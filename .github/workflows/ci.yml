@@ -265,12 +265,13 @@ jobs:
           echo "$(go env GOPATH)/bin" >> "${GITHUB_PATH}"
 
       - name: security gates
-        run: ./tooling/security-scan.sh
+        # bash is explicit so a missing exec bit can never turn into exit 126.
+        run: bash ./tooling/security-scan.sh
 
       - name: upload scanner reports
         if: always()
-        # v5 - verified tag SHA
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        # v6 - verified tag SHA (node24 runtime)
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         with:
           name: security-reports
           path: security-reports/
