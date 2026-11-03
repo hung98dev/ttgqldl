@@ -14,12 +14,12 @@ Statuses allowed: NOT_STARTED, IN_PROGRESS, BLOCKED, PASS, FAIL. ALL ARE NOT_STA
 | M08 | load, chaos, security, profiling and docs correction | M06,M07 | NOT_STARTED | AC005-011, AC013, soak report |
 | M09 | approved real TikTok adapter + rights verification | M08 | BLOCKED | AC019 official approval + end-to-end stream |
 | M10 | backup/restore, deployment, OBS production rehearsals | M08,M09 | NOT_STARTED | AC018-020, operator signoff |
-| M11 | release approval and branch protection | M10 | NOT_STARTED | all P0 PASS, no severe issues |
+| M11 | release approval and single-branch safeguards | M10 | NOT_STARTED | all P0 PASS, no severe issues |
 
-M00 itself is NOT PASS until product/technical owner approves open risks and checks consistency. Coding agents MUST NOT skip M00 approval; can prepare scaffold PR while approval pending but cannot declare production ready. If TikTok rights unavailable, ship simulator-only preview separately with clear non-TikTok claims; M09 remains BLOCKED.
+M00 itself is NOT PASS until product/technical owner approves open risks and checks consistency. Coding agents MUST NOT skip M00 approval; can prepare a local scaffold patch while approval pending but cannot declare production ready. If TikTok rights unavailable, ship simulator-only preview separately with clear non-TikTok claims; M09 remains BLOCKED.
 
 ## Agent execution prompt contract
-Read all /docs, inspect repo and latest CI. Select first unblocked non-PASS matrix row. Write plan of concrete code/test/doc changes; implement fully; run tests; capture evidence; update row only when objective pass; commit and open PR. Never jump ahead, guess authorization or change hard rules silently. Report unresolved limitations and exact next row.
+Read all /docs, inspect repo and latest CI. Select first unblocked non-PASS matrix row. Write plan of concrete code/test/doc changes; implement fully; run tests; capture evidence; update row only when objective pass; commit to main with linked evidence after required local checks, then verify CI. Do not create PRs. Never jump ahead, guess authorization or change hard rules silently. Report unresolved limitations and exact next row.
 
-## Branch protection
-main PR only, lint+tests+security checks required, one review for docs changes and two approvals for live adapter/security config. Do not auto-merge agent work. CI version and migration changes need recorded compatibility testing.
+## Single-branch safeguards
+Only main is canonical; never create branches or PRs unless the user explicitly requests them. Require lint, tests and security scans before pushing; verify CI after commits and immediately fix/revert failures. Human review/explicit approval for docs baseline, LIVE adapter/security configuration and production release remains mandatory, regardless of direct commits. CI version and migration changes need recorded compatibility testing.
