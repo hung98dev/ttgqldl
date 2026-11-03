@@ -10,7 +10,7 @@ TTG_SOURCE=mock|replay|authorized_live (default mock; live fails closed until pe
 TTG_HTTP_ADDR=127.0.0.1:8080 (default local)
 TTG_DATABASE_URL: secret, mandatory all modes
 TTG_HMAC_KEY_VERSION: nonempty and TTG_HMAC_SECRET: secret mandatory
-TTG_ADMIN_PASSWORD_HASH: Argon2id mandatory on stage/prod, seed dev creds only in local environment
+TTG_ADMIN_PASSWORD_HASH: Argon2id mandatory on stage/prod; TTG_BOOTSTRAP_ADMIN_USER: nonempty username required if no admin exists at first startup; seed dev creds only in local loopback environment, never production defaults
 TTG_STREAM_SIGNING_SECRET: random >=32 bytes, mandatory stage/prod
 TTG_SOURCE_CREDENTIAL_REF: mandatory in authorized_live
 TTG_LOG_LEVEL=info; TTG_METRICS_ADDR=127.0.0.1:9090; TTG_MAX_QUEUE=20000; TTG_STREAM_RATE_HZ=5; TTG_SNAPSHOT_TICKS=600
@@ -34,3 +34,12 @@ Privacy erase: queue, immediate alias suppression, anonymized checkpoint at safe
 
 ## Production LIVE human prerequisites
 Confirm approved provider event source, owner account/region and streaming rights; verify full overlay and latency on LIVE preview; original audio/art IP rights, privacy notice and deletion mechanism, staffed moderation, emergency stop, 2h rehearsal, physical workstation and recovery drills. Engineer automation CANNOT grant platform privileges or human legal approvals. If not met, mark LIVE release BLOCKED, allow standalone simulator deliverable only.
+
+## Reproducible AI delivery environment and failure contracts
+- M01 must create a single top-level `tooling/doctor` command (PowerShell and Bash) that checks exact Go1.27.3, Unity6000.6.7f1, PostgreSQL18.6 and compatible Node toolchain, including arch, Unity license, Docker image digest, disk space and current test runner permissions. Missing license/stream account does NOT mark code ready or CI PASS.
+- GitHub Actions can execute code-level Go/Postgres/TS gates on Linux; Unity license/graphics/OBS capture may require authenticated dedicated Windows runner. If runner cannot be provisioned, label UNITY_CAPTURE/OBS_EXTERNAL BLOCKED; never replace real FPS evidence with headless screenshots.
+- A developer setup must work with *zero* real TikTok credentials: generate 10, 100, 1k and 10k stable synthetic actor IDs with deterministic NDJSON replay and genuine MOCK/REPLAY watermark. No network call to TikTok in dev/test unless authorized. Include a predictable scenario with 10+ wave transitions, disconnect/reconnect and terminal failure recovery.
+- Once package tests pass locally and commit to main, inspect actual CI run for that commit. If red, fix or revert immediately; direct-main policy does not remove mandatory integration and security gates.
+- Production operator preflight: verify credentials and expiry, source permissions, free disk>20%, DB backup/restore verification freshness<=7 days, clock sync, live preview safe-area check, active operator/moderator and emergency-stop rehearsal. Missing mandatory proof makes public LIVE startup BLOCKED; P0 mock remains runnable.
+- Performance harness must report ingress events/s, distinct accepted participants, duplicate/noop counts, valid action drops, DB commit p50/p95/p99, runtime GC, writer contention, streaming frame bytes/lag, Unity 1% low FPS and WAN/source delay separately. 10k synthetic users does not mean 10k genuine LIVE audience.
+- Provider disconnection, manual pause and DB errors are independent pause reasons. Never auto-resume an operator pause when source reconnects. Only use a verified authorized source adapter in P1 and clearly differentiate SOURCE_DISCONNECTED vs UNSUPPORTED_IDENTITY.
