@@ -1,0 +1,12 @@
+# Build artefacts (Go binaries named after their package directory)
+*.exe
+*.test
+*.out
+tooling/refeval/refeval
+tooling/planvalidate/planvalidate
+
+# Local environment / secrets
+.env
+.env.local
+*.env
+!*.env.example

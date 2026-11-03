@@ -1,7 +1,7 @@
 # TESTS, SLO, ACCEPTANCE
 
 ## Core principles
-All test cases MUST be executable and reproducible, or explicitly identified as a manual human test. A spec is never evidence that code works. Every PASS requires SHA + command + fixture + time + environment + log artifact; human-required tests use real human signature. A missing license/device/credential = BLOCKED, not PASS. The required baseline host is specified in 07_OPERATIONS, and any other tested hardware recorded verbatim.
+All test cases MUST be executable and reproducible, or explicitly identified as a manual human test. A spec is never evidence that code works. Every PASS requires SHA + command + fixture + time + environment + log artifact and the active `ttg-rules-v1` rules identifier; human-required tests use real human signature. A missing license/device/credential = BLOCKED, not PASS. The required baseline host is specified in 08_OPERATIONS.md, and any other tested hardware recorded verbatim.
 
 ## Mandatory test IDs
 QA-GOV-01 docs/plan/00_INDEX.md and its topic-owned modules are the only normative plan, main-only branch policy, no hidden PR dependency.
@@ -17,7 +17,7 @@ QA-SIM-02 mandatory deterministic reducer operation order, integer rounding, lan
 QA-SIM-03 boss spawns before combat at t2600; t2800 final combat before results.
 QA-SIM-04 WAITING without players and pause/disconnect freeze.
 QA-SIM-05 defeat freezes economy/combat and prevents any post-defeat XP; loss penalty, 250 HP recovery, level retention and no overflow/negative.
-QA-BAL-01 simulated P=1,3,4,5,10,30,100,1000,10000 at 0/20/40/60/100% fighter mixes, d=1,5,10 and boss/nonboss; battle must end within 300s, no divide by zero, no mathematically unwinnable recurrence after losses with at least one fighter or low-P NPC militia.
+QA-BAL-01 simulated P=1,3,4,5,10,30,100,1000,10000 at 0/20/25/40/50/60/75/100% fighter mixes, d=1,5,10 and boss/nonboss; battle must end within 300s, no divide by zero, no mathematically unwinnable recurrence after losses with at least one fighter or low-P NPC militia. Every case must be classified as feasible or arithmetic-only: consecutive_wins>0 together with consecutive_losses>0 cannot occur in a real session because a win resets consecutive_losses, so those pairings are stress tests and MUST NOT be reported as player-experience evidence.
 QA-BAL-02 1,000 generated session/wave fixtures, test transparent scaling, bounded XP, resource and load. Target 65-80% first-three-wave win rate is hypothesis, NOT mandatory or faked until viewer research.
 QA-ECO-01 construction/repair, one upgrade max per boundary, resource caps, vote deductions and rewards exactly once.
 QA-VOTE-01 close boundary t1200, ties A>B>C, insufficient-resource fallback and no invalid ballot.
@@ -46,7 +46,23 @@ Safety: 0 known critical/high exploitable vulnerabilities, secret scan clean, si
 No dependency on monetization or gift use. Real-source platform readiness is separate gate; P0 mock pass does not imply live P1 pass.
 
 ## Evidence files and traceability
-For each Mxx-Wxxxx: docs/evidence/Mxx-Wxxxx.md contains milestone, requirement IDs, source code commit, exact machine+OS, build and test commands, test IDs, expected vs actual, log path, metric summary, UTC, automated/human reviewer, status and rerun instructions. docs/traceability.csv has columns requirement_id,document_anchor,work_package,test_id,priority,status,evidence_uri; M01 creates script to fail if any MUST unmapped or PASS without valid evidence. Weekly or on milestones review drift in doc/fixture versions, and lint links.
+For each Mxx-Wxxxx: docs/evidence/Mxx-Wxxxx.md starts with a machine-readable block so the plan validator can prove status honesty:
+
+    <!-- evidence
+    wp: M00-W0001
+    milestone: M00
+    status: PASS
+    commit: WORKTREE@<40-hex-head>   (or a 40-hex sha)
+    head: <40-hex commit the tests were executed on>
+    utc: 2026-11-03T12:00:00Z
+    environment: <OS, cpu, tool versions>
+    requirements: REQ-02-ENEMY,REQ-03-ORDER
+    tests: QA-SIM-02,QA-BAL-03
+    reviewer: <automated tooling name, or the real human reviewer>
+    reviewer_kind: automated|human
+    -->
+
+and then records, in prose or tables: files inspected and modified, an exact command list, expected versus actual output, metric summary, log path, outstanding blockers and rerun instructions. `docs/traceability.csv` has exactly these columns: requirement_id,document_anchor,owner_module,work_package,test_id,priority,verification_method,spec_status,impl_status,evidence_uri; document_anchor is `<module>.md#<github-heading-slug>`, test_id lists QA ids, spec_status is VERIFIED|FIXED|BLOCKED, impl_status uses the matrix vocabulary and evidence_uri is a repository path that exists. `tooling/planvalidate` (run from `tooling/` as `go run ./planvalidate -root ..`) fails if any MUST is unmapped, any QA id is missing or duplicated, any anchor does not resolve, or any PASS lacks a matching evidence record. Weekly or on milestones review drift in doc/fixture versions and lint links.
 
 ## Required CI stages
 Go test ./... + -race, fuzz seeds, sqlc/generation check, goose migrate up/down PG18.6, determinism golden, OpenAPI/JSON schema contract tests, security SAST/secret/SBOM/license, Unity EditMode/PlayMode with license, TS UI tests, k6/Go load harness on dedicated runner. Manual OBS, privacy, streamer and legal gates are never spoofed by headless CI.
@@ -57,7 +73,7 @@ QA-SIM-07 P=0 WAITING never creates fake viewers, unattended losses or backgroun
 QA-SIM-08 At boss wave all ordinary enemies can die before tick2600, but BOSS_INCOMING remains; boss spawn/combat at2600 then2800, victory banner only after t2800.
 QA-SIM-09 DEFEATED before t2800 skips ALL later builder/economy/XP/combat effects; settlement once.
 QA-CMD-04 First role switch after joining immediately allowed; next role switch rejected until last successful switch+600 ticks; duplicate messages never reset cooldown.
-QA-BAL-03 With d=1, no recovery modifier, wave_no=5 boss, population P=10 and builders2,guards2,fighters6: ordinary base_hp=162, boss_hp=33; fighter attack per combat interval=40 (18*isqrt(6)+militia4). For P=30 with builders8,guards8,fighters14: base_hp=238, boss_hp=48, attack=54. These are EXPECTED mathematical vectors, not completed Go tests. They MUST become golden Go fixtures asserting exact tick-by-tick outcomes and win at tick2800 under clean starting wall/hall/resources.
+QA-BAL-03 With d=1, no recovery modifier, wave_no=5 boss, population P=10 and builders2,guards2,fighters6: ordinary base_hp=162, boss_hp=33; fighter attack per combat interval=40 (18*isqrt(6)+militia4); the boss dies at tick2600 and victory is settled at tick2800 with wall_hp=1000, wood=518, stone=324, food=350, session XP 100. For P=30 with builders8,guards8,fighters14: base_hp=238, boss_hp=48, attack=54; the boss SURVIVES tick2600 with 16 HP and is killed only by the tick2800 combat, so victory is settled at tick2800 with wall_hp=1000, wood=544, stone=338, session XP 300. These are EXPECTED mathematical vectors, not completed Go tests; they MUST become golden Go fixtures asserting exact tick-by-tick outcomes, and the P=30 vector is the mandatory regression that proves QA-SIM-10 (excluding tick2800 would flip the result to a loss).
 QA-BAL-04 Cross-check reference combat implementation against an independently implemented evaluator for each population and role mix; if any case contradicts spec, mark M02 FAIL and correct math before app/UI.
 QA-DB-06 Queue NEXT-wave input_seq50 and later current-wave input_seq51; process current event once, preserve future event for next wave and apply once at tick0 after rollover. Reject use of one global applied-sequence cursor.
 QA-DB-07 Writer lease fencing and batch order: source 1k/s through batch<=256/50ms, commit ACK only after persistence; mixed operator pause + source outage + DB outage does not advance tick.
@@ -86,3 +102,9 @@ QA-VIS-02 Unity 6000.6.7f1 continuous 2h streaming build survives repeated pause
 
 QA-DB-09 Schema requires nullable last_change_tick, explicit first_switch_used and sessions.privacy_epoch; first role change immediately permitted, later >=600 ticks. SQL and reducer/golden hash must agree on these persisted fields.
 QA-SIM-10 At tick2800 mandatory final combat/repair precedes RESULTS, including 20s role resolution, but if DEFEATED economy/combat is skipped; avoid excluding tick2800 just because its resulting phase is RESULTS.
+
+QA-SIM-11 XP ordering and idempotency: at each 200-tick boundary the reducer awards at most +10 session XP to each active member with xp_awarded=false, awards BEFORE that boundary's combat/defeat effect, never awards after a defeat, never awards twice on replay, and caps at 300; a crash replay must reproduce identical session_xp values in the canonical hash.
+QA-DB-10 NEXT-wave membership normalization: a registration accepted during RESULTS is persisted for wave_no+1 with joined_tick=0, last_change_tick NULL and first_switch_used=false, promoted at tick3000 without a second comment, and counted inside the next wave's anchor window (joined_tick<=1599); storing the RESULTS tick as joined_tick is a FAIL.
+QA-BAL-05 Required-fighter-share curve must match the independent reference evaluator: boss wave, d=1, no prior losses, no vote, minimum fighters to win = 0 for P=1,3,4; 1 for P=5; 4 for P=10; 9 for P=30; 25 for P=100; 196 for P=1000; 1849 for P=10000. M02 golden fixtures reproduce these exactly; any change requires a rules_version bump and regenerated `tooling/refeval` vectors.
+QA-API-05 Admin audit and privacy-erasure status endpoints: audit read is admin-only and paginated <=50 without secrets, actor_key or provider ids; erase status is operator/admin readable, returns queued|applied|blocked|failed, and unauthorized or cross-village access returns 403/404 without leaking existence.
+QA-GOV-04 Plan validator: `tooling/planvalidate` exits 0 on the canonical plan and exits non-zero when seeded with any single defect — broken link, duplicate QA id, undefined QA reference, milestone cycle, PASS without evidence, constant drift, or traceability row pointing at a missing evidence file.

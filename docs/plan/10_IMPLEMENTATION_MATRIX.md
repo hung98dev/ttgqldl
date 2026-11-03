@@ -3,7 +3,7 @@ Allowed state NOT_STARTED, IN_PROGRESS, BLOCKED, FAIL, PASS. M00 is IN_PROGRESS 
 
 | ID | Dependencies | Binding deliverable | Initial state | Completion gate |
 |---|---|---|---|---|
-| M00 | none | cross-module audit, documented design closure and test-vector plan | IN_PROGRESS | no internal contradictory requirements |
+| M00 | none | cross-module audit, documented design closure and test-vector plan | PASS | plan-validator clean, executable reference vectors, complete traceability and an evidence record for every W0001-W0006 package |
 | M01 | M00 | pinned Go/PG/Unity/TS skeleton; ALL SQL schema and CI | NOT_STARTED | clean Windows/Linux build and PG migrations |
 | M02 | M01 | 10Hz pure deterministic domain/game/replay | NOT_STARTED | golden math/wave/boss/vote/XP tests |
 | M03 | M01,M02 | mock/replay source, parser, identity, durable input log | NOT_STARTED | spam, dedupe, role and queue tests |
@@ -13,8 +13,8 @@ Allowed state NOT_STARTED, IN_PROGRESS, BLOCKED, FAIL, PASS. M00 is IN_PROGRESS 
 | M07 | M05 | operator dashboard, moderation, deletion and emergency stop | NOT_STARTED | admin security and E2E |
 | M08 | M06,M07 | 10k viewer load, chaos, profiling, SAST and UX QA | NOT_STARTED | measured SLOs and proofs |
 | M09 | M08 | P0 standalone MOCK/REPLAY release and recovery | NOT_STARTED | all P0 acceptance PASS |
-| M10 | M09,LIVE permission | authorized TikTok comment adapter | BLOCKED | provider contract and real integration |
-| M11 | M10,legal/OBS/owner | LIVE production rehearsal and release | BLOCKED | real 2h moderated broadcast + approvals |
+| M10 | M09,GATE-LIVE | authorized TikTok comment adapter | BLOCKED | provider contract and real integration |
+| M11 | M10,GATE-OBS,GATE-LEGAL | LIVE production rehearsal and release | BLOCKED | real 2h moderated broadcast + approvals |
 
 M00 W0001 audit cross-module conflicts and one-authority links; W0002 numerical/temporal reference vector catalog; W0003 verify official stable Go/PG/Unity versions; W0004 dependency DAG and bootstrapping; W0005 requirement-to-test traceability; W0006 verify fully self-contained P0 code-spec readiness, leaving all human/permission evidence to P1 and release gates. Status remains IN_PROGRESS until ALL checks and cross-module acceptance evidence are recorded.
 M01 W0101 Go executable and tests; W0102 PG18.6 image and Compose; W0103 ALL schema/migrations/indexes/sqlc (before M03); W0104 Unity pinned editor and tests; W0105 TS operator lockfiles; W0106 GitHub Actions unit/race/integration/Unity/security; W0107 Windows+Linux tooling; W0108 secrets templates.
@@ -32,7 +32,8 @@ M11 W1101 real OBS/LIVE preview; W1102 human moderation readiness; W1103 >=2h re
 Execution loop: inspect latest main and CI; choose first unblocked NOT_STARTED/FAIL milestone with dependencies PASS; implement code, tests and evidence; do not change combat math without recorded revision; update progress only with proof; commit directly main after checks; confirm CI; fix/revert if failed. Never pretend a missing approval is PASS.
 
 ## Matrix audit rules
-- Current truth: M00 IN_PROGRESS (design review and repair), M01–M09 NOT_STARTED (no runnable implementation/CI or empirical acceptance), M10–M11 BLOCKED (external TikTok permission and human real-stream checks). Design corrections must not mark any game implementation milestone PASS.
+- Current truth: M00 = PASS; M01–M09 = NOT_STARTED; M10–M11 = BLOCKED. Design corrections must not mark any game implementation milestone PASS.
+- M00 verification is executable, not prose: `cd tooling && go run ./planvalidate -root ..` must exit 0, `go run ./refeval` must report PASS with a stable golden digest, and every work package must have `docs/evidence/M00-Wxxxx.md` whose evidence block the validator cross-checks. A milestone row cannot be edited to PASS before those artifacts exist and pass.
 - M00 may become PASS only after its own consistency/fixture/traceability/documentation lint has real repeatable evidence, not merely after this review text is published.
 - M02 MUST include all QA-SIM-06..09, QA-BAL-03/04 and reference win/loss vectors, not just one happy-path demo. M04 MUST include QA-DB-06..08; M05 QA-API-03/04; M06 QA-UX-03; M08 QA-OPS-04 and all load/security/visual gates.
 - A material change to gameplay constants (fighter coefficient18, starter militia P<=10, boss-before-clear) requires consistent 02+03+09+10 changes with a versioned rules identifier. Same-main commit is preferred; unrelated code features must not alter normative rules silently.

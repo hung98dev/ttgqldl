@@ -1,5 +1,5 @@
 # TTGQLDL — CANONICAL IMPLEMENTATION PLAN INDEX
-**One plan, twelve topic-owned modules, one main branch.** Status: SPECIFICATION, NOT IMPLEMENTED OR TESTED. Date: 2026-11-03. Do not create alternate plans, docs/v2 or other branches.
+**One plan, twelve topic-owned modules, one main branch.** Status: M00 specification baseline validated by executable tooling on 2026-11-03; the product itself is NOT IMPLEMENTED OR TESTED (M01–M09 NOT_STARTED, M10–M11 BLOCKED). Do not create alternate plans, docs/v2 or other branches.
 
 ## Module ownership (each subject has exactly one authoritative owner)
 | Document | Binding scope |
@@ -27,6 +27,6 @@
 7. When modules conflict, stop the affected package, document the conflict and correct the owning module(s); independent unblocked work can proceed. Ownership is strict: 01 scope, 02 gameplay, 03 time/order, 04 persistence, 05 wire, 06 live/security, 07 visuals, 08 ops, 09 QA, 10 status, 11 external gates.
 
 ## Product/release boundaries
-P0 is a mock/replay standalone game only after objective tests and real production assets. M00 is IN_PROGRESS after cross-module review; implementation tests have NOT run. P1 is genuine TikTok LIVE and remains BLOCKED until expressly permitted source access, account consent, legal/asset rights, moderation and real-stream tests. AI cannot grant permissions or forge human assessment. Generated source, schema, fixtures and evidence are work outputs, not competing plan files.
+P0 is a mock/replay standalone game only after objective tests and real production assets. M00 is PASS on plan-consistency and reference-vector evidence (docs/evidence/M00-W0001..W0006.md plus `tooling/planvalidate`); implementation tests have NOT run. P1 is genuine TikTok LIVE and remains BLOCKED until expressly permitted source access, account consent, legal/asset rights, moderation and real-stream tests. AI cannot grant permissions or forge human assessment. Generated source, schema, fixtures and evidence are work outputs, not competing plan files.
 
-Every module should remain focused and ideally under 12 KB; do not concatenate into giant MASTER_PLAN.md or create a second version of the plan.
+Every module should remain focused. The M00 audit pushed 02_GAME_RULES.md, 04_DATABASE.md, 09_QA_ACCEPTANCE.md and 12_REVIEW_FINDINGS.md slightly past the original ~12 KB guidance because deterministic ordering and evidence schemas needed to be explicit; that is accepted. Growth beyond ~20 KB must split along ownership lines into a new topic-owned module registered in this index, never be appended into one document, and never become a second version of the plan.

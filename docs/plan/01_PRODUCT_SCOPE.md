@@ -15,4 +15,9 @@ Hard requirements say MUST/SHALL. If contradictory: block the affected requireme
 
 **All authoritative links and AI read order:** [00_INDEX.md](00_INDEX.md).
 
+## 1. CANONICAL IDENTIFIERS AND CHANGE CONTROL
+`rules_version` is the gameplay/simulation contract identifier. The current baseline is **`ttg-rules-v1`** (defined by 02_GAME_RULES.md and 03_SIMULATION.md). Canonical persisted and reducer state serialization is **`schema_version` = 1** (field list in 04_DATABASE.md). Both values are stored with every session and included in the canonical state hash.
+Any balance, timing, scoring or hashing change MUST bump `rules_version` (and `schema_version` when the serialized field list changes) in the SAME commit that updates 02, 03, 04, 09 and 10 and regenerates the `tooling/refeval` golden vectors. A golden-vector mismatch is a FAIL, never a warning.
+The fixed technology baseline is Go 1.27.3, PostgreSQL 18.6 and Unity 6000.6.7f1, with PostgreSQL as the single authoritative persistent store. Adding Redis, Kafka, Kubernetes, microservices, an additional database or another paid service requires a recorded measurable necessity plus an explicit change to this module; otherwise the baseline stands and any such addition is a FAIL.
+
 Verified official patch references (as of 2026-11-03): https://go.dev/dl/ ; https://www.postgresql.org/docs/release/18.6/ ; https://www.postgresql.org/about/news/postgresql-19-rc-1-released-3409/ (19 remains RC) ; https://unity.com/releases/editor/whats-new/6000.6.7f1 (known issues must be tested). Version selection is pinned for reproducibility; any future GA upgrade requires CI + migration approval, not unreviewed automatic upgrade.

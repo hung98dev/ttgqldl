@@ -20,7 +20,9 @@ All admin write requests: same-site Secure HttpOnly session cookie, CSRF X-CSRF-
 - GET /admin/v1/sessions/{id}/metrics ->200 counts, p50/p95 backend latency, ingress dropped breakdown, queue, ws.
 - POST /admin/v1/sessions/{id}/stream-token {} ->200 {token,expires_at,websocket_url}; viewed only by operator/admin.
 - POST /admin/v1/sessions/{id}/moderation {actor_public_ref:string,action:"hide"|"unhide"|"block",reason:string<=256} ->200 {applied:true}; never expose ActorKey via public wire.
-- POST /admin/v1/sessions/{id}/privacy/erase {actor_public_ref:string,reason:string<=256} ->202 {status:"queued",request_id:UUID}; admin only, append auditable erasure workflow.
+- POST /admin/v1/sessions/{id}/privacy/erase {actor_public_ref:string,reason:string<=256} ->202 {status:"queued",request_id:UUID,status_url:string}; admin only, append auditable erasure workflow and a privacy_erase_requests row.
+- GET /admin/v1/sessions/{id}/privacy/erase/{request_id} ->200 {request_id,status:"queued"|"applied"|"blocked"|"failed",requested_at,applied_at?,privacy_epoch?}; operator/admin read. This is the only way an operator can prove erasure completed, so M07 evidence depends on it.
+- GET /admin/v1/audit?cursor=&limit=1..50 ->200 {items:[{id,actor_public_ref,action,target,reason,created_at}],next_cursor:null|string}; admin only, bounded page size, never returns secrets, password hashes, actor_key or raw provider IDs.
 - POST /dev/v1/events {session_id:UUID,events:[{event_id:string,viewer_id:string,alias:string,comment:string}]} ->202 {accepted:int,ignored:int,invalid:int}; dev mode only, route not registered prod/stage.
 - POST /admin/v1/sessions/{id}/settings {low_vfx:bool,mute_audio:bool} ->200 settings; operator permitted; changes do not alter combat/official gameplay.
 Every request/response schema must be materialized as machine-readable OpenAPI 3.1 and verified via schema-conformance tests in M03; these exact routes are normative, not examples.

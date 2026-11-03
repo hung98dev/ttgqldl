@@ -1,7 +1,7 @@
 # DEVELOPMENT, CI, DEPLOYMENT AND INCIDENTS
 
 ## Runtime reference and toolchains
-Windows 11 host for Unity OBS with >=6 physical CPU cores, >=16 GiB RAM and discrete GPU approximately RTX3060-class as reference only; Linux amd64 backend reference dedicated 8vCPU, 16GiB RAM, NVMe SSD and PostgreSQL 18.6 over private loopback/network. These are NOT verified current user's equipment; tests record real CPU/GPU/storage before claiming numbers. Go 1.27.3, Unity 6000.6.7f1, Postgres18.6. Pin exact external libs, node LTS, Docker digests and Unity packages during M01; no moving latest tags. Windows PowerShell and Linux Bash entrypoints run from repo root.
+Windows 11 host for Unity OBS with >=6 physical CPU cores, >=16 GiB RAM and discrete GPU approximately RTX3060-class as reference only; Linux amd64 backend reference dedicated 8vCPU, 16GiB RAM, NVMe SSD and PostgreSQL 18.6 over private loopback/network. These are NOT verified current user's equipment; tests record real CPU/GPU/storage before claiming numbers. Go 1.27.3, Unity 6000.6.7f1, PostgreSQL 18.6. Pin exact external libs, node LTS, Docker digests and Unity packages during M01; no moving latest tags. Windows PowerShell and Linux Bash entrypoints run from repo root.
 Single-main workflow: pre-commit quality gates, then commit main, then verify GitHub Actions and revert/repair. No auto-merge, PRs or branches unless explicitly requested.
 
 ## Required configuration register
@@ -17,7 +17,7 @@ TTG_LOG_LEVEL=info; TTG_METRICS_ADDR=127.0.0.1:9090; TTG_MAX_QUEUE=20000; TTG_ST
 Invalid enum, weak secret, missing key or migration mismatch => fail startup. .env.example placeholders ONLY, real secrets gitignored and scanned.
 
 ## Mandatory commands/scripts
-tooling/doctor, up, down, migrate-up, migrate-down, test-unit, test-race, test-integration, test-schema, test-golden, test-load, test-unity, test-operator, test-security, backup, restore-verify, capture-obs; both .ps1 and .sh wrappers or portable Go CLI where possible.
+tooling/doctor, up, down, migrate-up, migrate-down, test-unit, test-race, test-integration, test-schema, test-golden, test-load, test-unity, test-operator, test-security, backup, restore-verify, capture-obs, plus the M00 baseline validators `tooling/validate-plan.ps1|.sh` (plan consistency) and `tooling/reference-eval.ps1|.sh` (golden gameplay vectors); both .ps1 and .sh wrappers or portable Go CLI where possible.
 doctor prints versions and refuses mismatched stable pins; up starts PostgreSQL/backend/operator and mock source. down preserves persistent state unless --wipe-dev-data explicit with interactive warning. All scripts write JSON evidence UTC timestamp, SHA, host, versions, command, exit status. If a test cannot run due to missing device/licensing, mark BLOCKED not PASS.
 
 ## Deployment
