@@ -1,0 +1,16 @@
+{
+    "name": "Ttgqldl.Networking",
+    "rootNamespace": "Ttgqldl.Networking",
+    "references": [
+        "Ttgqldl.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": true
+}

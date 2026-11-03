@@ -30,3 +30,26 @@ Thumbs.db
 *.swp
 .idea/
 .vscode/
+
+# --- Unity project (unity/) ---------------------------------------------------
+# Never commit generated caches, local settings, licenses or build output.
+/unity/[Ll]ibrary/
+/unity/[Tt]emp/
+/unity/[Oo]bj/
+/unity/[Ll]ogs/
+/unity/[Uu]ser[Ss]ettings/
+/unity/[Mm]emoryCaptures/
+/unity/[Rr]ecordings/
+/unity/[Bb]uild/
+/unity/[Bb]uilds/
+/unity/TestResults/
+/unity/*.csproj
+/unity/*.sln
+/unity/*.slnx
+/unity/*.unityproj
+/unity/*.pidb
+/unity/*.userprefs
+/unity/sysinfo.txt
+/unity/.vs/
+/unity/.idea/
+/unity/*.unitypackage

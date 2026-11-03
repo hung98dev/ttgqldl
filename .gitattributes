@@ -18,3 +18,15 @@ go.sum text eol=lf
 *.jpeg binary
 *.wav  binary
 *.ogg  binary
+
+# Unity text-serialized assets are YAML; keep them LF so a Windows checkout does
+# not rewrite every scene and prefab. Unity's YAML merger is not configured in
+# this repository, so no merge driver is referenced here.
+*.unity   text eol=lf
+*.prefab  text eol=lf
+*.asset   text eol=lf
+*.mat     text eol=lf
+*.meta    text eol=lf
+*.asmdef  text eol=lf
+*.asmref  text eol=lf
+*.shader  text eol=lf

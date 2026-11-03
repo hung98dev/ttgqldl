@@ -95,13 +95,13 @@ type issue struct {
 }
 
 type report struct {
-	Root       string            `json:"root"`
-	Checks     []string          `json:"checks"`
-	Issues     []issue           `json:"issues"`
-	Stats      map[string]string `json:"stats"`
-	Errors     int               `json:"errors"`
-	Warnings   int               `json:"warnings"`
-	Passed     bool              `json:"passed"`
+	Root     string            `json:"root"`
+	Checks   []string          `json:"checks"`
+	Issues   []issue           `json:"issues"`
+	Stats    map[string]string `json:"stats"`
+	Errors   int               `json:"errors"`
+	Warnings int               `json:"warnings"`
+	Passed   bool              `json:"passed"`
 }
 
 type validator struct {
@@ -132,18 +132,18 @@ type milestone struct {
 }
 
 type evRecord struct {
-	File       string
-	WP         string
-	Milestone  string
-	Status     string
-	Commit     string
-	Head       string
-	UTCTime    string
-	Env        string
-	Tests      []string
+	File        string
+	WP          string
+	Milestone   string
+	Status      string
+	Commit      string
+	Head        string
+	UTCTime     string
+	Env         string
+	Tests       []string
 	Requirement []string
-	Reviewer   string
-	ReviewKind string
+	Reviewer    string
+	ReviewKind  string
 }
 
 func main() {
@@ -153,14 +153,14 @@ func main() {
 	flag.Parse()
 
 	v := &validator{
-		root:    *root,
-		stats:   map[string]string{},
-		files:   map[string][]string{},
+		root:     *root,
+		stats:    map[string]string{},
+		files:    map[string][]string{},
 		slugSets: map[string]map[string]bool{},
-		matrix:  map[string]*milestone{},
-		wpOwner: map[string]string{},
-		qaIDs:   map[string]string{},
-		reqIDs:  map[string]string{},
+		matrix:   map[string]*milestone{},
+		wpOwner:  map[string]string{},
+		qaIDs:    map[string]string{},
+		reqIDs:   map[string]string{},
 		evidence: map[string]*evRecord{},
 	}
 	v.run()
@@ -265,6 +265,19 @@ func (v *validator) run() {
 
 // ---------- file inventory ----------
 
+// generatedDirs are repository-local build outputs that are never committed and
+// never subject to plan linting.
+var generatedDirs = []string{
+	"unity/Library",
+	"unity/Temp",
+	"unity/Obj",
+	"unity/Logs",
+	"unity/Build",
+	"unity/Builds",
+	"unity/TestResults",
+	"unity/UserSettings",
+}
+
 func (v *validator) collectMarkdown() {
 	v.begin("markdown-inventory")
 	_ = filepath.WalkDir(v.root, func(path string, d os.DirEntry, err error) error {
@@ -275,6 +288,17 @@ func (v *validator) collectMarkdown() {
 		if d.IsDir() {
 			if name == ".git" || name == "node_modules" || name == ".dsh" {
 				return filepath.SkipDir
+			}
+			// Generated Unity directories are gitignored build caches; linting
+			// package documentation inside them would fail every local run for
+			// content the repository does not own.
+			if rel, rerr := filepath.Rel(v.root, path); rerr == nil {
+				rel = filepath.ToSlash(rel)
+				for _, generated := range generatedDirs {
+					if rel == generated || strings.HasPrefix(rel, generated+"/") {
+						return filepath.SkipDir
+					}
+				}
 			}
 			return nil
 		}

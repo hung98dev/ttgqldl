@@ -188,13 +188,32 @@ foreach ($candidate in $unityCandidates) {
     $unityWrong += "$version ($candidate)"
 }
 if ($null -ne $unityMatch) {
-    Add-Row 'unity' 'OK' $unityMatch 'M06' $true
+    # M01-W0104 needs more than an executable: the Windows standalone module and
+    # local licence evidence decide whether tests and builds can run at all.
+    $editorPath = $unityMatch.Substring($unityMatch.LastIndexOf('(') + 1).TrimEnd(')')
+    $editorRoot = Split-Path (Split-Path $editorPath -Parent) -Parent
+    $windowsModule = Join-Path $editorRoot 'Editor\Data\PlaybackEngines\windowsstandalonesupport'
+    $licenceCandidates = @(
+        (Join-Path $env:LOCALAPPDATA 'Unity\licenses\UnityEntitlementLicense.xml'),
+        (Join-Path $env:ProgramData 'Unity\licenses\UnityEntitlementLicense.xml'),
+        (Join-Path $env:ProgramData 'Unity\Unity_lic.ulf')
+    )
+    $licence = $licenceCandidates | Where-Object { Test-Path $_ } | Select-Object -First 1
+    $gaps = @()
+    if (-not (Test-Path $windowsModule)) { $gaps += 'windows standalone build module missing' }
+    if ($null -eq $licence) { $gaps += 'no local licence file found (Unity may still be activated online)' }
+    if ($gaps.Count -gt 0) {
+        Add-Row 'unity' 'BLOCKED' "$unityMatch; $($gaps -join '; ')" 'M01-W0104' $true
+    }
+    else {
+        Add-Row 'unity' 'OK' "$unityMatch; windows module + licence present" 'M01-W0104' $true
+    }
 }
 elseif ($unityWrong.Count -gt 0) {
     Add-Row 'unity' 'MISMATCH' "found $($unityWrong -join '; '), required 6000.6.7f1" 'M06' $true
 }
 else {
-    Add-Row 'unity' 'MISSING' 'Unity 6000.6.7f1 not found; required by M06, not by M01' 'M06' $true
+    Add-Row 'unity' 'MISSING' 'Unity 6000.6.7f1 not found; required by M01-W0104 and M06' 'M01-W0104' $true
 }
 
 # --- Optional: Bash (shell script parity) ------------------------------------

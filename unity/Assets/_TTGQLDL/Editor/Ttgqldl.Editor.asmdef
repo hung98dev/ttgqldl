@@ -1,0 +1,22 @@
+{
+    "name": "Ttgqldl.Editor",
+    "rootNamespace": "Ttgqldl.Editor",
+    "references": [
+        "Ttgqldl.Core",
+        "Ttgqldl.Presentation",
+        "Ttgqldl.Networking",
+        "Ttgqldl.UI",
+        "Ttgqldl.Bootstrap"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

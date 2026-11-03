@@ -1,0 +1,20 @@
+{
+    "name": "Ttgqldl.Bootstrap",
+    "rootNamespace": "Ttgqldl.Bootstrap",
+    "references": [
+        "Ttgqldl.Core",
+        "Ttgqldl.Presentation",
+        "Ttgqldl.Networking",
+        "Ttgqldl.UI",
+        "Ttgqldl.Diagnostics"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

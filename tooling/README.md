@@ -17,6 +17,9 @@ tooling/
   migrate-down.ps1|.sh     roll back one migration (or -To N / --to N)
   migrate-status.ps1|.sh   show applied and pending migrations
   schema-dump.ps1|.sh      regenerate backend/db/schema.sql for sqlc
+  unity-test.ps1|.sh       run Unity EditMode/PlayMode tests in the pinned editor
+  unity-build.ps1|.sh      build the Windows standalone player
+  unitycheck/              licence-free Unity project validation (CI gate)
   validate-plan.ps1|.sh    (M00) plan-validator wrapper
   reference-eval.ps1|.sh   (M00) golden-vector wrapper
   planvalidate/            canonical-plan consistency checker (Go, stdlib only)
@@ -39,6 +42,9 @@ Run them from anywhere; each resolves the repository root itself.
 | `./migrate-down.ps1` / `./migrate-down.sh` | Rolls back one migration; `-To N` / `--to N` rolls back to version N. `0` (full rollback) asks for an interactive confirmation. | 0 ok, migrate exit code |
 | `./migrate-status.ps1` / `./migrate-status.sh` | Applied and pending migrations plus the current schema version. | 0 ok |
 | `./schema-dump.ps1` / `./schema-dump.sh` | Runs `pg_dump` inside the compose container and rewrites `backend/db/schema.sql` (the sqlc input), then writes `backend/db/schema.fingerprint.json` (tables, columns, constraints, indexes). Both are byte-reproducible and CI fails on drift. | 0 ok |
+| `./unity-test.ps1` / `./unity-test.sh` | Finds the pinned Unity 6000.6.7f1 editor (`TTG_UNITY_EDITOR`, the Hub install or `Unity` on PATH), verifies the exact version, runs EditMode and/or PlayMode tests and reports from the NUnit XML. A run without an XML result is never reported as success. | 0 pass, 1 failure, 2 blocked (editor/version/licence), 3 harness error |
+| `./unity-build.ps1` / `./unity-build.sh` | Verifies the editor, the pinned version and the Windows standalone module, builds `unity/Build/Windows/TTGQLDL.exe` and fails when the player is missing. | 0 built, 1 build failed, 2 blocked |
+| `go run ./unitycheck -root ..` | Validates the Unity project without a licence: pinned editor version, package manifest vs lockfile, `.meta` coverage for files and folders, duplicate guids, scene guid resolution, null `m_Script`, assembly boundaries, test-assembly gating, ignore rules. Runs in CI; it is **not** a substitute for executing the editor. | 0 ok, 1 findings |
 
 Typical loop:
 
@@ -162,6 +168,12 @@ and review the diff in the same commit.
 
 A red run must block the merge to `main`; the validator is intentionally strict
 so that a status claim cannot outrun its evidence.
+
+Unity EditMode/PlayMode execution and the Windows player build are **not** part of
+the CI pipeline: no licensed Unity runner is available and no licence secret may
+be committed. The `unity` job runs the licence-free validator only, and the
+editor-dependent gate stays BLOCKED in CI while it passes locally through the two
+`unity-*` scripts.
 
 The backend job starts PostgreSQL 18.6 from the pinned digest with
 `docker/postgres/initdb` mounted, so CI exercises the same least-privilege role

@@ -164,6 +164,37 @@ jobs:
         working-directory: .
         run: docker rm -f ttg-pg || true
 
+  unity:
+    name: unity project (static, no editor)
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: tooling
+    steps:
+      - name: Checkout
+        # v7.0.1 - verified tag SHA; pinning the immutable commit avoids tag-move supply-chain risk
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Go
+        # v7.0.0 - verified tag SHA (node24 runtime, no Node 20 deprecation)
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache: false
+
+      # This job proves the Unity project is internally consistent: pinned
+      # editor version, package lock, .meta coverage, scene guid integrity,
+      # assembly boundaries and ignore rules. It is NOT a substitute for running
+      # the editor: Unity EditMode/PlayMode execution and the Windows build stay
+      # BLOCKED in CI because no licensed Unity runner is available and no
+      # license secret may be stored in this repository. Run them locally with
+      #   pwsh ./tooling/unity-test.ps1
+      #   pwsh ./tooling/unity-build.ps1
+      - name: unity project validation
+        run: go run ./unitycheck -root ..
+
+      - name: unity validator tests
+        run: go test -count=1 ./unitycheck/...
   tooling:
     name: baseline tooling (plan validator, golden vectors)
     runs-on: ubuntu-24.04
