@@ -23,7 +23,7 @@
           apply_builder_generation_repair_upgrade()
           if tick >= 1800:
              if tick == 2600 and boss_wave: add_boss_pool()
-             attack = 14*isqrt(min(F,10000)) + (max(0,40-4*(P-1)) if 1<=P<=10 else 0)
+             attack = 18*isqrt(min(F,10000)) + (max(0,40-4*(P-1)) if 1<=P<=10 else 0)
              if vote == B: attack = floor(115*attack/100)
              apply_attack_to_subpools_deterministically(attack)
              ordinary = sum(ordinary_subpool_hp)
