@@ -191,8 +191,11 @@ jobs:
           # Quoted heredoc: the JavaScript is intentionally literal, which also
           # keeps shellcheck (run by actionlint in CI) satisfied.
           cat > "${RUNNER_TEMP}/check-lockfile.cjs" <<'NODE'
-          const pkg = require("./package.json");
-          const lock = require("./package-lock.json");
+          const fs = require("node:fs");
+          // Resolve from the step working directory (operator/), not from the
+          // script location in RUNNER_TEMP.
+          const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+          const lock = JSON.parse(fs.readFileSync("package-lock.json", "utf8"));
           const root = lock.packages[""] || {};
           const declared = { ...pkg.dependencies, ...pkg.devDependencies };
           const problems = [];
