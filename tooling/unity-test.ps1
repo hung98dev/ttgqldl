@@ -1,20 +1,29 @@
 # Runs the real Unity EditMode and/or PlayMode test suites and reports from the
 # produced NUnit XML.
 #
+# Acceptance rules (identical to tooling/unity-test.sh):
+#   - the result file must exist and be valid XML with a <test-run> element
+#   - total, passed, failed, skipped and inconclusive must be present, integers
+#     and non-negative
+#   - total must equal passed+failed+skipped+inconclusive
+#   - at least one test must have actually executed (not skipped/inconclusive)
+#   - zero failures, and Unity must exit 0
+#   - a stale result file cannot be reused: it is deleted before the run
+#
 # Exit codes:
 #   0  every requested platform passed
-#   1  at least one test failed (or Unity reported a non-zero exit code)
+#   1  at least one test failed, or the result was empty/inconsistent/missing
 #   2  BLOCKED: editor missing, wrong version, or no usable licence
-#   3  harness error: Unity exited without producing a result file
-#
-# This script never reports PASS because Unity merely exited: a missing XML file
-# is always a failure. Local usage:
-#   pwsh ./tooling/unity-test.ps1              # both platforms
-#   pwsh ./tooling/unity-test.ps1 -Platform EditMode
+#   3  harness error (reserved for unexpected script failures)
 [CmdletBinding()]
 param(
     [ValidateSet('EditMode', 'PlayMode', 'All')]
-    [string]$Platform = 'All'
+    [string]$Platform = 'All',
+
+    # Regression-test seams. Never set these for a normal run.
+    [string]$EditorPath = '',
+    [string]$ResultsDirectory = '',
+    [switch]$SkipVersionCheck
 )
 
 . (Join-Path $PSScriptRoot '_common.ps1')
@@ -23,20 +32,25 @@ param(
 $script:RequiredUnityVersion = '6000.6.7f1'
 $root = Get-RepoRoot
 $project = Join-Path $root 'unity'
-$results = Join-Path $project 'TestResults'
+$results = if ($ResultsDirectory -ne '') { $ResultsDirectory } else { Join-Path $project 'TestResults' }
 
 function Get-UnityVersion {
-    param([string]$EditorPath)
+    param([string]$EditorExecutable)
     # Unity prints -version straight to the console, bypassing PowerShell
     # redirection, so the executable metadata is the reliable source on Windows.
     try {
-        $info = (Get-Item -LiteralPath $EditorPath).VersionInfo
+        $info = (Get-Item -LiteralPath $EditorExecutable).VersionInfo
         if ($info -and $info.ProductVersion) { return ($info.ProductVersion -split '_')[0] }
     }
     catch { }
     return $null
 }
+
 function Resolve-UnityEditor {
+    if ($EditorPath -ne '') {
+        if (Test-Path $EditorPath) { return (Resolve-Path $EditorPath).Path }
+        return $null
+    }
     if ($env:TTG_UNITY_EDITOR) {
         if (Test-Path $env:TTG_UNITY_EDITOR) { return (Resolve-Path $env:TTG_UNITY_EDITOR).Path }
         Write-WarnLine "TTG_UNITY_EDITOR points to a missing path: $env:TTG_UNITY_EDITOR"
@@ -61,17 +75,22 @@ if ($null -eq $editor) {
 }
 
 Write-Step "using editor $editor"
-$version = Get-UnityVersion $editor
-if ($null -eq $version) {
-    Write-Fail 'BLOCKED: the editor did not report a version'
-    exit 2
+if ($SkipVersionCheck) {
+    Write-WarnLine 'version verification skipped (regression-test mode only)'
 }
-$version = "$version".Trim()
-if ($version -notlike "$script:RequiredUnityVersion*") {
-    Write-Fail "BLOCKED: editor version $version does not match the pinned $script:RequiredUnityVersion"
-    exit 2
+else {
+    $version = Get-UnityVersion $editor
+    if ($null -eq $version) {
+        Write-Fail 'BLOCKED: the editor did not report a version'
+        exit 2
+    }
+    $version = "$version".Trim()
+    if ($version -notlike "$script:RequiredUnityVersion*") {
+        Write-Fail "BLOCKED: editor version $version does not match the pinned $script:RequiredUnityVersion"
+        exit 2
+    }
+    Write-Ok "editor version $version"
 }
-Write-Ok "editor version $version"
 
 New-Item -ItemType Directory -Force -Path $results | Out-Null
 $platforms = if ($Platform -eq 'All') { @('EditMode', 'PlayMode') } else { @($Platform) }
@@ -81,6 +100,9 @@ $blocked = $false
 foreach ($current in $platforms) {
     $xml = Join-Path $results ("{0}.xml" -f $current.ToLowerInvariant())
     $log = Join-Path $results ("{0}.log" -f $current.ToLowerInvariant())
+
+    # Removing the previous result is what makes a stale file impossible: if the
+    # editor does not write a new one, the platform fails below.
     Remove-Item -Path $xml, $log -ErrorAction SilentlyContinue
 
     Write-Step "running $current tests"
@@ -101,7 +123,7 @@ foreach ($current in $platforms) {
     if (-not (Test-Path $xml)) {
         $licenceProblem = $false
         if (Test-Path $log) {
-            $licenceProblem = $null -ne (Select-String -Path $log -Pattern 'No valid Unity Editor license|License is not active|licensing.*error' -Quiet)
+            $licenceProblem = [bool](Select-String -Path $log -Pattern 'No valid Unity Editor license|License is not active|licensing.*error' -Quiet)
         }
         if ($licenceProblem) {
             Write-Fail "BLOCKED: $current tests could not run because no usable Unity licence was found"
@@ -114,31 +136,35 @@ foreach ($current in $platforms) {
         continue
     }
 
-    [xml]$doc = Get-Content -Path $xml
-    $run = $doc.'test-run'
-    $total = [int]$run.total
-    $passed = [int]$run.passed
-    $failed = [int]$run.failed
-    $skipped = [int]$run.skipped
+    try {
+        $summary = Get-UnityTestSummary -XmlPath $xml
+    }
+    catch {
+        Write-Fail "${current}: the result file is missing or corrupt ($($_.Exception.Message))"
+        $failedPlatforms += $current
+        continue
+    }
 
-    if ($failed -gt 0) {
-        Write-Fail "$current`: $failed of $total failed"
-        $doc.SelectNodes("//test-case[@result='Failed']") | ForEach-Object {
-            Write-Fail "  $($_.name)"
-            $message = $_.failure.message.'#cdata-section'
-            if ($message) { Write-Note (($message -split "`n")[0]) }
+    $problems = @($summary.Problems)
+    if ($code -ne 0) {
+        $problems += "Unity exited with code $code"
+    }
+    if ($summary.Failed -gt 0) {
+        $problems += "$($summary.Failed) of $($summary.Total) tests failed"
+    }
+
+    if ($problems.Count -gt 0) {
+        foreach ($problem in $problems) {
+            Write-Fail "${current}: $problem"
+        }
+        foreach ($case in $summary.FailedCases) {
+            Write-Fail "  failed case: $case"
         }
         $failedPlatforms += $current
         continue
     }
 
-    if ($code -ne 0) {
-        Write-Fail "${current}: Unity exited with $code although the result file reports no failures"
-        $failedPlatforms += $current
-        continue
-    }
-
-    Write-Ok "$current`: total=$total passed=$passed failed=$failed skipped=$skipped"
+    Write-Ok "${current}: total=$($summary.Total) passed=$($summary.Passed) failed=$($summary.Failed) skipped=$($summary.Skipped) executed=$($summary.Executed)"
 }
 
 if ($blocked) { exit 2 }

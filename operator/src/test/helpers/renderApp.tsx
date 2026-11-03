@@ -1,4 +1,4 @@
-import { render, type RenderResult } from '@testing-library/react';
+import { act, render, type RenderResult } from '@testing-library/react';
 import { App } from '@/app/App';
 import type { AuthAdapter } from '@/features/authentication/auth';
 import type { DemoData } from '@/api/demo';
@@ -15,9 +15,15 @@ export interface RenderAppOptions {
   readonly theme?: Theme;
 }
 
-/** Renders the whole app with a MemoryRouter and deterministic dependencies. */
-export function renderApp(options: RenderAppOptions = {}): RenderResult {
-  return render(
+/**
+ * Renders the whole app with a MemoryRouter and deterministic dependencies.
+ *
+ * The provider effects (health probe, session lookup) resolve asynchronously;
+ * they are flushed inside act() before the result is returned so a test never
+ * observes React state updates outside act.
+ */
+export async function renderApp(options: RenderAppOptions = {}): Promise<RenderResult> {
+  const result = render(
     <App
       router="memory"
       initialEntries={[options.route ?? '/']}
@@ -30,4 +36,11 @@ export function renderApp(options: RenderAppOptions = {}): RenderResult {
       apiBaseUrl=""
     />,
   );
+
+  await act(async () => {
+    await Promise.resolve();
+    await Promise.resolve();
+  });
+
+  return result;
 }

@@ -31,6 +31,20 @@ function asFiniteNumber(value: unknown, what: string): number {
   return value;
 }
 
+function asSafeInteger(value: unknown, what: string): number {
+  const numeric = asFiniteNumber(value, what);
+  if (!Number.isInteger(numeric)) {
+    throw ApiError.protocol(`${what} must be an integer`);
+  }
+  if (numeric < 0) {
+    throw ApiError.protocol(`${what} must not be negative`);
+  }
+  if (numeric > Number.MAX_SAFE_INTEGER) {
+    throw ApiError.protocol(`${what} must be a safe integer`);
+  }
+  return numeric;
+}
+
 function asBoolean(value: unknown, what: string): boolean {
   if (typeof value !== 'boolean') {
     throw ApiError.protocol(`${what} must be a boolean`);
@@ -55,7 +69,7 @@ export function parseReadyResponse(json: unknown): ReadyResponse {
   }
   return {
     status: 'ready',
-    writer_epoch: asFiniteNumber(body['writer_epoch'], 'readiness.writer_epoch'),
+    writer_epoch: asSafeInteger(body['writer_epoch'], 'readiness.writer_epoch'),
   };
 }
 
@@ -83,4 +97,4 @@ export function parseErrorEnvelope(json: unknown): ApiErrorEnvelope | null {
   };
 }
 
-export { asBoolean, asFiniteNumber, asRecord, asString };
+export { asBoolean, asFiniteNumber, asRecord, asSafeInteger, asString };

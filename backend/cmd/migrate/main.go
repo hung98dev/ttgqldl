@@ -13,6 +13,8 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/pressly/goose/v3"
@@ -126,7 +128,17 @@ func run() error {
 			return err
 		}
 		if *out != "" {
-			if err := os.WriteFile(*out, data, 0o644); err != nil {
+			// The path comes from the operator running this local CLI (tooling/
+			// schema-dump passes an absolute path inside the repository). Traversal
+			// sequences are rejected so a mistyped flag cannot escape the working
+			// tree.
+			cleaned := filepath.Clean(*out)
+			if cleaned == ".." || strings.HasPrefix(cleaned, ".."+string(os.PathSeparator)) {
+				return fmt.Errorf("refusing output path %q: it escapes the working tree", *out)
+			}
+			// #nosec G703 G306 -- operator-supplied local CLI path, not untrusted input; the
+			// fingerprint is a committed public artifact that must be world-readable.
+			if err := os.WriteFile(cleaned, data, 0o644); err != nil {
 				return fmt.Errorf("write fingerprint: %w", err)
 			}
 			fmt.Fprintf(os.Stderr, "migrate: wrote schema fingerprint to %s (%d tables)\n", *out, len(fp.Tables))

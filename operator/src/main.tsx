@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from '@/app/App';
+import { resolveDemoMode } from '@/app/demoMode';
 import { createHttpClient } from '@/api/http';
 import { createHealthApi } from '@/api/health';
 import { demoData } from '@/api/demo';
@@ -13,7 +14,8 @@ import '@/styles/global.css';
  * documented as development-only. A production bundle defaults to real services
  * with no fabricated data.
  */
-const demo = import.meta.env['VITE_OPERATOR_DEMO'] === 'true';
+// resolveDemoMode is false in any production bundle, even if the flag leaked.
+const demo = resolveDemoMode(import.meta.env);
 const baseUrl = import.meta.env['VITE_OPERATOR_API_BASE_URL'] ?? '';
 const healthPollMs = Number.parseInt(import.meta.env['VITE_OPERATOR_HEALTH_POLL_MS'] ?? '30000', 10);
 

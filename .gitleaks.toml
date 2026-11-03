@@ -1,0 +1,28 @@
+# Secret scanning configuration.
+#
+# gitleaks scans the repository; generated build output is not repository
+# content, so those paths are excluded. Real secrets must never be added to the
+# allowlist: only documented placeholders belong here.
+title = "TTGQLDL secret scanning"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Generated or vendored directories that are never committed"
+paths = [
+  '''node_modules/''',
+  '''operator/dist/''',
+  '''operator/coverage/''',
+  '''unity/Library/''',
+  '''unity/Build/''',
+  '''unity/Builds/''',
+  '''unity/Logs/''',
+  '''unity/Temp/''',
+  '''unity/TestResults/''',
+  '''unity/UserSettings/''',
+  '''security-reports/''',
+  '''\.git/''',
+  '''\.env''',
+  '''\.env\.local''',
+]

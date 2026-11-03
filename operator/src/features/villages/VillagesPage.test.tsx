@@ -6,7 +6,7 @@ import { emptyDemoData } from '@/test/fixtures/health';
 
 describe('villages', () => {
   it('shows the unavailable state and a disabled form in production', async () => {
-    renderApp({ route: '/villages', demo: false });
+    await renderApp({ route: '/villages', demo: false });
 
     expect((await screen.findAllByText(/admin\/v1\/villages/)).length).toBeGreaterThan(0);
     expect(screen.getByLabelText(/Tên làng/)).toBeDisabled();
@@ -15,7 +15,7 @@ describe('villages', () => {
   });
 
   it('lists fixture villages in demo mode', async () => {
-    renderApp({ route: '/villages', demo: true });
+    await renderApp({ route: '/villages', demo: true });
 
     expect(await screen.findByText('Làng Ven Sông')).toBeInTheDocument();
     expect(screen.getByText('Làng Đồi Gió')).toBeInTheDocument();
@@ -23,28 +23,36 @@ describe('villages', () => {
   });
 
   it('shows an empty state when the fixture has no villages', async () => {
-    renderApp({ route: '/villages', demo: true, demoFixtures: emptyDemoData() });
+    await renderApp({ route: '/villages', demo: true, demoFixtures: emptyDemoData() });
 
     expect(await screen.findByText('Chưa có làng nào')).toBeInTheDocument();
   });
 
-  it('validates the create-village form before touching any state', async () => {
+  it('validates the documented display_name constraint before touching any state', async () => {
     const user = userEvent.setup();
-    renderApp({ route: '/villages', demo: true });
+    await renderApp({ route: '/villages', demo: true });
 
     await user.click(screen.getByRole('button', { name: 'Tạo làng' }));
     expect(await screen.findByText('Tên làng là bắt buộc.')).toBeInTheDocument();
 
-    await user.type(screen.getByLabelText(/Tên làng/), 'Làng Mới');
-    await user.clear(screen.getByLabelText('Máu tường tối đa'));
-    await user.type(screen.getByLabelText('Máu tường tối đa'), '50');
+    await user.type(screen.getByLabelText(/Tên làng/), 'x'.repeat(65));
     await user.click(screen.getByRole('button', { name: 'Tạo làng' }));
-    expect(await screen.findByText('Máu tường phải từ 100 đến 100000.')).toBeInTheDocument();
+    expect(await screen.findByText('Tên làng tối đa 64 ký tự.')).toBeInTheDocument();
+  });
+
+  it('offers only mock and replay, and disables authorized_live', async () => {
+    await renderApp({ route: '/villages', demo: true });
+
+    const select = await screen.findByLabelText('Nguồn dữ liệu');
+    const options = Array.from(select.querySelectorAll('option'));
+    expect(options.map((option) => option.value)).toEqual(['mock', 'replay', 'authorized_live']);
+    const live = options.find((option) => option.value === 'authorized_live');
+    expect(live).toBeDisabled();
   });
 
   it('adds a clearly simulated row in demo mode', async () => {
     const user = userEvent.setup();
-    renderApp({ route: '/villages', demo: true });
+    await renderApp({ route: '/villages', demo: true });
 
     await user.type(await screen.findByLabelText(/Tên làng/), 'Làng Mới');
     await user.click(screen.getByRole('button', { name: 'Tạo làng' }));

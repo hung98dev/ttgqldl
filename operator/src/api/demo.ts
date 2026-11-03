@@ -18,7 +18,7 @@ export interface DemoData {
 const VILLAGES: readonly VillageSummary[] = [
   {
     id: 'demo-village-01',
-    name: 'Làng Ven Sông',
+    display_name: 'Làng Ven Sông',
     lifecycle: 'running',
     source_status: 'mock',
     wave_no: 3,
@@ -26,7 +26,7 @@ const VILLAGES: readonly VillageSummary[] = [
   },
   {
     id: 'demo-village-02',
-    name: 'Làng Đồi Gió',
+    display_name: 'Làng Đồi Gió',
     lifecycle: 'paused',
     source_status: 'mock',
     wave_no: 5,

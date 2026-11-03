@@ -2,11 +2,20 @@
 # Runs the real Unity EditMode and/or PlayMode test suites and reports from the
 # produced NUnit XML.
 #
+# Acceptance rules (identical to tooling/unity-test.ps1):
+#   - the result file must exist and contain a <test-run> element
+#   - total, passed, failed, skipped and inconclusive must be present, integers
+#     and non-negative
+#   - total must equal passed+failed+skipped+inconclusive
+#   - at least one test must have actually executed (not skipped/inconclusive)
+#   - zero failures, and Unity must exit 0
+#   - a stale result file cannot be reused: it is deleted before the run
+#
 # Exit codes:
 #   0  every requested platform passed
-#   1  at least one test failed (or Unity reported a non-zero exit code)
+#   1  at least one test failed, or the result was empty/inconsistent/missing
 #   2  BLOCKED: editor missing, wrong version, or no usable licence
-#   3  harness error: Unity exited without producing a result file
+#   3  harness error
 #
 # Usage:
 #   ./tooling/unity-test.sh              # both platforms
@@ -30,7 +39,6 @@ resolve_editor() {
         fi
         log_warn "TTG_UNITY_EDITOR points to a missing or non-executable path: ${TTG_UNITY_EDITOR}"
     fi
-    # Linux/macOS installs used by CI images.
     local candidates=(
         "/opt/unity/editors/${REQUIRED_UNITY_VERSION}/Editor/Unity"
         "/opt/unity/Editor/Unity"
@@ -79,12 +87,18 @@ case "${PLATFORM}" in
         ;;
 esac
 
+counter_of() {
+    local xml="$1" name="$2"
+    grep -o "${name}=\"[0-9]*\"" "${xml}" | head -n 1 | grep -o '[0-9]*' || true
+}
+
 FAILED=()
 BLOCKED=0
 
 for current in "${PLATFORMS[@]}"; do
     xml="${RESULTS}/$(printf '%s' "${current}" | tr '[:upper:]' '[:lower:]').xml"
     logfile="${RESULTS}/$(printf '%s' "${current}" | tr '[:upper:]' '[:lower:]').log"
+    # Removing the previous result makes a stale file impossible.
     rm -f "${xml}" "${logfile}"
 
     log_step "running ${current} tests"
@@ -105,28 +119,45 @@ for current in "${PLATFORMS[@]}"; do
         continue
     fi
 
-    total="$(grep -o 'total="[0-9]*"' "${xml}" | head -n 1 | grep -o '[0-9]*' || echo 0)"
-    passed="$(grep -o 'passed="[0-9]*"' "${xml}" | head -n 1 | grep -o '[0-9]*' || echo 0)"
-    failed="$(grep -o 'failed="[0-9]*"' "${xml}" | head -n 1 | grep -o '[0-9]*' || echo 0)"
-    skipped="$(grep -o 'skipped="[0-9]*"' "${xml}" | head -n 1 | grep -o '[0-9]*' || echo 0)"
-    inconclusive="$(grep -o 'inconclusive="[0-9]*"' "${xml}" | head -n 1 | grep -o '[0-9]*' || echo 0)"
+    if ! grep -q '<test-run' "${xml}"; then
+        log_fail "${current}: the result file has no <test-run> element; refusing to report a result"
+        FAILED+=("${current}")
+        continue
+    fi
+
+    total="$(counter_of "${xml}" total)"
+    passed="$(counter_of "${xml}" passed)"
+    failed_count="$(counter_of "${xml}" failed)"
+    skipped="$(counter_of "${xml}" skipped)"
+    inconclusive="$(counter_of "${xml}" inconclusive)"
+
+    if [[ -z "${total}" || -z "${passed}" || -z "${failed_count}" || -z "${skipped}" || -z "${inconclusive}" ]]; then
+        log_fail "${current}: missing or non-integer NUnit counters; refusing to report a result"
+        FAILED+=("${current}")
+        continue
+    fi
+
     executed=$((total - skipped - inconclusive))
-
-    # An empty or fully skipped result proves nothing about the editor.
+    counted=$((passed + failed_count + skipped + inconclusive))
+    problem=""
     if [[ "${total}" -eq 0 ]]; then
-        log_fail "${current}: no tests were discovered or executed"
-        FAILED+=("${current}")
-        continue
+        problem="no tests were discovered or executed"
+    elif [[ "${total}" -ne "${counted}" ]]; then
+        problem="inconsistent counters: total=${total} but passed+failed+skipped+inconclusive=${counted}"
+    elif [[ "${executed}" -le 0 ]]; then
+        problem="no test was actually executed (${skipped} skipped, ${inconclusive} inconclusive of ${total})"
+    elif [[ "${passed}" -eq 0 && "${failed_count}" -eq 0 ]]; then
+        problem="no passing or failing test reported (total=${total})"
     fi
-    if [[ "${executed}" -le 0 ]]; then
-        log_fail "${current}: every test was skipped (${skipped} of ${total})"
+
+    if [[ -n "${problem}" ]]; then
+        log_fail "${current}: ${problem}"
         FAILED+=("${current}")
         continue
     fi
 
-    if [[ "${failed}" -gt 0 ]]; then
-        log_fail "${current}: ${failed} of ${total} failed"
-        grep -o 'name="[^"]*" [^>]*result="Failed"' "${xml}" || true
+    if [[ "${failed_count}" -gt 0 ]]; then
+        log_fail "${current}: ${failed_count} of ${total} failed"
         FAILED+=("${current}")
         continue
     fi
@@ -137,7 +168,7 @@ for current in "${PLATFORMS[@]}"; do
         continue
     fi
 
-    log_ok "${current}: total=${total} passed=${passed} failed=${failed} skipped=${skipped}"
+    log_ok "${current}: total=${total} passed=${passed} failed=${failed_count} skipped=${skipped} executed=${executed}"
 done
 
 if [[ "${BLOCKED}" -eq 1 ]]; then

@@ -53,3 +53,6 @@ Thumbs.db
 /unity/.vs/
 /unity/.idea/
 /unity/*.unitypackage
+
+# Security scanner output (CI uploads these as artifacts)
+/security-reports/

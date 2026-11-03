@@ -12,7 +12,7 @@ function main(): HTMLElement {
 
 describe('dashboard', () => {
   it('shows backend and PostgreSQL readiness from the real endpoints', async () => {
-    renderApp();
+    await renderApp();
 
     expect(await screen.findByText('Backend phản hồi')).toBeInTheDocument();
     expect(within(main()).getByText('PostgreSQL sẵn sàng')).toBeInTheDocument();
@@ -29,7 +29,7 @@ describe('dashboard', () => {
       },
     };
 
-    renderApp({ health });
+    await renderApp({ health });
 
     expect((await screen.findAllByText('PostgreSQL chưa sẵn sàng')).length).toBeGreaterThan(0);
     expect(within(main()).getByText(/readiness failed: postgres/)).toBeInTheDocument();
@@ -51,7 +51,7 @@ describe('dashboard', () => {
       },
     };
 
-    renderApp({ health });
+    await renderApp({ health });
 
     const alert = await screen.findByRole('alert');
     expect(alert).toHaveTextContent('Không kết nối được tới backend');
@@ -61,7 +61,7 @@ describe('dashboard', () => {
   });
 
   it('reports only the two implemented capabilities as available', async () => {
-    renderApp();
+    await renderApp();
 
     const table = await screen.findByRole('table', { name: 'Năng lực hiện có' });
     const rows = within(table).getAllByRole('row').slice(1);
@@ -73,7 +73,7 @@ describe('dashboard', () => {
   });
 
   it('never fabricates a session in production mode', async () => {
-    renderApp({ demo: false });
+    await renderApp({ demo: false });
 
     expect(await screen.findByText('Phiên chơi thực tế')).toBeInTheDocument();
     expect(
@@ -83,12 +83,12 @@ describe('dashboard', () => {
   });
 
   it('lists the LIVE approvals gate', async () => {
-    renderApp();
+    await renderApp();
     expect(await screen.findByText(/GATE-LIVE đang bị chặn/)).toBeInTheDocument();
   });
 
   it('keeps the timeout failure distinguishable from a network failure', async () => {
-    renderApp({ health: failingHealthApi(new ApiError({ kind: 'timeout', message: 'took too long' })) });
+    await renderApp({ health: failingHealthApi(new ApiError({ kind: 'timeout', message: 'took too long' })) });
 
     const alert = await screen.findByRole('alert');
     expect(alert).toHaveTextContent('Backend không phản hồi trong thời gian cho phép');

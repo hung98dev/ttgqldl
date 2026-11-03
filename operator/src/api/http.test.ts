@@ -130,3 +130,82 @@ describe('http client', () => {
     expect((failure as ApiError).kind).toBe('aborted');
   });
 });
+
+describe('http client hardening', () => {
+  it('refuses a cross-origin API base that would leak cookies', () => {
+    expect(() =>
+      createHttpClient({ baseUrl: 'https://evil.example.com', origin: 'http://localhost:5173' }),
+    ).toThrow(/refusing cross-origin API base/);
+  });
+
+  it('allows an explicit cross-origin base but never sends cookies there', async () => {
+    const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue(fakeResponse({ body: { status: 'alive' } }));
+    const client = createHttpClient({
+      baseUrl: 'https://api.example.com',
+      origin: 'http://localhost:5173',
+      allowCrossOrigin: true,
+      fetchImpl,
+    });
+
+    await client.getJson('/healthz', parseHealthResponse);
+    const [, init] = fetchImpl.mock.calls[0] ?? [];
+    expect(init?.credentials).toBe('same-origin');
+  });
+
+  it('sends cookies for a same-origin absolute base', async () => {
+    const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue(fakeResponse({ body: { status: 'alive' } }));
+    const client = createHttpClient({
+      baseUrl: 'https://console.example.com',
+      origin: 'https://console.example.com',
+      fetchImpl,
+    });
+
+    await client.getJson('/healthz', parseHealthResponse);
+    const [, init] = fetchImpl.mock.calls[0] ?? [];
+    expect(init?.credentials).toBe('include');
+  });
+
+  it('times out when the response body never finishes parsing', async () => {
+    const hangingBody = {
+      ok: true,
+      status: 200,
+      json: () => new Promise<unknown>(() => undefined),
+    } as unknown as Response;
+    const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue(hangingBody);
+    const client = createHttpClient({ fetchImpl, timeoutMs: 10 });
+
+    const failure = await client.getJson('/healthz', parseHealthResponse).catch((error: unknown) => error);
+    expect((failure as ApiError).kind).toBe('timeout');
+  });
+
+  it('stops retrying when the caller cancels during backoff', async () => {
+    const fetchImpl = vi.fn<typeof fetch>().mockRejectedValue(new TypeError('connection refused'));
+    const client = createHttpClient({ fetchImpl, retryDelayMs: 5_000 });
+    const controller = new AbortController();
+    const pending = client.getJson('/healthz', parseHealthResponse, {
+      signal: controller.signal,
+      retries: 3,
+    });
+
+    setTimeout(() => {
+      controller.abort();
+    }, 20);
+
+    const failure = await pending.catch((error: unknown) => error);
+    expect((failure as ApiError).kind).toBe('aborted');
+    expect(fetchImpl).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not start a retry after the caller has already cancelled', async () => {
+    const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue(fakeResponse({ body: { status: 'alive' } }));
+    const client = createHttpClient({ fetchImpl });
+    const controller = new AbortController();
+    controller.abort();
+
+    const failure = await client
+      .getJson('/healthz', parseHealthResponse, { signal: controller.signal, retries: 2 })
+      .catch((error: unknown) => error);
+    expect((failure as ApiError).kind).toBe('aborted');
+    expect(fetchImpl).not.toHaveBeenCalled();
+  });
+});

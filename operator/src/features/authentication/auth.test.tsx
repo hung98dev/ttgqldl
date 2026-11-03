@@ -6,21 +6,21 @@ import { ROLE_PERMISSIONS, hasPermission, unavailableAuthAdapter } from '@/featu
 import { fixedAuth } from '@/test/fixtures/health';
 
 describe('role capabilities', () => {
-  it('gives a viewer read-only permissions', () => {
+  it('gives a viewer read-only permissions', async () => {
     expect(ROLE_PERMISSIONS.viewer).toContain('dashboard.view');
     expect(ROLE_PERMISSIONS.viewer).not.toContain('sessions.control');
     expect(ROLE_PERMISSIONS.viewer).not.toContain('villages.create');
     expect(ROLE_PERMISSIONS.viewer).not.toContain('privacy.erase');
   });
 
-  it('gives an operator control but not administration', () => {
+  it('gives an operator control but not administration', async () => {
     expect(ROLE_PERMISSIONS.operator).toContain('sessions.control');
     expect(ROLE_PERMISSIONS.operator).toContain('moderation.mutate');
     expect(ROLE_PERMISSIONS.operator).not.toContain('villages.create');
     expect(ROLE_PERMISSIONS.operator).not.toContain('settings.manage');
   });
 
-  it('gives an admin every permission', () => {
+  it('gives an admin every permission', async () => {
     expect(ROLE_PERMISSIONS.admin).toEqual(
       expect.arrayContaining([
         'villages.create',
@@ -32,7 +32,7 @@ describe('role capabilities', () => {
     );
   });
 
-  it('denies every permission when no session exists', () => {
+  it('denies every permission when no session exists', async () => {
     const session = { kind: 'unavailable', reason: 'M05' } as const;
     expect(hasPermission(session, 'dashboard.view')).toBe(false);
     expect(hasPermission(session, 'sessions.control')).toBe(false);
@@ -53,7 +53,7 @@ describe('authentication boundary', () => {
 
   it('shows the login form, rejects the attempt and stores no secret', async () => {
     const user = userEvent.setup();
-    renderApp({ route: '/login' });
+    await renderApp({ route: '/login' });
 
     await user.type(await screen.findByLabelText('Tài khoản'), 'operator@example');
     await user.type(screen.getByLabelText('Mật khẩu'), 'super-secret');
@@ -69,12 +69,12 @@ describe('authentication boundary', () => {
   });
 
   it('shows the access-denied presentation', async () => {
-    renderApp({ route: '/access-denied' });
+    await renderApp({ route: '/access-denied' });
     expect(await screen.findByText('Không đủ quyền')).toBeInTheDocument();
   });
 
   it('reflects an authenticated role in the settings summary', async () => {
-    renderApp({ route: '/settings', auth: fixedAuth('admin') });
+    await renderApp({ route: '/settings', auth: fixedAuth('admin') });
     expect(await screen.findByText(/Quản trị/)).toBeInTheDocument();
   });
 });

@@ -230,6 +230,52 @@ jobs:
             echo "VITE_OPERATOR_DEMO must not be enabled in CI" >&2
             exit 1
           fi
+  security:
+    name: security (scanners, SBOM, supply chain)
+    runs-on: ubuntu-24.04
+    env:
+      GOTOOLCHAIN: auto
+    steps:
+      - name: Checkout
+        # v7.0.1 - verified tag SHA
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Go
+        # v7.0.0 - verified tag SHA (node24 runtime)
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache: false
+
+      - name: Set up Node
+        # v6 - verified tag SHA (node24 runtime)
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: "24.21.0"
+
+      # Every scanner is pinned to an exact module version. A scanner that is
+      # missing makes tooling/security-scan.sh exit 2 (BLOCKED), never green.
+      - name: install pinned scanners
+        run: |
+          set -euo pipefail
+          go install golang.org/x/vuln/cmd/govulncheck@v1.9.0
+          go install github.com/securego/gosec/v2/cmd/gosec@v2.30.0
+          go install github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
+          go install github.com/zricethezav/gitleaks/v8@v8.30.1
+          echo "$(go env GOPATH)/bin" >> "${GITHUB_PATH}"
+
+      - name: security gates
+        run: ./tooling/security-scan.sh
+
+      - name: upload scanner reports
+        if: always()
+        # v5 - verified tag SHA
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        with:
+          name: security-reports
+          path: security-reports/
+          if-no-files-found: warn
+          retention-days: 14
   unity:
     name: unity project (static, no editor)
     runs-on: ubuntu-24.04
@@ -294,6 +340,9 @@ jobs:
 
       - name: unity result evaluation tests
         run: pwsh -NoProfile -File ./unity-results.test.ps1
+
+      - name: unity wrapper regression tests
+        run: pwsh -NoProfile -File ./unity-test.wrapper.test.ps1
 
       - name: shell script syntax
         working-directory: .

@@ -6,14 +6,14 @@ import { fixedAuth } from '@/test/fixtures/health';
 
 describe('sessions', () => {
   it('shows the unavailable state and disabled controls in production', async () => {
-    renderApp({ route: '/sessions', demo: false });
+    await renderApp({ route: '/sessions', demo: false });
 
     expect(await screen.findByText(/Session listing depends on M05/)).toBeInTheDocument();
     expect(screen.getByText(/Điều khiển phiên cần API M05/)).toBeInTheDocument();
   });
 
   it('disables controls when no operator role is authenticated', async () => {
-    renderApp({ route: '/sessions', demo: true });
+    await renderApp({ route: '/sessions', demo: true });
 
     const stop = await screen.findByRole('button', { name: /Dừng hẳn demo-session-01/ });
     expect(stop).toBeDisabled();
@@ -21,7 +21,7 @@ describe('sessions', () => {
 
   it('allows an operator to pause and resume a demo session', async () => {
     const user = userEvent.setup();
-    renderApp({ route: '/sessions', demo: true, auth: fixedAuth('operator') });
+    await renderApp({ route: '/sessions', demo: true, auth: fixedAuth('operator') });
 
     const pause = await screen.findByRole('button', { name: /Tạm dừng demo-session-01/ });
     expect(pause).toBeEnabled();
@@ -36,7 +36,7 @@ describe('sessions', () => {
 
   it('asks for confirmation before stopping a session and can be cancelled', async () => {
     const user = userEvent.setup();
-    renderApp({ route: '/sessions', demo: true, auth: fixedAuth('operator') });
+    await renderApp({ route: '/sessions', demo: true, auth: fixedAuth('operator') });
 
     await user.click(await screen.findByRole('button', { name: /Dừng hẳn demo-session-01/ }));
     const dialog = await screen.findByRole('dialog', { name: 'Dừng phiên chơi?' });
@@ -49,7 +49,7 @@ describe('sessions', () => {
 
   it('stops the session only after confirmation', async () => {
     const user = userEvent.setup();
-    renderApp({ route: '/sessions', demo: true, auth: fixedAuth('operator') });
+    await renderApp({ route: '/sessions', demo: true, auth: fixedAuth('operator') });
 
     await user.click(await screen.findByRole('button', { name: /Dừng hẳn demo-session-01/ }));
     const dialog = await screen.findByRole('dialog', { name: 'Dừng phiên chơi?' });
@@ -61,7 +61,7 @@ describe('sessions', () => {
 
   it('closes the dialog on Escape', async () => {
     const user = userEvent.setup();
-    renderApp({ route: '/sessions', demo: true, auth: fixedAuth('operator') });
+    await renderApp({ route: '/sessions', demo: true, auth: fixedAuth('operator') });
 
     await user.click(await screen.findByRole('button', { name: /Dừng hẳn demo-session-01/ }));
     expect(await screen.findByRole('dialog')).toBeInTheDocument();
@@ -70,7 +70,7 @@ describe('sessions', () => {
   });
 
   it('shows an empty state when there are no sessions', async () => {
-    renderApp({
+    await renderApp({
       route: '/sessions',
       demo: true,
       auth: fixedAuth('operator'),

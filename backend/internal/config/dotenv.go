@@ -58,6 +58,9 @@ func ParseDotEnv(r io.Reader) (map[string]string, error) {
 // which is a normal condition for stage/prod deployments that inject the
 // environment directly.
 func LoadDotEnvFile(path string) (values map[string]string, existed bool, err error) {
+	// #nosec G304 -- the path is the developer's TTG_ENV_FILE setting for the local
+	// development loader. It is never network-controlled and stage/prod inject the
+	// environment directly instead of reading a file.
 	f, err := os.Open(path)
 	if err != nil {
 		if os.IsNotExist(err) {

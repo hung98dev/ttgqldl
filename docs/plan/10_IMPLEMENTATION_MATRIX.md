@@ -32,7 +32,7 @@ M11 W1101 real OBS/LIVE preview; W1102 human moderation readiness; W1103 >=2h re
 Execution loop: inspect latest main and CI; choose first unblocked NOT_STARTED/FAIL milestone with dependencies PASS; implement code, tests and evidence; do not change combat math without recorded revision; update progress only with proof; commit directly main after checks; confirm CI; fix/revert if failed. Never pretend a missing approval is PASS.
 
 ## Matrix audit rules
-- Current truth: M00 = PASS; M01 = IN_PROGRESS; M02–M09 = NOT_STARTED; M10–M11 = BLOCKED. Design corrections must not mark any game implementation milestone PASS.
+- Current truth: M00 = PASS; M01 = IN_PROGRESS; M02–M09 = NOT_STARTED; M10–M11 = BLOCKED. M01-W0106 security, SBOM, frontend and tooling gates are PASS; real Unity EditMode/PlayMode execution inside CI is BLOCKED on licensed-runner infrastructure, so M01 stays IN_PROGRESS until that gate exists. Design corrections must not mark any game implementation milestone PASS.
 - M00 verification is executable, not prose: `cd tooling && go run ./planvalidate -root ..` must exit 0, `go run ./refeval` must report PASS with a stable golden digest, and every work package must have `docs/evidence/M00-Wxxxx.md` whose evidence block the validator cross-checks. A milestone row cannot be edited to PASS before those artifacts exist and pass.
 - M00 may become PASS only after its own consistency/fixture/traceability/documentation lint has real repeatable evidence, not merely after this review text is published.
 - M02 MUST include all QA-SIM-06..09, QA-BAL-03/04 and reference win/loss vectors, not just one happy-path demo. M04 MUST include QA-DB-06..08; M05 QA-API-03/04; M06 QA-UX-03; M08 QA-OPS-04 and all load/security/visual gates.
