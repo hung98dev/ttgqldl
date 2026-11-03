@@ -1,7 +1,3 @@
 # TTGQLDL — LIVE Village Survival
-
-An interactive TikTok LIVE community-defense game, designed for thousands of concurrent participants. Initial repository bootstrap; detailed game design, architecture, specifications, and delivery plans are developed in a dedicated planning branch and proposed via pull request.
-
-**Status:** Planning. The project does not yet contain runnable game code.
-
-**Platform dependency:** Real-time TikTok LIVE comment ingestion is subject to verified access and platform permissions. A mock/replay adapter must work without TikTok credentials.
+**One plan:** [MASTER_PLAN.md](MASTER_PLAN.md). **AI instructions:** [AGENTS.md](AGENTS.md).
+Branch: main only. Current state: specification; runnable code and performance are not yet verified. P0 is offline/mock-replay; P1 TikTok LIVE remains externally gated. No parallel plan or v2 directory.
