@@ -38,4 +38,18 @@ docker exec "${CONTAINER_ID}" pg_dump -U ttg_owner -d ttgqldl \
 } >"${TARGET}"
 
 log_ok "wrote ${TARGET} ($(wc -c <"${TARGET}" | tr -d ' ') bytes)"
+
+# The fingerprint is the drift contract: every table, column (type, nullability,
+# default, length/precision), constraint and index. CI compares it against a
+# freshly migrated database.
+FINGERPRINT="${REPO_ROOT}/backend/db/schema.fingerprint.json"
+export TTG_ENV_FILE="${ENV_FILE}"
+log_step "writing schema fingerprint"
+code=0
+invoke_go "${REPO_ROOT}/backend" run ./cmd/migrate -direction fingerprint -out "${FINGERPRINT}" || code=$?
+if [[ ${code} -ne 0 ]]; then
+    log_fail "schema fingerprint failed with exit code ${code}"
+    exit "${code}"
+fi
+log_ok "wrote ${FINGERPRINT} ($(wc -c <"${FINGERPRINT}" | tr -d ' ') bytes)"
 log_note "next: cd backend && sqlc generate"

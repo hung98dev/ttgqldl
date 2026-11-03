@@ -12,15 +12,14 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"net/url"
 	"os"
-	"strings"
 	"time"
 
 	"github.com/pressly/goose/v3"
 
 	"github.com/hung98dev/ttgqldl/backend/db/migrations"
 	"github.com/hung98dev/ttgqldl/backend/internal/config"
+	"github.com/hung98dev/ttgqldl/backend/internal/schema"
 	"github.com/hung98dev/ttgqldl/backend/internal/storage"
 )
 
@@ -41,9 +40,10 @@ func main() {
 }
 
 func run() error {
-	direction := flag.String("direction", "up", "up|down|status|version")
+	direction := flag.String("direction", "up", "up|down|status|version|fingerprint")
 	to := flag.Int64("to", -1, "target version for -direction down (0 rolls everything back)")
 	timeout := flag.Duration("timeout", 2*time.Minute, "overall migration timeout")
+	out := flag.String("out", "", "write the -direction fingerprint output to this file instead of stdout")
 	flag.Parse()
 
 	envFile := os.Getenv("TTG_ENV_FILE")
@@ -77,7 +77,7 @@ func run() error {
 		return err
 	}
 
-	db, err := storage.OpenSQL(withSearchPath(dsn, schemaName))
+	db, err := storage.OpenSQL(schema.WithSearchPath(dsn, schemaName))
 	if err != nil {
 		return err
 	}
@@ -116,8 +116,26 @@ func run() error {
 		}
 		fmt.Printf("%d\n", version)
 		return nil
+	case "fingerprint":
+		fp, err := schema.Read(ctx, db)
+		if err != nil {
+			return err
+		}
+		data, err := schema.Marshal(fp)
+		if err != nil {
+			return err
+		}
+		if *out != "" {
+			if err := os.WriteFile(*out, data, 0o644); err != nil {
+				return fmt.Errorf("write fingerprint: %w", err)
+			}
+			fmt.Fprintf(os.Stderr, "migrate: wrote schema fingerprint to %s (%d tables)\n", *out, len(fp.Tables))
+			return nil
+		}
+		_, err = os.Stdout.Write(data)
+		return err
 	default:
-		return fmt.Errorf("unknown direction %q (want up|down|status|version)", *direction)
+		return fmt.Errorf("unknown direction %q (want up|down|status|version|fingerprint)", *direction)
 	}
 
 	version, err := goose.GetDBVersionContext(ctx, db)
@@ -143,23 +161,4 @@ func ensureSchema(ctx context.Context, dsn string) error {
 		return fmt.Errorf("create schema %s (the migration role needs CREATE on the database): %w", schemaName, err)
 	}
 	return nil
-}
-
-// withSearchPath returns dsn with the connection runtime parameter
-// `search_path` pinned to schema, supporting both URL and keyword DSN forms.
-func withSearchPath(dsn, schema string) string {
-	if strings.HasPrefix(dsn, "postgres://") || strings.HasPrefix(dsn, "postgresql://") {
-		parsed, err := url.Parse(dsn)
-		if err != nil {
-			return dsn
-		}
-		query := parsed.Query()
-		query.Set("search_path", schema)
-		parsed.RawQuery = query.Encode()
-		return parsed.String()
-	}
-	if strings.Contains(dsn, "search_path=") {
-		return dsn
-	}
-	return dsn + " search_path=" + schema
 }

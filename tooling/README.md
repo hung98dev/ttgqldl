@@ -38,7 +38,7 @@ Run them from anywhere; each resolves the repository root itself.
 | `./migrate-up.ps1` / `./migrate-up.sh` | `backend/cmd/migrate -direction up` using `TTG_MIGRATION_DATABASE_URL` (schema-owner role). The server's app role cannot run DDL. | 0 ok, migrate exit code |
 | `./migrate-down.ps1` / `./migrate-down.sh` | Rolls back one migration; `-To N` / `--to N` rolls back to version N. `0` (full rollback) asks for an interactive confirmation. | 0 ok, migrate exit code |
 | `./migrate-status.ps1` / `./migrate-status.sh` | Applied and pending migrations plus the current schema version. | 0 ok |
-| `./schema-dump.ps1` / `./schema-dump.sh` | Runs `pg_dump` inside the compose container and rewrites `backend/db/schema.sql` (the sqlc input). | 0 ok |
+| `./schema-dump.ps1` / `./schema-dump.sh` | Runs `pg_dump` inside the compose container and rewrites `backend/db/schema.sql` (the sqlc input), then writes `backend/db/schema.fingerprint.json` (tables, columns, constraints, indexes). Both are byte-reproducible and CI fails on drift. | 0 ok |
 
 Typical loop:
 
@@ -162,3 +162,9 @@ and review the diff in the same commit.
 
 A red run must block the merge to `main`; the validator is intentionally strict
 so that a status claim cannot outrun its evidence.
+
+The backend job starts PostgreSQL 18.6 from the pinned digest with
+`docker/postgres/initdb` mounted, so CI exercises the same least-privilege role
+model as the developer: migrations run as `ttg_owner`, runtime and permission
+tests run as `ttg_app`, and `sqlc diff` plus the schema fingerprint fail the job
+on generated-code or schema drift.

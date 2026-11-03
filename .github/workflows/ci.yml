@@ -1,20 +1,19 @@
 name: ci
 
-# Initial M01 Phase A CI.
+# M01 database and backend CI.
 #
 # Covered here:
-#   - backend module: gofmt, go vet, unit tests, race tests, PostgreSQL 18.6
-#     integration tests, linux build
-#   - M00 baseline tooling: plan validator and independent golden vectors
-#   - shell entry-point syntax checks
+#   - PostgreSQL 18.6 started from the same pinned image and the same
+#     docker/postgres/initdb role bootstrap the developer uses, so the
+#     least-privilege model is exercised for real
+#   - migrations as ttg_owner, runtime tests as ttg_app, DDL denial as ttg_app
+#   - schema fingerprint drift, sqlc generated-code drift, migration
+#     up/down/reapply and the destructive upgrade lifecycle on a disposable DB
+#   - backend gofmt/vet/unit/race/linux build, M00 plan validator and golden
+#     vectors, shell entry-point syntax
 #
-# Explicitly NOT covered yet (do not read this workflow as full M01 coverage):
-#   - the docker/postgres/initdb role bootstrap (CI uses a plain service
-#     container; least-privilege roles are verified locally by M01-W0102)
-#   - SQL migrations / sqlc / goose (W0103)
-#   - Unity EditMode/PlayMode and OBS capture (M06, needs a licensed runner)
-#   - TypeScript operator build (W0105)
-#   - load/soak gates (M08) and the full security/SAST/SBOM stage (W0106)
+# Explicitly NOT covered yet: Unity (M06), the TypeScript operator (W0105),
+# SAST/SBOM/secret/licence scanning and load/soak gates (M08).
 
 on:
   push:
@@ -31,37 +30,75 @@ concurrency:
 
 env:
   GO_VERSION: "1.27.3"
+  TTG_DB_NAME: ttgqldl_ci
+  TTG_DB_PORT: "5432"
+  # Pinned by tag and immutable digest; identical to compose.dev.yaml.
+  POSTGRES_IMAGE: postgres:18.6@sha256:3a4264520e121176619f54ff867d12774bc81e95e7b84db58d63bccdb6144b81
+  SQLC_VERSION: v1.31.1
 
 jobs:
   backend:
-    name: backend (unit, race, postgres integration)
+    name: backend (unit, race, postgres, migrations)
     runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: backend
-    services:
-      postgres:
-        image: postgres:18.6@sha256:3a4264520e121176619f54ff867d12774bc81e95e7b84db58d63bccdb6144b81
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: ttgqldl_test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U postgres -d ttgqldl_test"
-          --health-interval 5s
-          --health-timeout 3s
-          --health-retries 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        # v7.0.1 - verified tag SHA; pinning the immutable commit avoids tag-move supply-chain risk
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Set up Go
-        uses: actions/setup-go@v5
+        # v7.0.0 - verified tag SHA (node24 runtime, no Node 20 deprecation)
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e
         with:
           go-version: ${{ env.GO_VERSION }}
           cache-dependency-path: backend/go.sum
+
+      - name: Generate ephemeral database credentials
+        working-directory: .
+        run: |
+          set -euo pipefail
+          admin="$(openssl rand -hex 16)"
+          owner="$(openssl rand -hex 16)"
+          app="$(openssl rand -hex 16)"
+          # Mask before anything can print them.
+          echo "::add-mask::${admin}"
+          echo "::add-mask::${owner}"
+          echo "::add-mask::${app}"
+          {
+            echo "TTG_DB_ADMIN_PASSWORD=${admin}"
+            echo "TTG_OWNER_PASSWORD=${owner}"
+            echo "TTG_APP_PASSWORD=${app}"
+          } >> "${GITHUB_ENV}"
+
+      - name: Start PostgreSQL 18.6 with the development role bootstrap
+        working-directory: .
+        run: |
+          set -euo pipefail
+          docker run -d --name ttg-pg \
+            -e POSTGRES_DB="${TTG_DB_NAME}" \
+            -e POSTGRES_USER=ttg_bootstrap \
+            -e POSTGRES_PASSWORD="${TTG_DB_ADMIN_PASSWORD}" \
+            -e TTG_OWNER_PASSWORD="${TTG_OWNER_PASSWORD}" \
+            -e TTG_APP_PASSWORD="${TTG_APP_PASSWORD}" \
+            -p "127.0.0.1:${TTG_DB_PORT}:5432" \
+            -v "${PWD}/docker/postgres/initdb:/docker-entrypoint-initdb.d:ro" \
+            --health-cmd "pg_isready -U ttg_bootstrap -d ${TTG_DB_NAME} -h 127.0.0.1" \
+            --health-interval 5s --health-timeout 3s --health-retries 20 --health-start-period 15s \
+            "${POSTGRES_IMAGE}" >/dev/null
+          for _ in $(seq 1 60); do
+            status="$(docker inspect -f '{{.State.Health.Status}}' ttg-pg)"
+            if [ "${status}" = "healthy" ]; then
+              echo "postgres is healthy"
+              docker exec ttg-pg psql -U ttg_bootstrap -d "${TTG_DB_NAME}" -tAc "select version()"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "postgres did not become healthy" >&2
+          docker logs ttg-pg >&2
+          exit 1
 
       - name: gofmt
         run: |
@@ -81,26 +118,51 @@ jobs:
       - name: race tests
         run: go test -race -count=1 ./...
 
-      - name: migrations up
-        env:
-          TTG_MIGRATION_DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/ttgqldl_test?sslmode=disable
-        run: go run ./cmd/migrate -direction up
+      - name: migrations up as ttg_owner
+        run: |
+          set -euo pipefail
+          export TTG_MIGRATION_DATABASE_URL="postgres://ttg_owner:${TTG_OWNER_PASSWORD}@127.0.0.1:${TTG_DB_PORT}/${TTG_DB_NAME}?sslmode=disable"
+          go run ./cmd/migrate -direction up
+          go run ./cmd/migrate -direction status
 
-      - name: schema and postgres 18.6 integration
-        env:
-          TTG_TEST_DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/ttgqldl_test?sslmode=disable
-        run: go test -count=1 -v ./test/integration/...
+      - name: schema, permission and runtime tests as ttg_app
+        run: |
+          set -euo pipefail
+          export TTG_TEST_DATABASE_URL="postgres://ttg_app:${TTG_APP_PASSWORD}@127.0.0.1:${TTG_DB_PORT}/${TTG_DB_NAME}?sslmode=disable"
+          go test -count=1 -v ./test/integration/...
+
+      - name: migration lifecycle on a disposable database
+        run: |
+          set -euo pipefail
+          export TTG_TEST_DATABASE_URL="postgres://ttg_app:${TTG_APP_PASSWORD}@127.0.0.1:${TTG_DB_PORT}/${TTG_DB_NAME}?sslmode=disable"
+          export TTG_MIGRATION_DATABASE_URL="postgres://ttg_owner:${TTG_OWNER_PASSWORD}@127.0.0.1:${TTG_DB_PORT}/${TTG_DB_NAME}?sslmode=disable"
+          export TTG_TEST_DESTRUCTIVE=1
+          go test -count=1 -v -run TestMigrationLifecycleDestructive ./test/integration/...
 
       - name: migrations roll back to zero and re-apply
-        env:
-          TTG_MIGRATION_DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/ttgqldl_test?sslmode=disable
         run: |
+          set -euo pipefail
+          export TTG_MIGRATION_DATABASE_URL="postgres://ttg_owner:${TTG_OWNER_PASSWORD}@127.0.0.1:${TTG_DB_PORT}/${TTG_DB_NAME}?sslmode=disable"
           go run ./cmd/migrate -direction down -to 0
           go run ./cmd/migrate -direction up
           go run ./cmd/migrate -direction status
 
+      - name: sqlc generated-code drift
+        run: |
+          set -euo pipefail
+          go install "github.com/sqlc-dev/sqlc/cmd/sqlc@${SQLC_VERSION}"
+          echo "$(go env GOPATH)/bin" >> "${GITHUB_PATH}"
+          # sqlc diff fails when internal/db does not match the committed schema
+          # and queries; it never rewrites files.
+          "$(go env GOPATH)/bin/sqlc" diff
+
       - name: linux build
         run: go build ./...
+
+      - name: Stop PostgreSQL
+        if: always()
+        working-directory: .
+        run: docker rm -f ttg-pg || true
 
   tooling:
     name: baseline tooling (plan validator, golden vectors)
@@ -110,10 +172,12 @@ jobs:
         working-directory: tooling
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        # v7.0.1 - verified tag SHA; pinning the immutable commit avoids tag-move supply-chain risk
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Set up Go
-        uses: actions/setup-go@v5
+        # v7.0.0 - verified tag SHA (node24 runtime, no Node 20 deprecation)
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e
         with:
           go-version: ${{ env.GO_VERSION }}
           # tooling has no third-party dependencies, so there is no go.sum to cache

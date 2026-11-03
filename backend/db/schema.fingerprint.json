@@ -1,0 +1,2944 @@
+{
+  "version": 1,
+  "schema": "ttg",
+  "tables": [
+    {
+      "name": "actor_identity_aliases",
+      "columns": [
+        {
+          "name": "village_id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "actor_key",
+          "ordinal": 2,
+          "data_type": "character",
+          "udt_name": "bpchar",
+          "nullable": false,
+          "default": null,
+          "max_length": 64
+        },
+        {
+          "name": "key_version",
+          "ordinal": 3,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "player_id",
+          "ordinal": 4,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "ordinal": 5,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        }
+      ]
+    },
+    {
+      "name": "admin_idempotency_keys",
+      "columns": [
+        {
+          "name": "account_id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "route",
+          "ordinal": 2,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "key",
+          "ordinal": 3,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "request_hash",
+          "ordinal": 4,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "response_status",
+          "ordinal": 5,
+          "data_type": "integer",
+          "udt_name": "int4",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0
+        },
+        {
+          "name": "response_json",
+          "ordinal": 6,
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "ordinal": 7,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        },
+        {
+          "name": "expires_at",
+          "ordinal": 8,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": null
+        }
+      ]
+    },
+    {
+      "name": "ballots",
+      "columns": [
+        {
+          "name": "session_id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "wave_no",
+          "ordinal": 2,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "actor_key",
+          "ordinal": 3,
+          "data_type": "character",
+          "udt_name": "bpchar",
+          "nullable": false,
+          "default": null,
+          "max_length": 64
+        },
+        {
+          "name": "option",
+          "ordinal": 4,
+          "data_type": "character",
+          "udt_name": "bpchar",
+          "nullable": false,
+          "default": null,
+          "max_length": 1
+        },
+        {
+          "name": "input_seq",
+          "ordinal": 5,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        }
+      ]
+    },
+    {
+      "name": "broadcaster_source_bindings",
+      "columns": [
+        {
+          "name": "village_id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "provider",
+          "ordinal": 2,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "broadcaster_key",
+          "ordinal": 3,
+          "data_type": "character",
+          "udt_name": "bpchar",
+          "nullable": false,
+          "default": null,
+          "max_length": 64
+        },
+        {
+          "name": "approval_ref",
+          "ordinal": 4,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "permission_expires_at",
+          "ordinal": 5,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": true,
+          "default": null
+        }
+      ]
+    },
+    {
+      "name": "checkpoints",
+      "columns": [
+        {
+          "name": "session_id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "revision",
+          "ordinal": 2,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "wave_no",
+          "ordinal": 3,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "wave_tick",
+          "ordinal": 4,
+          "data_type": "integer",
+          "udt_name": "int4",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0
+        },
+        {
+          "name": "input_seq",
+          "ordinal": 5,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "state_json",
+          "ordinal": 6,
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "state_hash",
+          "ordinal": 7,
+          "data_type": "character",
+          "udt_name": "bpchar",
+          "nullable": false,
+          "default": null,
+          "max_length": 64
+        },
+        {
+          "name": "rules_version",
+          "ordinal": 8,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "ordinal": 9,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        }
+      ]
+    },
+    {
+      "name": "domain_events",
+      "columns": [
+        {
+          "name": "session_id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "revision",
+          "ordinal": 2,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "event_index",
+          "ordinal": 3,
+          "data_type": "integer",
+          "udt_name": "int4",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0
+        },
+        {
+          "name": "event_type",
+          "ordinal": 4,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "payload",
+          "ordinal": 5,
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "ordinal": 6,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        }
+      ]
+    },
+    {
+      "name": "input_events",
+      "columns": [
+        {
+          "name": "session_id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "input_seq",
+          "ordinal": 2,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "accepted_tick",
+          "ordinal": 3,
+          "data_type": "integer",
+          "udt_name": "int4",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0
+        },
+        {
+          "name": "scheduled_tick",
+          "ordinal": 4,
+          "data_type": "integer",
+          "udt_name": "int4",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0
+        },
+        {
+          "name": "applied_at_tick",
+          "ordinal": 5,
+          "data_type": "integer",
+          "udt_name": "int4",
+          "nullable": true,
+          "default": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0
+        },
+        {
+          "name": "wave_no",
+          "ordinal": 6,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "actor_key",
+          "ordinal": 7,
+          "data_type": "character",
+          "udt_name": "bpchar",
+          "nullable": false,
+          "default": null,
+          "max_length": 64
+        },
+        {
+          "name": "kind",
+          "ordinal": 8,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "canonical_payload",
+          "ordinal": 9,
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "rules_version",
+          "ordinal": 10,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "inserted_at",
+          "ordinal": 11,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        }
+      ]
+    },
+    {
+      "name": "input_receipts",
+      "columns": [
+        {
+          "name": "session_id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "provider_source",
+          "ordinal": 2,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "provider_event_id",
+          "ordinal": 3,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "inserted_at",
+          "ordinal": 4,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        }
+      ]
+    },
+    {
+      "name": "operator_accounts",
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "username",
+          "ordinal": 2,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "password_hash",
+          "ordinal": 3,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "role",
+          "ordinal": 4,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "disabled_at",
+          "ordinal": 5,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "ordinal": 6,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        }
+      ]
+    },
+    {
+      "name": "operator_audit",
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "actor_id",
+          "ordinal": 2,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "action",
+          "ordinal": 3,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "target",
+          "ordinal": 4,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "reason",
+          "ordinal": 5,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "ip_hash",
+          "ordinal": 6,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "ordinal": 7,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        }
+      ]
+    },
+    {
+      "name": "operator_sessions",
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "account_id",
+          "ordinal": 2,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "secret_hash",
+          "ordinal": 3,
+          "data_type": "character",
+          "udt_name": "bpchar",
+          "nullable": false,
+          "default": null,
+          "max_length": 64
+        },
+        {
+          "name": "expires_at",
+          "ordinal": 4,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "revoked_at",
+          "ordinal": 5,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "ordinal": 6,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        }
+      ]
+    },
+    {
+      "name": "players",
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "village_id",
+          "ordinal": 2,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "actor_key",
+          "ordinal": 3,
+          "data_type": "character",
+          "udt_name": "bpchar",
+          "nullable": false,
+          "default": null,
+          "max_length": 64
+        },
+        {
+          "name": "ephemeral",
+          "ordinal": 4,
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "alias",
+          "ordinal": 5,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "hide_alias",
+          "ordinal": 6,
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "nullable": false,
+          "default": "false"
+        },
+        {
+          "name": "lifetime_xp",
+          "ordinal": 7,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": "0",
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "created_at",
+          "ordinal": 8,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        },
+        {
+          "name": "last_seen_at",
+          "ordinal": 9,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": true,
+          "default": null
+        }
+      ]
+    },
+    {
+      "name": "privacy_erase_requests",
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "session_id",
+          "ordinal": 2,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "actor_ref_protected",
+          "ordinal": 3,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "reason",
+          "ordinal": 4,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "status",
+          "ordinal": 5,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "requested_at",
+          "ordinal": 6,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        },
+        {
+          "name": "applied_at",
+          "ordinal": 7,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "privacy_epoch",
+          "ordinal": 8,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "requested_by",
+          "ordinal": 9,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": true,
+          "default": null
+        }
+      ]
+    },
+    {
+      "name": "privacy_ledger_outbox",
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "seq",
+          "ordinal": 2,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "tombstone_id",
+          "ordinal": 3,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "payload",
+          "ordinal": 4,
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "ordinal": 5,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        },
+        {
+          "name": "exported_at",
+          "ordinal": 6,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "ledger_ack_ref",
+          "ordinal": 7,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "attempts",
+          "ordinal": 8,
+          "data_type": "integer",
+          "udt_name": "int4",
+          "nullable": false,
+          "default": "0",
+          "numeric_precision": 32,
+          "numeric_scale": 0
+        },
+        {
+          "name": "last_error",
+          "ordinal": 9,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": true,
+          "default": null
+        }
+      ]
+    },
+    {
+      "name": "privacy_tombstones",
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "actor_ref_protected",
+          "ordinal": 2,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "scope",
+          "ordinal": 3,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "ordinal": 4,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        },
+        {
+          "name": "restore_applied_at",
+          "ordinal": 5,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": true,
+          "default": null
+        }
+      ]
+    },
+    {
+      "name": "session_player_progress",
+      "columns": [
+        {
+          "name": "session_id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "actor_key",
+          "ordinal": 2,
+          "data_type": "character",
+          "udt_name": "bpchar",
+          "nullable": false,
+          "default": null,
+          "max_length": 64
+        },
+        {
+          "name": "session_xp",
+          "ordinal": 3,
+          "data_type": "smallint",
+          "udt_name": "int2",
+          "nullable": false,
+          "default": "0",
+          "numeric_precision": 16,
+          "numeric_scale": 0
+        }
+      ]
+    },
+    {
+      "name": "sessions",
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "village_id",
+          "ordinal": 2,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "mode",
+          "ordinal": 3,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "lifecycle",
+          "ordinal": 4,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "wave_no",
+          "ordinal": 5,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": "1",
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "wave_tick",
+          "ordinal": 6,
+          "data_type": "integer",
+          "udt_name": "int4",
+          "nullable": false,
+          "default": "'-1'::integer",
+          "numeric_precision": 32,
+          "numeric_scale": 0
+        },
+        {
+          "name": "privacy_epoch",
+          "ordinal": 7,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": "0",
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "rules_version",
+          "ordinal": 8,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "writer_epoch",
+          "ordinal": 9,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": "0",
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "input_sequence",
+          "ordinal": 10,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": "0",
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "stream_sequence",
+          "ordinal": 11,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": "0",
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "last_reduced_tick",
+          "ordinal": 12,
+          "data_type": "integer",
+          "udt_name": "int4",
+          "nullable": false,
+          "default": "'-1'::integer",
+          "numeric_precision": 32,
+          "numeric_scale": 0
+        },
+        {
+          "name": "last_state_hash",
+          "ordinal": 13,
+          "data_type": "character",
+          "udt_name": "bpchar",
+          "nullable": true,
+          "default": null,
+          "max_length": 64
+        },
+        {
+          "name": "runtime_state",
+          "ordinal": 14,
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "pause_reasons",
+          "ordinal": 15,
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "nullable": false,
+          "default": "'[]'::jsonb"
+        },
+        {
+          "name": "started_at",
+          "ordinal": 16,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "stopped_at",
+          "ordinal": 17,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "last_heartbeat_at",
+          "ordinal": 18,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": true,
+          "default": null
+        }
+      ]
+    },
+    {
+      "name": "stream_outbox",
+      "columns": [
+        {
+          "name": "session_id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "stream_seq",
+          "ordinal": 2,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "revision",
+          "ordinal": 3,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "type",
+          "ordinal": 4,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "payload",
+          "ordinal": 5,
+          "data_type": "jsonb",
+          "udt_name": "jsonb",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "checkpoint_ref",
+          "ordinal": 6,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": true,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "created_at",
+          "ordinal": 7,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        }
+      ]
+    },
+    {
+      "name": "villages",
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "broadcaster_key",
+          "ordinal": 2,
+          "data_type": "character",
+          "udt_name": "bpchar",
+          "nullable": false,
+          "default": null,
+          "max_length": 64
+        },
+        {
+          "name": "level",
+          "ordinal": 3,
+          "data_type": "smallint",
+          "udt_name": "int2",
+          "nullable": false,
+          "default": "1",
+          "numeric_precision": 16,
+          "numeric_scale": 0
+        },
+        {
+          "name": "wall_tier",
+          "ordinal": 4,
+          "data_type": "smallint",
+          "udt_name": "int2",
+          "nullable": false,
+          "default": "1",
+          "numeric_precision": 16,
+          "numeric_scale": 0
+        },
+        {
+          "name": "wall_hp",
+          "ordinal": 5,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": "1000",
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "townhall_hp",
+          "ordinal": 6,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": "500",
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "wood",
+          "ordinal": 7,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": "400",
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "stone",
+          "ordinal": 8,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": "250",
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "food",
+          "ordinal": 9,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": "300",
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "construction_work",
+          "ordinal": 10,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": "0",
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "total_wins",
+          "ordinal": 11,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": "0",
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "consecutive_wins",
+          "ordinal": 12,
+          "data_type": "smallint",
+          "udt_name": "int2",
+          "nullable": false,
+          "default": "0",
+          "numeric_precision": 16,
+          "numeric_scale": 0
+        },
+        {
+          "name": "consecutive_losses",
+          "ordinal": 13,
+          "data_type": "smallint",
+          "udt_name": "int2",
+          "nullable": false,
+          "default": "0",
+          "numeric_precision": 16,
+          "numeric_scale": 0
+        },
+        {
+          "name": "created_at",
+          "ordinal": 14,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        },
+        {
+          "name": "updated_at",
+          "ordinal": 15,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        }
+      ]
+    },
+    {
+      "name": "wave_members",
+      "columns": [
+        {
+          "name": "session_id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "wave_no",
+          "ordinal": 2,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "actor_key",
+          "ordinal": 3,
+          "data_type": "character",
+          "udt_name": "bpchar",
+          "nullable": false,
+          "default": null,
+          "max_length": 64
+        },
+        {
+          "name": "role",
+          "ordinal": 4,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "joined_tick",
+          "ordinal": 5,
+          "data_type": "integer",
+          "udt_name": "int4",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0
+        },
+        {
+          "name": "last_change_tick",
+          "ordinal": 6,
+          "data_type": "integer",
+          "udt_name": "int4",
+          "nullable": true,
+          "default": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0
+        },
+        {
+          "name": "first_switch_used",
+          "ordinal": 7,
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "nullable": false,
+          "default": "false"
+        },
+        {
+          "name": "last_update_seq",
+          "ordinal": 8,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": true,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "xp_awarded",
+          "ordinal": 9,
+          "data_type": "boolean",
+          "udt_name": "bool",
+          "nullable": false,
+          "default": "false"
+        }
+      ]
+    },
+    {
+      "name": "writer_leases",
+      "columns": [
+        {
+          "name": "village_id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "writer_epoch",
+          "ordinal": 2,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": "0",
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "owner_instance",
+          "ordinal": 3,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "leased_until",
+          "ordinal": 4,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": true,
+          "default": null
+        }
+      ]
+    }
+  ],
+  "constraints": [
+    {
+      "table": "actor_identity_aliases",
+      "name": "actor_identity_aliases_actor_key_is_hmac_hex",
+      "type": "c",
+      "definition": "CHECK ((actor_key ~ '^[0-9a-f]{64}$'::text))"
+    },
+    {
+      "table": "actor_identity_aliases",
+      "name": "actor_identity_aliases_actor_key_not_null",
+      "type": "n",
+      "definition": "NOT NULL actor_key"
+    },
+    {
+      "table": "actor_identity_aliases",
+      "name": "actor_identity_aliases_created_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table": "actor_identity_aliases",
+      "name": "actor_identity_aliases_key_version_not_null",
+      "type": "n",
+      "definition": "NOT NULL key_version"
+    },
+    {
+      "table": "actor_identity_aliases",
+      "name": "actor_identity_aliases_key_version_shape",
+      "type": "c",
+      "definition": "CHECK ((key_version ~ '^[A-Za-z0-9._:-]{1,32}$'::text))"
+    },
+    {
+      "table": "actor_identity_aliases",
+      "name": "actor_identity_aliases_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (village_id, actor_key, key_version)"
+    },
+    {
+      "table": "actor_identity_aliases",
+      "name": "actor_identity_aliases_player_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL player_id"
+    },
+    {
+      "table": "actor_identity_aliases",
+      "name": "actor_identity_aliases_same_village_player_fk",
+      "type": "f",
+      "definition": "FOREIGN KEY (village_id, player_id) REFERENCES players(village_id, id) ON DELETE CASCADE"
+    },
+    {
+      "table": "actor_identity_aliases",
+      "name": "actor_identity_aliases_village_fk",
+      "type": "f",
+      "definition": "FOREIGN KEY (village_id) REFERENCES villages(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "actor_identity_aliases",
+      "name": "actor_identity_aliases_village_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL village_id"
+    },
+    {
+      "table": "admin_idempotency_keys",
+      "name": "admin_idempotency_keys_account_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL account_id"
+    },
+    {
+      "table": "admin_idempotency_keys",
+      "name": "admin_idempotency_keys_created_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table": "admin_idempotency_keys",
+      "name": "admin_idempotency_keys_expires_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL expires_at"
+    },
+    {
+      "table": "admin_idempotency_keys",
+      "name": "admin_idempotency_keys_key_not_null",
+      "type": "n",
+      "definition": "NOT NULL key"
+    },
+    {
+      "table": "admin_idempotency_keys",
+      "name": "admin_idempotency_keys_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (account_id, route, key)"
+    },
+    {
+      "table": "admin_idempotency_keys",
+      "name": "admin_idempotency_keys_request_hash_not_null",
+      "type": "n",
+      "definition": "NOT NULL request_hash"
+    },
+    {
+      "table": "admin_idempotency_keys",
+      "name": "admin_idempotency_keys_response_json_not_null",
+      "type": "n",
+      "definition": "NOT NULL response_json"
+    },
+    {
+      "table": "admin_idempotency_keys",
+      "name": "admin_idempotency_keys_response_status_not_null",
+      "type": "n",
+      "definition": "NOT NULL response_status"
+    },
+    {
+      "table": "admin_idempotency_keys",
+      "name": "admin_idempotency_keys_route_not_null",
+      "type": "n",
+      "definition": "NOT NULL route"
+    },
+    {
+      "table": "ballots",
+      "name": "ballots_actor_key_not_null",
+      "type": "n",
+      "definition": "NOT NULL actor_key"
+    },
+    {
+      "table": "ballots",
+      "name": "ballots_input_seq_not_null",
+      "type": "n",
+      "definition": "NOT NULL input_seq"
+    },
+    {
+      "table": "ballots",
+      "name": "ballots_option_check",
+      "type": "c",
+      "definition": "CHECK ((option = ANY (ARRAY['A'::bpchar, 'B'::bpchar, 'C'::bpchar])))"
+    },
+    {
+      "table": "ballots",
+      "name": "ballots_option_not_null",
+      "type": "n",
+      "definition": "NOT NULL option"
+    },
+    {
+      "table": "ballots",
+      "name": "ballots_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (session_id, wave_no, actor_key)"
+    },
+    {
+      "table": "ballots",
+      "name": "ballots_session_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "ballots",
+      "name": "ballots_session_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL session_id"
+    },
+    {
+      "table": "ballots",
+      "name": "ballots_wave_no_check",
+      "type": "c",
+      "definition": "CHECK ((wave_no \u003e= 1))"
+    },
+    {
+      "table": "ballots",
+      "name": "ballots_wave_no_not_null",
+      "type": "n",
+      "definition": "NOT NULL wave_no"
+    },
+    {
+      "table": "broadcaster_source_bindings",
+      "name": "broadcaster_source_bindings_broadcaster_key_not_null",
+      "type": "n",
+      "definition": "NOT NULL broadcaster_key"
+    },
+    {
+      "table": "broadcaster_source_bindings",
+      "name": "broadcaster_source_bindings_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (village_id, provider)"
+    },
+    {
+      "table": "broadcaster_source_bindings",
+      "name": "broadcaster_source_bindings_provider_not_null",
+      "type": "n",
+      "definition": "NOT NULL provider"
+    },
+    {
+      "table": "broadcaster_source_bindings",
+      "name": "broadcaster_source_bindings_village_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (village_id) REFERENCES villages(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "broadcaster_source_bindings",
+      "name": "broadcaster_source_bindings_village_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL village_id"
+    },
+    {
+      "table": "checkpoints",
+      "name": "checkpoints_created_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table": "checkpoints",
+      "name": "checkpoints_input_seq_not_null",
+      "type": "n",
+      "definition": "NOT NULL input_seq"
+    },
+    {
+      "table": "checkpoints",
+      "name": "checkpoints_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (session_id, revision)"
+    },
+    {
+      "table": "checkpoints",
+      "name": "checkpoints_revision_not_null",
+      "type": "n",
+      "definition": "NOT NULL revision"
+    },
+    {
+      "table": "checkpoints",
+      "name": "checkpoints_rules_version_not_null",
+      "type": "n",
+      "definition": "NOT NULL rules_version"
+    },
+    {
+      "table": "checkpoints",
+      "name": "checkpoints_session_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "checkpoints",
+      "name": "checkpoints_session_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL session_id"
+    },
+    {
+      "table": "checkpoints",
+      "name": "checkpoints_state_hash_not_null",
+      "type": "n",
+      "definition": "NOT NULL state_hash"
+    },
+    {
+      "table": "checkpoints",
+      "name": "checkpoints_state_json_not_null",
+      "type": "n",
+      "definition": "NOT NULL state_json"
+    },
+    {
+      "table": "checkpoints",
+      "name": "checkpoints_wave_no_not_null",
+      "type": "n",
+      "definition": "NOT NULL wave_no"
+    },
+    {
+      "table": "checkpoints",
+      "name": "checkpoints_wave_tick_not_null",
+      "type": "n",
+      "definition": "NOT NULL wave_tick"
+    },
+    {
+      "table": "domain_events",
+      "name": "domain_events_created_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table": "domain_events",
+      "name": "domain_events_event_index_not_null",
+      "type": "n",
+      "definition": "NOT NULL event_index"
+    },
+    {
+      "table": "domain_events",
+      "name": "domain_events_event_type_not_null",
+      "type": "n",
+      "definition": "NOT NULL event_type"
+    },
+    {
+      "table": "domain_events",
+      "name": "domain_events_payload_not_null",
+      "type": "n",
+      "definition": "NOT NULL payload"
+    },
+    {
+      "table": "domain_events",
+      "name": "domain_events_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (session_id, revision, event_index)"
+    },
+    {
+      "table": "domain_events",
+      "name": "domain_events_revision_not_null",
+      "type": "n",
+      "definition": "NOT NULL revision"
+    },
+    {
+      "table": "domain_events",
+      "name": "domain_events_session_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "domain_events",
+      "name": "domain_events_session_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL session_id"
+    },
+    {
+      "table": "input_events",
+      "name": "input_events_accepted_tick_not_null",
+      "type": "n",
+      "definition": "NOT NULL accepted_tick"
+    },
+    {
+      "table": "input_events",
+      "name": "input_events_actor_key_not_null",
+      "type": "n",
+      "definition": "NOT NULL actor_key"
+    },
+    {
+      "table": "input_events",
+      "name": "input_events_canonical_payload_not_null",
+      "type": "n",
+      "definition": "NOT NULL canonical_payload"
+    },
+    {
+      "table": "input_events",
+      "name": "input_events_input_seq_not_null",
+      "type": "n",
+      "definition": "NOT NULL input_seq"
+    },
+    {
+      "table": "input_events",
+      "name": "input_events_inserted_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL inserted_at"
+    },
+    {
+      "table": "input_events",
+      "name": "input_events_kind_check",
+      "type": "c",
+      "definition": "CHECK ((kind = ANY (ARRAY['role'::text, 'vote'::text])))"
+    },
+    {
+      "table": "input_events",
+      "name": "input_events_kind_not_null",
+      "type": "n",
+      "definition": "NOT NULL kind"
+    },
+    {
+      "table": "input_events",
+      "name": "input_events_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (session_id, input_seq)"
+    },
+    {
+      "table": "input_events",
+      "name": "input_events_rules_version_not_null",
+      "type": "n",
+      "definition": "NOT NULL rules_version"
+    },
+    {
+      "table": "input_events",
+      "name": "input_events_scheduled_tick_not_null",
+      "type": "n",
+      "definition": "NOT NULL scheduled_tick"
+    },
+    {
+      "table": "input_events",
+      "name": "input_events_session_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "input_events",
+      "name": "input_events_session_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL session_id"
+    },
+    {
+      "table": "input_events",
+      "name": "input_events_wave_no_check",
+      "type": "c",
+      "definition": "CHECK ((wave_no \u003e= 1))"
+    },
+    {
+      "table": "input_events",
+      "name": "input_events_wave_no_not_null",
+      "type": "n",
+      "definition": "NOT NULL wave_no"
+    },
+    {
+      "table": "input_receipts",
+      "name": "input_receipts_inserted_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL inserted_at"
+    },
+    {
+      "table": "input_receipts",
+      "name": "input_receipts_provider_event_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL provider_event_id"
+    },
+    {
+      "table": "input_receipts",
+      "name": "input_receipts_provider_source_not_null",
+      "type": "n",
+      "definition": "NOT NULL provider_source"
+    },
+    {
+      "table": "input_receipts",
+      "name": "input_receipts_session_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "input_receipts",
+      "name": "input_receipts_session_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL session_id"
+    },
+    {
+      "table": "input_receipts",
+      "name": "input_receipts_unique_event",
+      "type": "u",
+      "definition": "UNIQUE (session_id, provider_source, provider_event_id)"
+    },
+    {
+      "table": "operator_accounts",
+      "name": "operator_accounts_created_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table": "operator_accounts",
+      "name": "operator_accounts_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table": "operator_accounts",
+      "name": "operator_accounts_password_hash_not_null",
+      "type": "n",
+      "definition": "NOT NULL password_hash"
+    },
+    {
+      "table": "operator_accounts",
+      "name": "operator_accounts_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "operator_accounts",
+      "name": "operator_accounts_role_check",
+      "type": "c",
+      "definition": "CHECK ((role = ANY (ARRAY['admin'::text, 'operator'::text, 'viewer'::text])))"
+    },
+    {
+      "table": "operator_accounts",
+      "name": "operator_accounts_role_not_null",
+      "type": "n",
+      "definition": "NOT NULL role"
+    },
+    {
+      "table": "operator_accounts",
+      "name": "operator_accounts_username_not_null",
+      "type": "n",
+      "definition": "NOT NULL username"
+    },
+    {
+      "table": "operator_audit",
+      "name": "operator_audit_action_not_null",
+      "type": "n",
+      "definition": "NOT NULL action"
+    },
+    {
+      "table": "operator_audit",
+      "name": "operator_audit_created_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table": "operator_audit",
+      "name": "operator_audit_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table": "operator_audit",
+      "name": "operator_audit_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "operator_sessions",
+      "name": "operator_sessions_account_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (account_id) REFERENCES operator_accounts(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "operator_sessions",
+      "name": "operator_sessions_account_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL account_id"
+    },
+    {
+      "table": "operator_sessions",
+      "name": "operator_sessions_created_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table": "operator_sessions",
+      "name": "operator_sessions_expires_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL expires_at"
+    },
+    {
+      "table": "operator_sessions",
+      "name": "operator_sessions_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table": "operator_sessions",
+      "name": "operator_sessions_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "operator_sessions",
+      "name": "operator_sessions_secret_hash_not_null",
+      "type": "n",
+      "definition": "NOT NULL secret_hash"
+    },
+    {
+      "table": "players",
+      "name": "players_actor_key_not_null",
+      "type": "n",
+      "definition": "NOT NULL actor_key"
+    },
+    {
+      "table": "players",
+      "name": "players_alias_check",
+      "type": "c",
+      "definition": "CHECK (((alias IS NULL) OR (octet_length(alias) \u003c= 256)))"
+    },
+    {
+      "table": "players",
+      "name": "players_created_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table": "players",
+      "name": "players_ephemeral_not_null",
+      "type": "n",
+      "definition": "NOT NULL ephemeral"
+    },
+    {
+      "table": "players",
+      "name": "players_hide_alias_not_null",
+      "type": "n",
+      "definition": "NOT NULL hide_alias"
+    },
+    {
+      "table": "players",
+      "name": "players_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table": "players",
+      "name": "players_lifetime_xp_check",
+      "type": "c",
+      "definition": "CHECK ((lifetime_xp \u003e= 0))"
+    },
+    {
+      "table": "players",
+      "name": "players_lifetime_xp_not_null",
+      "type": "n",
+      "definition": "NOT NULL lifetime_xp"
+    },
+    {
+      "table": "players",
+      "name": "players_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "players",
+      "name": "players_village_actor_key",
+      "type": "u",
+      "definition": "UNIQUE (village_id, actor_key)"
+    },
+    {
+      "table": "players",
+      "name": "players_village_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (village_id) REFERENCES villages(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "players",
+      "name": "players_village_id_id_key",
+      "type": "u",
+      "definition": "UNIQUE (village_id, id)"
+    },
+    {
+      "table": "players",
+      "name": "players_village_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL village_id"
+    },
+    {
+      "table": "privacy_erase_requests",
+      "name": "privacy_erase_requests_actor_ref_protected_not_null",
+      "type": "n",
+      "definition": "NOT NULL actor_ref_protected"
+    },
+    {
+      "table": "privacy_erase_requests",
+      "name": "privacy_erase_requests_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table": "privacy_erase_requests",
+      "name": "privacy_erase_requests_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "privacy_erase_requests",
+      "name": "privacy_erase_requests_privacy_epoch_not_null",
+      "type": "n",
+      "definition": "NOT NULL privacy_epoch"
+    },
+    {
+      "table": "privacy_erase_requests",
+      "name": "privacy_erase_requests_reason_not_null",
+      "type": "n",
+      "definition": "NOT NULL reason"
+    },
+    {
+      "table": "privacy_erase_requests",
+      "name": "privacy_erase_requests_requested_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL requested_at"
+    },
+    {
+      "table": "privacy_erase_requests",
+      "name": "privacy_erase_requests_session_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "privacy_erase_requests",
+      "name": "privacy_erase_requests_session_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL session_id"
+    },
+    {
+      "table": "privacy_erase_requests",
+      "name": "privacy_erase_requests_status_check",
+      "type": "c",
+      "definition": "CHECK ((status = ANY (ARRAY['queued'::text, 'applied'::text, 'blocked'::text, 'failed'::text])))"
+    },
+    {
+      "table": "privacy_erase_requests",
+      "name": "privacy_erase_requests_status_not_null",
+      "type": "n",
+      "definition": "NOT NULL status"
+    },
+    {
+      "table": "privacy_ledger_outbox",
+      "name": "privacy_ledger_outbox_ack_consistency",
+      "type": "c",
+      "definition": "CHECK (((exported_at IS NULL) = (ledger_ack_ref IS NULL)))"
+    },
+    {
+      "table": "privacy_ledger_outbox",
+      "name": "privacy_ledger_outbox_ack_ref_length",
+      "type": "c",
+      "definition": "CHECK (((ledger_ack_ref IS NULL) OR ((length(ledger_ack_ref) \u003e= 1) AND (length(ledger_ack_ref) \u003c= 128))))"
+    },
+    {
+      "table": "privacy_ledger_outbox",
+      "name": "privacy_ledger_outbox_attempts_non_negative",
+      "type": "c",
+      "definition": "CHECK ((attempts \u003e= 0))"
+    },
+    {
+      "table": "privacy_ledger_outbox",
+      "name": "privacy_ledger_outbox_attempts_not_null",
+      "type": "n",
+      "definition": "NOT NULL attempts"
+    },
+    {
+      "table": "privacy_ledger_outbox",
+      "name": "privacy_ledger_outbox_created_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table": "privacy_ledger_outbox",
+      "name": "privacy_ledger_outbox_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table": "privacy_ledger_outbox",
+      "name": "privacy_ledger_outbox_payload_is_object",
+      "type": "c",
+      "definition": "CHECK ((jsonb_typeof(payload) = 'object'::text))"
+    },
+    {
+      "table": "privacy_ledger_outbox",
+      "name": "privacy_ledger_outbox_payload_not_null",
+      "type": "n",
+      "definition": "NOT NULL payload"
+    },
+    {
+      "table": "privacy_ledger_outbox",
+      "name": "privacy_ledger_outbox_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "privacy_ledger_outbox",
+      "name": "privacy_ledger_outbox_seq_key",
+      "type": "u",
+      "definition": "UNIQUE (seq)"
+    },
+    {
+      "table": "privacy_ledger_outbox",
+      "name": "privacy_ledger_outbox_seq_not_null",
+      "type": "n",
+      "definition": "NOT NULL seq"
+    },
+    {
+      "table": "privacy_ledger_outbox",
+      "name": "privacy_ledger_outbox_tombstone_fk",
+      "type": "f",
+      "definition": "FOREIGN KEY (tombstone_id) REFERENCES privacy_tombstones(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "privacy_ledger_outbox",
+      "name": "privacy_ledger_outbox_tombstone_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL tombstone_id"
+    },
+    {
+      "table": "privacy_tombstones",
+      "name": "privacy_tombstones_actor_ref_protected_not_null",
+      "type": "n",
+      "definition": "NOT NULL actor_ref_protected"
+    },
+    {
+      "table": "privacy_tombstones",
+      "name": "privacy_tombstones_created_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table": "privacy_tombstones",
+      "name": "privacy_tombstones_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table": "privacy_tombstones",
+      "name": "privacy_tombstones_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "privacy_tombstones",
+      "name": "privacy_tombstones_scope_not_null",
+      "type": "n",
+      "definition": "NOT NULL scope"
+    },
+    {
+      "table": "session_player_progress",
+      "name": "session_player_progress_actor_key_not_null",
+      "type": "n",
+      "definition": "NOT NULL actor_key"
+    },
+    {
+      "table": "session_player_progress",
+      "name": "session_player_progress_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (session_id, actor_key)"
+    },
+    {
+      "table": "session_player_progress",
+      "name": "session_player_progress_session_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "session_player_progress",
+      "name": "session_player_progress_session_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL session_id"
+    },
+    {
+      "table": "session_player_progress",
+      "name": "session_player_progress_session_xp_check",
+      "type": "c",
+      "definition": "CHECK (((session_xp \u003e= 0) AND (session_xp \u003c= 300)))"
+    },
+    {
+      "table": "session_player_progress",
+      "name": "session_player_progress_session_xp_not_null",
+      "type": "n",
+      "definition": "NOT NULL session_xp"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_input_sequence_not_null",
+      "type": "n",
+      "definition": "NOT NULL input_sequence"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_last_reduced_tick_not_null",
+      "type": "n",
+      "definition": "NOT NULL last_reduced_tick"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_lifecycle_check",
+      "type": "c",
+      "definition": "CHECK ((lifecycle = ANY (ARRAY['waiting'::text, 'running'::text, 'paused'::text, 'source_disconnected'::text, 'storage_unavailable'::text, 'stopped'::text])))"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_lifecycle_not_null",
+      "type": "n",
+      "definition": "NOT NULL lifecycle"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_mode_check",
+      "type": "c",
+      "definition": "CHECK ((mode = ANY (ARRAY['mock'::text, 'replay'::text, 'authorized_live'::text])))"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_mode_not_null",
+      "type": "n",
+      "definition": "NOT NULL mode"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_pause_reasons_not_null",
+      "type": "n",
+      "definition": "NOT NULL pause_reasons"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_privacy_epoch_check",
+      "type": "c",
+      "definition": "CHECK ((privacy_epoch \u003e= 0))"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_privacy_epoch_not_null",
+      "type": "n",
+      "definition": "NOT NULL privacy_epoch"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_rules_version_not_null",
+      "type": "n",
+      "definition": "NOT NULL rules_version"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_stream_sequence_not_null",
+      "type": "n",
+      "definition": "NOT NULL stream_sequence"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_village_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (village_id) REFERENCES villages(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_village_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL village_id"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_wave_no_check",
+      "type": "c",
+      "definition": "CHECK ((wave_no \u003e= 1))"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_wave_no_not_null",
+      "type": "n",
+      "definition": "NOT NULL wave_no"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_wave_tick_check",
+      "type": "c",
+      "definition": "CHECK (((wave_tick \u003e= '-1'::integer) AND (wave_tick \u003c= 3000)))"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_wave_tick_not_null",
+      "type": "n",
+      "definition": "NOT NULL wave_tick"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_writer_epoch_not_null",
+      "type": "n",
+      "definition": "NOT NULL writer_epoch"
+    },
+    {
+      "table": "stream_outbox",
+      "name": "stream_outbox_created_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table": "stream_outbox",
+      "name": "stream_outbox_payload_not_null",
+      "type": "n",
+      "definition": "NOT NULL payload"
+    },
+    {
+      "table": "stream_outbox",
+      "name": "stream_outbox_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (session_id, stream_seq)"
+    },
+    {
+      "table": "stream_outbox",
+      "name": "stream_outbox_revision_not_null",
+      "type": "n",
+      "definition": "NOT NULL revision"
+    },
+    {
+      "table": "stream_outbox",
+      "name": "stream_outbox_session_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "stream_outbox",
+      "name": "stream_outbox_session_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL session_id"
+    },
+    {
+      "table": "stream_outbox",
+      "name": "stream_outbox_stream_seq_not_null",
+      "type": "n",
+      "definition": "NOT NULL stream_seq"
+    },
+    {
+      "table": "stream_outbox",
+      "name": "stream_outbox_type_not_null",
+      "type": "n",
+      "definition": "NOT NULL type"
+    },
+    {
+      "table": "villages",
+      "name": "villages_broadcaster_key_key",
+      "type": "u",
+      "definition": "UNIQUE (broadcaster_key)"
+    },
+    {
+      "table": "villages",
+      "name": "villages_broadcaster_key_not_null",
+      "type": "n",
+      "definition": "NOT NULL broadcaster_key"
+    },
+    {
+      "table": "villages",
+      "name": "villages_consecutive_losses_check",
+      "type": "c",
+      "definition": "CHECK (((consecutive_losses \u003e= 0) AND (consecutive_losses \u003c= 3)))"
+    },
+    {
+      "table": "villages",
+      "name": "villages_consecutive_losses_not_null",
+      "type": "n",
+      "definition": "NOT NULL consecutive_losses"
+    },
+    {
+      "table": "villages",
+      "name": "villages_consecutive_wins_check",
+      "type": "c",
+      "definition": "CHECK (((consecutive_wins \u003e= 0) AND (consecutive_wins \u003c= 10)))"
+    },
+    {
+      "table": "villages",
+      "name": "villages_consecutive_wins_not_null",
+      "type": "n",
+      "definition": "NOT NULL consecutive_wins"
+    },
+    {
+      "table": "villages",
+      "name": "villages_construction_work_check",
+      "type": "c",
+      "definition": "CHECK ((construction_work \u003e= 0))"
+    },
+    {
+      "table": "villages",
+      "name": "villages_construction_work_not_null",
+      "type": "n",
+      "definition": "NOT NULL construction_work"
+    },
+    {
+      "table": "villages",
+      "name": "villages_created_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table": "villages",
+      "name": "villages_food_check",
+      "type": "c",
+      "definition": "CHECK (((food \u003e= 0) AND (food \u003c= 1000000)))"
+    },
+    {
+      "table": "villages",
+      "name": "villages_food_not_null",
+      "type": "n",
+      "definition": "NOT NULL food"
+    },
+    {
+      "table": "villages",
+      "name": "villages_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table": "villages",
+      "name": "villages_level_check",
+      "type": "c",
+      "definition": "CHECK (((level \u003e= 1) AND (level \u003c= 50)))"
+    },
+    {
+      "table": "villages",
+      "name": "villages_level_not_null",
+      "type": "n",
+      "definition": "NOT NULL level"
+    },
+    {
+      "table": "villages",
+      "name": "villages_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "villages",
+      "name": "villages_stone_check",
+      "type": "c",
+      "definition": "CHECK (((stone \u003e= 0) AND (stone \u003c= 1000000)))"
+    },
+    {
+      "table": "villages",
+      "name": "villages_stone_not_null",
+      "type": "n",
+      "definition": "NOT NULL stone"
+    },
+    {
+      "table": "villages",
+      "name": "villages_total_wins_check",
+      "type": "c",
+      "definition": "CHECK ((total_wins \u003e= 0))"
+    },
+    {
+      "table": "villages",
+      "name": "villages_total_wins_not_null",
+      "type": "n",
+      "definition": "NOT NULL total_wins"
+    },
+    {
+      "table": "villages",
+      "name": "villages_townhall_hp_check",
+      "type": "c",
+      "definition": "CHECK (((townhall_hp \u003e= 0) AND (townhall_hp \u003c= 500)))"
+    },
+    {
+      "table": "villages",
+      "name": "villages_townhall_hp_not_null",
+      "type": "n",
+      "definition": "NOT NULL townhall_hp"
+    },
+    {
+      "table": "villages",
+      "name": "villages_updated_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL updated_at"
+    },
+    {
+      "table": "villages",
+      "name": "villages_wall_hp_check",
+      "type": "c",
+      "definition": "CHECK ((wall_hp \u003e= 0))"
+    },
+    {
+      "table": "villages",
+      "name": "villages_wall_hp_not_null",
+      "type": "n",
+      "definition": "NOT NULL wall_hp"
+    },
+    {
+      "table": "villages",
+      "name": "villages_wall_hp_within_tier",
+      "type": "c",
+      "definition": "CHECK ((wall_hp \u003c= (1000 + (200 * (wall_tier - 1)))))"
+    },
+    {
+      "table": "villages",
+      "name": "villages_wall_tier_check",
+      "type": "c",
+      "definition": "CHECK (((wall_tier \u003e= 1) AND (wall_tier \u003c= 20)))"
+    },
+    {
+      "table": "villages",
+      "name": "villages_wall_tier_not_null",
+      "type": "n",
+      "definition": "NOT NULL wall_tier"
+    },
+    {
+      "table": "villages",
+      "name": "villages_wood_check",
+      "type": "c",
+      "definition": "CHECK (((wood \u003e= 0) AND (wood \u003c= 1000000)))"
+    },
+    {
+      "table": "villages",
+      "name": "villages_wood_not_null",
+      "type": "n",
+      "definition": "NOT NULL wood"
+    },
+    {
+      "table": "wave_members",
+      "name": "wave_members_actor_key_not_null",
+      "type": "n",
+      "definition": "NOT NULL actor_key"
+    },
+    {
+      "table": "wave_members",
+      "name": "wave_members_first_switch_used_not_null",
+      "type": "n",
+      "definition": "NOT NULL first_switch_used"
+    },
+    {
+      "table": "wave_members",
+      "name": "wave_members_joined_tick_check",
+      "type": "c",
+      "definition": "CHECK ((joined_tick \u003e= 0))"
+    },
+    {
+      "table": "wave_members",
+      "name": "wave_members_joined_tick_not_null",
+      "type": "n",
+      "definition": "NOT NULL joined_tick"
+    },
+    {
+      "table": "wave_members",
+      "name": "wave_members_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (session_id, wave_no, actor_key)"
+    },
+    {
+      "table": "wave_members",
+      "name": "wave_members_role_check",
+      "type": "c",
+      "definition": "CHECK ((role = ANY (ARRAY['builder'::text, 'guard'::text, 'fighter'::text])))"
+    },
+    {
+      "table": "wave_members",
+      "name": "wave_members_role_not_null",
+      "type": "n",
+      "definition": "NOT NULL role"
+    },
+    {
+      "table": "wave_members",
+      "name": "wave_members_session_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "wave_members",
+      "name": "wave_members_session_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL session_id"
+    },
+    {
+      "table": "wave_members",
+      "name": "wave_members_wave_no_check",
+      "type": "c",
+      "definition": "CHECK ((wave_no \u003e= 1))"
+    },
+    {
+      "table": "wave_members",
+      "name": "wave_members_wave_no_not_null",
+      "type": "n",
+      "definition": "NOT NULL wave_no"
+    },
+    {
+      "table": "wave_members",
+      "name": "wave_members_xp_awarded_not_null",
+      "type": "n",
+      "definition": "NOT NULL xp_awarded"
+    },
+    {
+      "table": "writer_leases",
+      "name": "writer_leases_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (village_id)"
+    },
+    {
+      "table": "writer_leases",
+      "name": "writer_leases_village_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (village_id) REFERENCES villages(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "writer_leases",
+      "name": "writer_leases_village_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL village_id"
+    },
+    {
+      "table": "writer_leases",
+      "name": "writer_leases_writer_epoch_not_null",
+      "type": "n",
+      "definition": "NOT NULL writer_epoch"
+    }
+  ],
+  "indexes": [
+    {
+      "table": "actor_identity_aliases",
+      "name": "actor_identity_aliases_pkey",
+      "definition": "CREATE UNIQUE INDEX actor_identity_aliases_pkey ON ttg.actor_identity_aliases USING btree (village_id, actor_key, key_version)"
+    },
+    {
+      "table": "actor_identity_aliases",
+      "name": "actor_identity_aliases_player",
+      "definition": "CREATE INDEX actor_identity_aliases_player ON ttg.actor_identity_aliases USING btree (player_id)"
+    },
+    {
+      "table": "admin_idempotency_keys",
+      "name": "admin_idempotency_keys_expires_at",
+      "definition": "CREATE INDEX admin_idempotency_keys_expires_at ON ttg.admin_idempotency_keys USING btree (expires_at)"
+    },
+    {
+      "table": "admin_idempotency_keys",
+      "name": "admin_idempotency_keys_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_idempotency_keys_pkey ON ttg.admin_idempotency_keys USING btree (account_id, route, key)"
+    },
+    {
+      "table": "ballots",
+      "name": "ballots_pkey",
+      "definition": "CREATE UNIQUE INDEX ballots_pkey ON ttg.ballots USING btree (session_id, wave_no, actor_key)"
+    },
+    {
+      "table": "broadcaster_source_bindings",
+      "name": "broadcaster_source_bindings_pkey",
+      "definition": "CREATE UNIQUE INDEX broadcaster_source_bindings_pkey ON ttg.broadcaster_source_bindings USING btree (village_id, provider)"
+    },
+    {
+      "table": "checkpoints",
+      "name": "checkpoints_pkey",
+      "definition": "CREATE UNIQUE INDEX checkpoints_pkey ON ttg.checkpoints USING btree (session_id, revision)"
+    },
+    {
+      "table": "domain_events",
+      "name": "domain_events_pkey",
+      "definition": "CREATE UNIQUE INDEX domain_events_pkey ON ttg.domain_events USING btree (session_id, revision, event_index)"
+    },
+    {
+      "table": "input_events",
+      "name": "input_events_pending",
+      "definition": "CREATE INDEX input_events_pending ON ttg.input_events USING btree (session_id, wave_no, scheduled_tick, input_seq) WHERE (applied_at_tick IS NULL)"
+    },
+    {
+      "table": "input_events",
+      "name": "input_events_pkey",
+      "definition": "CREATE UNIQUE INDEX input_events_pkey ON ttg.input_events USING btree (session_id, input_seq)"
+    },
+    {
+      "table": "input_receipts",
+      "name": "input_receipts_inserted_at",
+      "definition": "CREATE INDEX input_receipts_inserted_at ON ttg.input_receipts USING btree (inserted_at)"
+    },
+    {
+      "table": "input_receipts",
+      "name": "input_receipts_unique_event",
+      "definition": "CREATE UNIQUE INDEX input_receipts_unique_event ON ttg.input_receipts USING btree (session_id, provider_source, provider_event_id)"
+    },
+    {
+      "table": "operator_accounts",
+      "name": "operator_accounts_pkey",
+      "definition": "CREATE UNIQUE INDEX operator_accounts_pkey ON ttg.operator_accounts USING btree (id)"
+    },
+    {
+      "table": "operator_accounts",
+      "name": "operator_accounts_username_lower",
+      "definition": "CREATE UNIQUE INDEX operator_accounts_username_lower ON ttg.operator_accounts USING btree (lower(username))"
+    },
+    {
+      "table": "operator_audit",
+      "name": "operator_audit_created_at",
+      "definition": "CREATE INDEX operator_audit_created_at ON ttg.operator_audit USING btree (created_at)"
+    },
+    {
+      "table": "operator_audit",
+      "name": "operator_audit_pkey",
+      "definition": "CREATE UNIQUE INDEX operator_audit_pkey ON ttg.operator_audit USING btree (id)"
+    },
+    {
+      "table": "operator_sessions",
+      "name": "operator_sessions_account",
+      "definition": "CREATE INDEX operator_sessions_account ON ttg.operator_sessions USING btree (account_id)"
+    },
+    {
+      "table": "operator_sessions",
+      "name": "operator_sessions_pkey",
+      "definition": "CREATE UNIQUE INDEX operator_sessions_pkey ON ttg.operator_sessions USING btree (id)"
+    },
+    {
+      "table": "players",
+      "name": "players_pkey",
+      "definition": "CREATE UNIQUE INDEX players_pkey ON ttg.players USING btree (id)"
+    },
+    {
+      "table": "players",
+      "name": "players_village_actor_key",
+      "definition": "CREATE UNIQUE INDEX players_village_actor_key ON ttg.players USING btree (village_id, actor_key)"
+    },
+    {
+      "table": "players",
+      "name": "players_village_id_id_key",
+      "definition": "CREATE UNIQUE INDEX players_village_id_id_key ON ttg.players USING btree (village_id, id)"
+    },
+    {
+      "table": "privacy_erase_requests",
+      "name": "privacy_erase_requests_pkey",
+      "definition": "CREATE UNIQUE INDEX privacy_erase_requests_pkey ON ttg.privacy_erase_requests USING btree (id)"
+    },
+    {
+      "table": "privacy_erase_requests",
+      "name": "privacy_erase_requests_session",
+      "definition": "CREATE INDEX privacy_erase_requests_session ON ttg.privacy_erase_requests USING btree (session_id)"
+    },
+    {
+      "table": "privacy_ledger_outbox",
+      "name": "privacy_ledger_outbox_pending",
+      "definition": "CREATE INDEX privacy_ledger_outbox_pending ON ttg.privacy_ledger_outbox USING btree (seq) WHERE (exported_at IS NULL)"
+    },
+    {
+      "table": "privacy_ledger_outbox",
+      "name": "privacy_ledger_outbox_pkey",
+      "definition": "CREATE UNIQUE INDEX privacy_ledger_outbox_pkey ON ttg.privacy_ledger_outbox USING btree (id)"
+    },
+    {
+      "table": "privacy_ledger_outbox",
+      "name": "privacy_ledger_outbox_seq_key",
+      "definition": "CREATE UNIQUE INDEX privacy_ledger_outbox_seq_key ON ttg.privacy_ledger_outbox USING btree (seq)"
+    },
+    {
+      "table": "privacy_ledger_outbox",
+      "name": "privacy_ledger_outbox_tombstone",
+      "definition": "CREATE INDEX privacy_ledger_outbox_tombstone ON ttg.privacy_ledger_outbox USING btree (tombstone_id)"
+    },
+    {
+      "table": "privacy_tombstones",
+      "name": "privacy_tombstones_actor",
+      "definition": "CREATE INDEX privacy_tombstones_actor ON ttg.privacy_tombstones USING btree (actor_ref_protected)"
+    },
+    {
+      "table": "privacy_tombstones",
+      "name": "privacy_tombstones_pkey",
+      "definition": "CREATE UNIQUE INDEX privacy_tombstones_pkey ON ttg.privacy_tombstones USING btree (id)"
+    },
+    {
+      "table": "session_player_progress",
+      "name": "session_player_progress_pkey",
+      "definition": "CREATE UNIQUE INDEX session_player_progress_pkey ON ttg.session_player_progress USING btree (session_id, actor_key)"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_one_active_per_village",
+      "definition": "CREATE UNIQUE INDEX sessions_one_active_per_village ON ttg.sessions USING btree (village_id) WHERE (lifecycle \u003c\u003e 'stopped'::text)"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_pkey",
+      "definition": "CREATE UNIQUE INDEX sessions_pkey ON ttg.sessions USING btree (id)"
+    },
+    {
+      "table": "stream_outbox",
+      "name": "stream_outbox_pkey",
+      "definition": "CREATE UNIQUE INDEX stream_outbox_pkey ON ttg.stream_outbox USING btree (session_id, stream_seq)"
+    },
+    {
+      "table": "villages",
+      "name": "villages_broadcaster_key_key",
+      "definition": "CREATE UNIQUE INDEX villages_broadcaster_key_key ON ttg.villages USING btree (broadcaster_key)"
+    },
+    {
+      "table": "villages",
+      "name": "villages_pkey",
+      "definition": "CREATE UNIQUE INDEX villages_pkey ON ttg.villages USING btree (id)"
+    },
+    {
+      "table": "wave_members",
+      "name": "wave_members_pkey",
+      "definition": "CREATE UNIQUE INDEX wave_members_pkey ON ttg.wave_members USING btree (session_id, wave_no, actor_key)"
+    },
+    {
+      "table": "writer_leases",
+      "name": "writer_leases_pkey",
+      "definition": "CREATE UNIQUE INDEX writer_leases_pkey ON ttg.writer_leases USING btree (village_id)"
+    }
+  ]
+}

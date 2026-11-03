@@ -67,5 +67,18 @@ $header = @(
 $text = (($header + $filtered) -join "`n") + "`n"
 [System.IO.File]::WriteAllText($target, $text, [System.Text.UTF8Encoding]::new($false))
 Write-Ok "wrote $target ($((Get-Item $target).Length) bytes)"
+
+# The fingerprint is the drift contract: every table, column (type, nullability,
+# default, length/precision), constraint and index. CI compares it against a
+# freshly migrated database.
+$fingerprint = Join-Path $root 'backend\db\schema.fingerprint.json'
+$env:TTG_ENV_FILE = $envPath
+Write-Step 'writing schema fingerprint'
+$code = Invoke-Go -Arguments @('run', './cmd/migrate', '-direction', 'fingerprint', '-out', $fingerprint) -WorkingDirectory (Join-Path $root 'backend')
+if ($code -ne 0) {
+    Write-Fail "schema fingerprint failed with exit code $code"
+    exit $code
+}
+Write-Ok "wrote $fingerprint ($((Get-Item $fingerprint).Length) bytes)"
 Write-Note 'next: cd backend && sqlc generate'
 exit 0

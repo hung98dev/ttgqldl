@@ -23,6 +23,21 @@ CREATE SCHEMA ttg;
 
 
 --
+-- Name: actor_identity_aliases; Type: TABLE; Schema: ttg; Owner: -
+--
+
+CREATE TABLE ttg.actor_identity_aliases (
+    village_id uuid NOT NULL,
+    actor_key character(64) NOT NULL,
+    key_version text NOT NULL,
+    player_id uuid NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT actor_identity_aliases_actor_key_is_hmac_hex CHECK ((actor_key ~ '^[0-9a-f]{64}$'::text)),
+    CONSTRAINT actor_identity_aliases_key_version_shape CHECK ((key_version ~ '^[A-Za-z0-9._:-]{1,32}$'::text))
+);
+
+
+--
 -- Name: admin_idempotency_keys; Type: TABLE; Schema: ttg; Owner: -
 --
 
@@ -226,6 +241,41 @@ CREATE TABLE ttg.privacy_erase_requests (
 
 
 --
+-- Name: privacy_ledger_outbox; Type: TABLE; Schema: ttg; Owner: -
+--
+
+CREATE TABLE ttg.privacy_ledger_outbox (
+    id uuid NOT NULL,
+    seq bigint NOT NULL,
+    tombstone_id uuid NOT NULL,
+    payload jsonb NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    exported_at timestamp with time zone,
+    ledger_ack_ref text,
+    attempts integer DEFAULT 0 NOT NULL,
+    last_error text,
+    CONSTRAINT privacy_ledger_outbox_ack_consistency CHECK (((exported_at IS NULL) = (ledger_ack_ref IS NULL))),
+    CONSTRAINT privacy_ledger_outbox_ack_ref_length CHECK (((ledger_ack_ref IS NULL) OR ((length(ledger_ack_ref) >= 1) AND (length(ledger_ack_ref) <= 128)))),
+    CONSTRAINT privacy_ledger_outbox_attempts_non_negative CHECK ((attempts >= 0)),
+    CONSTRAINT privacy_ledger_outbox_payload_is_object CHECK ((jsonb_typeof(payload) = 'object'::text))
+);
+
+
+--
+-- Name: privacy_ledger_outbox_seq_seq; Type: SEQUENCE; Schema: ttg; Owner: -
+--
+
+ALTER TABLE ttg.privacy_ledger_outbox ALTER COLUMN seq ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME ttg.privacy_ledger_outbox_seq_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
 -- Name: privacy_tombstones; Type: TABLE; Schema: ttg; Owner: -
 --
 
@@ -364,6 +414,14 @@ CREATE TABLE ttg.writer_leases (
 
 
 --
+-- Name: actor_identity_aliases actor_identity_aliases_pkey; Type: CONSTRAINT; Schema: ttg; Owner: -
+--
+
+ALTER TABLE ONLY ttg.actor_identity_aliases
+    ADD CONSTRAINT actor_identity_aliases_pkey PRIMARY KEY (village_id, actor_key, key_version);
+
+
+--
 -- Name: admin_idempotency_keys admin_idempotency_keys_pkey; Type: CONSTRAINT; Schema: ttg; Owner: -
 --
 
@@ -460,11 +518,35 @@ ALTER TABLE ONLY ttg.players
 
 
 --
+-- Name: players players_village_id_id_key; Type: CONSTRAINT; Schema: ttg; Owner: -
+--
+
+ALTER TABLE ONLY ttg.players
+    ADD CONSTRAINT players_village_id_id_key UNIQUE (village_id, id);
+
+
+--
 -- Name: privacy_erase_requests privacy_erase_requests_pkey; Type: CONSTRAINT; Schema: ttg; Owner: -
 --
 
 ALTER TABLE ONLY ttg.privacy_erase_requests
     ADD CONSTRAINT privacy_erase_requests_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: privacy_ledger_outbox privacy_ledger_outbox_pkey; Type: CONSTRAINT; Schema: ttg; Owner: -
+--
+
+ALTER TABLE ONLY ttg.privacy_ledger_outbox
+    ADD CONSTRAINT privacy_ledger_outbox_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: privacy_ledger_outbox privacy_ledger_outbox_seq_key; Type: CONSTRAINT; Schema: ttg; Owner: -
+--
+
+ALTER TABLE ONLY ttg.privacy_ledger_outbox
+    ADD CONSTRAINT privacy_ledger_outbox_seq_key UNIQUE (seq);
 
 
 --
@@ -532,6 +614,13 @@ ALTER TABLE ONLY ttg.writer_leases
 
 
 --
+-- Name: actor_identity_aliases_player; Type: INDEX; Schema: ttg; Owner: -
+--
+
+CREATE INDEX actor_identity_aliases_player ON ttg.actor_identity_aliases USING btree (player_id);
+
+
+--
 -- Name: admin_idempotency_keys_expires_at; Type: INDEX; Schema: ttg; Owner: -
 --
 
@@ -581,6 +670,20 @@ CREATE INDEX privacy_erase_requests_session ON ttg.privacy_erase_requests USING 
 
 
 --
+-- Name: privacy_ledger_outbox_pending; Type: INDEX; Schema: ttg; Owner: -
+--
+
+CREATE INDEX privacy_ledger_outbox_pending ON ttg.privacy_ledger_outbox USING btree (seq) WHERE (exported_at IS NULL);
+
+
+--
+-- Name: privacy_ledger_outbox_tombstone; Type: INDEX; Schema: ttg; Owner: -
+--
+
+CREATE INDEX privacy_ledger_outbox_tombstone ON ttg.privacy_ledger_outbox USING btree (tombstone_id);
+
+
+--
 -- Name: privacy_tombstones_actor; Type: INDEX; Schema: ttg; Owner: -
 --
 
@@ -592,6 +695,22 @@ CREATE INDEX privacy_tombstones_actor ON ttg.privacy_tombstones USING btree (act
 --
 
 CREATE UNIQUE INDEX sessions_one_active_per_village ON ttg.sessions USING btree (village_id) WHERE (lifecycle <> 'stopped'::text);
+
+
+--
+-- Name: actor_identity_aliases actor_identity_aliases_same_village_player_fk; Type: FK CONSTRAINT; Schema: ttg; Owner: -
+--
+
+ALTER TABLE ONLY ttg.actor_identity_aliases
+    ADD CONSTRAINT actor_identity_aliases_same_village_player_fk FOREIGN KEY (village_id, player_id) REFERENCES ttg.players(village_id, id) ON DELETE CASCADE;
+
+
+--
+-- Name: actor_identity_aliases actor_identity_aliases_village_fk; Type: FK CONSTRAINT; Schema: ttg; Owner: -
+--
+
+ALTER TABLE ONLY ttg.actor_identity_aliases
+    ADD CONSTRAINT actor_identity_aliases_village_fk FOREIGN KEY (village_id) REFERENCES ttg.villages(id) ON DELETE RESTRICT;
 
 
 --
@@ -664,6 +783,14 @@ ALTER TABLE ONLY ttg.players
 
 ALTER TABLE ONLY ttg.privacy_erase_requests
     ADD CONSTRAINT privacy_erase_requests_session_id_fkey FOREIGN KEY (session_id) REFERENCES ttg.sessions(id) ON DELETE RESTRICT;
+
+
+--
+-- Name: privacy_ledger_outbox privacy_ledger_outbox_tombstone_fk; Type: FK CONSTRAINT; Schema: ttg; Owner: -
+--
+
+ALTER TABLE ONLY ttg.privacy_ledger_outbox
+    ADD CONSTRAINT privacy_ledger_outbox_tombstone_fk FOREIGN KEY (tombstone_id) REFERENCES ttg.privacy_tombstones(id) ON DELETE RESTRICT;
 
 
 --

@@ -8,6 +8,14 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+type TtgActorIdentityAlias struct {
+	VillageID  pgtype.UUID
+	ActorKey   string
+	KeyVersion string
+	PlayerID   pgtype.UUID
+	CreatedAt  pgtype.Timestamptz
+}
+
 type TtgAdminIdempotencyKey struct {
 	AccountID      pgtype.UUID
 	Route          string
@@ -127,6 +135,18 @@ type TtgPrivacyEraseRequest struct {
 	AppliedAt         pgtype.Timestamptz
 	PrivacyEpoch      int64
 	RequestedBy       pgtype.UUID
+}
+
+type TtgPrivacyLedgerOutbox struct {
+	ID           pgtype.UUID
+	Seq          int64
+	TombstoneID  pgtype.UUID
+	Payload      []byte
+	CreatedAt    pgtype.Timestamptz
+	ExportedAt   pgtype.Timestamptz
+	LedgerAckRef pgtype.Text
+	Attempts     int32
+	LastError    pgtype.Text
 }
 
 type TtgPrivacyTombstone struct {
