@@ -15,7 +15,11 @@ reviewer_kind: automated
 # M01 acceptance record
 
 Milestone-level audit of all eight M01 work packages at revision
-`c69ae5549f7fcad5d17fe12e53a3dea6436fafb7`. Each row was checked against the
+`dc429781da1ed2757771bfa2fd9d726eefab6892` (CI run
+[41687406542](https://github.com/hung98dev/ttgqldl/actions/runs/41687406542):
+5 jobs, 64 steps, 0 failures). The audit began at `c69ae55`; the committed
+revision differs only by documentation, the prepared Unity workflow and the
+validator allowance documented below. Each row was checked against the
 code, the automated tests and the recorded evidence; a package is PASS only when
 all three agree.
 
@@ -43,7 +47,7 @@ workflow colour.
 | Implementation | `backend/cmd/server`, `backend/internal/app/{app,handlers,middleware}.go`, `backend/internal/config`, `backend/internal/telemetry` |
 | Tests | `backend/internal/app/app_test.go`; whole-module `go test ./...` (5 packages) and `go test -race ./...` in CI |
 | Evidence | `docs/evidence/M01-W0101.md` |
-| Revision | CI run 41685763210 on `c69ae55` (`backend` job) |
+| Revision | CI run 41687406542 on `dc42978` (`backend` job) |
 | Unmet prerequisite | none |
 
 ### W0102 - PostgreSQL development environment - **PASS**
@@ -54,7 +58,7 @@ workflow colour.
 | Implementation | `compose.dev.yaml`, `docker/postgres/initdb/001_roles.sh`, `tooling/dev-up`, `tooling/dev-down` |
 | Tests | Same image and initdb scripts started by the CI `backend` job; migration and privilege suites |
 | Evidence | `docs/evidence/M01-W0102.md` |
-| Revision | CI run 41685763210 on `c69ae55` |
+| Revision | CI run 41687406542 on `dc42978` |
 | Unmet prerequisite | none |
 
 ### W0103 - Schema, migrations, indexes, sqlc - **PASS**
@@ -65,7 +69,7 @@ workflow colour.
 | Implementation | `backend/db/migrations/00001..00004`, `backend/internal/schema`, `backend/db/schema.sql`, `backend/db/schema.fingerprint.json`, `backend/internal/db` |
 | Tests | `backend/test/integration/{schema,identity_aliases,roles,fingerprint,zz_migration_lifecycle}_test.go`; `sqlc diff` |
 | Evidence | `docs/evidence/M01-W0103.md` |
-| Revision | CI run 41685763210 on `c69ae55` |
+| Revision | CI run 41687406542 on `dc42978` |
 | Unmet prerequisite | none |
 
 ### W0104 - Unity project foundation - **PASS** (local execution)
@@ -87,7 +91,7 @@ workflow colour.
 | Implementation | `operator/` |
 | Tests | 76 Vitest/Testing-Library tests; `tsc --noEmit`; `eslint .`; `vite build`; DEMO guard build that must fail |
 | Evidence | `docs/evidence/M01-W0105.md` |
-| Revision | CI run 41685763210 on `c69ae55` (`frontend` job) |
+| Revision | CI run 41687406542 on `dc42978` (`frontend` job) |
 | Unmet prerequisite | none |
 
 ### W0106 - CI, security, milestone acceptance - **IN_PROGRESS**
@@ -98,7 +102,7 @@ workflow colour.
 | Implementation | `.github/workflows/ci.yml`, `.github/workflows/unity-editor-tests.yml`, `tooling/security-scan.ps1|.sh`, `tooling/sbom`, `.gitleaks.toml` |
 | Tests | backend/frontend/security/tooling jobs green; Unity **static** validator green; wrapper regression 21 checks |
 | Evidence | `docs/evidence/M01-W0106.md` |
-| Revision | CI run 41685763210 on `c69ae55` |
+| Revision | CI run 41687406542 on `dc42978` |
 | Unmet prerequisite | **licensed, isolated Unity runner** - real EditMode/PlayMode/build execution in CI. The workflow is prepared and fails closed while disabled; no runner is registered and no licence secret exists. |
 
 ### W0107 - Cross-platform tooling - **PASS**
@@ -109,7 +113,7 @@ workflow colour.
 | Implementation | `tooling/*.ps1`, `tooling/*.sh`, `tooling/doctor.ps1|.sh` |
 | Tests | `tooling/tooling-test.*`, shell syntax gate in CI, wrapper scripts exercised in this task |
 | Evidence | `docs/evidence/M01-W0107.md` |
-| Revision | CI run 41685763210 on `c69ae55` |
+| Revision | CI run 41687406542 on `dc42978` |
 | Unmet prerequisite | none |
 
 ### W0108 - Configuration and secrets - **PASS**
@@ -120,7 +124,7 @@ workflow colour.
 | Implementation | `backend/internal/config`, `.env.example`, `.gitignore`, operator demo guard |
 | Tests | `backend/internal/config` tests; gitleaks 0 findings; production bundle secret scan |
 | Evidence | `docs/evidence/M01-W0108.md` |
-| Revision | CI run 41685763210 on `c69ae55` |
+| Revision | CI run 41687406542 on `dc42978` |
 | Unmet prerequisite | none |
 
 ## Verification performed for this record
