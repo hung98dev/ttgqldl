@@ -20,6 +20,10 @@ tooling/
   unity-test.ps1|.sh       run Unity EditMode/PlayMode tests in the pinned editor
   unity-build.ps1|.sh      build the Windows standalone player
   unitycheck/              licence-free Unity project validation (CI gate)
+  unity-results.ps1        shared NUnit result evaluation (rejects zero-test runs)
+  unity-results.test.ps1   regression tests for that evaluation (no Unity needed)
+  operator-run.ps1|.sh     start the operator console (Vite) against the Go backend
+  operator-test.ps1|.sh    npm ci, typecheck, lint, tests and production build
   validate-plan.ps1|.sh    (M00) plan-validator wrapper
   reference-eval.ps1|.sh   (M00) golden-vector wrapper
   planvalidate/            canonical-plan consistency checker (Go, stdlib only)
@@ -44,6 +48,9 @@ Run them from anywhere; each resolves the repository root itself.
 | `./schema-dump.ps1` / `./schema-dump.sh` | Runs `pg_dump` inside the compose container and rewrites `backend/db/schema.sql` (the sqlc input), then writes `backend/db/schema.fingerprint.json` (tables, columns, constraints, indexes). Both are byte-reproducible and CI fails on drift. | 0 ok |
 | `./unity-test.ps1` / `./unity-test.sh` | Finds the pinned Unity 6000.6.7f1 editor (`TTG_UNITY_EDITOR`, the Hub install or `Unity` on PATH), verifies the exact version, runs EditMode and/or PlayMode tests and reports from the NUnit XML. A run without an XML result is never reported as success. | 0 pass, 1 failure, 2 blocked (editor/version/licence), 3 harness error |
 | `./unity-build.ps1` / `./unity-build.sh` | Verifies the editor, the pinned version and the Windows standalone module, builds `unity/Build/Windows/TTGQLDL.exe` and fails when the player is missing. | 0 built, 1 build failed, 2 blocked |
+| `./operator-run.ps1` / `./operator-run.sh` | Checks Node 24, installs from the lockfile when needed, and starts Vite on 127.0.0.1:5173 with `/healthz`, `/readyz` and `/admin/v1` proxied to the Go backend. `--demo` / `-Demo` enables the explicit fixture preview. | 0 ok, 2 toolchain blocked |
+| `./operator-test.ps1` / `./operator-test.sh` | `npm ci`, `npm run typecheck`, `npm run lint`, `npm run test -- --run`, `npm run build`, failing fast with the step's exit code. | 0 ok, 1 gate failed, 2 toolchain blocked |
+| `./unity-results.test.ps1` | Regression tests for the Unity result evaluation: a result file with zero tests or a fully skipped suite must fail. Runs without Unity. | 0 ok, 1 failure |
 | `go run ./unitycheck -root ..` | Validates the Unity project without a licence: pinned editor version, package manifest vs lockfile, `.meta` coverage for files and folders, duplicate guids, scene guid resolution, null `m_Script`, assembly boundaries, test-assembly gating, ignore rules. Runs in CI; it is **not** a substitute for executing the editor. | 0 ok, 1 findings |
 
 Typical loop:

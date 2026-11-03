@@ -109,6 +109,20 @@ for current in "${PLATFORMS[@]}"; do
     passed="$(grep -o 'passed="[0-9]*"' "${xml}" | head -n 1 | grep -o '[0-9]*' || echo 0)"
     failed="$(grep -o 'failed="[0-9]*"' "${xml}" | head -n 1 | grep -o '[0-9]*' || echo 0)"
     skipped="$(grep -o 'skipped="[0-9]*"' "${xml}" | head -n 1 | grep -o '[0-9]*' || echo 0)"
+    inconclusive="$(grep -o 'inconclusive="[0-9]*"' "${xml}" | head -n 1 | grep -o '[0-9]*' || echo 0)"
+    executed=$((total - skipped - inconclusive))
+
+    # An empty or fully skipped result proves nothing about the editor.
+    if [[ "${total}" -eq 0 ]]; then
+        log_fail "${current}: no tests were discovered or executed"
+        FAILED+=("${current}")
+        continue
+    fi
+    if [[ "${executed}" -le 0 ]]; then
+        log_fail "${current}: every test was skipped (${skipped} of ${total})"
+        FAILED+=("${current}")
+        continue
+    fi
 
     if [[ "${failed}" -gt 0 ]]; then
         log_fail "${current}: ${failed} of ${total} failed"

@@ -18,6 +18,7 @@ param(
 )
 
 . (Join-Path $PSScriptRoot '_common.ps1')
+. (Join-Path $PSScriptRoot 'unity-results.ps1')
 
 $script:RequiredUnityVersion = '6000.6.7f1'
 $root = Get-RepoRoot

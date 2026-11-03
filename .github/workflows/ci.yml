@@ -164,6 +164,72 @@ jobs:
         working-directory: .
         run: docker rm -f ttg-pg || true
 
+  frontend:
+    name: operator (typecheck, lint, tests, build)
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: operator
+    steps:
+      - name: Checkout
+        # v7.0.1 - verified tag SHA
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Node
+        # v6 - verified tag SHA (node24 runtime)
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: "24.21.0"
+          cache: npm
+          cache-dependency-path: operator/package-lock.json
+
+      - name: install from lockfile
+        run: npm ci --no-audit --no-fund
+
+      - name: lockfile consistency
+        run: |
+          node -e '
+          const pkg = require("./package.json");
+          const lock = require("./package-lock.json");
+          const root = lock.packages[""] || {};
+          const declared = { ...pkg.dependencies, ...pkg.devDependencies };
+          const problems = [];
+          if (lock.lockfileVersion < 3) problems.push(`lockfileVersion ${lock.lockfileVersion} is older than 3`);
+          for (const [name, version] of Object.entries(declared)) {
+            if (!/^\d+\.\d+\.\d+$/.test(version)) problems.push(`${name} is not pinned exactly (${version})`);
+            const locked = root.dependencies?.[name] ?? root.devDependencies?.[name];
+            if (locked !== version) problems.push(`${name} manifest=${version} lock=${locked}`);
+          }
+          if (problems.length) { console.error(problems.join("\n")); process.exit(1); }
+          console.log(`lockfile verified: ${Object.keys(declared).length} packages pinned exactly`);
+          '
+
+      - name: typecheck
+        run: npm run typecheck
+
+      - name: lint
+        run: npm run lint
+
+      - name: tests
+        run: npm run test -- --run
+
+      - name: production build
+        run: npm run build
+
+      # The production bundle must not carry privileged material. Demo mode is
+      # never enabled in CI, and no secret is present in the environment.
+      - name: bundle contains no credentials or database DSNs
+        run: |
+          set -euo pipefail
+          if grep -RInE 'AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{20,}|BEGIN (RSA|OPENSSH|EC) PRIVATE KEY|postgres://|ttg_app|ttg_owner' dist; then
+            echo "privileged material found in the production bundle" >&2
+            exit 1
+          fi
+          echo "bundle contains no credentials or DSNs"
+          if [ "${VITE_OPERATOR_DEMO:-}" = "true" ]; then
+            echo "VITE_OPERATOR_DEMO must not be enabled in CI" >&2
+            exit 1
+          fi
   unity:
     name: unity project (static, no editor)
     runs-on: ubuntu-24.04
@@ -225,6 +291,9 @@ jobs:
 
       - name: golden vectors
         run: go run ./refeval -check
+
+      - name: unity result evaluation tests
+        run: pwsh -NoProfile -File ./unity-results.test.ps1
 
       - name: shell script syntax
         working-directory: .
