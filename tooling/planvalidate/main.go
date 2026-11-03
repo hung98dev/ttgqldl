@@ -823,6 +823,11 @@ func (v *validator) checkConstants() {
 
 var evidenceName = regexp.MustCompile(`^(M\d{2})-(W\d{4})\.md$`)
 
+// acceptanceName is the milestone-level acceptance record. It is not a work
+// package, so it carries provenance (status/commit/utc) but no wp id and is not
+// registered as package evidence.
+var acceptanceName = regexp.MustCompile(`^(M\d{2})-ACCEPTANCE\.md$`)
+
 func (v *validator) loadEvidence() {
 	v.begin("evidence-load")
 	dir := v.abs(evidenceDir)
@@ -839,6 +844,20 @@ func (v *validator) loadEvidence() {
 		rec := &evRecord{File: rel}
 		m := evidenceName.FindStringSubmatch(e.Name())
 		if m == nil {
+			if acceptance := acceptanceName.FindStringSubmatch(e.Name()); acceptance != nil {
+				fields := evidenceFields(lines)
+				for _, required := range []string{"status", "commit", "utc", "reviewer", "reviewer_kind"} {
+					if strings.TrimSpace(fields[required]) == "" {
+						v.addf("evidence-load", sevError, rel, 0,
+							"milestone acceptance record is missing %q", required)
+					}
+				}
+				if fields["milestone"] != "" && fields["milestone"] != acceptance[1] {
+					v.addf("evidence-load", sevError, rel, 0,
+						"evidence milestone=%q disagrees with file name %s", fields["milestone"], acceptance[1])
+				}
+				continue
+			}
 			v.addf("evidence-load", sevError, rel, 0, "evidence file name must be Mxx-Wxxxx.md")
 			continue
 		}

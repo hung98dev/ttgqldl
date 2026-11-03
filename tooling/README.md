@@ -182,6 +182,13 @@ and review the diff in the same commit.
 A red run must block the merge to `main`; the validator is intentionally strict
 so that a status claim cannot outrun its evidence.
 
+Licensed Unity execution lives in a separate manual workflow,
+`.github/workflows/unity-editor-tests.yml`. It fails closed until the repository
+owner registers the `[self-hosted, Windows, X64, ttgqldl-unity]` runner with a
+Unity 6000.6.7f1 licence held in the protected `unity-licensed` environment and
+sets the repository variable `TTG_UNITY_RUNNER_ENABLED=true`. The milestone
+verdict is recorded in `docs/evidence/M01-ACCEPTANCE.md`.
+
 Unity EditMode/PlayMode execution and the Windows player build are **not** part of
 the CI pipeline: no licensed Unity runner is available and no licence secret may
 be committed. The `unity` job runs the licence-free validator only, and the
