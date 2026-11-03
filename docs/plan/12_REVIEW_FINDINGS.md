@@ -57,3 +57,6 @@ A separate integer approximation using wave5 boss, difficulty d=1, no prior loss
 
 ## Audit governance
 Future review adds rows or updates disposition IN THIS file only. Every newly discovered issue gets ID, severity, owning module, exact rule change and automated/manual QA ID; never create an alternative master/v3 plan. All 30 simulated reviewer roles are analytical perspectives, not identity claims or genuine external endorsements.
+
+## Final incremental security/engine findings
+TL06 extension: historical database backups predating a deletion cannot know later tombstones stored only inside the restored DB. The design now requires an independent durable encrypted deletion ledger and fail-closed restoration in 04/08, with QA-SEC-08. GP09 extension: Unity 6000.6.7f1 release notes list repeated LoadSceneAsync hang risk; the BroadcastWorld scene remains loaded and overlays display reconnect/recovery, with QA-VIS-02. These are design remediations requiring executable tests, not evidence of completed operations.

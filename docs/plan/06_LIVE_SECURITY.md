@@ -26,3 +26,7 @@ Command replay, duplicate ID, missing stable ID, 1,000 comments from one viewer,
 - Identity HMAC construction uses versioned secret with length-delimited provider,broadcaster,stable_user_id tuple; version rotation must retain permitted stable player continuity without storing raw provider IDs in events, WS or public UI.
 - Anti-flood per actor token bucket capacity10 and refill 0.5/s; duplicates of the same role are no-ops and cannot grant extra strength. Hard bounded 20k global queue; valid drop causes explicit DEGRADED+operator alert and release benchmark FAIL rather than silently claiming all were processed.
 - Moderation/erasure checks run BEFORE rendering; when actor_public_ref is hidden or erased, public snapshot no longer includes alias. Database recovery must replay deletion tombstones before rebroadcast.
+
+## Key rotation and deletion boundary
+Current + prior HMAC key versions are supplied from protected secret storage; never place keys in DB/asset/UI. A stable provider ID received lawfully may be hashed with old/new keys transiently in memory to resolve actor_identity_aliases; raw ID is never written to event logs. On privacy erase remove all aliases and queued roles after snapshot/anonymization. Externally durable encrypted deletion ledger is mandatory for recovery from backups older than deletion. Unknown ledger state blocks restore of audience data.
+

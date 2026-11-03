@@ -14,3 +14,5 @@ Product: 9:16 cooperative chibi village survival. Three input commands XAY/THU/D
 Hard requirements say MUST/SHALL. If contradictory: block the affected requirement, repair the owning module and dependent fixtures/acceptance with an explicit decision; independent tasks may continue. No unstated default or fabricated PASS. Work solely on main; run pre-commit tests, verify CI post-commit and revert/repair regressions. Evidence must contain code SHA, exact commands, OS/hardware, test inputs, expected/actual output, CI artifact, review provenance.
 
 **All authoritative links and AI read order:** [00_INDEX.md](00_INDEX.md).
+
+Verified official patch references (as of 2026-11-03): https://go.dev/dl/ ; https://www.postgresql.org/docs/release/18.6/ ; https://www.postgresql.org/about/news/postgresql-19-rc-1-released-3409/ (19 remains RC) ; https://unity.com/releases/editor/whats-new/6000.6.7f1 (known issues must be tested). Version selection is pinned for reproducibility; any future GA upgrade requires CI + migration approval, not unreviewed automatic upgrade.

@@ -79,3 +79,7 @@ QA-GATE-03 Separate completion states: engineering-code-built, automated QA PASS
 
 ## Baseline sanity evidence classification
 Exploratory numerical projections in 12_REVIEW_FINDINGS.md are NOT executable game tests and never satisfy QA-BAL-03/04. The first implementation must produce independent Go golden fixtures and deterministic seed/replay tests. The documentation audit has not executed Unity/Golang/PostgreSQL tests yet; matrix status remains IN_PROGRESS for M00 and NOT_STARTED for M01–M09.
+
+QA-SEC-08 Erase participant after full PostgreSQL backup; export tombstone to independent ledger, restore old DB snapshot, apply newer ledger, assert no private account/alias/queued event resurrected; missing external ledger => startup FAILS CLOSED.
+QA-VIS-02 Unity 6000.6.7f1 continuous 2h streaming build survives repeated pause/source disconnect/recovery without SceneManager.LoadSceneAsync hang; logs/frame metrics recorded.
+
