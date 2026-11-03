@@ -348,6 +348,9 @@ jobs:
       - name: unity result evaluation tests
         run: pwsh -NoProfile -File ./unity-results.test.ps1
 
+      - name: unity log sanitizer tests
+        run: pwsh -NoProfile -File ./sanitize-unity-log.test.ps1
+
       - name: unity wrapper regression tests
         run: pwsh -NoProfile -File ./unity-test.wrapper.test.ps1
 

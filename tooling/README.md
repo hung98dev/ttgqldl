@@ -27,6 +27,9 @@ tooling/
   security-scan.ps1|.sh    govulncheck, gosec, npm audit, gitleaks, actionlint, SBOM
   sbom/                    deterministic CycloneDX inventory + container pin check
   unity-test.wrapper.test.ps1  wrapper-level Unity result acceptance tests
+  cmd/unitygate/           acceptance preflight (exact main HEAD, owner switches)
+  sanitize-unity-log.ps1   redacts secrets/identities from Unity logs before upload
+  sanitize-unity-log.test.ps1  regression tests for that sanitizer
   cmd/unityfake/           test-only stand-in editor for those tests
   validate-plan.ps1|.sh    (M00) plan-validator wrapper
   reference-eval.ps1|.sh   (M00) golden-vector wrapper
@@ -55,6 +58,8 @@ Run them from anywhere; each resolves the repository root itself.
 | `./operator-run.ps1` / `./operator-run.sh` | Checks Node 24, installs from the lockfile when needed, and starts Vite on 127.0.0.1:5173 with `/healthz`, `/readyz` and `/admin/v1` proxied to the Go backend. `--demo` / `-Demo` enables the explicit fixture preview. | 0 ok, 2 toolchain blocked |
 | `./operator-test.ps1` / `./operator-test.sh` | `npm ci`, `npm run typecheck`, `npm run lint`, `npm run test -- --run`, `npm run build`, failing fast with the step's exit code. | 0 ok, 1 gate failed, 2 toolchain blocked |
 | `./security-scan.ps1` / `./security-scan.sh` | Runs the pinned security gates (govulncheck, gosec, npm audit high/critical, gitleaks, actionlint) and `go run ./sbom` for the CycloneDX inventory and container digest pinning. A missing scanner exits 2 (BLOCKED), never green. Reports land in `security-reports/` (gitignored; CI uploads them). | 0 ok, 1 finding, 2 blocked |
+| `go run ./cmd/unitygate ...` | The licensed-Unity acceptance preflight: requires runner + environment owner switches, `refs/heads/main`, the expected repository, and requested == checked out == freshly fetched `origin/main` tip. Ancestors are rejected. | 0 accepted, 1 rejected |
+| `./sanitize-unity-log.ps1` / `.test.ps1` | Rewrites a Unity log with secrets, licence serials, OS account names, licence-channel ids, home paths and machine ids removed, then re-scans its own output. Exit 3 means a residual pattern survived and the log must not be uploaded. | 0 clean, 2 unreadable, 3 residual |
 | `./unity-test.wrapper.test.ps1` | Executes the real Unity wrapper against a fake editor and asserts non-zero exits for zero-test, all-skipped, inconsistent-counter, corrupt, missing, stale and failed results. | 0 ok, 1 failure |
 | `./unity-results.test.ps1` | Regression tests for the Unity result evaluation: a result file with zero tests or a fully skipped suite must fail. Runs without Unity. | 0 ok, 1 failure |
 | `go run ./unitycheck -root ..` | Validates the Unity project without a licence: pinned editor version, package manifest vs lockfile, `.meta` coverage for files and folders, duplicate guids, scene guid resolution, null `m_Script`, assembly boundaries, test-assembly gating, ignore rules. Runs in CI; it is **not** a substitute for executing the editor. | 0 ok, 1 findings |

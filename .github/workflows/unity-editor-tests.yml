@@ -2,24 +2,32 @@ name: unity-editor-tests
 
 # Licensed Unity execution (M01-W0106 acceptance gate).
 #
-# This workflow is intentionally manual and fails closed:
-#   - it never runs on push or pull_request, so a privileged Windows machine can
-#     never execute untrusted code from a fork;
-#   - it refuses to start until the repository owner sets the repository variable
-#     TTG_UNITY_RUNNER_ENABLED=true (a deliberate, auditable switch);
-#   - the requested SHA must be the current main HEAD, verified against
-#     origin/main, so only a reviewed main revision can be accepted;
-#   - it uses the same wrapper developers run locally (tooling/unity-test.ps1),
-#     never a looser invocation;
-#   - it records the real SHA, editor version and test counts, and uploads only
-#     sanitized XML/logs/summaries (no licence files, tokens or machine ids).
+# Security model
+#   - manual workflow_dispatch only; never push, never pull_request, so a
+#     privileged Windows machine can never execute untrusted fork code;
+#   - contents: read, no write token, no repository secrets beyond the protected
+#     environment;
+#   - two owner switches must be "true": TTG_UNITY_RUNNER_ENABLED (a licensed
+#     runner exists) and TTG_UNITY_ENV_CONFIRMED (the `unity-licensed`
+#     environment exists WITH protection rules). Referencing a non-existent
+#     environment would auto-create an unprotected one, so the second switch is
+#     what prevents silent, unprotected runs;
+#   - tooling/cmd/unitygate enforces: ref == refs/heads/main, repository identity,
+#     full 40-hex SHA, requested == checked out == freshly fetched origin/main
+#     tip (exact equality; a stale ancestor is rejected - covered by Go tests);
+#   - every job re-checks its own HEAD and repository before doing work;
+#   - unity/TestResults logs are sanitized before upload; only sanitized extracts,
+#     NUnit XML, build summary and acceptance.json are uploaded. A sanitizer that
+#     finds a residual high-risk pattern fails the job instead of uploading.
 #
-# Infrastructure this needs and that this repository does NOT provide:
+# Infrastructure this needs and that this repository does NOT provide today
+#   (verified 2026-11-03: the environments API reports total_count = 0 and this
+#   workflow has 0 runs):
 #   1. an isolated Windows runner labelled [self-hosted, Windows, X64, ttgqldl-unity]
-#   2. Unity 6000.6.7f1 with the Windows standalone module installed there
-#   3. a Unity licence activated on that runner through the protected environment
-#      `unity-licensed` (secrets held in GitHub, never in the repository)
-# Registering a runner and holding the licence are repository-owner actions.
+#   2. Unity 6000.6.7f1 + Windows Standalone module on that runner
+#   3. a Unity licence activated on that runner (licence held in the protected
+#      environment, never in the repository)
+# Registering a runner and holding a licence are repository-owner actions.
 
 on:
   workflow_dispatch:
@@ -38,153 +46,213 @@ concurrency:
 
 env:
   UNITY_VERSION: '6000.6.7f1'
-  # Pinned so the accepted revision is unambiguous.
-  CHECKOUT_SHA: 3d3c42e5aac5ba805825da76410c181273ba90b1
-  UPLOAD_ARTIFACT_SHA: b7c566a772e6b6bfb58ed0dc250532a479d7789f
+  EXPECTED_REPOSITORY: 'hung98dev/ttgqldl'
 
 jobs:
   preflight:
-    name: preflight (main-only, runner enabled)
+    name: preflight (exact main HEAD, owner switches)
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     outputs:
       sha: ${{ steps.gate.outputs.sha }}
-      enabled: ${{ steps.gate.outputs.enabled }}
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           fetch-depth: 0
 
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e
+        with:
+          go-version: '1.27.3'
+          cache: false
+
       - name: gate
         id: gate
         env:
           RUNNER_ENABLED: ${{ vars.TTG_UNITY_RUNNER_ENABLED }}
+          ENV_CONFIRMED: ${{ vars.TTG_UNITY_ENV_CONFIRMED }}
           REQUESTED_SHA: ${{ inputs.confirm_main_sha }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           set -euo pipefail
-          sha="$(git rev-parse HEAD)"
+          checked="$(git rev-parse HEAD)"
+          remote_main="$(git ls-remote origin refs/heads/main | awk '{print $1}')"
+          echo "checked-out: ${checked}"
+          echo "origin/main: ${remote_main}"
+          if ! ( cd tooling && go run ./cmd/unitygate \
+              -runner-enabled "${RUNNER_ENABLED}" \
+              -environment-ready "${ENV_CONFIRMED}" \
+              -ref "${GITHUB_REF}" \
+              -repository "${GITHUB_REPOSITORY}" \
+              -expected-repository "${EXPECTED_REPOSITORY}" \
+              -requested-sha "${REQUESTED_SHA}" \
+              -checkout-sha "${checked}" \
+              -remote-main-sha "${remote_main}" \
+              -json ) | tee gate.json; then
+            echo "::error::preflight gate rejected this run; see gate.json reasons above"
+            exit 1
+          fi
+          sha="$(python3 -c 'import json;print(json.load(open("gate.json"))["sha"])')"
+          if [[ -z "${sha}" ]]; then
+            echo "::error::gate did not return an accepted SHA"
+            exit 1
+          fi
           echo "sha=${sha}" >> "${GITHUB_OUTPUT}"
-          echo "checked-out ${sha}"
 
-          if [[ "${RUNNER_ENABLED}" != "true" ]]; then
-            echo "::error::TTG_UNITY_RUNNER_ENABLED is not 'true'. No licensed Unity runner is configured for this repository, so W0106 cannot be accepted. See docs/evidence/M01-W0106.md section 2 for the exact infrastructure that must be provisioned."
-            exit 1
-          fi
-
-          if [[ ! "${REQUESTED_SHA}" =~ ^[0-9a-f]{40}$ ]]; then
-            echo "::error::confirm_main_sha must be a full 40-character commit SHA"
-            exit 1
-          fi
-
-          git fetch --quiet origin main
-          if [[ "${REQUESTED_SHA}" != "${sha}" ]]; then
-            echo "::error::requested ${REQUESTED_SHA} is not the checked-out main HEAD ${sha}"
-            exit 1
-          fi
-          if ! git merge-base --is-ancestor "${sha}" origin/main; then
-            echo "::error::${sha} is not on origin/main; only main revisions can be accepted"
-            exit 1
-          fi
-
-          echo "enabled=true" >> "${GITHUB_OUTPUT}"
-          echo "accepted revision ${sha}"
+      - name: upload gate decision
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        with:
+          name: unity-preflight
+          path: gate.json
+          if-no-files-found: warn
+          retention-days: 14
 
   editmode:
     name: edit mode (licensed editor)
     needs: preflight
-    if: needs.preflight.outputs.enabled == 'true'
     runs-on: [self-hosted, Windows, X64, ttgqldl-unity]
     environment: unity-licensed
+    timeout-minutes: 45
     steps:
-      - name: Checkout
+      - name: Checkout approved revision
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           ref: ${{ needs.preflight.outputs.sha }}
           clean: true
+          fetch-depth: 1
+
+      - name: verify revision and repository
+        shell: pwsh
+        env:
+          EXPECTED_SHA: ${{ needs.preflight.outputs.sha }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $sha = (git rev-parse HEAD).Trim()
+          $remote = (git config --get remote.origin.url)
+          Write-Host "checked-out revision: $sha"
+          Write-Host "repository: $remote"
+          if ($sha -ne $env:EXPECTED_SHA) { throw "checkout mismatch: $sha != $env:EXPECTED_SHA" }
+          if ($env:GITHUB_REPOSITORY -ne 'hung98dev/ttgqldl') { throw "unexpected repository $env:GITHUB_REPOSITORY" }
+          if ($remote -notmatch 'hung98dev/ttgqldl') { throw "unexpected remote $remote" }
 
       - name: verify editor and run EditMode suite
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          $sha = (git rev-parse HEAD).Trim()
-          Write-Host "checked-out revision: $sha"
-          if ($sha -ne '${{ needs.preflight.outputs.sha }}') {
-            throw "checkout mismatch: $sha"
-          }
           ./tooling/unity-test.ps1 -Platform EditMode
 
-      - name: upload edit mode results
+      - name: sanitize editor log
+        if: always()
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $log = 'unity/TestResults/editmode.log'
+          if (-not (Test-Path $log)) {
+            Write-Host '::warning::no editor log was produced'
+            exit 0
+          }
+          ./tooling/sanitize-unity-log.ps1 -InputPath $log -OutputPath artifacts/logs/editmode.sanitized.log
+          if ($LASTEXITCODE -ne 0) { throw "sanitizer refused the log (exit $LASTEXITCODE); not uploading" }
+
+      - name: upload edit mode evidence
         if: always()
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         with:
           name: unity-editmode-results
           path: |
             unity/TestResults/editmode.xml
-            unity/TestResults/editmode.log
+            artifacts/logs/editmode.sanitized.log
           if-no-files-found: warn
           retention-days: 14
 
   playmode:
     name: play mode (licensed editor)
     needs: preflight
-    if: needs.preflight.outputs.enabled == 'true'
     runs-on: [self-hosted, Windows, X64, ttgqldl-unity]
     environment: unity-licensed
+    timeout-minutes: 45
     steps:
-      - name: Checkout
+      - name: Checkout approved revision
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           ref: ${{ needs.preflight.outputs.sha }}
           clean: true
+          fetch-depth: 1
+
+      - name: verify revision and repository
+        shell: pwsh
+        env:
+          EXPECTED_SHA: ${{ needs.preflight.outputs.sha }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $sha = (git rev-parse HEAD).Trim()
+          if ($sha -ne $env:EXPECTED_SHA) { throw "checkout mismatch: $sha != $env:EXPECTED_SHA" }
+          if ($env:GITHUB_REPOSITORY -ne 'hung98dev/ttgqldl') { throw "unexpected repository $env:GITHUB_REPOSITORY" }
 
       - name: verify editor and run PlayMode suite
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          $sha = (git rev-parse HEAD).Trim()
-          if ($sha -ne '${{ needs.preflight.outputs.sha }}') {
-            throw "checkout mismatch: $sha"
-          }
           ./tooling/unity-test.ps1 -Platform PlayMode
 
-      - name: upload play mode results
+      - name: sanitize editor log
+        if: always()
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $log = 'unity/TestResults/playmode.log'
+          if (-not (Test-Path $log)) {
+            Write-Host '::warning::no editor log was produced'
+            exit 0
+          }
+          ./tooling/sanitize-unity-log.ps1 -InputPath $log -OutputPath artifacts/logs/playmode.sanitized.log
+          if ($LASTEXITCODE -ne 0) { throw "sanitizer refused the log (exit $LASTEXITCODE); not uploading" }
+
+      - name: upload play mode evidence
         if: always()
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         with:
           name: unity-playmode-results
           path: |
             unity/TestResults/playmode.xml
-            unity/TestResults/playmode.log
+            artifacts/logs/playmode.sanitized.log
           if-no-files-found: warn
           retention-days: 14
 
   player-build:
     name: windows player build (licensed editor)
     needs: preflight
-    if: needs.preflight.outputs.enabled == 'true'
     runs-on: [self-hosted, Windows, X64, ttgqldl-unity]
     environment: unity-licensed
+    timeout-minutes: 60
     steps:
-      - name: Checkout
+      - name: Checkout approved revision
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           ref: ${{ needs.preflight.outputs.sha }}
           clean: true
+          fetch-depth: 1
 
       - name: build Windows x64 player
         shell: pwsh
+        env:
+          EXPECTED_SHA: ${{ needs.preflight.outputs.sha }}
         run: |
           $ErrorActionPreference = 'Stop'
+          $sha = (git rev-parse HEAD).Trim()
+          if ($sha -ne $env:EXPECTED_SHA) { throw "checkout mismatch: $sha != $env:EXPECTED_SHA" }
           ./tooling/unity-build.ps1
           $player = 'unity/Build/Windows/TTGQLDL.exe'
           if (-not (Test-Path $player)) { throw "player missing: $player" }
-          $size = (Get-Item $player).Length
           $summary = [ordered]@{
-            revision    = (git rev-parse HEAD).Trim()
+            revision    = $sha
             unity       = '6000.6.7f1'
             target      = 'StandaloneWindows64'
-            player      = $player
-            playerBytes = $size
+            player      = 'TTGQLDL.exe'
+            playerBytes = (Get-Item $player).Length
             builtAtUtc  = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')
             runnerOs    = $env:RUNNER_OS
             runnerArch  = $env:RUNNER_ARCH
@@ -193,68 +261,87 @@ jobs:
           $summary | ConvertTo-Json | Set-Content artifacts/build-summary.json
           Write-Host ($summary | ConvertTo-Json -Compress)
 
-      - name: upload build summary
+      - name: sanitize build log
+        if: always()
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $log = 'unity/TestResults/build.log'
+          if (-not (Test-Path $log)) {
+            Write-Host '::warning::no build log was produced'
+            exit 0
+          }
+          ./tooling/sanitize-unity-log.ps1 -InputPath $log -OutputPath artifacts/logs/build.sanitized.log
+          if ($LASTEXITCODE -ne 0) { throw "sanitizer refused the build log (exit $LASTEXITCODE); not uploading" }
+
+      - name: upload build evidence
         if: always()
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         with:
           name: unity-build-summary
           path: |
             artifacts/build-summary.json
-            unity/TestResults/build.log
+            artifacts/logs/build.sanitized.log
           if-no-files-found: warn
           retention-days: 14
 
   acceptance:
-    name: acceptance report (executed counts)
+    name: acceptance (independent evidence check)
     needs: [preflight, editmode, playmode, player-build]
-    if: needs.preflight.outputs.enabled == 'true'
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
-      - name: download results
+      - name: download evidence
         uses: actions/download-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         with:
           path: artifacts
 
-      - name: build machine-readable acceptance report
+      - name: verify evidence and write acceptance report
         shell: pwsh
+        env:
+          EXPECTED_SHA: ${{ needs.preflight.outputs.sha }}
         run: |
           $ErrorActionPreference = 'Stop'
           . ./tooling/unity-results.ps1
-          $sha = '${{ needs.preflight.outputs.sha }}'
+
           $report = [ordered]@{
-            revision   = $sha
+            revision   = $env:EXPECTED_SHA
             unity      = '6000.6.7f1'
             editmode   = $null
             playmode   = $null
             build      = $null
             acceptedAt = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')
           }
+
           foreach ($platform in @('editmode', 'playmode')) {
             $xml = Join-Path 'artifacts' "unity-$platform-results" "$platform.xml"
-            if (-not (Test-Path $xml)) {
-              throw "$platform result file is missing; refusing to report acceptance"
-            }
+            if (-not (Test-Path $xml)) { throw "$platform NUnit XML is missing" }
             $summary = Get-UnityTestSummary -XmlPath $xml
-            if ($summary.Problems.Count -gt 0) {
-              throw "$platform result is not acceptable: $($summary.Problems -join '; ')"
-            }
+            if ($summary.Problems.Count -gt 0) { throw "$platform result is not acceptable: $($summary.Problems -join '; ')" }
             if ($summary.Failed -gt 0) { throw "$platform has $($summary.Failed) failing tests" }
             $report[$platform] = [ordered]@{
               total = $summary.Total; passed = $summary.Passed; failed = $summary.Failed
               skipped = $summary.Skipped; executed = $summary.Executed
             }
           }
-          if ($report.editmode.executed -lt 56) { throw "EditMode executed $($report.editmode.executed) < 56 baseline" }
-          if ($report.playmode.executed -lt 7) { throw "PlayMode executed $($report.playmode.executed) < 7 baseline" }
-          $buildJson = Join-Path 'artifacts' 'unity-build-summary' 'build-summary.json'
-          if (-not (Test-Path $buildJson)) { throw 'build summary is missing' }
-          $report.build = Get-Content $buildJson -Raw | ConvertFrom-Json
+          if ($report.editmode.executed -lt 56) { throw "EditMode executed $($report.editmode.executed), baseline is 56" }
+          if ($report.playmode.executed -lt 7) { throw "PlayMode executed $($report.playmode.executed), baseline is 7" }
+
+          $buildPath = Join-Path 'artifacts' 'unity-build-summary' 'build-summary.json'
+          if (-not (Test-Path $buildPath)) { throw 'build summary is missing' }
+          $build = Get-Content $buildPath -Raw | ConvertFrom-Json
+          if ($build.revision -ne $env:EXPECTED_SHA) { throw "build summary revision $($build.revision) != accepted $($env:EXPECTED_SHA)" }
+          if ($build.unity -ne '6000.6.7f1') { throw "build summary unity $($build.unity)" }
+          if ($build.target -ne 'StandaloneWindows64') { throw "build summary target $($build.target)" }
+          if ([int]$build.playerBytes -le 0) { throw 'build summary reports an empty player' }
+          $report.build = $build
+
           New-Item -ItemType Directory -Force -Path artifacts/acceptance | Out-Null
           $report | ConvertTo-Json -Depth 5 | Set-Content artifacts/acceptance/acceptance.json
-          Write-Host ($report | ConvertTo-Json -Depth 5)
+          Get-Content artifacts/acceptance/acceptance.json
 
       - name: upload acceptance report
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f

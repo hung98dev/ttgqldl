@@ -58,7 +58,7 @@ workflow colour.
 | Implementation | `compose.dev.yaml`, `docker/postgres/initdb/001_roles.sh`, `tooling/dev-up`, `tooling/dev-down` |
 | Tests | Same image and initdb scripts started by the CI `backend` job; migration and privilege suites |
 | Evidence | `docs/evidence/M01-W0102.md` |
-| Revision | CI run 41687406542 on `dc42978` |
+| Revision | CI run 41687406542 on `dc42978`; gate hardening committed later |
 | Unmet prerequisite | none |
 
 ### W0103 - Schema, migrations, indexes, sqlc - **PASS**
@@ -69,7 +69,7 @@ workflow colour.
 | Implementation | `backend/db/migrations/00001..00004`, `backend/internal/schema`, `backend/db/schema.sql`, `backend/db/schema.fingerprint.json`, `backend/internal/db` |
 | Tests | `backend/test/integration/{schema,identity_aliases,roles,fingerprint,zz_migration_lifecycle}_test.go`; `sqlc diff` |
 | Evidence | `docs/evidence/M01-W0103.md` |
-| Revision | CI run 41687406542 on `dc42978` |
+| Revision | CI run 41687406542 on `dc42978`; gate hardening committed later |
 | Unmet prerequisite | none |
 
 ### W0104 - Unity project foundation - **PASS** (local execution)
@@ -102,8 +102,8 @@ workflow colour.
 | Implementation | `.github/workflows/ci.yml`, `.github/workflows/unity-editor-tests.yml`, `tooling/security-scan.ps1|.sh`, `tooling/sbom`, `.gitleaks.toml` |
 | Tests | backend/frontend/security/tooling jobs green; Unity **static** validator green; wrapper regression 21 checks |
 | Evidence | `docs/evidence/M01-W0106.md` |
-| Revision | CI run 41687406542 on `dc42978` |
-| Unmet prerequisite | **licensed, isolated Unity runner** - real EditMode/PlayMode/build execution in CI. The workflow is prepared and fails closed while disabled; no runner is registered and no licence secret exists. |
+| Revision | CI run 41687406542 on `dc42978`; gate hardening committed later |
+| Unmet prerequisite | **licensed, isolated Unity runner** - real EditMode/PlayMode/build execution in CI. Verified 2026-11-03: environments API `total_count: 0` (the `unity-licensed` environment does not exist) and the workflow has 0 runs. The workflow fails closed on two owner switches and on an exact-main-HEAD gate (`tooling/cmd/unitygate`), so it cannot be satisfied by a stale or unprotected run. |
 
 ### W0107 - Cross-platform tooling - **PASS**
 
@@ -113,7 +113,7 @@ workflow colour.
 | Implementation | `tooling/*.ps1`, `tooling/*.sh`, `tooling/doctor.ps1|.sh` |
 | Tests | `tooling/tooling-test.*`, shell syntax gate in CI, wrapper scripts exercised in this task |
 | Evidence | `docs/evidence/M01-W0107.md` |
-| Revision | CI run 41687406542 on `dc42978` |
+| Revision | CI run 41687406542 on `dc42978`; gate hardening committed later |
 | Unmet prerequisite | none |
 
 ### W0108 - Configuration and secrets - **PASS**
@@ -124,7 +124,7 @@ workflow colour.
 | Implementation | `backend/internal/config`, `.env.example`, `.gitignore`, operator demo guard |
 | Tests | `backend/internal/config` tests; gitleaks 0 findings; production bundle secret scan |
 | Evidence | `docs/evidence/M01-W0108.md` |
-| Revision | CI run 41687406542 on `dc42978` |
+| Revision | CI run 41687406542 on `dc42978`; gate hardening committed later |
 | Unmet prerequisite | none |
 
 ## Verification performed for this record
@@ -139,6 +139,8 @@ workflow colour.
 | Reference golden vectors | PASS |
 | Unity static validator | PASS 7 checks |
 | Unity result + wrapper regression | 13 + 21 checks |
+| Unity acceptance gate tests | 10 Go tests (stale ancestor, unrelated SHA, invalid SHA, non-main ref, disabled flag, unconfirmed environment, foreign repo) |
+| Unity log sanitizer | 25 checks, including the fail-closed exit-3 path; real logs redact usernames, paths and licence channels |
 | Unity EditMode / PlayMode (licensed workstation) | 56 / 7 passed, 0 skipped |
 | Operator typecheck / lint / tests / build | 0 / 0 / 76 / built |
 | govulncheck / gosec | 0 / 0 |
