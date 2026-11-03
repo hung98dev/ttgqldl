@@ -27,6 +27,6 @@
 7. When modules conflict, stop the affected package, document the conflict and correct the owning module(s); independent unblocked work can proceed. Ownership is strict: 01 scope, 02 gameplay, 03 time/order, 04 persistence, 05 wire, 06 live/security, 07 visuals, 08 ops, 09 QA, 10 status, 11 external gates.
 
 ## Product/release boundaries
-P0 is a mock/replay standalone game only after objective tests and real production assets. P1 is genuine TikTok LIVE and remains BLOCKED until expressly permitted source access, account consent, legal/asset rights, moderation and real-stream tests. AI cannot grant permissions or forge human assessment. Generated source, schema, fixtures and evidence are work outputs, not competing plan files.
+P0 is a mock/replay standalone game only after objective tests and real production assets. M00 is IN_PROGRESS after cross-module review; implementation tests have NOT run. P1 is genuine TikTok LIVE and remains BLOCKED until expressly permitted source access, account consent, legal/asset rights, moderation and real-stream tests. AI cannot grant permissions or forge human assessment. Generated source, schema, fixtures and evidence are work outputs, not competing plan files.
 
 Every module should remain focused and ideally under 12 KB; do not concatenate into giant MASTER_PLAN.md or create a second version of the plan.

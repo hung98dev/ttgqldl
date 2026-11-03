@@ -4,7 +4,7 @@
 All test cases MUST be executable and reproducible, or explicitly identified as a manual human test. A spec is never evidence that code works. Every PASS requires SHA + command + fixture + time + environment + log artifact; human-required tests use real human signature. A missing license/device/credential = BLOCKED, not PASS. The required baseline host is specified in 07_OPERATIONS, and any other tested hardware recorded verbatim.
 
 ## Mandatory test IDs
-QA-GOV-01 master is only normative source, main-only branch policy, no hidden PR dependency.
+QA-GOV-01 docs/plan/00_INDEX.md and its topic-owned modules are the only normative plan, main-only branch policy, no hidden PR dependency.
 QA-GOV-02 pinned official versions, exact checksums/lockfiles, Docker image digest.
 QA-MAT-01 implementation matrix dependencies are DAG; SQL migrations available before DB-dependent work.
 QA-CMD-01 exact Vietnamese command normalization including diacritics, U+0111, NFKC, whitespace, invalid punctuation.
@@ -16,8 +16,8 @@ QA-SIM-01 exact logical phase ticks 0,1599,1600,1799,1800,2599,2600,2799,2800,29
 QA-SIM-02 mandatory deterministic reducer operation order, integer rounding, lane redistribution.
 QA-SIM-03 boss spawns before combat at t2600; t2800 final combat before results.
 QA-SIM-04 WAITING without players and pause/disconnect freeze.
-QA-SIM-05 defeat inventory penalty and recovery, level retention; no overflow/negative.
-QA-BAL-01 simulated P=1,3,10,100,1000,10000 at 0/20/40/60/100% fighter mixes, d=1,5,10 and boss/nonboss; battle must end within 300s, no divide by zero, no mathematically unwinnable recurrence after losses with at least one fighter or low-P NPC militia.
+QA-SIM-05 defeat freezes economy/combat and prevents any post-defeat XP; loss penalty, 250 HP recovery, level retention and no overflow/negative.
+QA-BAL-01 simulated P=1,3,4,5,10,30,100,1000,10000 at 0/20/40/60/100% fighter mixes, d=1,5,10 and boss/nonboss; battle must end within 300s, no divide by zero, no mathematically unwinnable recurrence after losses with at least one fighter or low-P NPC militia.
 QA-BAL-02 1,000 generated session/wave fixtures, test transparent scaling, bounded XP, resource and load. Target 65-80% first-three-wave win rate is hypothesis, NOT mandatory or faked until viewer research.
 QA-ECO-01 construction/repair, one upgrade max per boundary, resource caps, vote deductions and rewards exactly once.
 QA-VOTE-01 close boundary t1200, ties A>B>C, insufficient-resource fallback and no invalid ballot.
@@ -50,3 +50,29 @@ For each Mxx-Wxxxx: docs/evidence/Mxx-Wxxxx.md contains milestone, requirement I
 
 ## Required CI stages
 Go test ./... + -race, fuzz seeds, sqlc/generation check, goose migrate up/down PG18.6, determinism golden, OpenAPI/JSON schema contract tests, security SAST/secret/SBOM/license, Unity EditMode/PlayMode with license, TS UI tests, k6/Go load harness on dedicated runner. Manual OBS, privacy, streamer and legal gates are never spoofed by headless CI.
+
+## Additional binding QA cases for audit gaps
+QA-SIM-06 First join on WAITING=-1 initializes tick0 only; 10Hz execution never calls a tick outside [0,2999] for gameplay; rollover tick3000 is a control boundary only.
+QA-SIM-07 P=0 WAITING never creates fake viewers, unattended losses or background enemy damage; queued RESULTS players auto-start wave on rollover.
+QA-SIM-08 At boss wave all ordinary enemies can die before tick2600, but BOSS_INCOMING remains; boss spawn/combat at2600 then2800, victory banner only after t2800.
+QA-SIM-09 DEFEATED before t2800 skips ALL later builder/economy/XP/combat effects; settlement once.
+QA-CMD-04 First role switch after joining immediately allowed; next role switch rejected until last successful switch+600 ticks; duplicate messages never reset cooldown.
+QA-BAL-03 With d=1, no recovery modifier, wave_no=5 boss, population P=10 and builders2,guards2,fighters6: ordinary base_hp=162, boss_hp=33; fighter attack per combat interval=40 (18*isqrt(6)+militia4). For P=30 with builders8,guards8,fighters14: base_hp=238, boss_hp=48, attack=54. These are EXPECTED mathematical vectors, not completed Go tests. They MUST become golden Go fixtures asserting exact tick-by-tick outcomes and win at tick2800 under clean starting wall/hall/resources.
+QA-BAL-04 Cross-check reference combat implementation against an independently implemented evaluator for each population and role mix; if any case contradicts spec, mark M02 FAIL and correct math before app/UI.
+QA-DB-06 Queue NEXT-wave input_seq50 and later current-wave input_seq51; process current event once, preserve future event for next wave and apply once at tick0 after rollover. Reject use of one global applied-sequence cursor.
+QA-DB-07 Writer lease fencing and batch order: source 1k/s through batch<=256/50ms, commit ACK only after persistence; mixed operator pause + source outage + DB outage does not advance tick.
+QA-DB-08 Restore after privacy deletion must not recreate alias, player mapping, pending votes or next-wave memberships; verify tombstone ledger and privacy_epoch across snapshot/replay.
+QA-API-03 Clean DB bootstrap creates admin then village via POST /admin/v1/villages, lists it, starts session; negative unauthorized/duplicate tests. No imaginary manual database seed.
+QA-API-04 Unity/WebSocket handshake accepts Sec-WebSocket-Protocol scoped token, rejects leaked query token, supports diff base_revision and heartbeat stale state; client never displays victory when boss_incoming=true.
+QA-SEC-07 Missing stable provider viewer identity makes authorized_live non-playable and P1 BLOCKED; no spoofing based on display name or per-comment synthetic identity.
+QA-OPS-04 Operator pause + source loss + reconnect must retain pause; resume only after all distinct blockers cleared, no wallclock catch-up.
+QA-UX-03 Every actual 30s section has truthful information, one visible role CTA, no empty/noisy 160s intro, no manufactured activity and no misleading crowd count.
+QA-PSY-03 Run P0 heuristic evaluation with 5 uncoached viewers; report observed (not invented) completion for single-comment onboarding and 3-second comprehension. Pilot retention after P1 only if lawful and consented; never present role-played 10,000 audience opinions as real evidence.
+QA-GOV-03 Module ownership, cross-links, implementation matrix IDs and QA references resolve. Review file is explicitly non-normative. No additional plans/branches.
+QA-GATE-03 Separate completion states: engineering-code-built, automated QA PASS, visual-UX MANUAL PASS, and authorized TikTok LIVE P1 PASS; code completion alone never equals production launch.
+
+## Hard verification policy for an autonomous coding agent
+- A work package has a three-part verification checklist: (a) source/deliverables exist and compile, (b) its referenced executable tests pass on pinned toolchain, (c) applicable manual or provider-human gates have attached real evidence. If (c) not available, report CODE_COMPLETE or BLOCKED but never production PASS.
+- For M00 the agent MUST cross-check all explicit normative numerical formulas and boundaries with independently computed reference vectors; after M01 it must run automated tests. Review of a plan alone is not evidence of implemented features.
+- Release blocker check must include: P0 runnable from clean Windows/Linux checkout without TikTok, correct UI 9:16, no raw identity on video, 10k load within measured SLO, all game simulations deterministic; P1 needs real approved source and observed stream.
+- No artificial test success: simulated benchmarks, hypothetical user testing and written assumptions are evidence of design exploration only, NOT measured production FPS, live input throughput or verified audience retention.
