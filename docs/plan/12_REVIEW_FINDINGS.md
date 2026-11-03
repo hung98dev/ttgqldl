@@ -1,39 +1,59 @@
-# REVIEW HISTORY (NON-NORMATIVE): TECH LEAD, GAME AND PSYCHOLOGY AUDIT
-Historical findings do not override current topic-owned specifications. This is a structured simulated 30-perspective review, NOT interviews with 30 actual experts. Perspectives: 10 Tech Leads (architecture, storage, distributed systems, SRE, security, database, networking, testing, CI, API), 10 senior game programmers (simulation, pacing, economy, balance, rendering, UX, animations, content production, live operations, fairness), 10 psychology specialists (attention, cognitive load, autonomy, belonging, fairness, social proof, curiosity, motivation, social dynamics, return habit). The actual evidence is independent document inspection and model reasoning, not a clinical/consumer study.
+# MULTIDISCIPLINARY FINAL DESIGN AUDIT — 30 SIMULATED PERSPECTIVES
+Date: 2026-11-03. Scope: TTGQLDL docs/plan/00–11 on main. This is 30 *reasoning lenses*, NOT 30 actual hired experts, 10,000 real surveyed viewers, or a measured gameplay/UX study. The author inspected contracts and performed a separate exploratory integer-combat simulation. Audit findings are non-normative; **the binding fixes live only in each topic-owned module**. Never interpret "resolved in specification" as tested implementation.
 
-## Findings and dispositions
-| ID | Severity | Previous gap / contradiction | Binding master resolution | Validation |
-|---|---|---|---|---|
-| F01 | BLOCKER | Role contribution once per 20s only if commented again; rewarded spam / contradicted anti-spam | One valid join/wave, role auto-contributes each interval | QA-CMD-02 |
-| F02 | BLOCKER | Assault 180..270, finale 270..290 versus 20s resolution allowed boss zero or ambiguous combat | Exact integer ticks, boss t2600 and 2 opportunities t2600/2800 | QA-SIM-03 |
-| F03 | BLOCKER | Fixed enemy count independent of 1/10/10k participation can make tiny lives unwinnable | Transparent population-anchored integer HP pools, low-P militia, capped scaling | QA-BAL-01 |
-| F04 | BLOCKER | M03 required SQL upserts before M04 created schema | Persistence schema and migrations built before ingest integration | QA-MAT-01 |
-| F05 | BLOCKER | State log/outbox described but outbox missing table and tick atomicity unclear | Typed outbox and game checkpoint together in one transaction | QA-DB-05 |
-| F06 | BLOCKER | Replay hash had no canonical field list/version/encoding | RFC8785 canonical game state and fixture | QA-DET-01 |
-| F07 | BLOCKER | No clear source rights; API might not be authorized | External authorization gate, no scraping, mock complete | QA-LIVE-01 |
-| F08 | HIGH | XP per 20-second action encourages repeat commands | 10 XP once/wave; cosmetics only | QA-PSY-02 |
-| F09 | HIGH | Vote timing and invalid-options/ties undefined in edge cases | t800..1199, closing t1200, deterministic fallback | QA-VOTE-01 |
-| F10 | HIGH | World progress level / tier / construction costs unclear | Fixed progression and cost/time formulas | QA-ECO-01 |
-| F11 | HIGH | Missing loss recovery means low viewer permanent spiral | capped adaptive difficulty + defeat recovery | QA-BAL-02 |
-| F12 | HIGH | Source connection loss vs pause vs return not defined | fail-closed source contract, frozen tick, recovery protocol | QA-OPS-03 |
-| F13 | HIGH | No response/error schemas, compatible WebSocket replay | versioned protocol/authorization in 04_PROTOCOL | QA-API-01 |
-| F14 | HIGH | SQL fields absent for resources, membership, checkpoint, event ordering | DDL/properties/spec in 03_PERSISTENCE | QA-DB-01 |
-| F15 | HIGH | Missing HMAC key rotation/deletion and anonymous identity rules | 05_PLATFORM_SECURITY policy and data lifecycle | QA-SEC-03 |
-| F16 | HIGH | 10k load benchmark targets without machine, queue semantics or no-loss requirements | 08_ACCEPTANCE hardware & SLO, drop/queue policy | QA-LOAD-01 |
-| F17 | HIGH | Unity art and screen layouts not sufficiently implementable | concrete asset manifest/UI states/OBS crop in 06_UNITY_CONTENT | QA-UX-01 |
-| F18 | HIGH | Main-only workflow conflicted with prior PR/branch instructions/README | one-branch AGENTS contract and updated README | QA-GOV-01 |
-| F19 | HIGH | Human signoffs treated as AI capabilities | P0 engineering autonomous vs P1 external human gates | QA-GATE-01 |
-| F20 | HIGH | No production-ready moderation/streamer recovery plan | 05 security + 07 operations manual workflows | QA-SEC-05 |
-| F21 | MEDIUM | Visual unit counts mixed with real damage actors | lane subpools are authority; visual objects bounded | QA-VIS-01 |
-| F22 | MEDIUM | Luck/seeded tie rules ambiguous for replay | no game RNG; lexicographic vote tie | QA-DET-02 |
-| F23 | MEDIUM | 'latest' dependencies not pinned exact when scaffolding | fixed tested baseline + CI dependency lock | QA-GOV-02 |
-| F24 | MEDIUM | Inconsistent metric accepted-to-published vs viewer-visible | separate transport latency SLO and OBS preview target | QA-OBS-01 |
-| F25 | MEDIUM | No data rights/IP on generated sprites/audio | licensed or original-only asset manifest & provenance | QA-ASSET-01 |
-| F26 | MEDIUM | 3-second comprehensibility merely prose | UX rubric, sample captures, human measurable approval | QA-PSY-01 |
-| F27 | MEDIUM | Gameplay too long inactive in prep | countdown+signaled non-fabricated building goals and active HUD | QA-UX-02 |
-| F28 | MEDIUM | No name abuse, self-harm language or harassment suppression | safe alias fallback and hide/ban moderation | QA-SEC-06 |
-| F29 | MEDIUM | No clean simulation-stop when chat empty | WAITING state between waves | QA-SIM-07 |
-| F30 | MEDIUM | Unspecified update process for external policy changes | periodic review/fail closed if expired | QA-GATE-02 |
+## Executive finding
+Previous plans contained first-tick state ambiguity, future-wave event loss under global input cursors, uninitialized admin/village setup, premature victory before boss spawn, role-switch/20-second timing conflicts, confusing cooldowns, absence of provider stable identity requirements, small-audience boss imbalance, untested UE/OBS UX, and unprovable claims of unconditional automation. These issues have been addressed as design decisions and test IDs. M00 is IN_PROGRESS; no executable backend/Unity/CI tests exist yet. M01–M09 are NOT_STARTED and P1 requires real account/provider/legal/human proof.
 
-## Important limits
-These are *resolved in design* to the extent specified in master. They have NOT been implemented, tested against TikTok, profiled on production host, or approved by a real operator. All QA IDs remain NOT_STARTED until live evidence. The phrase '100% autonomous production TikTok release' is not a truthful guarantee; permissions, legal, deployment access, art ownership, audience evaluation, stream rights and moderation require human ownership. P0 mock engineering may be automated after baseline approval.
+## Ten senior Tech Lead perspectives
+| ID | Specialty | Severity | Gap found | Binding design disposition | Proof not yet obtained |
+|---|---|---|---|---|---|
+| TL01 | System architecture | CRITICAL | No precise single-owner contract for game state | Go authoritative reducer; Unity projected/visual only (01/03/05) | QA-DET-01, QA-API-02 |
+| TL02 | PostgreSQL DBA | CRITICAL | Future-wave seq50 can be skipped after current-wave seq51 | Per-event applied_at_tick and wave_no; exact transaction order (04) | QA-DB-06 |
+| TL03 | Distributed systems | CRITICAL | Crash and stale writer can double rewards or mutate after takeover | DB-clock writer_epoch fencing, tick-state+outbox atomicity (04) | QA-DB-05/07, QA-OPS-03 |
+| TL04 | API architect | HIGH | Start needs village_id but new install had no create-village route | Admin village create/list, bootstrap secret, idempotency and negative cases (05) | QA-API-03 |
+| TL05 | Application security | CRITICAL | No stable provider ID permits fake new viewers each comment | Real LIVE fails closed without stable identity/authorized source (06) | QA-SEC-07 |
+| TL06 | Privacy engineer | HIGH | Restore may resurrect erased players from event log | New privacy checkpoint, protected deletion tombstones and restore verification (04/06) | QA-DB-08, QA-SEC-03 |
+| TL07 | SRE | HIGH | Source outage and manual pause collide, resumption unclear | Sorted independent blockers; no wallclock catchup, operator resume (03/08) | QA-OPS-04 |
+| TL08 | Performance engineer | HIGH | 1k/s serialized DB row lock and giant 10k-member snapshots each tick | <=256/50ms ingress batches, compact tick state and bounded public view (04) | QA-LOAD-01 |
+| TL09 | CI/Release | HIGH | A written SLO or design was treated like a PASS | Evidence/CI and BLOCKED external gates; M00 IN_PROGRESS (09/10) | QA-GOV-01/02/03 |
+| TL10 | Protocol/network | HIGH | No production handshake details and stale diff rules | Per-session signed scoped WS subprotocol, base_revision, heartbeat <=2s (05) | QA-API-04 |
+
+## Ten senior Game Programmer perspectives
+| ID | Specialty | Severity | Gap found | Binding design disposition | Proof not yet obtained |
+|---|---|---|---|---|---|
+| GP01 | Game loop | CRITICAL | WAITING had no valid initial sim tick; 0 and -1 mismatch | Initial StartWave(-1,0), 3000 rollover control (02/03/04) | QA-SIM-06 |
+| GP02 | Combat | CRITICAL | Tick2800 phase transition could skip final boss hit | Final combat first, settlement once, RESULTS 20s (02/03) | QA-SIM-03 |
+| GP03 | Boss system | CRITICAL | Early CLEAR before scheduled boss | BOSS_INCOMING until spawn2600, result at2800 (02/03/07) | QA-SIM-08 |
+| GP04 | Balancing | HIGH | 10/30-person balanced team sometimes loses boss mathematically | Fighter attack 18*isqrt(F); integer normal/base boss pools (02/03) | QA-BAL-03/04 |
+| GP05 | New-player fairness | HIGH | Militia P<=3 cliff when 4th player joins | Published assist for P<=10 with linear falloff, no fake viewers (02) | QA-BAL-01 |
+| GP06 | Progression | HIGH | Consecutive win count could exceed DB check; total wins not incremented | cap at10, total_wins++ and level formula (02/04) | QA-ECO-01 |
+| GP07 | Input/game command | HIGH | Role change cooldown was described inconsistently | First switch immediate, next >=600 ticks, one membership (02/03/09) | QA-CMD-04 |
+| GP08 | Event/replay | CRITICAL | Role entered at RESULTS might require a second comment to start next wave | Auto-promote next-wave membership at rollover (02/03/04) | QA-SIM-04/07 |
+| GP09 | Rendering | HIGH | 10k game objects vs aggregate game state unclear | <=150 pooled representative sprites, one world snapshot, no per-viewer combat object (07) | QA-VIS-01 |
+| GP10 | Content pipeline | HIGH | Placeholder character art could be accepted as final | Original/licensed full role/boss animation manifest + 360px capture (07) | QA-ASSET-01 |
+
+## Ten psychology and LIVE audience-experience perspectives
+| ID | Lens | Severity | Gap found | Binding design disposition | Proof not yet obtained |
+|---|---|---|---|---|---|
+| PSY01 | Attention | HIGH | Casual viewer cannot decode a cluttered scene in 3 seconds | One castle HP / threat / role CTA hierarchy (07) | QA-PSY-01 |
+| PSY02 | Cognitive load | HIGH | Multiple commands and votes shown with equal weight | One primary join CTA; A/B/C only during vote window (02/07) | QA-UX-01 |
+| PSY03 | Agency | HIGH | A single comment might not visibly matter | Counts update at next committed projection, no fabricated feedback (05/07) | QA-UX-03 |
+| PSY04 | Belonging | MEDIUM | Not everyone can get a visible named avatar at 10k | Fair bounded spotlight rotation, aggregate participation display (07) | QA-VIS-01 |
+| PSY05 | Fairness | HIGH | Repeating comments or gifts could dominate | One join per wave, one XP award, votes per stable actor, no paid combat (02/06) | QA-CMD-02, QA-PSY-02 |
+| PSY06 | Curiosity | HIGH | 160 seconds prep may look inactive | Truthful 20/30s progress, 15s threat warning, scheduled boss suspense (07) | QA-UX-03 |
+| PSY07 | Return motivation | MEDIUM | Losing could erase everything and stop return | Persistent cosmetics/village, bounded recovery without humiliation (02) | QA-SIM-05 |
+| PSY08 | Late arrivals | HIGH | RESULTS join counted too late and forgotten | Next-wave queue auto-start, immediate truthful NEXT-WAVE feedback (02/03/07) | QA-SIM-07 |
+| PSY09 | Social safety | HIGH | On-video nicknames enable harassment or identity exposure | Sanitization, alias opt-out, privacy hide and actor lookup (05/06/07) | QA-SEC-06 |
+| PSY10 | Ethical engagement | CRITICAL | Excessive compulsion/spam/false crowd feedback | No forced repeat comments, no fake numbers, no paid strength, respectful CTA (01/02/07) | QA-PSY-03 |
+
+## Exploratory numeric sanity check (NOT a validated game build)
+A separate integer approximation using wave5 boss, difficulty d=1, no prior losses and starting full village state observed that for 25% builders /25% guards /50% fighters (rounded to integer actor counts), P=10 and P=30 would leave ordinary+boss HP 3 and 34 respectively under old fighter coefficient14, but leave 0 under coefficient18. Candidate formula baseline is therefore 18*isqrt(F) in authoritative 02/03, and QA-BAL-03 now requires expected ordinary/boss HP vectors: P10 162/33; P30 238/48. This exercise detects a mathematical risk, not measured player sentiment, production balance certification or a Go acceptance PASS. Recompute using the actual Go reducer and independently implemented test oracle; balance may still change ONLY with rules_version and golden fixtures updated together.
+
+## Residual external blockers versus code completeness
+- "Resolved by design": major technical contradictions are given explicit deterministic contracts, not implemented source.
+- "Must prove by running": Go/DB/Unity implementation, load 10k, 1k/s, game determinism, FPS, security, privacy restoration and build reproducibility.
+- "Cannot be self-proven by an agent": actual TikTok API/account rights, copyrights and privacy legal approval, real OBS device overlays, five independent UX study participants, staff moderation and public-release authorization.
+- "Current audit status": M00 IN_PROGRESS, M01–M09 NOT_STARTED, M10–M11 BLOCKED. An agent can implement an excellent P0 mock product against the modular plan without reinventing the game, but no written plan can *guarantee* a human-free lawful P1 TikTok deployment.
+
+## Audit governance
+Future review adds rows or updates disposition IN THIS file only. Every newly discovered issue gets ID, severity, owning module, exact rule change and automated/manual QA ID; never create an alternative master/v3 plan. All 30 simulated reviewer roles are analytical perspectives, not identity claims or genuine external endorsements.

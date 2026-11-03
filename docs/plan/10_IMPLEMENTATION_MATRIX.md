@@ -1,5 +1,5 @@
 # ORDERED IMPLEMENTATION MATRIX AND MANDATORY WORK PACKAGES
-Allowed state NOT_STARTED, IN_PROGRESS, BLOCKED, FAIL, PASS. All P0 milestones start NOT_STARTED until implemented/tested. M10 and M11 start BLOCKED on external rights. Each package requires docs/evidence/Mxx-Wxxxx.md with SHA, test IDs, exact command, UTC, environment/hardware, actual results, PASS/FAIL/BLOCKED and reviewer. Completion is NOT inferred from this document.
+Allowed state NOT_STARTED, IN_PROGRESS, BLOCKED, FAIL, PASS. M00 is IN_PROGRESS for specification audit, while M01–M09 remain NOT_STARTED pending executable implementation/test evidence. M10 and M11 start BLOCKED on external rights. Each package requires docs/evidence/Mxx-Wxxxx.md with SHA, test IDs, exact command, UTC, environment/hardware, actual results, PASS/FAIL/BLOCKED and reviewer. Completion is NOT inferred from this document.
 
 | ID | Dependencies | Binding deliverable | Initial state | Completion gate |
 |---|---|---|---|---|

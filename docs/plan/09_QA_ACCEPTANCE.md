@@ -76,3 +76,6 @@ QA-GATE-03 Separate completion states: engineering-code-built, automated QA PASS
 - For M00 the agent MUST cross-check all explicit normative numerical formulas and boundaries with independently computed reference vectors; after M01 it must run automated tests. Review of a plan alone is not evidence of implemented features.
 - Release blocker check must include: P0 runnable from clean Windows/Linux checkout without TikTok, correct UI 9:16, no raw identity on video, 10k load within measured SLO, all game simulations deterministic; P1 needs real approved source and observed stream.
 - No artificial test success: simulated benchmarks, hypothetical user testing and written assumptions are evidence of design exploration only, NOT measured production FPS, live input throughput or verified audience retention.
+
+## Baseline sanity evidence classification
+Exploratory numerical projections in 12_REVIEW_FINDINGS.md are NOT executable game tests and never satisfy QA-BAL-03/04. The first implementation must produce independent Go golden fixtures and deterministic seed/replay tests. The documentation audit has not executed Unity/Golang/PostgreSQL tests yet; matrix status remains IN_PROGRESS for M00 and NOT_STARTED for M01–M09.

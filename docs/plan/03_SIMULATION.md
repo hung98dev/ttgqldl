@@ -40,7 +40,7 @@
        return state, canonical_events
 
 ## Seed and randomness
-Balance simulation itself requires NO RNG: attacks and damage use fixed integer math, seed only for cosmetic sampling. Cosmetic RNG must be Xoshiro or PCG with specified algorithm/parameters in a future **non-gameplay** client fixture; simulation outcome MUST never depend on it. Tie votes deterministic A>B>C; no unspecified seeded randomness or iteration over Go maps. All aggregate iteration sorted by ActorKey when emitting acknowledgments; lane indices west=0,center=1,east=2 and archetype indices runner=0,grunt=1,brute=2,boss=3.
+Balance simulation itself requires NO RNG: attacks and damage use fixed integer math, seed only for cosmetic sampling. No cosmetic PRNG implementation is mandated in Go. For deterministic purely visual choices, Unity MAY choose index = uint64_le(first8(SHA256(session_id + ':' + wave_no + ':' + visual_event_seq))) % option_count when option_count>0; the cosmetic hash and selection are never written into authoritative game-state hash. The gameplay outcome MUST never depend on cosmetic randomness. Tie votes deterministic A>B>C; no unspecified seeded randomness or iteration over Go maps. All aggregate iteration sorted by ActorKey when emitting acknowledgments; lane indices west=0,center=1,east=2 and archetype indices runner=0,grunt=1,brute=2,boss=3.
 
 ## Temporal boundary cases
 - A role whose scheduled_tick<=1599 is included in anchor P at tick1600; input arriving as tick1600 commits schedules tick1601 and is NOT in P.
