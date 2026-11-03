@@ -12,7 +12,9 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"net/url"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/pressly/goose/v3"
@@ -25,6 +27,10 @@ import (
 const (
 	migrationDir = "."
 	defaultEnv   = ".env"
+	// schemaName is owned by docs/plan/04_DATABASE.md: every authoritative object
+	// lives in `ttg`, including goose's own bookkeeping table, so that a role
+	// without a search_path cannot scatter objects into `public`.
+	schemaName = "ttg"
 )
 
 func main() {
@@ -60,14 +66,22 @@ func run() error {
 		return fmt.Errorf("TTG_MIGRATION_DATABASE_URL or TTG_DATABASE_URL must be set")
 	}
 
-	db, err := storage.OpenSQL(dsn)
+	ctx, cancel := context.WithTimeout(context.Background(), *timeout)
+	defer cancel()
+
+	// goose creates its version table before the first migration runs, so the
+	// target schema must exist and be selected first. Doing this explicitly
+	// makes the location deterministic: a role whose search_path is the default
+	// ("$user", public) would otherwise put goose_db_version in public.
+	if err := ensureSchema(ctx, dsn); err != nil {
+		return err
+	}
+
+	db, err := storage.OpenSQL(withSearchPath(dsn, schemaName))
 	if err != nil {
 		return err
 	}
 	defer func() { _ = db.Close() }()
-
-	ctx, cancel := context.WithTimeout(context.Background(), *timeout)
-	defer cancel()
 
 	if err := db.PingContext(ctx); err != nil {
 		return fmt.Errorf("cannot reach the migration database: %w", err)
@@ -112,4 +126,40 @@ func run() error {
 	}
 	fmt.Printf("migrate: %s complete, schema version %d\n", *direction, version)
 	return nil
+}
+
+// ensureSchema creates the owned schema before goose touches the database.
+func ensureSchema(ctx context.Context, dsn string) error {
+	db, err := storage.OpenSQL(dsn)
+	if err != nil {
+		return err
+	}
+	defer func() { _ = db.Close() }()
+
+	if err := db.PingContext(ctx); err != nil {
+		return fmt.Errorf("cannot reach the migration database: %w", err)
+	}
+	if _, err := db.ExecContext(ctx, "CREATE SCHEMA IF NOT EXISTS "+schemaName); err != nil {
+		return fmt.Errorf("create schema %s (the migration role needs CREATE on the database): %w", schemaName, err)
+	}
+	return nil
+}
+
+// withSearchPath returns dsn with the connection runtime parameter
+// `search_path` pinned to schema, supporting both URL and keyword DSN forms.
+func withSearchPath(dsn, schema string) string {
+	if strings.HasPrefix(dsn, "postgres://") || strings.HasPrefix(dsn, "postgresql://") {
+		parsed, err := url.Parse(dsn)
+		if err != nil {
+			return dsn
+		}
+		query := parsed.Query()
+		query.Set("search_path", schema)
+		parsed.RawQuery = query.Encode()
+		return parsed.String()
+	}
+	if strings.Contains(dsn, "search_path=") {
+		return dsn
+	}
+	return dsn + " search_path=" + schema
 }
