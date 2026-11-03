@@ -1,17 +1,17 @@
 # DETERMINISTIC SIMULATION — BINDING
 
 ## Integer/time model
-10 fixed logical ticks per second, ticks int64 and no floating arithmetic or OS wall clock in game reducer. Global wave tick local range 0..2999. Every tick scheduled in strict ascending sequence. Phase is derived only from local tick: [0,1600)=PREP, [1600,2600)=ASSAULT, [2600,2800)=FINALE, [2800,3000)=RESULTS. A combat resolution at boundary tick 2800 executes BEFORE the phase becomes RESULTS and result is then evaluated on the same tick; do not process economy twice. Tick 3000 closes RESULTS and moves to WAITING for next wave. On restart use committed tick and accepted input log, not elapsed wall time.
+10 fixed logical ticks per second; signed wave_tick ranges [-1,3000], -1 means WAITING, cumulative counters checked int64; no floating-point or wall clock in reducer. Global wave tick local range 0..2999. Every tick scheduled in strict ascending sequence. Phase is derived only from local tick: [0,1600)=PREP, [1600,2600)=ASSAULT, [2600,2800)=FINALE, [2800,3000)=RESULTS. A combat resolution at boundary tick 2800 executes BEFORE the phase becomes RESULTS and result is then evaluated on the same tick; do not process economy twice. Tick3000 closes RESULTS: queued roles start next wave at tick0 automatically, otherwise WAITING at wave_tick=-1. On restart use committed tick and accepted input log, not elapsed wall time.
 
 ## Total order of events at every tick boundary
 1. WAITING accepts the first authorized role and starts a wave at tick0; PAUSED/SOURCE_DISCONNECTED/STORAGE_UNAVAILABLE freeze ticks. STOPPED rejects new game actions; operator/source controls remain usable.
 2. Consume durable input_events ordered by input_seq whose scheduled_tick<=current boundary and not previously applied. Ingest schedules at last committed wave_tick+1, so no input arriving during a tick can affect that already committing tick. During RESULTS assign valid join to NEXT wave tick0.
 3. If t=1200, close vote and choose option.
 4. If t=1600, lock P,d,base_hp and spawn ordinary pools.
-5. If t is positive multiple 200 <=2800, with t2800 resolved BEFORE entering RESULTS: aggregate roles and perform builder economy+construction once; if t>=1800, apply fighter phase (boss spawn if t=2600) and enemy response.
+5. If t is positive multiple 200 <=2800, with t2800 resolved BEFORE entering RESULTS, and only if not already DEFEATED: aggregate roles and perform builder economy+construction once; if t>=1800, apply fighter phase (boss spawn if t=2600) and enemy response.
 6. If t=2800, compute final wave outcome once and write result.
 7. Emit state hash, outbox entries, committed sequence and tick in ONE transaction. Publish committed state only.
-8. At tick3000, advance wave and promote queued NEXT-wave actors; start tick0 when queued members exist; otherwise WAITING; never require a queued actor to comment twice.
+8. At tick3000 promote NEXT-wave actors; start next wave tick0 if any, else WAITING at wave_tick=-1; no second comment.
 
 ## Pseudocode — reducer owns no I/O
     Next(state, ordered_events, tick):
@@ -23,7 +23,7 @@
           apply_builder_generation_repair_upgrade()
           if tick >= 1800:
              if tick == 2600 and boss_wave: add_boss_pool()
-             attack = 14*isqrt(min(F,10000)) + militia_bonus(P)
+             attack = 14*isqrt(min(F,10000)) + (max(0,40-4*(P-1)) if 1<=P<=10 else 0)
              if vote == B: attack = floor(115*attack/100)
              apply_attack_to_subpools_deterministically(attack)
              ordinary = sum(ordinary_subpool_hp)
@@ -60,3 +60,11 @@ A tick transaction owns: accepted commands for tick, state change, emitted domai
 
 ## Canonical hashing
 Define state hash as SHA256 of RFC 8785 JSON Canonicalization Scheme encoding of a versioned **pure game state**; omit transport timestamps, random visual positions and network counters. Integer-only numbers safe within JSON precision 2^53-1; encode any larger sequence/tick as decimal strings. Include sorted participant roles by actor_key, sorted enemy pools by (lane,archetype), all resources and vote, tick and relevant metadata; exact field list in 04_DATABASE.md. Every commit affecting canonical serialization requires regenerated and independently reviewed golden fixtures, and master version bump if incompatible.
+
+## Mandatory deterministic implementation clarifications
+- Session creation: wave_no=1,wave_tick=-1,lifecycle=waiting. First role input targets wave1 tick0; reducer calls StartWave(-1 -> 0) and later NextTick(t -> t+1). Rollover tick3000 is ONE control transition, not an extra combat tick. After rollover wave_tick=0 with queued roles or -1 WAITING.
+- Ingest schedules current-wave event to committed_tick+1; a command received while boundary tick is committing cannot change that boundary. Votes eligible by scheduled_tick in [800,1199] only; scheduled_tick=1200 is late. Commands in RESULTS queue next wave at tick0.
+- Anchor P at tick1600 includes registrations with scheduled_tick<=1599 only. Boss spawns at tick2600 BEFORE fighter attack. At tick2800 final combat executes then results settle, and DEFEATED skips further economy and damage.
+- Combat_index=0 at t1800. Attack A split equally among lanes, A%3 remainder distributed cyclically starting combat_index%3. Within each lane target runner,grunt,brute,center boss. Unused lane damage gets redistributed cyclically to other living pools by min(poolHP,remaining), with zero wasted while HP remains. No combat logic relies on cosmetic RNG.
+- Before boss spawn on boss waves, ordinary pools empty => BOSS_INCOMING, never CLEAR. A wave result must be emitted only at tick2800.
+- Pure Reduce(state,orderedCommands,tick) MUST NOT do database/network/time/OS I/O. Hashing follows canonical schema in 04_DATABASE.md, no map-iteration-dependent order. The pause reasons for manual operator pause, provider disconnect and database unavailable coexist; resume only when all clear without wallclock catch-up.
