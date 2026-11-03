@@ -1,0 +1,20 @@
+# Line endings that must not depend on the contributor's platform.
+#
+# Shell scripts are executed inside Linux containers and by Git Bash; a CRLF
+# shebang fails with "bad interpreter". Go sources are handled by gofmt, but
+# keeping them LF avoids noisy diffs on Windows checkouts.
+*.sh   text eol=lf
+*.bash text eol=lf
+*.sql  text eol=lf
+*.yaml text eol=lf
+*.yml  text eol=lf
+.env*  text eol=lf
+go.mod text eol=lf
+go.sum text eol=lf
+
+# Binary assets are never normalised.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.wav  binary
+*.ogg  binary

@@ -1,0 +1,129 @@
+name: ci
+
+# Initial M01 Phase A CI.
+#
+# Covered here:
+#   - backend module: gofmt, go vet, unit tests, race tests, PostgreSQL 18.6
+#     integration tests, linux build
+#   - M00 baseline tooling: plan validator and independent golden vectors
+#   - shell entry-point syntax checks
+#
+# Explicitly NOT covered yet (do not read this workflow as full M01 coverage):
+#   - the docker/postgres/initdb role bootstrap (CI uses a plain service
+#     container; least-privilege roles are verified locally by M01-W0102)
+#   - SQL migrations / sqlc / goose (W0103)
+#   - Unity EditMode/PlayMode and OBS capture (M06, needs a licensed runner)
+#   - TypeScript operator build (W0105)
+#   - load/soak gates (M08) and the full security/SAST/SBOM stage (W0106)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GO_VERSION: "1.27.3"
+
+jobs:
+  backend:
+    name: backend (unit, race, postgres integration)
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      postgres:
+        image: postgres:18.6@sha256:3a4264520e121176619f54ff867d12774bc81e95e7b84db58d63bccdb6144b81
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ttgqldl_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d ttgqldl_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache-dependency-path: backend/go.sum
+
+      - name: gofmt
+        run: |
+          unformatted="$(gofmt -l .)"
+          if [ -n "$unformatted" ]; then
+            echo "gofmt found unformatted files:"
+            echo "$unformatted"
+            exit 1
+          fi
+
+      - name: go vet
+        run: go vet ./...
+
+      - name: unit tests
+        run: go test -count=1 ./...
+
+      - name: race tests
+        run: go test -race -count=1 ./...
+
+      - name: postgres 18.6 integration
+        env:
+          TTG_TEST_DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/ttgqldl_test?sslmode=disable
+        run: go test -count=1 -v ./test/integration/...
+
+      - name: linux build
+        run: go build ./...
+
+  tooling:
+    name: baseline tooling (plan validator, golden vectors)
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: tooling
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          # tooling has no third-party dependencies, so there is no go.sum to cache
+          cache: false
+
+      - name: go vet
+        run: go vet ./...
+
+      - name: tooling tests
+        run: go test -count=1 ./...
+
+      - name: plan validator
+        run: go run ./planvalidate -root ..
+
+      - name: golden vectors
+        run: go run ./refeval -check
+
+      - name: shell script syntax
+        working-directory: .
+        run: |
+          fail=0
+          for script in tooling/*.sh docker/postgres/initdb/*.sh; do
+            echo "bash -n ${script}"
+            bash -n "${script}" || fail=1
+          done
+          exit "${fail}"

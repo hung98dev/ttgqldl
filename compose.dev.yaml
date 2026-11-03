@@ -1,0 +1,51 @@
+# TTGQLDL — development dependencies (PostgreSQL 18.6).
+#
+# This file is DEVELOPMENT ONLY. Production deployment is a separate artefact
+# owned by M09; nothing here may be reused as a production manifest.
+#
+#   docker compose --env-file .env -f compose.dev.yaml up -d --wait
+#
+# The image is pinned by tag AND immutable digest so a retag cannot change the
+# bytes that run. PostgreSQL listens on 127.0.0.1 only and is never published on
+# a public interface.
+
+name: ttgqldl
+
+services:
+  postgres:
+    image: postgres:18.6@sha256:3a4264520e121176619f54ff867d12774bc81e95e7b84db58d63bccdb6144b81
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is required}
+      POSTGRES_USER: ${POSTGRES_BOOTSTRAP_USER:?POSTGRES_BOOTSTRAP_USER is required}
+      POSTGRES_PASSWORD: ${POSTGRES_BOOTSTRAP_PASSWORD:?POSTGRES_BOOTSTRAP_PASSWORD is required}
+      # Consumed by docker/postgres/initdb/001_roles.sh on first initialisation.
+      TTG_OWNER_PASSWORD: ${TTG_OWNER_PASSWORD:?TTG_OWNER_PASSWORD is required}
+      TTG_APP_PASSWORD: ${TTG_APP_PASSWORD:?TTG_APP_PASSWORD is required}
+      POSTGRES_INITDB_ARGS: "--data-checksums --auth-host=scram-sha-256"
+      PGDATA: /var/lib/postgresql/18/docker
+    ports:
+      # Loopback only: never 0.0.0.0, never a public interface.
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      # PostgreSQL 18 images keep PGDATA under /var/lib/postgresql.
+      - pgdata:/var/lib/postgresql
+      - ./docker/postgres/initdb:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\" -h 127.0.0.1"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 15s
+    stop_grace_period: 60s
+    shm_size: 256mb
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 2g
+    cpus: 2.0
+
+volumes:
+  pgdata:
+    # `docker compose down` keeps this volume; only an explicit
+    # `down --volumes` (or tooling/dev-down --wipe-data) removes the data.
+    name: ${POSTGRES_DATA_VOLUME:-ttgqldl_pgdata}

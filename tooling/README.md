@@ -1,26 +1,66 @@
-# tooling/ — M00 baseline validators
+# tooling/ — developer entry points and baseline validators
 
-Two dependency-free Go programs plus thin wrappers. Neither imports production
-code and neither writes to the repository. They are the executable part of the
-M00 baseline and the intended input to the M01 CI pipeline.
+Portable entry points for the TTGQLDL repository plus two dependency-free Go
+programs. Every entry point exists as a PowerShell (`.ps1`) and a Bash (`.sh`)
+script; both do the same thing and propagate their exit code.
 
 ```
 tooling/
-  go.mod                  module ttgqldl/tooling (stdlib only)
-  planvalidate/           canonical-plan consistency checker
-  refeval/                independent gameplay reference evaluator + golden vectors
-  validate-plan.ps1|.sh   wrapper: run the plan validator
-  reference-eval.ps1|.sh  wrapper: verify the golden vectors
+  _common.ps1|.sh          shared helpers (repo root, logging, pinned Go toolchain)
+  doctor.ps1|.sh           environment verification against the pinned baseline
+  dev-up.ps1|.sh           start the PostgreSQL 18.6 development dependencies
+  dev-down.ps1|.sh         stop them without deleting data
+  backend-run.ps1|.sh      run the Go backend from source
+  backend-test.ps1|.sh     gofmt + go vet + unit tests (+ -Race)
+  tooling-test.ps1|.sh     plan validator + golden vectors + tooling tests
+  validate-plan.ps1|.sh    (M00) plan-validator wrapper
+  reference-eval.ps1|.sh   (M00) golden-vector wrapper
+  planvalidate/            canonical-plan consistency checker (Go, stdlib only)
+  refeval/                 independent gameplay reference evaluator (Go, stdlib only)
 ```
 
-## Requirements
+## Developer entry points (M01 Phase A)
 
-- Go 1.27.x. The module declares `go 1.27.0`, so it builds on any 1.27 patch.
-  The product baseline pins **Go 1.27.3**; M01's `tooling/doctor` must enforce
-  the exact patch. Running these tools on an older patch does not weaken the pin.
+Run them from anywhere; each resolves the repository root itself.
+
+| Command | What it does | Exit codes |
+|---|---|---|
+| `./doctor.ps1` / `./doctor.sh` | Prints one row per dependency and distinguishes correct version, missing dependency, incorrect version, unusable install and permission/licence block. Required now: Go 1.27.3, Docker + Compose plugin, pinned PostgreSQL image digest, ≥5 GiB disk. Optional (reported, not fatal): Node (W0105), Unity (M06), `.env`. Add `-Strict` / `--strict` to fail on optional gaps too. | 0 ok, 1 required failure |
+| `./dev-up.ps1` / `./dev-up.sh` | Creates `.env` from `.env.example` when missing, then `docker compose --env-file .env -f compose.dev.yaml up -d --wait` and waits for the health check. Never deletes data, never edits an existing `.env`. | 0 ok, non-zero on compose failure |
+| `./dev-down.ps1` / `./dev-down.sh` | `docker compose down`; the named volume is preserved. `-WipeData` / `--wipe-data` deletes it after an interactive confirmation and refuses in non-interactive shells. | 0 ok, non-zero on failure |
+| `./backend-run.ps1` / `./backend-run.sh` | Points `TTG_ENV_FILE` at the repository `.env` and runs `go run ./cmd/server`. Refuses to start without `.env`. | server exit code |
+| `./backend-test.ps1` / `./backend-test.sh` | gofmt check, `go vet`, `go test`. `-Race`/`--race` adds `go test -race` (needs cgo; the Linux CI job is the authoritative race gate). `-Short`/`-short` passes `-short`. | 0 ok, first failing step's code |
+| `./tooling-test.ps1` / `./tooling-test.sh` | `go vet`, `go test`, then the plan validator and the golden vectors. | 0 ok, first failing step's code |
+
+Typical loop:
+
+```bash
+cd tooling
+./doctor.sh            # environment is correct?
+./dev-up.sh            # PostgreSQL 18.6 on 127.0.0.1:5432
+./backend-test.sh      # gofmt, vet, unit tests
+cd ../backend
+TTG_TEST_DATABASE_URL='postgres://ttg_app:...@127.0.0.1:5432/ttgqldl?sslmode=disable' go test ./test/integration/...
+cd ../tooling
+./tooling-test.sh      # M00 guarantees still hold
+./dev-down.sh          # stop, keep the data volume
+```
+
+### Go toolchain note
+
+`backend/go.mod` requires **Go 1.27.3**. If the host pins an older toolchain
+(`go env -w GOTOOLCHAIN=go1.27.1`), these scripts pass `GOTOOLCHAIN=auto` to the
+Go commands they run and print a note, so the module-selected toolchain is used
+instead of failing. They never edit the user's global Go configuration; the
+permanent fix is `go env -w GOTOOLCHAIN=auto`.
+
+## Requirements for the validators
+
+- Go 1.27.x. The tooling module declares `go 1.27.0`; the product baseline pins
+  **Go 1.27.3** and `doctor` verifies the effective toolchain in `backend/`.
 - No database, no network, no Unity, no Node.
 
-## Commands
+## Validator commands
 
 Always run from `tooling/` (the wrappers handle this for you).
 
@@ -44,21 +84,7 @@ go run ./refeval -write
 go test ./...
 ```
 
-PowerShell / Bash equivalents:
-
-```powershell
-./validate-plan.ps1
-./reference-eval.ps1
-go test ./...
-```
-
-```bash
-./validate-plan.sh
-./reference-eval.sh
-go test ./...
-```
-
-## Exit codes
+## Exit codes (validators)
 
 | Code | Meaning |
 |---|---|
@@ -117,12 +143,14 @@ reducer: M02 must re-implement and match it, never import it.
 approved `rules_version` change, regenerate it with `go run ./refeval -write`
 and review the diff in the same commit.
 
-## CI wiring (M01)
+## CI wiring
 
-```yaml
-- run: cd tooling && go vet ./... && go test ./...
-- run: cd tooling && go run ./planvalidate -root .. -json > plan-report.json
-```
+`.github/workflows/ci.yml` runs, on `ubuntu-24.04`:
+
+- backend: `gofmt` check, `go vet`, `go test`, `go test -race`, PostgreSQL 18.6
+  integration tests and a Linux build;
+- tooling: `go vet`, `go test`, `go run ./planvalidate -root ..`,
+  `go run ./refeval -check` and `bash -n` over every shell entry point.
 
 A red run must block the merge to `main`; the validator is intentionally strict
 so that a status claim cannot outrun its evidence.
