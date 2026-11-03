@@ -1,0 +1,21 @@
+version: "2"
+# sqlc reads the generated snapshot db/schema.sql, never the goose migrations:
+# goose files contain down migrations and markers that sqlc cannot parse.
+#
+#   cd backend && sqlc generate
+#
+# Regenerate the snapshot with tooling/schema-dump.ps1|sh after any migration
+# change; CI fails when the snapshot no longer matches the migrations.
+sql:
+  - engine: "postgresql"
+    schema: "db/schema.sql"
+    queries: "db/queries"
+    gen:
+      go:
+        package: "db"
+        out: "internal/db"
+        sql_package: "pgx/v5"
+        emit_json_tags: false
+        emit_prepared_queries: false
+        emit_interface: false
+        emit_empty_slices: true

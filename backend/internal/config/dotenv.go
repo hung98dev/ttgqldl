@@ -73,6 +73,24 @@ func LoadDotEnvFile(path string) (values map[string]string, existed bool, err er
 	return values, true, nil
 }
 
+// LoadEnvFileIntoProcess parses path (when present) and sets every value that is
+// not already present in the process environment. It returns how many variables
+// were applied and whether the file existed.
+//
+// This is the single place that binds a .env file to the process environment;
+// every command (server, migrate) goes through it.
+func LoadEnvFileIntoProcess(path string) (applied int, existed bool, err error) {
+	values, existed, err := LoadDotEnvFile(path)
+	if err != nil || !existed {
+		return 0, existed, err
+	}
+	keys, err := ApplyDotEnv(values, os.LookupEnv, os.Setenv)
+	if err != nil {
+		return 0, true, err
+	}
+	return len(keys), true, nil
+}
+
 // ApplyDotEnv sets every value that is not already present in the process
 // environment and returns the keys it actually set. Existing variables always
 // win, so an explicit shell export can never be overwritten by a file.

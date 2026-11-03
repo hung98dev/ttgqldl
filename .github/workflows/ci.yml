@@ -81,10 +81,23 @@ jobs:
       - name: race tests
         run: go test -race -count=1 ./...
 
-      - name: postgres 18.6 integration
+      - name: migrations up
+        env:
+          TTG_MIGRATION_DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/ttgqldl_test?sslmode=disable
+        run: go run ./cmd/migrate -direction up
+
+      - name: schema and postgres 18.6 integration
         env:
           TTG_TEST_DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/ttgqldl_test?sslmode=disable
         run: go test -count=1 -v ./test/integration/...
+
+      - name: migrations roll back to zero and re-apply
+        env:
+          TTG_MIGRATION_DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/ttgqldl_test?sslmode=disable
+        run: |
+          go run ./cmd/migrate -direction down -to 0
+          go run ./cmd/migrate -direction up
+          go run ./cmd/migrate -direction status
 
       - name: linux build
         run: go build ./...

@@ -7,12 +7,14 @@ package storage
 
 import (
 	"context"
+	"database/sql"
 	"errors"
 	"fmt"
 	"strings"
 	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
+	_ "github.com/jackc/pgx/v5/stdlib" // registers the "pgx" database/sql driver
 )
 
 // Options configures the PostgreSQL pool.
@@ -64,6 +66,22 @@ func Open(ctx context.Context, opts Options) (*Pool, error) {
 		return nil, fmt.Errorf("postgres: create pool: %w", err)
 	}
 	return &Pool{pool: pool}, nil
+}
+
+// OpenSQL returns a database/sql handle backed by the pgx driver, for tooling
+// that cannot use pgxpool (goose migrations). The caller must Close it.
+func OpenSQL(dsn string) (*sql.DB, error) {
+	if strings.TrimSpace(dsn) == "" {
+		return nil, ErrEmptyDSN
+	}
+	db, err := sql.Open("pgx", dsn)
+	if err != nil {
+		return nil, fmt.Errorf("postgres: open sql handle: %w", err)
+	}
+	db.SetMaxOpenConns(2)
+	db.SetMaxIdleConns(2)
+	db.SetConnMaxLifetime(5 * time.Minute)
+	return db, nil
 }
 
 // Ping verifies that a connection can be acquired and used right now.

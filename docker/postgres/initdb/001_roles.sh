@@ -39,6 +39,8 @@ CREATE SCHEMA ttg AUTHORIZATION ttg_owner;
 REVOKE ALL ON SCHEMA ttg FROM PUBLIC;
 
 GRANT CONNECT ON DATABASE "$POSTGRES_DB" TO ttg_owner, ttg_app;
+-- The owner role is the only role allowed to create schema objects.
+GRANT CREATE ON DATABASE "$POSTGRES_DB" TO ttg_owner;
 GRANT USAGE ON SCHEMA ttg TO ttg_owner, ttg_app;
 
 -- Tables created by the owner inherit row-level privileges for the app role.

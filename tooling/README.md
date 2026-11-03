@@ -13,6 +13,10 @@ tooling/
   backend-run.ps1|.sh      run the Go backend from source
   backend-test.ps1|.sh     gofmt + go vet + unit tests (+ -Race)
   tooling-test.ps1|.sh     plan validator + golden vectors + tooling tests
+  migrate-up.ps1|.sh       apply all pending PostgreSQL migrations
+  migrate-down.ps1|.sh     roll back one migration (or -To N / --to N)
+  migrate-status.ps1|.sh   show applied and pending migrations
+  schema-dump.ps1|.sh      regenerate backend/db/schema.sql for sqlc
   validate-plan.ps1|.sh    (M00) plan-validator wrapper
   reference-eval.ps1|.sh   (M00) golden-vector wrapper
   planvalidate/            canonical-plan consistency checker (Go, stdlib only)
@@ -31,6 +35,10 @@ Run them from anywhere; each resolves the repository root itself.
 | `./backend-run.ps1` / `./backend-run.sh` | Points `TTG_ENV_FILE` at the repository `.env` and runs `go run ./cmd/server`. Refuses to start without `.env`. | server exit code |
 | `./backend-test.ps1` / `./backend-test.sh` | gofmt check, `go vet`, `go test`. `-Race`/`--race` adds `go test -race` (needs cgo; the Linux CI job is the authoritative race gate). `-Short`/`-short` passes `-short`. | 0 ok, first failing step's code |
 | `./tooling-test.ps1` / `./tooling-test.sh` | `go vet`, `go test`, then the plan validator and the golden vectors. | 0 ok, first failing step's code |
+| `./migrate-up.ps1` / `./migrate-up.sh` | `backend/cmd/migrate -direction up` using `TTG_MIGRATION_DATABASE_URL` (schema-owner role). The server's app role cannot run DDL. | 0 ok, migrate exit code |
+| `./migrate-down.ps1` / `./migrate-down.sh` | Rolls back one migration; `-To N` / `--to N` rolls back to version N. `0` (full rollback) asks for an interactive confirmation. | 0 ok, migrate exit code |
+| `./migrate-status.ps1` / `./migrate-status.sh` | Applied and pending migrations plus the current schema version. | 0 ok |
+| `./schema-dump.ps1` / `./schema-dump.sh` | Runs `pg_dump` inside the compose container and rewrites `backend/db/schema.sql` (the sqlc input). | 0 ok |
 
 Typical loop:
 

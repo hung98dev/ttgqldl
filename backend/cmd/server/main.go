@@ -37,16 +37,12 @@ func run() error {
 	if envFile == "" {
 		envFile = defaultEnvFile
 	}
-	values, existed, err := config.LoadDotEnvFile(envFile)
+	applied, existed, err := config.LoadEnvFileIntoProcess(envFile)
 	if err != nil {
 		return err
 	}
 	if existed {
-		applied, applyErr := config.ApplyDotEnv(values, os.LookupEnv, os.Setenv)
-		if applyErr != nil {
-			return applyErr
-		}
-		fmt.Fprintf(os.Stderr, "ttgqldl server: loaded %d setting(s) from %s\n", len(applied), envFile)
+		fmt.Fprintf(os.Stderr, "ttgqldl server: loaded %d setting(s) from %s\n", applied, envFile)
 	}
 
 	cfg, err := config.Load(os.Getenv)

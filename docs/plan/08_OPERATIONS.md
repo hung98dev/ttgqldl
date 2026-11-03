@@ -14,6 +14,7 @@ TTG_ADMIN_PASSWORD_HASH: Argon2id mandatory on stage/prod; TTG_BOOTSTRAP_ADMIN_U
 TTG_STREAM_SIGNING_SECRET: random >=32 bytes, mandatory stage/prod
 TTG_SOURCE_CREDENTIAL_REF: mandatory in authorized_live
 TTG_LOG_LEVEL=info; TTG_METRICS_ADDR=127.0.0.1:9090; TTG_MAX_QUEUE=20000; TTG_STREAM_RATE_HZ=5; TTG_SNAPSHOT_TICKS=600
+TTG_MIGRATION_DATABASE_URL: optional tooling-only DSN for the schema-owner role used by `migrate-up`/`migrate-down`; the server never reads it and the tooling falls back to TTG_DATABASE_URL when it is unset. The owner role may run DDL; the runtime application role may not.
 Invalid enum, weak secret, missing key or migration mismatch => fail startup. .env.example placeholders ONLY, real secrets gitignored and scanned.
 
 ## Mandatory commands/scripts
