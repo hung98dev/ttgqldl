@@ -188,7 +188,9 @@ jobs:
 
       - name: lockfile consistency
         run: |
-          node -e '
+          # Quoted heredoc: the JavaScript is intentionally literal, which also
+          # keeps shellcheck (run by actionlint in CI) satisfied.
+          cat > "${RUNNER_TEMP}/check-lockfile.cjs" <<'NODE'
           const pkg = require("./package.json");
           const lock = require("./package-lock.json");
           const root = lock.packages[""] || {};
@@ -202,7 +204,8 @@ jobs:
           }
           if (problems.length) { console.error(problems.join("\n")); process.exit(1); }
           console.log(`lockfile verified: ${Object.keys(declared).length} packages pinned exactly`);
-          '
+          NODE
+          node "${RUNNER_TEMP}/check-lockfile.cjs"
 
       - name: typecheck
         run: npm run typecheck
