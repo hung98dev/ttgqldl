@@ -83,3 +83,6 @@ Exploratory numerical projections in 12_REVIEW_FINDINGS.md are NOT executable ga
 QA-SEC-08 Erase participant after full PostgreSQL backup; export tombstone to independent ledger, restore old DB snapshot, apply newer ledger, assert no private account/alias/queued event resurrected; missing external ledger => startup FAILS CLOSED.
 QA-VIS-02 Unity 6000.6.7f1 continuous 2h streaming build survives repeated pause/source disconnect/recovery without SceneManager.LoadSceneAsync hang; logs/frame metrics recorded.
 
+
+QA-DB-09 Schema requires nullable last_change_tick, explicit first_switch_used and sessions.privacy_epoch; first role change immediately permitted, later >=600 ticks. SQL and reducer/golden hash must agree on these persisted fields.
+QA-SIM-10 At tick2800 mandatory final combat/repair precedes RESULTS, including 20s role resolution, but if DEFEATED economy/combat is skipped; avoid excluding tick2800 just because its resulting phase is RESULTS.

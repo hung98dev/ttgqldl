@@ -60,3 +60,5 @@ Future review adds rows or updates disposition IN THIS file only. Every newly di
 
 ## Final incremental security/engine findings
 TL06 extension: historical database backups predating a deletion cannot know later tombstones stored only inside the restored DB. The design now requires an independent durable encrypted deletion ledger and fail-closed restoration in 04/08, with QA-SEC-08. GP09 extension: Unity 6000.6.7f1 release notes list repeated LoadSceneAsync hang risk; the BroadcastWorld scene remains loaded and overlays display reconnect/recovery, with QA-VIS-02. These are design remediations requiring executable tests, not evidence of completed operations.
+
+GP02 final audit: tick2800 now explicitly belongs to the final combat calculation before the RESULTS phase, rather than being excluded by the generic results-phase rule. GP07/TL02 final audit: first_switch_used and privacy_epoch are mandatory persisted columns, not inferred dynamically. Tests QA-SIM-10 and QA-DB-09 remain unexecuted until M01/M02.
