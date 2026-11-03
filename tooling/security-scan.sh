@@ -49,6 +49,11 @@ for tool in govulncheck gosec gitleaks actionlint npm; do
     log_note "${tool} -> ${resolved}"
 done
 
+# emit_annotation surfaces a gate failure in the GitHub Actions UI (and in the
+# check-run annotations API) without needing to download the raw job log.
+emit_annotation() {
+    printf '::error::%s\n' "$*"
+}
 FAILURES=()
 
 # --- 1. govulncheck -----------------------------------------------------------
@@ -58,7 +63,8 @@ set +e
 vuln_code=$?
 set -e
 if [[ ${vuln_code} -ne 0 ]] || grep -q 'Vulnerability #' "${REPORTS}/govulncheck.txt"; then
-    log_fail "govulncheck reported vulnerabilities"
+    log_fail "govulncheck reported vulnerabilities (exit ${vuln_code})"
+    emit_annotation "govulncheck exit ${vuln_code}: $(tail -n 3 "${REPORTS}/govulncheck.txt" | tr '\n' ' ')"
     FAILURES+=("govulncheck")
 else
     log_ok "govulncheck: no vulnerabilities"
@@ -81,12 +87,15 @@ else
     golang_error_entries="$(grep -c '"error": "loading files' "${GOSEC_REPORT}" || true)"
     if [[ "${issues}" -gt 0 ]]; then
         log_fail "gosec: ${issues} finding(s); see ${GOSEC_REPORT}"
+        emit_annotation "gosec ${issues} finding(s): $(grep -o '"rule_id":"[^"]*"' "${GOSEC_REPORT}" | head -n 3 | tr '\n' ' ')"
         FAILURES+=("gosec")
     elif [[ "${golang_error_entries}" -gt 0 ]]; then
         log_fail "gosec could not load ${golang_error_entries} package(s); the scan was incomplete"
+        emit_annotation "gosec load error: $(grep -o '"error": "loading files[^"]*"' "${GOSEC_REPORT}" | head -n 1)"
         FAILURES+=("gosec")
     elif [[ ${gosec_code} -ne 0 ]]; then
         log_fail "gosec exited with ${gosec_code} but reported no parsed findings"
+        emit_annotation "gosec exit ${gosec_code} without a parseable report"
         FAILURES+=("gosec")
     else
         log_ok "gosec: no findings"
@@ -118,6 +127,7 @@ critical="$(count_of critical)"
 log_note "severity counts: critical=${critical} high=${high} moderate=${moderate}"
 if [[ ${audit_code} -ne 0 ]] || [[ "${high}" -gt 0 ]] || [[ "${critical}" -gt 0 ]]; then
     log_fail "npm audit found high or critical vulnerabilities in runtime dependencies"
+    emit_annotation "npm audit exit ${audit_code} critical=${critical} high=${high} moderate=${moderate}"
     FAILURES+=("npm-audit")
 else
     log_ok "npm audit: no high/critical runtime findings (${moderate} moderate, dev-only)"
@@ -133,6 +143,7 @@ leaks_code=$?
 set -e
 if [[ ${leaks_code} -ne 0 ]]; then
     log_fail "gitleaks found potential secrets"
+    emit_annotation "gitleaks exit ${leaks_code}: $(grep -o '"File":"[^"]*"' "${REPORTS}/gitleaks.json" 2>/dev/null | head -n 3 | tr '\n' ' ')"
     FAILURES+=("gitleaks")
 else
     log_ok "gitleaks: no leaks"
@@ -146,6 +157,7 @@ lint_code=$?
 set -e
 if [[ ${lint_code} -ne 0 ]]; then
     log_fail "actionlint reported workflow problems"
+    emit_annotation "actionlint exit ${lint_code}"
     FAILURES+=("actionlint")
 else
     log_ok "actionlint: workflows are valid"
@@ -160,7 +172,8 @@ pin_code=$?
 sbom_code=$?
 set -e
 if [[ ${pin_code} -ne 0 ]] || [[ ${sbom_code} -ne 0 ]]; then
-    log_fail "container pinning or SBOM generation failed"
+    log_fail "container pinning or SBOM generation failed (pin=${pin_code} sbom=${sbom_code})"
+    emit_annotation "sbom failed: pin exit ${pin_code}, generate exit ${sbom_code}"
     FAILURES+=("sbom")
 else
     log_ok "sbom: inventory written and every container image is digest-pinned"
