@@ -350,6 +350,11 @@ jobs:
 
       - name: unity log sanitizer tests
         run: pwsh -NoProfile -File ./sanitize-unity-log.test.ps1
+      - name: unity acceptance chain tests
+        run: pwsh -NoProfile -File ./unity-acceptance.test.ps1
+
+      - name: unity safe logging tests
+        run: pwsh -NoProfile -File ./unity-safe-logging.test.ps1
 
       - name: unity wrapper regression tests
         run: pwsh -NoProfile -File ./unity-test.wrapper.test.ps1

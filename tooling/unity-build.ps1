@@ -12,6 +12,7 @@
 param()
 
 . (Join-Path $PSScriptRoot '_common.ps1')
+. (Join-Path $PSScriptRoot 'unity-safe-console.ps1')
 
 $script:RequiredUnityVersion = '6000.6.7f1'
 $root = Get-RepoRoot
@@ -75,18 +76,21 @@ Remove-Item -Path (Join-Path $project 'Build') -Recurse -Force -ErrorAction Sile
 
 Write-Step "building Windows player with Unity $version"
 $started = Get-Date
-# See unity-test.ps1: merge stderr and use Out-Host so a healthy build is not
-# converted into a terminating NativeCommandError and $LASTEXITCODE survives.
+# Raw editor output is captured to a protected temporary file and never streamed
+# into a CI log; only a sanitized extract is printed.
+$rawConsole = Join-Path ([System.IO.Path]::GetTempPath()) ("ttg-unity-build-console-{0}.log" -f ([guid]::NewGuid().ToString('N').Substring(0, 8)))
 $previous = $ErrorActionPreference
 $ErrorActionPreference = 'Continue'
 try {
     & $editor -batchmode -nographics -quit -projectPath $project `
-        -executeMethod Ttgqldl.Editor.BuildWindows.PerformBuild -logFile $log 2>&1 | Out-Host
+        -executeMethod Ttgqldl.Editor.BuildWindows.PerformBuild -logFile $log 2>&1 | Out-File -FilePath $rawConsole -Encoding utf8
     $code = $LASTEXITCODE
 }
 finally {
     $ErrorActionPreference = $previous
 }
+Publish-SafeConsoleOutput -RawPath $rawConsole -Label 'player build'
+Remove-Item -LiteralPath $rawConsole -Force -ErrorAction SilentlyContinue
 $elapsed = [math]::Round(((Get-Date) - $started).TotalSeconds)
 
 if ($code -ne 0) {

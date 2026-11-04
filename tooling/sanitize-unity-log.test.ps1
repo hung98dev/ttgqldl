@@ -12,6 +12,7 @@ $script = Join-Path $PSScriptRoot 'sanitize-unity-log.ps1'
 $temp = Join-Path ([System.IO.Path]::GetTempPath()) ("ttg-sanitize-{0}" -f ([guid]::NewGuid().ToString('N').Substring(0, 8)))
 New-Item -ItemType Directory -Force -Path $temp | Out-Null
 
+$fakeToken = 'ghp_' + ('a' * 36)
 $script:checks = 0
 $script:failures = 0
 
@@ -32,7 +33,7 @@ function Invoke-Sanitizer {
     $output = & pwsh -NoProfile -File $script -InputPath $inputPath -OutputPath $outputPath 2>&1
     $code = $LASTEXITCODE
     $sanitized = if (Test-Path $outputPath) { Get-Content -LiteralPath $outputPath -Raw } else { '' }
-    return [pscustomobject]@{ ExitCode = $code; Output = ($output -join "`n"); Sanitized = $sanitized }
+    return [pscustomobject]@{ ExitCode = $code; Output = ($output -join "`n"); Sanitized = $sanitized; OutputPath = $outputPath }
 }
 
 # 1. Benign editor output is preserved.
@@ -117,6 +118,16 @@ $survivor = "/home/dave/Unity/Editor.log`naccount: dave.smith`n"
 $case = Invoke-Sanitizer -Content $survivor -Name 'residual-identity'
 Assert-True ($case.ExitCode -eq 3) "residual identity: expected exit 3, got $($case.ExitCode)"
 Assert-True ($case.Output -match 'residual high-risk patterns') 'residual identity: reason reported'
+Assert-True (-not (Test-Path $case.OutputPath)) 'residual identity: rejected output was not published'
+
+# 12. Scan-only mode reports sensitive material without writing anything.
+$scanInput = Join-Path $temp 'scan-only.xml'
+Set-Content -LiteralPath $scanInput -Value ("<test-run><test-case name=`"$fakeToken`" /></test-run>") -Encoding utf8
+& pwsh -NoProfile -File $script -InputPath $scanInput -ScanOnly 2>&1 | Out-Null
+Assert-True ($LASTEXITCODE -eq 3) 'scan-only: sensitive XML exits 3'
+Set-Content -LiteralPath $scanInput -Value '<test-run total="7" passed="7" failed="0" skipped="0" inconclusive="0" />' -Encoding utf8
+& pwsh -NoProfile -File $script -InputPath $scanInput -ScanOnly 2>&1 | Out-Null
+Assert-True ($LASTEXITCODE -eq 0) 'scan-only: clean XML exits 0'
 Remove-Item -Recurse -Force $temp -ErrorAction SilentlyContinue
 
 if ($script:failures -gt 0) {

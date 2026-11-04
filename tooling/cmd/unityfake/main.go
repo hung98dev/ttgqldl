@@ -7,6 +7,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -16,6 +17,14 @@ import (
 func main() {
 	testResults := argument("testResults")
 	logFile := argument("logFile")
+
+	// Emit whatever the test wants on stdout/stderr, simulating raw editor output.
+	if noise := os.Getenv("TTG_FAKE_STDOUT"); noise != "" {
+		fmt.Println(noise)
+	}
+	if noise := os.Getenv("TTG_FAKE_STDERR"); noise != "" {
+		fmt.Fprintln(os.Stderr, noise)
+	}
 
 	if logFile != "" {
 		_ = os.MkdirAll(filepath.Dir(logFile), 0o755)

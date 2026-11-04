@@ -140,7 +140,9 @@ workflow colour.
 | Unity static validator | PASS 7 checks |
 | Unity result + wrapper regression | 13 + 21 checks |
 | Unity acceptance gate tests | 10 Go tests (stale ancestor, unrelated SHA, invalid SHA, non-main ref, disabled flag, unconfirmed environment, foreign repo) |
-| Unity log sanitizer | 25 checks, including the fail-closed exit-3 path; real logs redact usernames, paths and licence channels |
+| Unity evidence chain | 33 checks (bundle validation + publisher fail-closed) |
+| Unity safe logging | 11 checks (no credential in wrapper output; raw captures removed) |
+| Unity log sanitizer | 28 checks, including scan-only mode and the fail-closed exit-3 path; real logs redact usernames, paths and licence channels |
 | Unity EditMode / PlayMode (licensed workstation) | 56 / 7 passed, 0 skipped |
 | Operator typecheck / lint / tests / build | 0 / 0 / 76 / built |
 | govulncheck / gosec | 0 / 0 |

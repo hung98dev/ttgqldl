@@ -16,8 +16,16 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)][string]$InputPath,
-    [Parameter(Mandatory = $true)][string]$OutputPath,
-    [string]$Replacement = '<redacted>'
+    # Required unless -ScanOnly is used.
+    [string]$OutputPath = '',
+    [string]$Replacement = '<redacted>',
+    # Reports whether the input contains sensitive material without rewriting it.
+    # Use for evidence that must remain valid (NUnit XML): a secret in test output
+    # is a failure, not something to redact away.
+    [switch]$ScanOnly,
+    # Credential-class findings block publication instead of being silently
+    # redacted: a secret in CI output is a leak to fix, not noise to scrub.
+    [switch]$BlockOnSecrets
 )
 
 Set-StrictMode -Version Latest
@@ -33,12 +41,12 @@ if ($null -eq $text) { $text = '' }
 
 # Ordered: broad secrets first, then identifiers, then machine paths.
 $rules = @(
-    @{ Name = 'private-key'; Pattern = '(?s)-----BEGIN [A-Z ]*PRIVATE KEY-----.*?-----END [A-Z ]*PRIVATE KEY-----' }
-    @{ Name = 'github-token'; Pattern = '\b(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,})\b' }
-    @{ Name = 'authorization-header'; Pattern = '(?i)(authorization\s*:\s*(?:bearer|basic)\s+)\S+' }
-    @{ Name = 'bearer-token'; Pattern = '(?i)\b(bearer\s+)[A-Za-z0-9._\-]{16,}' }
-    @{ Name = 'unity-license'; Pattern = '(?i)\b(?:unity[_-]?serial|serial[_-]?number|license[_-]?key)\s*[:=]\s*\S+' }
-    @{ Name = 'secret-env'; Pattern = '\b([A-Z0-9_]*(?:TOKEN|SECRET|PASSWORD|PASSWD|LICENSE|SERIAL|API_KEY)[A-Z0-9_]*)\s*=\s*\S+' }
+    @{ Name = 'private-key'; Pattern = '(?s)-----BEGIN [A-Z ]*PRIVATE KEY-----.*?-----END [A-Z ]*PRIVATE KEY-----'; Blocking = $true }
+    @{ Name = 'github-token'; Pattern = '\b(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,})\b'; Blocking = $true }
+    @{ Name = 'authorization-header'; Pattern = '(?i)(authorization\s*:\s*(?:bearer|basic)\s+)\S+'; Blocking = $true }
+    @{ Name = 'bearer-token'; Pattern = '(?i)\b(bearer\s+)[A-Za-z0-9._\-]{16,}'; Blocking = $true }
+    @{ Name = 'unity-license'; Pattern = '(?i)\b(?:unity[_-]?serial|serial[_-]?number|license[_-]?key)\s*[:=]\s*\S+'; Blocking = $true }
+    @{ Name = 'secret-env'; Pattern = '\b([A-Z0-9_]*(?:TOKEN|SECRET|PASSWORD|PASSWD|LICENSE|SERIAL|API_KEY)[A-Z0-9_]*)\s*=\s*\S+'; Blocking = $true }
     @{ Name = 'machine-id'; Pattern = '(?i)\b(?:machine[_-]?id|hostname)\s*[:=]\s*\S+' }
     # Windows paths with either separator; no trailing separator is required, so
     # "C:\Users\alice" and "C:/Users/alice/AppData" are both covered.
@@ -70,11 +78,13 @@ foreach ($pattern in @(
 }
 
 $counts = [ordered]@{}
+$blockingHits = 0
 $sanitized = $text
 foreach ($rule in $rules) {
     $matches = [regex]::Matches($sanitized, $rule.Pattern)
     if ($matches.Count -gt 0) {
         $counts[$rule.Name] = $matches.Count
+        if ($rule.ContainsKey('Blocking') -and $rule.Blocking) { $blockingHits += $matches.Count }
         $sanitized = [regex]::Replace($sanitized, $rule.Pattern, $Replacement)
     }
 }
@@ -92,13 +102,41 @@ foreach ($identity in $identities) {
 }
 if ($identityHits -gt 0) { $counts['identity'] = $identityHits }
 
+if ($ScanOnly) {
+    $findings = @()
+    foreach ($rule in $rules) {
+        if ([regex]::IsMatch($text, $rule.Pattern)) { $findings += $rule.Name }
+    }
+    foreach ($identity in $identities) {
+        if ($text.IndexOf($identity, [System.StringComparison]::OrdinalIgnoreCase) -ge 0) { $findings += 'identity' }
+    }
+    $findings = @($findings | Select-Object -Unique)
+    if ($findings.Count -gt 0) {
+        Write-Host ("sanitize(scan): sensitive material found: " + ($findings -join ', ')) -ForegroundColor Red
+        exit 3
+    }
+    Write-Host 'sanitize(scan): no sensitive material'
+    exit 0
+}
+
+if ($OutputPath -eq '') {
+    Write-Host 'sanitize: -OutputPath is required unless -ScanOnly is used' -ForegroundColor Red
+    exit 2
+}
+
 $directory = Split-Path -Parent $OutputPath
 if ($directory -and -not (Test-Path $directory)) {
     New-Item -ItemType Directory -Force -Path $directory | Out-Null
 }
-Set-Content -LiteralPath $OutputPath -Value $sanitized -NoNewline -Encoding utf8
 
-# Verify our own output. Any surviving identity or high-risk pattern is a failure.
+# Write to a temporary file first. The final path is only created after the
+# sanitized content has been verified, so a failed run can never leave a
+# rejected file behind for an artifact upload step to pick up.
+$temporaryPath = "$OutputPath.tmp-$([guid]::NewGuid().ToString('N').Substring(0, 8))"
+Set-Content -LiteralPath $temporaryPath -Value $sanitized -NoNewline -Encoding utf8
+
+# Verify the temporary output. Any surviving identity or high-risk pattern is a
+# failure: the temporary file is deleted and any previous output is removed too.
 $residual = @()
 foreach ($identity in $identities) {
     # Substring, not word-boundary: an identity embedded in a longer token
@@ -114,12 +152,23 @@ foreach ($rule in $rules) {
 
 $summary = ($counts.GetEnumerator() | ForEach-Object { "$($_.Key)=$($_.Value)" }) -join ', '
 if ($summary -eq '') { $summary = 'none' }
-Write-Host "sanitize: redactions [$summary]"
-Write-Host ("sanitize: identities discovered={0}, wrote {1} ({2} bytes)" -f $identities.Count, $OutputPath, (Get-Item -LiteralPath $OutputPath).Length)
 
 if ($residual.Count -gt 0) {
+    Remove-Item -LiteralPath $temporaryPath -Force -ErrorAction SilentlyContinue
+    Remove-Item -LiteralPath $OutputPath -Force -ErrorAction SilentlyContinue
     Write-Host ("sanitize: residual high-risk patterns: " + (($residual | Select-Object -Unique) -join ', ')) -ForegroundColor Red
+    Write-Host "sanitize: rejected output was deleted; nothing may be uploaded" -ForegroundColor Red
     exit 3
 }
 
+if ($BlockOnSecrets -and $blockingHits -gt 0) {
+    Remove-Item -LiteralPath $temporaryPath -Force -ErrorAction SilentlyContinue
+    Remove-Item -LiteralPath $OutputPath -Force -ErrorAction SilentlyContinue
+    Write-Host ("sanitize: {0} credential-class finding(s); refusing to publish" -f $blockingHits) -ForegroundColor Red
+    exit 3
+}
+
+Move-Item -LiteralPath $temporaryPath -Destination $OutputPath -Force
+Write-Host "sanitize: redactions [$summary]"
+Write-Host ("sanitize: identities discovered={0}, published {1} ({2} bytes)" -f $identities.Count, $OutputPath, (Get-Item -LiteralPath $OutputPath).Length)
 exit 0

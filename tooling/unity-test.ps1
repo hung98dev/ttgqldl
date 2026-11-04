@@ -28,6 +28,7 @@ param(
 
 . (Join-Path $PSScriptRoot '_common.ps1')
 . (Join-Path $PSScriptRoot 'unity-results.ps1')
+. (Join-Path $PSScriptRoot 'unity-safe-console.ps1')
 
 $script:RequiredUnityVersion = '6000.6.7f1'
 $root = Get-RepoRoot
@@ -106,19 +107,23 @@ foreach ($current in $platforms) {
     Remove-Item -Path $xml, $log -ErrorAction SilentlyContinue
 
     Write-Step "running $current tests"
-    # Unity writes progress to stderr; merging it keeps ErrorActionPreference
-    # from turning a healthy run into a terminating NativeCommandError, and
-    # Out-Host keeps $LASTEXITCODE intact for the caller.
+    # Raw editor output is captured to a protected temporary file, never streamed
+    # into the CI log: Unity output can contain licence channels, account names
+    # and machine paths. Only a sanitized summary is printed, and the raw capture
+    # is deleted afterwards.
+    $rawConsole = Join-Path ([System.IO.Path]::GetTempPath()) ("ttg-unity-console-{0}.log" -f ([guid]::NewGuid().ToString('N').Substring(0, 8)))
     $previous = $ErrorActionPreference
     $ErrorActionPreference = 'Continue'
     try {
         & $editor -batchmode -nographics -projectPath $project -runTests `
-            -testPlatform $current -testResults $xml -logFile $log 2>&1 | Out-Host
+            -testPlatform $current -testResults $xml -logFile $log 2>&1 | Out-File -FilePath $rawConsole -Encoding utf8
         $code = $LASTEXITCODE
     }
     finally {
         $ErrorActionPreference = $previous
     }
+    Publish-SafeConsoleOutput -RawPath $rawConsole -Label $current
+    Remove-Item -LiteralPath $rawConsole -Force -ErrorAction SilentlyContinue
 
     if (-not (Test-Path $xml)) {
         $licenceProblem = $false
