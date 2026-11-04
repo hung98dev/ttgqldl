@@ -37,3 +37,7 @@ backend/testdata/golden/*.json   text eol=lf
 *.asmdef  text eol=lf
 *.asmref  text eol=lf
 *.shader  text eol=lf
+# Source replay fixtures are digest-pinned: the manifest SHA256 is computed over
+# exact bytes, so a CRLF checkout would break fixture verification on Windows.
+backend/internal/source/testdata/* text eol=lf
+backend/internal/commands/testdata/* text eol=lf

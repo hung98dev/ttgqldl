@@ -38,13 +38,15 @@ type Action struct {
 	Ballot domain.VoteOption
 }
 
-// Valid reports whether the action is internally consistent.
+// Valid reports whether the action is internally consistent. Action is a tagged
+// union: exactly one arm may be populated, so a ballot action with a role (or a
+// role action with a ballot) is rejected.
 func (a Action) Valid() bool {
 	switch a.Kind {
 	case KindRole:
 		return a.Role.Valid() && a.Ballot == domain.VoteOptionNone
 	case KindBallot:
-		return a.Ballot.Valid() && a.Ballot != domain.VoteOptionNone
+		return a.Ballot.Valid() && a.Ballot != domain.VoteOptionNone && a.Role == 0
 	default:
 		return false
 	}

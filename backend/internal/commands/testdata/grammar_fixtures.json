@@ -340,6 +340,30 @@
     {
       "raw_hex": "efbbbf584159",
       "error": "ErrForbiddenCharacter"
+    },
+    {
+      "raw_hex": "584159cd8f",
+      "error": "ErrForbiddenCharacter"
+    },
+    {
+      "raw_hex": "41efb88f",
+      "error": "ErrForbiddenCharacter"
+    },
+    {
+      "raw_hex": "544855e1a08b",
+      "error": "ErrForbiddenCharacter"
+    },
+    {
+      "raw_hex": "584159efb880",
+      "error": "ErrForbiddenCharacter"
+    },
+    {
+      "raw_hex": "584159f3a08480",
+      "error": "ErrForbiddenCharacter"
+    },
+    {
+      "raw_hex": "584159f3a087af",
+      "error": "ErrForbiddenCharacter"
     }
   ]
 }

@@ -17,6 +17,21 @@ const MaxCommentBytes = 500
 // text needs at most a few; a longer run is a spoofing/resource attack.
 const maxCombiningMarks = 8
 
+// isVietnameseCombiningMark reports whether r is one of the combining marks used
+// by decomposed Vietnamese text. Only these marks are erased by Vietnamese
+// diacritic folding. Every other combining mark (variation selectors, the combining
+// grapheme joiner, Mongolian free variation selectors, arbitrary script marks) is
+// rejected: silently erasing a default-ignorable character would turn invisible
+// spoofing input into a valid command.
+func isVietnameseCombiningMark(r rune) bool {
+	switch r {
+	case '\u0300', '\u0301', '\u0302', '\u0303', '\u0306', '\u0309', '\u031B', '\u0323':
+		return true
+	default:
+		return false
+	}
+}
+
 // normalizeComment validates raw input and returns its canonical allowlisted
 // token. The returned token is always a key of tokenActions.
 func normalizeComment(raw string) (string, error) {
@@ -68,9 +83,10 @@ func finishToken(token string) (string, error) {
 	return token, nil
 }
 
-// scanForbidden rejects controls, Unicode format characters and mark floods. It
-// runs before NFKC and again on its output. Allowed whitespace is exempt from the
-// control rule because legitimate leading/trailing whitespace is accepted.
+// scanForbidden rejects controls, Unicode format characters and non-Vietnamese
+// combining marks. It runs before NFKC and again on its output. Allowed whitespace is
+// exempt from the control rule because legitimate leading/trailing whitespace is
+// accepted.
 func scanForbidden(text string) error {
 	marks := 0
 	atStart := true
@@ -85,6 +101,12 @@ func scanForbidden(text string) error {
 			if atStart {
 				// A combining mark with no base character is malformed input, not a
 				// command variant.
+				return ErrForbiddenCharacter
+			}
+			if !isVietnameseCombiningMark(r) {
+				// Default-ignorable or foreign marks (variation selectors, CGJ,
+				// Mongolian selectors, arbitrary script marks) must never be erased
+				// into a valid command.
 				return ErrForbiddenCharacter
 			}
 			marks++
@@ -121,14 +143,14 @@ func isASCII(text string) bool {
 }
 
 // foldVietnamese removes Vietnamese diacritics after lower-casing. It decomposes
-// with NFD, drops combining marks and maps the Vietnamese letters đ/Đ to d, which
-// ordinary mark removal cannot handle.
+// with NFD, drops the reviewed Vietnamese combining marks and maps the Vietnamese
+// letters đ/Đ to d, which ordinary mark removal cannot handle.
 func foldVietnamese(text string) string {
 	decomposed := norm.NFD.String(text)
 	var builder strings.Builder
 	builder.Grow(len(decomposed))
 	for _, r := range decomposed {
-		if unicode.Is(unicode.Mn, r) {
+		if isVietnameseCombiningMark(r) {
 			continue
 		}
 		if r == '\u0111' || r == '\u0110' { // đ / Đ

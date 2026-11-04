@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "fixtures": [
+    {
+      "name": "replay_valid.ndjson",
+      "schema_version": 1,
+      "sha256": "2de2b9f6f350dd2eb2b7c34d20c6ee1aab6d363d4f11eb7dc05bcb1a99c2b772",
+      "records": 6
+    },
+    {
+      "name": "replay_unicode.ndjson",
+      "schema_version": 1,
+      "sha256": "af01e72b6ecfbef95b05414cc4f173e3115fc346e54368bd0848ae5e6e56c9c4",
+      "records": 6
+    },
+    {
+      "name": "replay_duplicates.ndjson",
+      "schema_version": 1,
+      "sha256": "8eeca24950eade077b26a2d446b9bd401e524d83003ab27a892081797c963303",
+      "records": 4
+    },
+    {
+      "name": "replay_disconnect.ndjson",
+      "schema_version": 1,
+      "sha256": "1a035f0a00a52b43d49e9cca40fa394888b922db2cd0e0e252876dee27ef0a24",
+      "records": 5
+    },
+    {
+      "name": "replay_out_of_order.ndjson",
+      "schema_version": 1,
+      "sha256": "e48569609c273ca1c8b88711da33526fa68e13777c5ef22c473b3250dd93689a",
+      "records": 3
+    },
+    {
+      "name": "replay_malformed.ndjson",
+      "schema_version": 1,
+      "sha256": "0e2ac6193540912ae62039b9c1cf009fce1b518d3ff2cf35e181a179155353ff",
+      "records": 4
+    },
+    {
+      "name": "replay_bad_session.ndjson",
+      "schema_version": 1,
+      "sha256": "a21d44ec7004b0b9e42f0ad68ab0c587ddf57b44cfd41a49cfc76ae18a41e430",
+      "records": 1
+    },
+    {
+      "name": "replay_oversize_message.ndjson",
+      "schema_version": 1,
+      "sha256": "20c39fddb0110ff51cbbf11739a33f77884f26605bad6b66975288d9fa96d0ef",
+      "records": 1
+    },
+    {
+      "name": "replay_control.ndjson",
+      "schema_version": 1,
+      "sha256": "a16d414c44b6507fa04283b62e178ed3f2c3164bba918e7ae135b330ecaeb3b0",
+      "records": 1
+    },
+    {
+      "name": "replay_unknown_field.ndjson",
+      "schema_version": 1,
+      "sha256": "d8b6ed8cef70133e3d01c9e42b491ba135bef66cede1012b0132f0f62e03cb95",
+      "records": 1
+    },
+    {
+      "name": "replay_bad_utf8.ndjson",
+      "schema_version": 1,
+      "sha256": "3837e713c782420bcc67ac4fa950baf8fbce00d481b847ccccf30bc1495ef288",
+      "records": 1
+    },
+    {
+      "name": "replay_oversize_record.ndjson",
+      "schema_version": 1,
+      "sha256": "b310d53dfc9433f0e5ddef26685e58d6868d572513865e2a6c44443c2f4d9a36",
+      "records": 1
+    },
+    {
+      "name": "replay_truncated.ndjson",
+      "schema_version": 1,
+      "sha256": "b42978e3a46db40e10b868fdca13993091c1e3fc0cd86b116691fd184a3afc90",
+      "records": 1
+    },
+    {
+      "name": "replay_invalid_grammar.ndjson",
+      "schema_version": 1,
+      "sha256": "ea5326962ec3467295ef5e0d9831c063da9d7aa1f30c5b8cc0471983a48d28d8",
+      "records": 5
+    }
+  ]
+}

@@ -18,6 +18,7 @@ func FuzzParseComment(f *testing.F) {
 		"XAY DANH", "XAY!", "!XAY", "XAY?", "/XAY", "#XAY", "123XAY", "XAY123",
 		"X Â Y", "B U I L D", "ATTACK NOW", "ХАУ", "Α", "Ａ", "１",
 		"XAY\u200B", "\u202EXAY", "\u2066XAY\u2069", "XAY\uFEFF", "\u0301XAY",
+		"XAY\u034F", "A\uFE0F", "THU\u180B", "XAY\uFE00", "XAY\U000E0100", "XAY\U000E01EF",
 		"XAY" + "\u0301\u0301\u0301\u0301\u0301\u0301\u0301\u0301\u0301",
 		"\xff", "XAY\xff", "\x80", "\xed\xa0\x80",
 	}
