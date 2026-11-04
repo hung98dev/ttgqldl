@@ -143,3 +143,47 @@ func TestLegacyEnvelopeVersionRejected(t *testing.T) {
 		t.Fatal("version-1 envelope without complete XP coverage was accepted")
 	}
 }
+
+// Canonical v1 hashes lifecycle but not the independent pause-reason set, so two
+// paused states with different blockers can share a canonical hash while resuming
+// differently. The private envelope must separate them.
+func TestPauseReasonsAffectPrivateCheckpoint(t *testing.T) {
+	state, queue := queuedCheckpointFixture(t)
+	first := state.Clone()
+	first.Lifecycle = domain.LifecyclePaused
+	first.PauseReasons = []domain.PauseReason{domain.PauseOperatorPaused}
+	second := state.Clone()
+	second.Lifecycle = domain.LifecyclePaused
+	second.PauseReasons = []domain.PauseReason{domain.PauseOperatorPaused, domain.PauseStorageUnavailable}
+	if err := first.Validate(); err != nil {
+		t.Fatal(err)
+	}
+	if err := second.Validate(); err != nil {
+		t.Fatal(err)
+	}
+	hashFirst, err := canonical.Hash(first)
+	if err != nil {
+		t.Fatal(err)
+	}
+	hashSecond, err := canonical.Hash(second)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if hashFirst != hashSecond {
+		t.Fatal("canonical v1 unexpectedly covers pause reasons; update the contract notes")
+	}
+	envelopeFirst, err := BuildCheckpointEnvelope(first, queue)
+	if err != nil {
+		t.Fatal(err)
+	}
+	envelopeSecond, err := BuildCheckpointEnvelope(second, queue)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if envelopeFirst.IntegrityHash == envelopeSecond.IntegrityHash {
+		t.Fatal("private checkpoint does not separate pause reason sets")
+	}
+	if err := VerifyCheckpointEnvelope(envelopeFirst, second, queue); err == nil {
+		t.Fatal("pause reason tampering was accepted")
+	}
+}

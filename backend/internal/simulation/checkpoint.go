@@ -12,20 +12,21 @@ import (
 // need their own deterministic digest: otherwise a tampered queue would resume
 // into different gameplay while the stored state hash still matched.
 type CheckpointEnvelope struct {
-	SchemaVersion int               `json:"schema_version"`
-	RulesVersion  string            `json:"rules_version"`
-	StateHash     string            `json:"state_hash"`
-	RoleQueue     []RoleCommand     `json:"role_queue"`
-	BallotQueue   []VoteCommand     `json:"ballot_queue"`
-	SessionXP     []domain.PlayerXP `json:"session_xp"`
-	IntegrityHash string            `json:"integrity_hash"`
+	SchemaVersion int                  `json:"schema_version"`
+	RulesVersion  string               `json:"rules_version"`
+	StateHash     string               `json:"state_hash"`
+	RoleQueue     []RoleCommand        `json:"role_queue"`
+	BallotQueue   []VoteCommand        `json:"ballot_queue"`
+	SessionXP     []domain.PlayerXP    `json:"session_xp"`
+	PauseReasons  []domain.PauseReason `json:"pause_reasons"`
+	IntegrityHash string               `json:"integrity_hash"`
 }
 
 // checkpointEnvelopeVersion is the private restoration format version, separate
 // from the canonical game-state schema. Version 2 adds the complete persisted
 // session XP set to the payload and digest; version 1 envelopes cannot be treated
 // as equivalent because they lack that coverage, so they are rejected.
-const checkpointEnvelopeVersion = 2
+const checkpointEnvelopeVersion = 3
 
 // BuildCheckpointEnvelope computes the integrity digest over the full restoration
 // payload: canonical state hash plus every queued role and ballot command.
@@ -41,6 +42,7 @@ func BuildCheckpointEnvelope(state domain.SessionState, queue RoleQueue) (Checkp
 		RoleQueue:     append([]RoleCommand(nil), queue.Entries...),
 		BallotQueue:   append([]VoteCommand(nil), queue.Ballots...),
 		SessionXP:     append([]domain.PlayerXP(nil), state.XP...),
+		PauseReasons:  append([]domain.PauseReason(nil), state.PauseReasons...),
 	}
 	digest, err := envelopeDigest(envelope)
 	if err != nil {
@@ -87,6 +89,14 @@ func VerifyCheckpointEnvelope(envelope CheckpointEnvelope, state domain.SessionS
 	for index := range envelope.SessionXP {
 		if envelope.SessionXP[index] != state.XP[index] {
 			return fmt.Errorf("%w: checkpoint XP record was tampered", ErrInvalidState)
+		}
+	}
+	if len(envelope.PauseReasons) != len(state.PauseReasons) {
+		return fmt.Errorf("%w: checkpoint pause reasons do not match", ErrInvalidState)
+	}
+	for index := range envelope.PauseReasons {
+		if envelope.PauseReasons[index] != state.PauseReasons[index] {
+			return fmt.Errorf("%w: checkpoint pause reasons were tampered", ErrInvalidState)
 		}
 	}
 	seen := make(map[int64]bool, len(envelope.RoleQueue)+len(envelope.BallotQueue))
@@ -148,6 +158,10 @@ func envelopeDigest(envelope CheckpointEnvelope) (string, error) {
 			"session_xp": row.XP,
 		})
 	}
+	pauseReasons := make([]any, 0, len(envelope.PauseReasons))
+	for _, reason := range envelope.PauseReasons {
+		pauseReasons = append(pauseReasons, reason.String())
+	}
 	payload := map[string]any{
 		"schema_version": int64(envelope.SchemaVersion),
 		"rules_version":  envelope.RulesVersion,
@@ -155,6 +169,7 @@ func envelopeDigest(envelope CheckpointEnvelope) (string, error) {
 		"role_queue":     roles,
 		"ballot_queue":   ballots,
 		"session_xp":     xp,
+		"pause_reasons":  pauseReasons,
 	}
 	encoded, err := canonical.MarshalJCS(payload)
 	if err != nil {
