@@ -25,6 +25,12 @@ var ErrInvalidState = errors.New("canonical: invalid state")
 // SchemaVersion is the canonical projection version covered by the hash.
 const SchemaVersion = domain.CanonicalSchemaVersion
 
+// maxSafeInteger is the largest magnitude representable exactly by an IEEE-754
+// double (2^53-1). The restricted JCS profile rejects larger integers rather than
+// silently losing precision; the binding contract reserves decimal strings for
+// such fields, and no current canonical field requires one.
+const maxSafeInteger int64 = 1<<53 - 1
+
 // Project returns the canonical, versioned game-state representation. Fields are
 // exactly the documented binding set; no timestamps, device or provider data are
 // included.
@@ -63,22 +69,30 @@ func Project(state domain.SessionState) (map[string]any, error) {
 		})
 	}
 
-	pools := make([]any, 0, len(state.Wave.Pools))
-	for _, pool := range state.Wave.Pools {
-		pools = append(pools, map[string]any{
-			"lane":      pool.Lane.String(),
-			"archetype": pool.Archetype.String(),
-			"hp":        pool.HP,
-		})
+	// Binding contract: exactly west, center, east, each with runner/grunt/brute HP.
+	laneHP := [domain.LaneCount][3]int64{}
+	laneSeen := [domain.LaneCount][3]bool{}
+	if len(state.Wave.Pools) != 0 && len(state.Wave.Pools) != domain.LaneCount*3 {
+		return nil, fmt.Errorf("%w: lane pools are not the canonical nine subpools", ErrInvalidState)
 	}
-
-	ballots := make([]any, 0, len(state.Wave.Ballots))
-	for _, ballot := range state.Wave.Ballots {
-		ballots = append(ballots, map[string]any{
-			"actor_key": string(ballot.ActorKey),
-			"option":    ballot.Option.String(),
-			"tick":      int64(ballot.Tick),
-			"input_seq": ballot.InputSeq,
+	for _, pool := range state.Wave.Pools {
+		lane, archetype := int(pool.Lane), int(pool.Archetype)
+		if lane < 0 || lane >= domain.LaneCount || archetype < 0 || archetype >= 3 {
+			return nil, fmt.Errorf("%w: invalid pool identity", ErrInvalidState)
+		}
+		if laneSeen[lane][archetype] {
+			return nil, fmt.Errorf("%w: duplicate pool identity", ErrInvalidState)
+		}
+		laneSeen[lane][archetype] = true
+		laneHP[lane][archetype] = pool.HP
+	}
+	pools := make([]any, 0, domain.LaneCount)
+	for lane := 0; lane < domain.LaneCount; lane++ {
+		pools = append(pools, map[string]any{
+			"lane":      domain.Lane(lane).String(),
+			"runner_hp": laneHP[lane][int(domain.ArchetypeRunner)],
+			"grunt_hp":  laneHP[lane][int(domain.ArchetypeGrunt)],
+			"brute_hp":  laneHP[lane][int(domain.ArchetypeBrute)],
 		})
 	}
 
@@ -121,7 +135,7 @@ func Project(state domain.SessionState) (map[string]any, error) {
 		"total_wins":         state.Village.TotalWins,
 		"consecutive_wins":   state.ConsecutiveWins,
 		"consecutive_losses": state.ConsecutiveLosses,
-		"anchor_population":  int64(state.Difficulty.ActualPopulation),
+		"anchor_population":  int64(state.Difficulty.PopulationAnchor),
 		"difficulty":         int64(state.Difficulty.Level),
 		"base_hp":            state.Difficulty.BaseHP,
 		"lane_pools":         pools,
@@ -136,7 +150,6 @@ func Project(state domain.SessionState) (map[string]any, error) {
 				"b": state.Wave.Vote.Counts.B,
 				"c": state.Wave.Vote.Counts.C,
 			},
-			"ballots": ballots,
 		},
 		"members":          members,
 		"queued_next_wave": queued,
@@ -178,8 +191,14 @@ func writeValue(buffer *bytes.Buffer, value any) error {
 			buffer.WriteString("false")
 		}
 	case int:
+		if int64(typed) > maxSafeInteger || int64(typed) < -maxSafeInteger {
+			return fmt.Errorf("canonical: integer outside the JSON safe range")
+		}
 		buffer.WriteString(strconv.FormatInt(int64(typed), 10))
 	case int64:
+		if typed > maxSafeInteger || typed < -maxSafeInteger {
+			return fmt.Errorf("canonical: integer %d outside the JSON safe range", typed)
+		}
 		buffer.WriteString(strconv.FormatInt(typed, 10))
 	case string:
 		encoded, err := encodeString(typed)

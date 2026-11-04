@@ -37,7 +37,7 @@ func TestJCSKnownVectors(t *testing.T) {
 		{map[string]any{"b": int64(1), "a": "x"}, `{"a":"x","b":1}`},
 		{map[string]any{"z": nil, "a": true}, `{"a":true,"z":null}`},
 		{[]any{int64(1), int64(2), int64(3)}, `[1,2,3]`},
-		{map[string]any{"n": int64(9223372036854775807)}, `{"n":9223372036854775807}`},
+		{map[string]any{"n": maxSafeInteger}, `{"n":9007199254740991}`},
 		{map[string]any{"q": "line\nquote\""}, "{\"q\":\"line\\nquote\\\"\"}"},
 		{map[string]any{"nested": map[string]any{"b": false, "a": int64(0)}}, `{"nested":{"a":0,"b":false}}`},
 	}
@@ -52,6 +52,9 @@ func TestJCSKnownVectors(t *testing.T) {
 	}
 	if _, err := MarshalJCS(3.14); err == nil {
 		t.Fatal("floats must be rejected")
+	}
+	if _, err := MarshalJCS(map[string]any{"n": int64(9223372036854775807)}); err == nil {
+		t.Fatal("integers outside the JSON safe range must be rejected")
 	}
 }
 
@@ -110,6 +113,75 @@ func TestProjectExposesNullableFieldsExplicitly(t *testing.T) {
 	}
 	if !bytes.Contains(encoded, []byte(`"rules_version":"ttg-rules-v1"`)) {
 		t.Fatal("rules version missing")
+	}
+}
+
+func TestLanePoolsUseTheBindingThreeLaneShape(t *testing.T) {
+	state := baseState(t)
+	state.Wave.Pools = []domain.EnemyPool{}
+	for lane := domain.LaneWest; lane <= domain.LaneEast; lane++ {
+		state.Wave.Pools = append(state.Wave.Pools,
+			domain.EnemyPool{Lane: lane, Archetype: domain.ArchetypeRunner, HP: int64(lane) + 1},
+			domain.EnemyPool{Lane: lane, Archetype: domain.ArchetypeGrunt, HP: int64(lane) + 2},
+			domain.EnemyPool{Lane: lane, Archetype: domain.ArchetypeBrute, HP: int64(lane) + 3},
+		)
+	}
+	projection, err := Project(state)
+	if err != nil {
+		t.Fatal(err)
+	}
+	lanes, ok := projection["lane_pools"].([]any)
+	if !ok || len(lanes) != domain.LaneCount {
+		t.Fatalf("lane_pools = %v", projection["lane_pools"])
+	}
+	first, ok := lanes[0].(map[string]any)
+	if !ok || first["lane"] != "west" || first["runner_hp"] != int64(1) || first["grunt_hp"] != int64(2) || first["brute_hp"] != int64(3) {
+		t.Fatalf("west lane = %v", lanes[0])
+	}
+}
+
+func TestAnchorPopulationUsesTheLockedAnchor(t *testing.T) {
+	state := baseState(t)
+	state.Difficulty = domain.Difficulty{Level: 1, PopulationAnchor: 10_000, Locked: true, ActualPopulation: 12_000, RecoveryPercent: 100, BaseHP: 3920, MilitiaAttack: 0}
+	state.Members = nil
+	for index := 1; index <= 3; index++ {
+		state.Members = append(state.Members, domain.WaveMember{ActorKey: actor(index), Role: domain.RoleBuilder, JoinedTick: 0})
+	}
+	state.XP = []domain.PlayerXP{}
+	state.Wave.Pools = []domain.EnemyPool{}
+	for lane := domain.LaneWest; lane <= domain.LaneEast; lane++ {
+		for archetype := domain.ArchetypeRunner; archetype <= domain.ArchetypeBrute; archetype++ {
+			state.Wave.Pools = append(state.Wave.Pools, domain.EnemyPool{Lane: lane, Archetype: archetype, HP: 1})
+		}
+	}
+	state.Wave.Number = 2
+	projection, err := Project(state)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if projection["anchor_population"] != int64(10_000) {
+		t.Fatalf("anchor_population = %v, want the locked cap 10000", projection["anchor_population"])
+	}
+}
+
+// TestPersistedXPOutsideCurrentMembersIsNotHashed documents a binding-contract
+// gap: the canonical member list carries session_xp only for current-wave members,
+// so XP retained by an actor who left the wave cannot be detected by the hash.
+// This is recorded as a limitation rather than silently adding an undocumented
+// field.
+func TestPersistedXPOutsideCurrentMembersIsNotHashed(t *testing.T) {
+	state := baseState(t)
+	base, err := Hash(state)
+	if err != nil {
+		t.Fatal(err)
+	}
+	state.XP = append(state.XP, domain.PlayerXP{ActorKey: actor(2), XP: 50})
+	changed, err := Hash(state)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if changed != base {
+		t.Fatal("contract unexpectedly covers non-member XP; update the evidence")
 	}
 }
 
