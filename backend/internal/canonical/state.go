@@ -166,6 +166,12 @@ func MarshalJCS(value any) ([]byte, error) {
 	return buffer.Bytes(), nil
 }
 
+// SHA256Hex returns the lowercase hex SHA-256 of raw bytes.
+func SHA256Hex(data []byte) string {
+	sum := sha256.Sum256(data)
+	return hex.EncodeToString(sum[:])
+}
+
 // Hash returns the hex SHA-256 of the canonical JSON projection.
 func Hash(state domain.SessionState) (string, error) {
 	projection, err := Project(state)
