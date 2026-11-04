@@ -53,6 +53,9 @@ const AcceptedTickUnspecified = -2
 // never mutate an earlier authoritative snapshot.
 type RoleQueue struct {
 	Entries []RoleCommand
+	// Ballots are accepted ballots that have not yet reached their effective tick.
+	// They never appear in authoritative ballot state before ApplyDueVotes.
+	Ballots []VoteCommand
 }
 
 // Len reports the number of accepted, not-yet-applied commands.
@@ -60,12 +63,34 @@ func (q RoleQueue) Len() int { return len(q.Entries) }
 
 // Clone returns an independent copy of the queue.
 func (q RoleQueue) Clone() RoleQueue {
-	if q.Entries == nil {
-		return RoleQueue{}
+	clone := RoleQueue{}
+	if q.Entries != nil {
+		clone.Entries = make([]RoleCommand, len(q.Entries))
+		copy(clone.Entries, q.Entries)
 	}
-	entries := make([]RoleCommand, len(q.Entries))
-	copy(entries, q.Entries)
-	return RoleQueue{Entries: entries}
+	if q.Ballots != nil {
+		clone.Ballots = make([]VoteCommand, len(q.Ballots))
+		copy(clone.Ballots, q.Ballots)
+	}
+	return clone
+}
+
+func (q RoleQueue) cloneRoles() []RoleCommand {
+	if q.Entries == nil {
+		return nil
+	}
+	out := make([]RoleCommand, len(q.Entries))
+	copy(out, q.Entries)
+	return out
+}
+
+func (q RoleQueue) cloneBallots() []VoteCommand {
+	if q.Ballots == nil {
+		return nil
+	}
+	out := make([]VoteCommand, len(q.Ballots))
+	copy(out, q.Ballots)
+	return out
 }
 
 // RoleOutcome is the internal processing result for one command.
@@ -243,7 +268,7 @@ func ApplyDueRoles(state domain.SessionState, queue RoleQueue) (domain.SessionSt
 	}
 
 	work := state.Clone()
-	remaining := RoleQueue{}
+	remaining := RoleQueue{Ballots: queue.cloneBallots()}
 	events := make([]RoleEvent, 0, len(queue.Entries))
 	decisions := make([]RoleDecision, 0, len(queue.Entries))
 	index := make(map[domain.ActorKey]int, len(work.Members))
@@ -378,7 +403,7 @@ func AdvanceWithRoles(state domain.SessionState, queue RoleQueue, input Input) (
 		if input.Registration == nil || input.Registration.ActorKey != head.ActorKey || input.Registration.Role != head.Role {
 			return state, queue, nil, nil, fmt.Errorf("%w: registration does not match the accepted command", ErrStartMismatch)
 		}
-		remaining := RoleQueue{Entries: append([]RoleCommand(nil), queue.Entries[1:]...)}
+		remaining := RoleQueue{Entries: append([]RoleCommand(nil), queue.Entries[1:]...), Ballots: queue.cloneBallots()}
 		next, clockEvents, err := Next(state, Input{
 			Kind:         KindStartWave,
 			Registration: &Registration{ActorKey: head.ActorKey, Role: head.Role},
@@ -390,10 +415,15 @@ func AdvanceWithRoles(state domain.SessionState, queue RoleQueue, input Input) (
 		if applyErr != nil {
 			return state, queue, nil, nil, applyErr
 		}
-		resolved, gameplayEvents, resolveErr := resolveBoundary(applied)
+		voted, voteQueue, voteErr := ApplyDueVotes(applied, leftover)
+		if voteErr != nil {
+			return state, queue, nil, nil, voteErr
+		}
+		resolved, gameplayEvents, resolveErr := resolveBoundary(voted)
 		if resolveErr != nil {
 			return state, queue, nil, nil, resolveErr
 		}
+		leftover = voteQueue
 		roleEvents := []RoleEvent{{
 			Type:       EventRoleAccepted,
 			WaveNo:     resolved.Wave.Number,
@@ -414,12 +444,16 @@ func AdvanceWithRoles(state domain.SessionState, queue RoleQueue, input Input) (
 	if applyErr != nil {
 		return state, queue, nil, nil, applyErr
 	}
-	resolved, gameplayEvents, resolveErr := resolveBoundary(applied)
+	voted, voteQueue, voteErr := ApplyDueVotes(applied, remaining)
+	if voteErr != nil {
+		return state, queue, nil, nil, voteErr
+	}
+	resolved, gameplayEvents, resolveErr := resolveBoundary(voted)
 	if resolveErr != nil {
 		return state, queue, nil, nil, resolveErr
 	}
 	events := mergeBoundaryEvents(resolved, clockEvents, roleEvents, gameplayEvents)
-	return resolved, remaining, events, roleEvents, nil
+	return resolved, voteQueue, events, roleEvents, nil
 }
 
 // validateRoleCommands validates the batch before any mutation and returns it in

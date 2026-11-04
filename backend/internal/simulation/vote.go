@@ -1,14 +1,18 @@
 package simulation
 
 import (
-	"errors"
 	"fmt"
+	"sort"
 
 	"github.com/hung98dev/ttgqldl/backend/internal/domain"
 )
 
 // VoteCommand is one already-canonicalized ballot. Chat parsing and identity
 // mapping belong to M03; this layer accepts only validated domain values.
+//
+// ScheduledTick is the effective tick inside the current wave and must match the
+// ingest contract committed_tick+1, so a caller can never rewrite a committed
+// boundary. AcceptedTick is the committed tick at acceptance time.
 type VoteCommand struct {
 	InputSeq      int64
 	ActorKey      domain.ActorKey
@@ -27,7 +31,7 @@ type VoteDecision struct {
 	Tick     int
 }
 
-// VoteDeferredError reports validated ballots that were not stored because the
+// VoteDeferredError reports validated ballots that were not queued because the
 // session is operator-paused. The caller must retain and resubmit them.
 type VoteDeferredError struct {
 	Commands []VoteCommand
@@ -39,128 +43,163 @@ func (e *VoteDeferredError) Error() string {
 
 func (e *VoteDeferredError) Is(target error) bool { return target == ErrInputDeferred }
 
-// AcceptVoteCommands validates ballots and stores the latest accepted ballot per
-// actor. Nothing is stored if any command is invalid. A ballot never changes the
-// tally before the close boundary.
-func AcceptVoteCommands(state domain.SessionState, commands []VoteCommand) (domain.SessionState, []VoteDecision, error) {
+// AcceptVoteCommands validates a batch and queues it without touching
+// authoritative ballot state. A ballot becomes effective only through
+// ApplyDueVotes at its scheduled tick.
+func AcceptVoteCommands(state domain.SessionState, queue RoleQueue, commands []VoteCommand) (domain.SessionState, RoleQueue, []VoteDecision, error) {
 	if err := state.Validate(); err != nil {
-		return state, nil, fmt.Errorf("%w: %v", ErrInvalidState, err)
+		return state, queue, nil, fmt.Errorf("%w: %v", ErrInvalidState, err)
 	}
 	switch state.Lifecycle {
 	case domain.LifecycleStopped:
-		return state, nil, ErrStopped
+		return state, queue, nil, ErrStopped
 	case domain.LifecycleStorageUnavailable:
-		return state, nil, ErrStorageUnavailable
+		return state, queue, nil, ErrStorageUnavailable
 	case domain.LifecycleSourceDisconnected:
-		return state, nil, ErrSourceDisconnected
+		return state, queue, nil, ErrSourceDisconnected
 	}
 	ordered := make([]VoteCommand, len(commands))
 	copy(ordered, commands)
-	sortVoteCommands(ordered)
+	sort.SliceStable(ordered, func(i, j int) bool { return ordered[i].InputSeq < ordered[j].InputSeq })
 
+	members := make(map[domain.ActorKey]int, len(state.Members))
+	for _, member := range state.Members {
+		members[member.ActorKey] = member.JoinedTick
+	}
 	seen := make(map[int64]bool, len(ordered))
+	if !domain.VoteAvailable(state.Wave.Number) {
+		return state, queue, nil, fmt.Errorf("%w: voting is only available on even waves", ErrInvalidCommand)
+	}
+	if state.Tick() >= domain.VoteCloseTick {
+		return state, queue, nil, fmt.Errorf("%w: voting closed at tick %d", ErrInvalidCommand, domain.VoteCloseTick)
+	}
 	for index := range ordered {
 		command := &ordered[index]
 		if command.InputSeq <= 0 {
-			return state, nil, fmt.Errorf("%w: input_seq must be positive", ErrInvalidCommand)
+			return state, queue, nil, fmt.Errorf("%w: input_seq must be positive", ErrInvalidCommand)
 		}
 		if seen[command.InputSeq] {
-			return state, nil, fmt.Errorf("%w: %d", ErrDuplicateInputSeq, command.InputSeq)
+			return state, queue, nil, fmt.Errorf("%w: %d", ErrDuplicateInputSeq, command.InputSeq)
 		}
 		seen[command.InputSeq] = true
+		for _, queued := range queue.Ballots {
+			if queued.InputSeq == command.InputSeq {
+				return state, queue, nil, fmt.Errorf("%w: %d", ErrDuplicateInputSeq, command.InputSeq)
+			}
+		}
 		if !command.ActorKey.Valid() {
-			return state, nil, fmt.Errorf("%w: invalid actor key", ErrInvalidCommand)
+			return state, queue, nil, fmt.Errorf("%w: invalid actor key", ErrInvalidCommand)
 		}
 		if !command.Option.Valid() || command.Option == domain.VoteOptionNone {
-			return state, nil, fmt.Errorf("%w: invalid ballot option", ErrInvalidCommand)
-		}
-		if !domain.VoteAvailable(state.Wave.Number) {
-			return state, nil, fmt.Errorf("%w: voting is only available on even waves", ErrInvalidCommand)
+			return state, queue, nil, fmt.Errorf("%w: invalid ballot option", ErrInvalidCommand)
 		}
 		if command.AcceptedTick == AcceptedTickUnspecified {
 			command.AcceptedTick = state.Tick()
 		}
 		if command.AcceptedTick != state.Tick() {
-			return state, nil, fmt.Errorf("%w: ballot accepted at %d but committed tick is %d", ErrRetroactiveInput, command.AcceptedTick, state.Tick())
+			return state, queue, nil, fmt.Errorf("%w: ballot accepted at %d but committed tick is %d", ErrRetroactiveInput, command.AcceptedTick, state.Tick())
 		}
 		if command.TargetWave != state.Wave.Number {
-			return state, nil, fmt.Errorf("%w: ballot targets wave %d while the session is on %d", ErrInvalidCommand, command.TargetWave, state.Wave.Number)
-		}
-		if state.Tick() >= domain.VoteCloseTick {
-			return state, nil, fmt.Errorf("%w: voting closed at tick %d", ErrInvalidCommand, domain.VoteCloseTick)
+			return state, queue, nil, fmt.Errorf("%w: ballot targets wave %d while the session is on %d", ErrInvalidCommand, command.TargetWave, state.Wave.Number)
 		}
 		if !domain.BallotTickEligible(command.ScheduledTick) {
-			return state, nil, fmt.Errorf("%w: ballot tick %d outside [800,1200)", ErrInvalidCommand, command.ScheduledTick)
+			return state, queue, nil, fmt.Errorf("%w: ballot tick %d outside [800,1200)", ErrInvalidCommand, command.ScheduledTick)
 		}
-		position, isMember := -1, false
-		for i, member := range state.Members {
-			if member.ActorKey == command.ActorKey {
-				position, isMember = i, true
-				break
-			}
+		// Ingest schedules at last committed tick + 1; a caller cannot choose an
+		// arbitrary future tick and cannot rewrite a committed one.
+		if command.ScheduledTick != state.Tick()+1 {
+			return state, queue, nil, fmt.Errorf("%w: ballot tick %d must equal committed+1 (%d)", ErrRetroactiveInput, command.ScheduledTick, state.Tick()+1)
 		}
+		joined, isMember := members[command.ActorKey]
 		if !isMember {
-			return state, nil, fmt.Errorf("%w: only current-wave participants may vote", ErrInvalidCommand)
+			return state, queue, nil, fmt.Errorf("%w: only current-wave participants may vote", ErrInvalidCommand)
 		}
-		if state.Members[position].JoinedTick > command.ScheduledTick {
-			return state, nil, fmt.Errorf("%w: participant is not effective at the ballot tick", ErrInvalidCommand)
+		if joined > command.ScheduledTick {
+			return state, queue, nil, fmt.Errorf("%w: participant is not effective at the ballot tick", ErrInvalidCommand)
 		}
 	}
 	if state.Lifecycle == domain.LifecyclePaused {
-		return state.Clone(), nil, &VoteDeferredError{Commands: ordered}
+		return state.Clone(), queue.Clone(), nil, &VoteDeferredError{Commands: ordered}
 	}
 
-	work := state.Clone()
 	decisions := make([]VoteDecision, 0, len(ordered))
+	next := queue.Clone()
 	for _, command := range ordered {
+		next.Ballots = append(next.Ballots, command)
+		decisions = append(decisions, VoteDecision{
+			Outcome:  "ballot_queued",
+			InputSeq: command.InputSeq,
+			ActorKey: command.ActorKey,
+			Option:   command.Option,
+			Tick:     command.ScheduledTick,
+		})
+	}
+	sortBallotQueue(next.Ballots)
+	return state.Clone(), next, decisions, nil
+}
+
+// ApplyDueVotes applies every queued ballot whose effective tick has committed,
+// in deterministic (tick, input_seq) order, and stores the latest ballot per
+// actor. It never mutates the authoritative ballot collection before that tick.
+func ApplyDueVotes(state domain.SessionState, queue RoleQueue) (domain.SessionState, RoleQueue, error) {
+	if len(queue.Ballots) == 0 {
+		return state, queue, nil
+	}
+	if state.Lifecycle != domain.LifecycleRunning || len(state.PauseReasons) > 0 {
+		return state, queue, nil
+	}
+	work := state.Clone()
+	remaining := queue.Clone()
+	remaining.Ballots = nil
+	for _, command := range queue.Ballots {
+		if command.ScheduledTick > state.Tick() {
+			remaining.Ballots = append(remaining.Ballots, command)
+			continue
+		}
+		if command.TargetWave != work.Wave.Number {
+			return state, queue, fmt.Errorf("%w: ballot targets wave %d while the session is on %d", ErrStaleSchedule, command.TargetWave, work.Wave.Number)
+		}
+		if command.ScheduledTick > work.Tick() {
+			// Cannot happen because the queue is ordered, but keep the invariant.
+			remaining.Ballots = append(remaining.Ballots, command)
+			continue
+		}
 		work.Wave.Ballots = upsertBallot(work.Wave.Ballots, domain.Ballot{
 			ActorKey: command.ActorKey,
 			Option:   command.Option,
 			Tick:     command.ScheduledTick,
 			InputSeq: command.InputSeq,
 		})
-		decisions = append(decisions, VoteDecision{
-			Outcome:  "ballot_accepted",
-			InputSeq: command.InputSeq,
-			ActorKey: command.ActorKey,
-			Option:   command.Option,
-			Tick:     command.ScheduledTick,
-		})
 	}
+	sortBallotQueue(remaining.Ballots)
+	domain.SortBallots(work.Wave.Ballots)
 	if err := work.Validate(); err != nil {
-		return state, nil, fmt.Errorf("%w: ballots produced an invalid state: %v", ErrInvalidState, err)
+		return state, queue, fmt.Errorf("%w: due ballots produced an invalid state: %v", ErrInvalidState, err)
 	}
-	return work, decisions, nil
+	return work, remaining, nil
 }
 
-// upsertBallot keeps one ballot per actor: a later effective tick wins, and for
-// the same tick the higher input sequence wins. The collection stays canonical.
+// upsertBallot keeps one ballot per actor with deterministic latest-wins rules.
 func upsertBallot(ballots []domain.Ballot, ballot domain.Ballot) []domain.Ballot {
 	for i := range ballots {
 		if ballots[i].ActorKey != ballot.ActorKey {
 			continue
 		}
-		replace := ballot.Tick > ballots[i].Tick ||
-			(ballot.Tick == ballots[i].Tick && ballot.InputSeq >= ballots[i].InputSeq)
-		if replace {
+		if ballot.Tick > ballots[i].Tick || (ballot.Tick == ballots[i].Tick && ballot.InputSeq > ballots[i].InputSeq) {
 			ballots[i] = ballot
 		}
-		domain.SortBallots(ballots)
 		return ballots
 	}
-	ballots = append(ballots, ballot)
-	domain.SortBallots(ballots)
-	return ballots
+	return append(ballots, ballot)
 }
 
-func sortVoteCommands(commands []VoteCommand) {
-	for i := 0; i < len(commands); i++ {
-		for j := i + 1; j < len(commands); j++ {
-			if commands[j].InputSeq < commands[i].InputSeq {
-				commands[i], commands[j] = commands[j], commands[i]
-			}
+func sortBallotQueue(commands []VoteCommand) {
+	sort.SliceStable(commands, func(i, j int) bool {
+		if commands[i].ScheduledTick != commands[j].ScheduledTick {
+			return commands[i].ScheduledTick < commands[j].ScheduledTick
 		}
-	}
+		return commands[i].InputSeq < commands[j].InputSeq
+	})
 }
 
 // openVote opens the ballot window exactly once on an eligible wave.
@@ -178,7 +217,7 @@ func openVote(state domain.SessionState) (domain.SessionState, []Event, error) {
 	}}, nil
 }
 
-// closeVote tallies the latest ballots, selects the option, deducts its cost
+// closeVote tallies the applied ballots, selects the option, deducts its cost
 // exactly once and closes the window. It must run before tick-1200 economy.
 func closeVote(state domain.SessionState) (domain.SessionState, []Event, error) {
 	if !domain.VoteAvailable(state.Wave.Number) || state.Wave.Vote.Closed {
@@ -217,12 +256,9 @@ func closeVote(state domain.SessionState) (domain.SessionState, []Event, error) 
 }
 
 // VoteModifiers returns the authoritative combat modifiers for the current vote.
-// Odd waves and unselected votes return 100/100.
 func VoteModifiers(state domain.SessionState) (attackPercent, guardPercent int64) {
 	if !domain.VoteAvailable(state.Wave.Number) || !state.Wave.Vote.Closed {
 		return 100, 100
 	}
 	return domain.VoteAttackPercent(state.Wave.Vote.Selected), domain.VoteGuardPercent(state.Wave.Vote.Selected)
 }
-
-var _ = errors.Is

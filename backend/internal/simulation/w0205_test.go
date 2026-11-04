@@ -280,8 +280,8 @@ func TestFinalCombatRunsOnceAndLeavesResultPending(t *testing.T) {
 	if attackEvents != 1 {
 		t.Fatalf("attack_resolved count = %d", attackEvents)
 	}
-	if next.Wave.Result != domain.WaveResultPending {
-		t.Fatal("W0205 must not settle the wave")
+	if next.Wave.Result == domain.WaveResultPending {
+		t.Fatal("settlement must run at the final boundary")
 	}
 	// Tick 3000 is control only.
 	at3000, _ := advanceWithRoles(t, next, RoleQueue{}, 3000)

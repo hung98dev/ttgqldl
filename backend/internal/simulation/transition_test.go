@@ -263,9 +263,7 @@ func TestBoundarySignalsAtCriticalTicks(t *testing.T) {
 	if foundSettlement {
 		t.Fatal("settlement_required belongs to the tick that reaches 2800, not 2801")
 	}
-	if state.Wave.Result != domain.WaveResultPending {
-		t.Fatalf("W0202 must not settle: result = %s", state.Wave.Result)
-	}
+	// W0207 settles at 2800; this clock-layer test only checks boundary signals.
 }
 
 func TestSettlementIsRequiredWhenEntering2800(t *testing.T) {
@@ -288,6 +286,7 @@ func TestSettlementIsRequiredWhenEntering2800(t *testing.T) {
 		{EventScheduleBoundary, BoundaryRoleResolution, StageFinalContribution},
 		{EventScheduleBoundary, BoundaryFinalCombat, StageFinalCombat},
 		{EventAttackResolved, "", ""},
+		{EventWaveResult, "", ""},
 		{EventSettlementRequired, "", StageSettlement},
 		{EventPhaseChanged, "", StageEnterResults},
 	}
@@ -299,8 +298,8 @@ func TestSettlementIsRequiredWhenEntering2800(t *testing.T) {
 			t.Fatalf("event %d = %+v, want type=%s boundary=%s stage=%s", i, events[i], expected.Type, expected.Boundary, expected.Stage)
 		}
 	}
-	if next.Wave.Result != domain.WaveResultPending {
-		t.Fatalf("no result may be produced in W0202: %s", next.Wave.Result)
+	if next.Wave.Result == domain.WaveResultPending {
+		t.Fatal("settlement must have produced a result at 2800")
 	}
 }
 
@@ -335,16 +334,15 @@ func TestPureProgressionChangesNoGameplayValues(t *testing.T) {
 	before := state
 	state = advanceTo(t, state, 2999)
 
-	// W0205 now resolves economy and combat at 200-tick boundaries, so village
-	// values legitimately change; only participant identity and XP must not.
-	if len(state.XP) != len(before.XP) {
-		t.Fatal("pure tick progression must not award XP")
-	}
+	// W0205/W0207 now resolve economy, combat and XP at 200-tick boundaries.
 	if len(state.Members) != len(before.Members) {
 		t.Fatal("pure tick progression must not create or remove players")
 	}
-	if state.Wave.Result != domain.WaveResultPending || state.Wave.Defeated {
-		t.Fatal("pure tick progression must not settle the wave")
+	if len(state.XP) == 0 {
+		t.Fatal("XP should be awarded at contribution boundaries")
+	}
+	if len(state.Members) != len(before.Members) {
+		t.Fatal("pure tick progression must not create or remove players")
 	}
 }
 

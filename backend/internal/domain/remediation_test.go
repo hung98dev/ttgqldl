@@ -119,6 +119,7 @@ func TestDefeatIsValidFromFirstCombatBoundary(t *testing.T) {
 	for _, tc := range cases {
 		state := validState(t)
 		state.Wave.Number = 3
+		state.Wave.Ballots = nil
 		state.Pending = nil
 		state.Wave.Tick = tc.tick
 		state.Wave.Phase = tc.phase
@@ -185,6 +186,7 @@ func TestBossLifecycleStates(t *testing.T) {
 		state := validState(t)
 		state.Pending = nil
 		state.Wave.Number = 5
+		state.Wave.Ballots = nil
 		state.Wave.Tick = tick
 		state.Wave.Phase = phase
 		state.Wave.Boss = boss
@@ -195,6 +197,7 @@ func TestBossLifecycleStates(t *testing.T) {
 	preSpawn := validState(t)
 	preSpawn.Pending = nil
 	preSpawn.Wave.Number = 5
+	preSpawn.Wave.Ballots = nil
 	preSpawn.Wave.Tick = 2000
 	preSpawn.Wave.Phase = PhaseAssault
 	preSpawn.Wave.Boss = BossPool{Exists: false, HP: 0, MaxHP: 20}
@@ -274,11 +277,11 @@ func TestWaveMemberFirstSwitchSemantics(t *testing.T) {
 
 func TestPendingTargetMustBeExactlyNextWave(t *testing.T) {
 	base := validState(t)
-	for _, target := range []int64{3, 5, 10} {
+	for _, target := range []int64{3, 4, 6} {
 		state := base
 		state.Pending = []PendingMember{{ActorKey: actorKeyFor(1), Role: RoleGuard, TargetWave: target}}
 		if err := state.Validate(); err == nil {
-			t.Fatalf("pending target wave %d must be rejected when the current wave is 3", target)
+			t.Fatalf("pending target wave %d must be rejected when the current wave is 4", target)
 		}
 	}
 }

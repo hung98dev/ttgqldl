@@ -1,6 +1,9 @@
 package domain
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 // Validate checks every persistent village invariant. Validation never repairs:
 // an invalid state is reported, never mutated back into shape.
@@ -73,11 +76,27 @@ func (w WaveState) Validate() *ValidationError {
 	if pools := ValidatePools(w.Pools, w.Boss, w.Number, w.Tick); pools != nil {
 		errs.Problems = append(errs.Problems, pools.Problems...)
 	}
-	if vote := ValidateVoteState(w.Vote, w.Tick); vote != nil {
+	if vote := ValidateVoteState(w.Vote, w.Number, w.Tick); vote != nil {
 		errs.Problems = append(errs.Problems, vote.Problems...)
 	}
-	if ballots := ValidateBallots(w.Ballots, w.Tick); ballots != nil {
+	if ballots := ValidateBallots(w.Ballots, w.Number, w.Tick); ballots != nil {
 		errs.Problems = append(errs.Problems, ballots.Problems...)
+	}
+	if w.Vote.Closed {
+		counts := VoteCounts{}
+		for _, ballot := range w.Ballots {
+			switch ballot.Option {
+			case VoteOptionA:
+				counts.A++
+			case VoteOptionB:
+				counts.B++
+			case VoteOptionC:
+				counts.C++
+			}
+		}
+		if counts != w.Vote.Counts {
+			errs.add("vote.counts", "must match the applied ballots")
+		}
 	}
 	if !w.Result.Valid() {
 		errs.add("wave.result", "must be pending, victory or defeat")
@@ -179,6 +198,21 @@ func (s SessionState) Validate() error {
 	appendProblems(ValidateMembers(s.Members, s.Wave.Number))
 	appendProblems(ValidatePending(s.Pending, s.Wave.Number))
 	appendProblems(ValidateXP(s.XP))
+	joinedByActor := make(map[ActorKey]int, len(s.Members))
+	for _, member := range s.Members {
+		joinedByActor[member.ActorKey] = member.JoinedTick
+	}
+	for index, ballot := range s.Wave.Ballots {
+		joined, ok := joinedByActor[ballot.ActorKey]
+		field := "ballots[" + strconv.Itoa(index) + "].actor_key"
+		if !ok {
+			errs.addf(field, "voter is not a current-wave participant")
+			continue
+		}
+		if joined > ballot.Tick {
+			errs.addf(field, "voter is not effective at ballot tick %d", ballot.Tick)
+		}
+	}
 
 	if lock := validateEnemyLock(s.Wave, s.Difficulty); lock != nil {
 		errs.Problems = append(errs.Problems, lock.Problems...)

@@ -61,6 +61,8 @@ const (
 	// Canonical W0206 vote signals.
 	EventVoteOpened EventType = "vote_opened"
 	EventVoteClosed EventType = "vote_closed"
+	// Canonical settlement signal.
+	EventWaveResult EventType = "wave_result"
 )
 
 // Event is one deterministic transition signal. It carries no participant

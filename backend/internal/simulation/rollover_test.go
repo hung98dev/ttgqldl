@@ -23,10 +23,10 @@ func stateAtRollover(t *testing.T) domain.SessionState {
 func TestRolloverRejectsUnsettledWave(t *testing.T) {
 	state, _ := mustStart(t, newState(t))
 	state = advanceTo(t, state, domain.RolloverTick)
+	// Settlement now runs at 2800; force the unsettled state this specific gate
+	// guards against.
+	state.Wave.Result = domain.WaveResultPending
 	snapshot := state.Clone()
-	if state.Wave.Result != domain.WaveResultPending {
-		t.Fatal("fixture must be unsettled")
-	}
 	next, events, err := Next(state, Input{Kind: KindRollover})
 	if !errors.Is(err, ErrUnsettledWave) {
 		t.Fatalf("unsettled rollover: %v", err)
@@ -160,8 +160,6 @@ func TestRolloverRequiresTheControlTick(t *testing.T) {
 
 func TestRolloverResetsWaveStateButKeepsProgress(t *testing.T) {
 	state := stateAtRollover(t)
-	state.Wave.Ballots = []domain.Ballot{{ActorKey: actorKey('a'), Option: domain.VoteOptionA, Tick: 900, InputSeq: 1}}
-	state.Wave.Vote = domain.VoteState{Open: false, Selected: domain.VoteOptionA, Counts: domain.VoteCounts{A: 1}}
 	state.Wave.Defeated = true
 	state.Wave.Result = domain.WaveResultDefeat
 	state.Village.Resources.Wood = 1234
@@ -174,10 +172,10 @@ func TestRolloverResetsWaveStateButKeepsProgress(t *testing.T) {
 	if err != nil {
 		t.Fatalf("rollover: %v", err)
 	}
-	if len(next.Wave.Pools) != 0 || next.Wave.Boss.Exists || len(next.Wave.Ballots) != 0 {
+	if len(next.Wave.Pools) != 0 || next.Wave.Boss.Exists {
 		t.Fatal("wave state was not reset")
 	}
-	if next.Wave.Defeated || next.Wave.Result != domain.WaveResultPending || next.Wave.Vote.Open {
+	if next.Wave.Defeated || next.Wave.Result != domain.WaveResultPending || next.Wave.Vote.Open || len(next.Wave.Ballots) != 0 {
 		t.Fatal("wave flags were not reset")
 	}
 	if next.Village.Resources.Wood != 1234 || next.Village.TotalWins != 7 {

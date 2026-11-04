@@ -10,20 +10,20 @@ import (
 func validState(t *testing.T) SessionState {
 	t.Helper()
 	state := initial(t)
-	state.Wave.Number = 3
-	state.Wave.Tick = 100
+	state.Wave.Number = 4
+	state.Wave.Tick = 950
 	state.Wave.Phase = PhasePrep
 	state.Wave.Pools = []EnemyPool{
 		{Lane: LaneWest, Archetype: ArchetypeRunner, HP: 10},
 		{Lane: LaneCenter, Archetype: ArchetypeGrunt, HP: 20},
 	}
-	state.Wave.Vote = VoteState{Open: false, Selected: VoteOptionB, Counts: VoteCounts{A: 1, B: 2, C: 3}}
+	state.Wave.Vote = VoteState{}
 	state.Wave.Ballots = []Ballot{{ActorKey: actorOne, Option: VoteOptionA, Tick: 900, InputSeq: 1}}
 	state.Members = []WaveMember{
 		{ActorKey: actorOne, Role: RoleBuilder, JoinedTick: 0, LastChangeTick: intPtr(10), FirstSwitchUsed: true},
 		{ActorKey: actorTwo, Role: RoleGuard, JoinedTick: 5},
 	}
-	state.Pending = []PendingMember{{ActorKey: actorKeyFor(3), Role: RoleFighter, TargetWave: 4}}
+	state.Pending = []PendingMember{{ActorKey: actorKeyFor(3), Role: RoleFighter, TargetWave: 5}}
 	state.XP = []PlayerXP{{ActorKey: actorOne, XP: 10}, {ActorKey: actorTwo, XP: 20}}
 	state.Difficulty = Difficulty{Level: 2, PopulationAnchor: 40}
 	if err := state.Validate(); err != nil {
@@ -122,6 +122,7 @@ func TestWaveInvariants(t *testing.T) {
 		}, errOrdinaryPoolBoss},
 		{"boss before spawn tick", func(s *SessionState) {
 			s.Wave.Number = 5
+			s.Wave.Ballots = nil
 			s.Wave.Boss = BossPool{Exists: true, HP: 10, MaxHP: 10}
 		}, errBossBeforeSpawn},
 		{"boss on non boss wave", func(s *SessionState) {
@@ -131,12 +132,14 @@ func TestWaveInvariants(t *testing.T) {
 		}, errBossWaveMismatch},
 		{"boss hp exceeds maximum", func(s *SessionState) {
 			s.Wave.Number = 5
+			s.Wave.Ballots = nil
 			s.Wave.Tick = 2700
 			s.Wave.Phase = PhaseFinale
 			s.Wave.Boss = BossPool{Exists: true, HP: 11, MaxHP: 10}
 		}, errBossHP},
 		{"boss killed immediately is valid", func(s *SessionState) {
 			s.Wave.Number = 5
+			s.Wave.Ballots = nil
 			s.Wave.Tick = 2600
 			s.Wave.Phase = PhaseFinale
 			s.Pending = nil
@@ -144,6 +147,7 @@ func TestWaveInvariants(t *testing.T) {
 		}, ""},
 		{"boss killed at final combat is valid", func(s *SessionState) {
 			s.Wave.Number = 5
+			s.Wave.Ballots = nil
 			s.Wave.Tick = 2800
 			s.Wave.Phase = PhaseResults
 			s.Pending = nil
@@ -151,6 +155,7 @@ func TestWaveInvariants(t *testing.T) {
 		}, ""},
 		{"negative boss hp", func(s *SessionState) {
 			s.Wave.Number = 5
+			s.Wave.Ballots = nil
 			s.Wave.Tick = 2700
 			s.Wave.Phase = PhaseFinale
 			s.Pending = nil
@@ -203,7 +208,10 @@ func TestVoteAndBallotInvariants(t *testing.T) {
 		mutate func(*SessionState)
 		want   string
 	}{
-		{"open vote with selection", func(s *SessionState) { s.Wave.Vote.Open = true }, "an open vote cannot have a selected option"},
+		{"open vote with selection", func(s *SessionState) {
+			s.Wave.Vote.Open = true
+			s.Wave.Vote.Selected = VoteOptionA
+		}, "an open vote cannot have a selected option"},
 		{"invalid selection", func(s *SessionState) { s.Wave.Vote.Selected = VoteOption(4) }, "vote.selected"},
 		{"negative vote count", func(s *SessionState) { s.Wave.Vote.Counts.C = -1 }, "vote.counts"},
 		{"ballot option none", func(s *SessionState) { s.Wave.Ballots[0].Option = VoteOptionNone }, "ballots[0].option"},

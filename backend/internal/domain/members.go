@@ -203,10 +203,14 @@ func ValidateXP(rows []PlayerXP) *ValidationError {
 	return errs
 }
 
-// ValidateBallots checks unique voters, canonical order, valid option and a tick
-// that cannot be in the future relative to the wave tick.
-func ValidateBallots(ballots []Ballot, waveTick int) *ValidationError {
+// ValidateBallots checks the authoritative applied ballots: canonical order,
+// unique voters, valid options, effective ticks inside the open window and never
+// in the future. Pending future commands live in the input queue, not here.
+func ValidateBallots(ballots []Ballot, waveNo int64, waveTick int) *ValidationError {
 	errs := &ValidationError{}
+	if len(ballots) > 0 && !VoteAvailable(waveNo) {
+		errs.add("wave.ballots", "voting is only available on even waves")
+	}
 	var previous ActorKey
 	for index, ballot := range ballots {
 		field := "ballots[" + itoa(index) + "]"
@@ -228,9 +232,11 @@ func ValidateBallots(ballots []Ballot, waveTick int) *ValidationError {
 			errs.add(field+".input_seq", "must be positive")
 		}
 		if !BallotTickEligible(ballot.Tick) {
-			errs.add(field+".tick", "must be inside the voting window [0,1200)")
+			errs.add(field+".tick", "must be inside the voting window [800,1200)")
 		}
-
+		if waveTick >= 0 && ballot.Tick > waveTick {
+			errs.add(field+".tick", "cannot be in the future")
+		}
 	}
 	if len(errs.Problems) == 0 {
 		return nil
@@ -238,10 +244,12 @@ func ValidateBallots(ballots []Ballot, waveTick int) *ValidationError {
 	return errs
 }
 
-// ValidateVoteState checks the vote window and its counters. The window itself
-// is validated against the wave tick by the caller.
-func ValidateVoteState(vote VoteState, waveTick int) *ValidationError {
+// ValidateVoteState checks the vote window and its counters against the wave.
+func ValidateVoteState(vote VoteState, waveNo int64, waveTick int) *ValidationError {
 	errs := &ValidationError{}
+	if (vote.Open || vote.Closed || vote.Selected != VoteOptionNone || vote.Counts.Total() > 0) && !VoteAvailable(waveNo) {
+		errs.add("vote", "voting is only available on even waves")
+	}
 	if !vote.Selected.Valid() {
 		errs.add("vote.selected", errVoteOptionInvalid)
 	}
@@ -251,8 +259,14 @@ func ValidateVoteState(vote VoteState, waveTick int) *ValidationError {
 	if vote.Open && vote.Closed {
 		errs.add("vote.closed", "a vote cannot be open and closed")
 	}
+	if vote.Open && waveTick < VoteOpenTick && waveTick >= 0 {
+		errs.add("vote.open", "voting opens at tick 800")
+	}
 	if vote.Open && waveTick > VoteCloseTick {
 		errs.add("vote.open", "voting closes at tick 1200")
+	}
+	if vote.Closed && waveTick >= 0 && waveTick < VoteCloseTick {
+		errs.add("vote.closed", "a vote cannot close before tick 1200")
 	}
 	if vote.Closed {
 		if vote.Open {

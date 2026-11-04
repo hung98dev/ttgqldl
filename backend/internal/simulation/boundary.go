@@ -48,6 +48,12 @@ func resolveBoundary(state domain.SessionState) (domain.SessionState, []Event, e
 
 	isBoundary := tick > 0 && tick%200 == 0 && tick <= domain.FinalCombatTick
 	if isBoundary && !next.Wave.Defeated {
+		// XP is awarded before economy and before any combat of this boundary.
+		awarded, xpErr := awardXP(next)
+		if xpErr != nil {
+			return state, nil, xpErr
+		}
+		next = awarded
 		resolved, err := resolveContribution(next, &events)
 		if err != nil {
 			return state, nil, err
@@ -71,6 +77,15 @@ func resolveBoundary(state domain.SessionState) (domain.SessionState, []Event, e
 			return state, nil, err
 		}
 		next = resolved
+	}
+	if tick == domain.FinalCombatTick {
+		// Settlement runs after final combat, once, and before RESULTS publication.
+		settled, settlementEvents, err := settleWave(next)
+		if err != nil {
+			return state, nil, err
+		}
+		next = settled
+		events = append(events, settlementEvents...)
 	}
 
 	if next.Difficulty.Locked && domain.IsBossWave(next.Wave.Number) && !next.Wave.Boss.Exists &&
