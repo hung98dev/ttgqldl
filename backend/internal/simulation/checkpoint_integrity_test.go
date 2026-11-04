@@ -163,8 +163,7 @@ func TestCheckpointRejectsMalformedQueuedCommands(t *testing.T) {
 
 func TestCheckpointDetectsRetainedXPTampering(t *testing.T) {
 	state, queue := queuedCheckpointFixture(t)
-	// A retired actor keeps session XP but is not a current-wave member; canonical
-	// v1 does not hash this record.
+	// A retired actor keeps session XP but is not a current-wave member.
 	state.XP = append(state.XP, domain.PlayerXP{ActorKey: actorKey('z'), XP: 50})
 	domain.SortPlayerXP(state.XP)
 	envelope, err := BuildCheckpointEnvelope(state, queue)
@@ -185,16 +184,29 @@ func TestCheckpointDetectsRetainedXPTampering(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if canonicalBefore != canonicalAfter {
-		t.Fatal("canonical v1 unexpectedly covers non-member XP; update the contract notes")
+	if canonicalBefore == canonicalAfter {
+		t.Fatal("canonical v2 must cover retained non-member XP")
 	}
 	if err := VerifyCheckpointEnvelope(envelope, tampered, queue); err == nil {
 		t.Fatal("private checkpoint did not detect retained-XP tampering")
 	}
-	// An attacker who also edits the envelope copy still fails the digest.
-	rewritten := envelope
-	if err := VerifyCheckpointEnvelope(rewritten, tampered, queue); err == nil {
-		t.Fatal("tampered state passed its integrity digest")
+
+	// The historical v1 compatibility path keeps the documented gap, so old v1
+	// hashes remain meaningful and are never silently reinterpreted.
+	v1Before := state.Clone()
+	v1Before.Revision.SchemaVersion = domain.LegacyCanonicalSchemaVersion
+	v1After := tampered.Clone()
+	v1After.Revision.SchemaVersion = domain.LegacyCanonicalSchemaVersion
+	hashV1Before, err := canonical.Hash(v1Before)
+	if err != nil {
+		t.Fatal(err)
+	}
+	hashV1After, err := canonical.Hash(v1After)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if hashV1Before != hashV1After {
+		t.Fatal("historical v1 hashing unexpectedly covers non-member XP")
 	}
 }
 
@@ -289,7 +301,7 @@ func TestCheckpointRejectsAppliedBallotTampering(t *testing.T) {
 	})
 }
 
-// Canonical v1 hashes lifecycle but not the independent pause-reason set, so two
+// The canonical hash covers lifecycle but not the independent pause-reason set, so two
 // paused states with different blockers can share a canonical hash while resuming
 // differently. The private envelope must separate them.
 func TestPauseReasonsAffectPrivateCheckpoint(t *testing.T) {
@@ -315,7 +327,7 @@ func TestPauseReasonsAffectPrivateCheckpoint(t *testing.T) {
 		t.Fatal(err)
 	}
 	if hashFirst != hashSecond {
-		t.Fatal("canonical v1 unexpectedly covers pause reasons; update the contract notes")
+		t.Fatal("the canonical hash unexpectedly covers pause reasons; update the contract notes")
 	}
 	envelopeFirst, err := BuildCheckpointEnvelope(first, queue)
 	if err != nil {

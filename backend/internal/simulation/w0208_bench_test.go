@@ -222,7 +222,7 @@ type checkpointPayload struct {
 }
 
 // BenchmarkCanonicalHashByPopulation measures projection, JCS and SHA-256 for the
-// three acceptance populations.
+// three acceptance populations under the active canonical schema (v2).
 func BenchmarkCanonicalHashByPopulation(b *testing.B) {
 	for _, size := range []int{100, 1000, 10000} {
 		b.Run(strconv.Itoa(size)+"_participants", func(b *testing.B) {
@@ -234,6 +234,57 @@ func BenchmarkCanonicalHashByPopulation(b *testing.B) {
 				}
 			}
 		})
+	}
+}
+
+// BenchmarkCanonicalHashSchemaVersions compares the active schema-v2 hash with the
+// historical schema-v1 compatibility hash on equivalent production-shaped states
+// (one persisted XP row per participant, as after the first contribution boundary)
+// and reports the canonical JSON byte size of each projection.
+func BenchmarkCanonicalHashSchemaVersions(b *testing.B) {
+	for _, size := range []int{100, 1000, 10000} {
+		active := benchState(b, size)
+		active.XP = make([]domain.PlayerXP, 0, size)
+		for index := range active.Members {
+			active.Members[index].XPAwarded = true
+			active.XP = append(active.XP, domain.PlayerXP{
+				ActorKey: active.Members[index].ActorKey,
+				XP:       domain.XPPerWave,
+			})
+		}
+		domain.SortPlayerXP(active.XP)
+		if err := active.Validate(); err != nil {
+			b.Fatalf("bench state with session progress: %v", err)
+		}
+		legacy := active.Clone()
+		legacy.Revision.SchemaVersion = domain.LegacyCanonicalSchemaVersion
+		targets := []struct {
+			name  string
+			state domain.SessionState
+		}{
+			{name: "v2", state: active},
+			{name: "v1", state: legacy},
+		}
+		for _, target := range targets {
+			b.Run(target.name+"/"+strconv.Itoa(size)+"_participants", func(b *testing.B) {
+				projection, err := canonical.Project(target.state)
+				if err != nil {
+					b.Fatal(err)
+				}
+				encoded, err := canonical.MarshalJCS(projection)
+				if err != nil {
+					b.Fatal(err)
+				}
+				b.ResetTimer()
+				for i := 0; i < b.N; i++ {
+					if _, err := canonical.Hash(target.state); err != nil {
+						b.Fatal(err)
+					}
+				}
+				b.StopTimer()
+				b.ReportMetric(float64(len(encoded)), "json_B")
+			})
+		}
 	}
 }
 

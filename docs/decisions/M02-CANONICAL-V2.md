@@ -1,6 +1,6 @@
 # ADR M02-CANONICAL-V2 — Complete persisted session XP in the canonical state hash
 
-Status: **PENDING OWNER APPROVAL** (not approved, not implemented)
+Status: **APPROVED (A1 + V-ACCEPT) — delegated owner decision, implemented in TASK 031**
 Owners: repository owner (`hung98dev`)
 Scope: M02 canonical serialization contract; gameplay rules unchanged (`ttg-rules-v1`)
 
@@ -8,31 +8,64 @@ Scope: M02 canonical serialization contract; gameplay rules unchanged (`ttg-rule
 
 | Identifier | Current value | Meaning |
 |---|---|---|
-| Gameplay rules version | `ttg-rules-v1` | Every number, formula, ordering and bound in 02_GAME_RULES.md. A change requires a rules-version bump. |
-| Canonical schema version | `1` | The canonical game-state JSON projection and its SHA-256 hash (04_DATABASE.md). This ADR proposes `2`. |
-| Private checkpoint envelope version | `4` | Private replay/restoration integrity payload (canonical hash + complete authoritative SessionState + pending queues). Version 4 supersedes the incremental v1/v2/v3 exception lists; it is a private format, not the canonical schema. |
-| Reference fixture schema version | `2` | Shape of the independently generated golden fixtures (`tooling/refeval`). A shape change bumps it and fails the production differential test until reviewed. |
+| Gameplay rules version | `ttg-rules-v1` | Every number, formula, ordering and bound in 02_GAME_RULES.md. A change requires a rules-version bump. Unchanged by this ADR. |
+| Canonical schema version | `2` | The canonical game-state JSON projection and its SHA-256 hash (04_DATABASE.md). Version 1 remains verifiable through the explicit compatibility path. |
+| Private checkpoint envelope version | `4` | Private replay/restoration integrity payload (canonical hash + complete authoritative SessionState + pending queues). Version 4 supersedes the incremental v1/v2/v3 exception lists; it is a private format, not the canonical schema, and it did not change with canonical v2. |
+| Reference fixture schema version | `2` | Shape of the independently generated golden fixtures (`tooling/refeval`). A shape change bumps it and fails the production differential test until reviewed. The v2 metadata update did not change the fixture shape. |
 
 These four numbers move independently. The private envelope version is **not** the
-canonical schema version, and a private checkpoint can be version 4 while the
-canonical game-state schema is still version 1.
+canonical schema version, and the active canonical schema is 2 while the private
+checkpoint envelope stays 4.
+
+## 0a. Decision record (TASK 031)
+
+The project requester explicitly delegated the architectural choice to the
+implementing assistant and then issued the implementation instruction:
+
+> "tự đề xuất và chọn giúp tôi phương án tốt nhất và cho tôi prompt đi"
+> (delegation quoted by the requester in the TASK 031 instruction)
+
+Under that delegation the requester selected:
+
+```text
+Selected canonical scope: A1 (targeted schema v2, complete persisted XP)
+Selected versioning policy: V-ACCEPT (four-axis separation)
+Expanded scope A2: NOT AUTHORIZED
+Gameplay rules: ttg-rules-v1 (unchanged)
+New canonical schema: 2
+Private checkpoint envelope: 4 (unchanged)
+Reference fixture schema: 2 (unchanged shape)
+```
+
+Provenance, recorded honestly: the decision originates from the repository
+requester's explicit conversational delegation and implementation instruction, not
+from the implementing agent's own choice. There is **no GitHub review approval, no
+signed decision artifact, no independently verified owner identity claim and no
+authorization timestamp** beyond the conversation itself; none is invented here.
+The repository owner of record remains `hung98dev`. Implementation, compatibility
+verification and exact-HEAD CI were performed under that instruction.
 
 ## 1. Problem
 
-Canonical schema v1 hashes `session_xp` only inside the current-wave `members`
+Canonical schema v1 hashed `session_xp` only inside the current-wave `members`
 collection. Session XP persists across waves in the separate XP collection, so an
-actor who is not a current-wave member can have that persisted value altered
-without changing the canonical v1 state hash. The gap is reproduced by
-`backend/internal/canonical.TestPersistedXPOutsideCurrentMembersIsNotHashed`,
-which shows two states with identical v1 hashes and different retained XP.
+actor who was not a current-wave member could have that persisted value altered
+without changing the canonical v1 state hash. The gap was reproduced by
+`backend/internal/canonical.TestPersistedXPOutsideCurrentMembersIsNotHashedInV1`,
+which shows two v1 states with identical hashes and different retained XP.
 
-This matters because QA-DB-05 / QA-OPS-03 rely on the canonical hash to detect
+This mattered because QA-DB-05 / QA-OPS-03 rely on the canonical hash to detect
 lost or duplicated XP across checkpoints and replay. The private checkpoint
-envelope (version 4) covers **all** persisted XP and, since version 4, every other
-authoritative field that canonical v1 omits, but that is a separate private
-integrity payload, not the canonical game-state hash.
+envelope (version 4) already covered all persisted XP and every other authoritative
+field that canonical v1 omitted, but that is a separate private integrity payload,
+not the canonical game-state hash.
 
-## 2. Proposed schema v2
+**Resolution (schema v2, implemented):** the active canonical projection includes
+`session_progress`, so retained XP now changes the canonical hash. The historical
+v1 gap is preserved intentionally as a compatibility artifact and can never be
+mistaken for active coverage.
+
+## 2. Approved schema v2 (implemented)
 
 ```json
 {
@@ -56,49 +89,66 @@ Requirements:
 - `rules_version` stays `ttg-rules-v1`; this is a serialization change, not a
   gameplay change.
 
-## 3. Hash compatibility
+## 3. Hash compatibility (as implemented)
 
-- v1 hashes remain unchanged and continue to verify as v1.
-- v2 introduces new hash values for every existing state; v1 fixtures are **not**
-  rewritten and remain as historical v1 vectors.
-- The schema version is part of the hashed payload, so a v1 and a v2 payload can
-  never collide semantically.
+- v1 hashes remain unchanged and continue to verify as v1 through an explicit
+  revision-selected projection path. Two historical fixtures are frozen with their
+  exact v1 canonical JSON and SHA-256 in
+  `backend/internal/canonical/schema_v2_test.go`:
+  base `438cc8924df9e067bd75ef1cb02e96ec5e9a26d6cb6bbf5826fe174a328a2357`,
+  rich `b0a5bad26b0548810b003359e774462c3ddddc715e363760ad8bd56e2196b86c`.
+- v2 introduces new hash values for every active state; v1 fixtures are **not**
+  rewritten and remain historical v1 vectors.
+- The schema version is inside the hashed payload, so a v1 and a v2 payload can
+  never collide semantically. Unknown schema versions are rejected.
+- The state revision, not a caller flag, selects the projection version. Schema-v1
+  states are structurally valid and hashable, but the simulation, input admission
+  and checkpoint layer reject them as inactive: they are never advanced, queued
+  into or restored as live sessions.
+- Historical verification therefore does not "pretend" a legacy state is current;
+  it validates the state under its recorded revision and hashes the exact v1 field
+  set.
 
 ## 4. Checkpoints and replay
 
-- The private checkpoint envelope is at **version 4**. It carries the canonical
-  v1 `state_hash` unchanged plus a `private_digest` computed over the complete
-  authoritative restoration payload: the entire `SessionState` (revision, session
-  and village ids, source mode, lifecycle and pause reasons, village resources and
-  progression, wave pools/boss/vote/ballots/defeat/result/boss-incoming, members,
-  pending next-wave registrations, persisted XP, all difficulty internals, streaks,
-  privacy epoch and input sequence) **and** every accepted but not yet applied role
-  and ballot command. This is independent of the canonical schema version.
+- The private checkpoint envelope is at **version 4**. It carries the active
+  canonical `state_hash` (v2 for new checkpoints, v1 only for historical v1
+  artifacts) plus a `private_digest` computed over the complete authoritative
+  restoration payload: the entire `SessionState` (revision, session and village
+  ids, source mode, lifecycle and pause reasons, village resources and progression,
+  wave pools/boss/vote/ballots/defeat/result/boss-incoming, members, pending
+  next-wave registrations, persisted XP, all difficulty internals, streaks, privacy
+  epoch and input sequence) **and** every accepted but not yet applied role and
+  ballot command. This is independent of the canonical schema version, so envelope
+  version 4 did not change with canonical v2.
 - Version 4 was introduced because the earlier incremental exception list (v1
   queues, v2 persisted XP, v3 pause reasons) still left valid canonical-hash
   collisions on fields that change continuation: `Mode`, `InputSequence`, applied
   ballot identity/sequence, `Difficulty.MilitiaAttack`, `Difficulty.BossMaxHP`,
   `Difficulty.ActualPopulation`, `Difficulty.RecoveryPercent`, `Wave.BossIncoming`,
   `Wave.Result` and `Village.Level`. All ten collisions are reproduced and
-  separated in `backend/internal/simulation.TestPrivateStateCollisions`.
+  separated in `backend/internal/simulation.TestPrivateStateCollisions` (under
+  canonical v2; A1 does not cover those fields).
 - Unsigned envelope versions 1, 2 and 3 are rejected, never silently migrated.
 - The private digest is an integrity check against corruption and partial edits,
   **not** authentication: an attacker who can rewrite both payload and digest can
   recompute it. A trusted external anchor/signature is out of M02 scope.
-- After approval, canonical v2 must be serialized in checkpoints with an explicit
-  schema-version tag; restoring a v1 checkpoint under v2 must fail closed rather
-  than migrate silently.
-- Replay comparison switches to v2 hashes; existing v1 replay traces remain
-  historical artifacts.
+- Checkpoints are created and verified only for the active revision. A legacy v1
+  checkpoint/state fails closed (`ErrInvalidState`) rather than being migrated or
+  advanced; its historical hash remains verifiable through the canonical
+  compatibility path.
+- Replay comparison uses v2 hashes and complete state equality; existing v1 replay
+  traces remain historical artifacts.
 
-## 4a. Canonical v1 omission inventory (measured, not assumed)
+## 4a. Canonical omission inventory after A1 (measured, not assumed)
 
-Each row is a pair of independently valid states that share the canonical v1 hash
-and differ in exactly one authoritative field. Canonical equality and private
-digest separation are both executed by `TestPrivateStateCollisions`.
+Each row is a pair of independently valid states that share the active **canonical
+v2 (A1)** hash and differ in exactly one authoritative field. Canonical equality and
+private digest separation are both executed by `TestPrivateStateCollisions`.
 
-| Field | Canonical v1 | Private digest v4 | Continuation impact |
+| Field | Canonical v2 (A1) | Private digest v4 | Continuation impact |
 |---|---|---|---|
+| Persisted XP outside current members | **covered** (`session_progress`) | covered | retained-XP integrity (QA-DB-05/QA-OPS-03) |
 | `SessionState.InputSequence` | omitted (collision) | covered | accepted-input sequence namespace (M03 ingest dedupe, durable replay ordering) |
 | `SessionState.Mode` | omitted (collision) | covered | source admission and audit provenance above the reducer |
 | `WaveState.Ballots` identity | omitted (counts/selected only; collision) | covered | same-tick latest-wins re-vote accounting |
@@ -110,9 +160,9 @@ digest separation are both executed by `TestPrivateStateCollisions`.
 | `Difficulty.RecoveryPercent` | omitted (collision) | covered | derived recovery modifier |
 | `Difficulty.BossMaxHP` | omitted (collision) | covered | tick-2600 boss spawn hit points |
 
-Every field the task brief asked to inspect is therefore covered by the private
-payload, while the fields canonical v1 does hash (`session_id`, `village_id`,
-lifecycle, resources, pools, boss existence/HP) remain canonical.
+Retained XP is now covered canonically. Every remaining A2-scope field is
+explicitly **not authorized** and stays covered by the private payload; canonical v1
+hashes for those fields also remain verifiable as historical artifacts.
 
 ## 5. M04 persistence implications
 
@@ -142,7 +192,7 @@ is required because the underlying table is unchanged.
    was lost or duplicated.
 3. Include `session_progress` in the public snapshot — rejected: privacy leak.
 
-## 9. Acceptance tests after approval
+## 9. Acceptance tests (executed)
 
 - Every persisted XP record appears exactly once, sorted by `actor_key`.
 - Duplicate keys, out-of-range XP and unsorted input fail closed.
@@ -152,22 +202,20 @@ is required because the underlying table is unchanged.
 - Full canonical, checkpoint, replay and M02 regression suite passes; exact-HEAD
   CI green.
 
-## 9a. Independent of this decision (already implemented)
+## 9a. Private checkpoint layer (version 4, implemented)
 
-The private checkpoint format is **version 4** and already covers every
-authoritative field plus the pending queues. It is not a substitute for canonical
-v2 (`docs/evidence/M02-W0208.md` records both), but it removes the practical
-restore vulnerability while the owner decides: a checkpoint whose state or queues
-were altered — including the persisted-XP gap in section 1 — fails verification
-before any simulation step runs. `CanonicalSchemaVersion` remains 1.
+The private checkpoint format is **version 4** and covers every authoritative field
+plus the pending queues. It complements canonical v2: a checkpoint whose state or
+queues were altered — including the retained-XP field that canonical v1 missed —
+fails verification before any simulation step runs. The private format did not
+change with canonical v2 (its payload and digest are unaffected by the canonical
+schema tag), so it stays version 4.
 
-## 9b. Proposed versioning policy (explicit owner decision required)
+## 9b. Versioning policy (ACCEPTED — V-ACCEPT)
 
-`docs/plan/03_SIMULATION.md` states that any change to "tick ordering, rounding,
-hashing fields or boundary handling" requires a rules-version bump. The v2 proposal
-keeps `ttg-rules-v1` while changing the hashed field set, so the binding documents
-currently conflict. **This ADR does not rewrite that policy.** It proposes the
-following split for owner approval:
+`docs/plan/03_SIMULATION.md` previously said that any change to "tick ordering,
+rounding, hashing fields or boundary handling" required a rules-version bump. The
+approved policy separates four independent axes:
 
 | Change class | Version axis | Examples |
 |---|---|---|
@@ -176,7 +224,7 @@ following split for owner approval:
 | Private checkpoint format or digest payload | private envelope version (`4` → `5`) | changing `privateRestorationPayload`, digest encoding |
 | Independent reference fixture shape | fixture schema version (`2` → `3`) | typed input model changes in `tooling/refeval` |
 
-Proposed rules:
+Approved rules:
 
 - A change may touch more than one axis, but each axis is bumped only for its own
   reason; none is a substitute for another.
@@ -187,12 +235,12 @@ Proposed rules:
   and v2 payloads cannot be confused semantically.
 - Every axis bump lands with same-commit updates to the affected binding documents,
   regenerated reference vectors and a reviewed replay/fixture impact statement.
-- Historical replay traces keep their original version tag; comparison switches to
-  v2 only after approval and implementation.
+- Historical replay traces keep their original version tag; the active comparison
+  uses the active canonical schema.
 
-Status: **PROPOSED — PENDING OWNER APPROVAL**. Until the owner accepts this split,
-the stricter reading (rules-version bump for any hashing-field change) remains
-binding, which is one more reason canonical v2 is not implemented.
+Status: **ACCEPTED (V-ACCEPT)** under the TASK 031 delegated owner decision recorded
+in section 0a. `03_SIMULATION.md` and `04_DATABASE.md` were updated in the same
+commit that implemented canonical v2.
 
 ## 9c. Canonical v2 scope: A1 versus A2
 
@@ -250,7 +298,7 @@ the privacy review of the canonical projection (private data, never published).
 **Neither option is implemented.** Option B (reject/defer and supply an alternative)
 remains available for both scopes.
 
-## 9d. Final recommendation and evaluation (task 030)
+## 9d. Final recommendation and evaluation (task 030; A1 selected in task 031)
 
 The recommendation below is engineering advice, **not approval**. It weighs the two
 canonical scopes against the documented acceptance criteria and the evidence
@@ -288,34 +336,36 @@ A1's `session_progress`. Explicit decision for the optional field:
 **`pause_reasons` = NO** — `lifecycle` is already canonical, the blocker set is
 transient operational state, and private v4 already covers it.
 
-**Versioning policy: recommend ACCEPT the four-axis split in 9b.** Keeping
-`ttg-rules-v1` while introducing canonical schema v2 is correct because gameplay
-mathematics, event ordering and reducer semantics do not change; only which
-authoritative fields the serialization contract hashes. Without the split, the
-binding `03_SIMULATION.md` wording would demand a gameplay-rules bump for a purely
-serialization change, conflating two contracts that are versioned independently.
-Because this is a policy change, it requires explicit owner acceptance; until then
-the stricter wording remains binding and v2 stays unimplemented.
+**Versioning policy: ACCEPTED (V-ACCEPT).** Keeping `ttg-rules-v1` while introducing
+canonical schema v2 is correct because gameplay mathematics, event ordering and
+reducer semantics do not change; only which authoritative fields the serialization
+contract hashes. Without the split, the binding `03_SIMULATION.md` wording would have
+demanded a gameplay-rules bump for a purely serialization change, conflating two
+contracts that are versioned independently.
 
-Option **B** remains available: if the owner rejects both scopes, M02 stays open
-until an alternative that satisfies canonical integrity requirements is specified.
+Option **B** was not selected.
 
-## 10. Owner decision
+## 10. Owner decision (recorded)
 
 ```text
-Decision status: PENDING OWNER APPROVAL
+Decision status: APPROVED — delegated owner decision (TASK 031)
+Provenance: explicit project-requester delegation and implementation instruction;
+            no signed artifact, GitHub review approval or verified external identity claim.
 
-Scope decision: no option selected.
-Versioning policy: NOT ACCEPTED (proposal in 9b).
+Scope decision: A1 — targeted canonical schema v2 (complete persisted session_progress).
+Versioning policy: V-ACCEPT — four-axis separation accepted.
+A2 (expanded scope): NOT AUTHORIZED.
+B: not selected.
 
-A1: Approve targeted schema v2 — complete persisted XP only.   [recommended]
-A2: Approve expanded schema v2 — A1 plus the frozen field list in 9c (pause_reasons = NO).
-B:  Reject/defer and supply an alternative that satisfies canonical integrity requirements.
-V:  Accept or reject the versioning-policy split proposed in 9b. [accept recommended]
+Gameplay rules: ttg-rules-v1 (unchanged)
+Canonical schema: 2 (implemented)
+Private checkpoint envelope: 4 (unchanged)
+Reference fixture schema: 2 (unchanged shape; version metadata updated to 2)
 ```
 
-No schema version constant, fixture or hash was changed by this record. The owner
-has not approved v2, and no task may self-approve it. M02 therefore stays
-IN_PROGRESS until the owner selects an option, accepts or rejects the versioning
-policy, and the selected implementation, compatibility verification and exact-HEAD
-CI all succeed.
+Implementing commit and exact-HEAD CI are recorded in
+`docs/evidence/M02-W0208.md`. No schema constant, fixture or hash is changed by this
+ADR alone; the change landed in the TASK 031 code commit with v1 compatibility tests
+and exact-HEAD CI verification. Historical v1 artifacts remain verifiable and were
+not rewritten.
+

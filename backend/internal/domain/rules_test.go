@@ -9,11 +9,23 @@ func TestRulesIdentityIsPinned(t *testing.T) {
 	if RulesVersion != "ttg-rules-v1" {
 		t.Fatalf("RulesVersion = %q", RulesVersion)
 	}
-	if CanonicalSchemaVersion != 1 {
+	if CanonicalSchemaVersion != 2 {
 		t.Fatalf("CanonicalSchemaVersion = %d", CanonicalSchemaVersion)
 	}
-	if got := CurrentRevision(); !got.Valid() {
-		t.Fatalf("current revision is not valid: %+v", got)
+	if LegacyCanonicalSchemaVersion != 1 {
+		t.Fatalf("LegacyCanonicalSchemaVersion = %d", LegacyCanonicalSchemaVersion)
+	}
+	current := CurrentRevision()
+	if !current.Valid() || !current.Active() {
+		t.Fatalf("current revision is not valid and active: %+v", current)
+	}
+	legacy := Revision{SchemaVersion: LegacyCanonicalSchemaVersion, RulesVersion: RulesVersion}
+	if !legacy.Valid() || legacy.Active() {
+		t.Fatalf("legacy v1 revision must be verifiable but inactive: %+v", legacy)
+	}
+	unknown := Revision{SchemaVersion: 3, RulesVersion: RulesVersion}
+	if unknown.Valid() {
+		t.Fatalf("unknown schema revision accepted: %+v", unknown)
 	}
 }
 

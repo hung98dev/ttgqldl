@@ -11,11 +11,23 @@ package domain
 // RulesVersion identifies the binding rule set in docs/plan/02_GAME_RULES.md.
 // Changing any gameplay constant requires a new rules version and regenerated
 // golden vectors; it must never be bumped for convenience.
+//
+// The version axes are independent (see 03_SIMULATION.md "Versioned contracts"):
+// gameplay rules, canonical serialization schema, private checkpoint envelope and
+// independent reference fixture schema. A serialization-only change bumps the
+// canonical schema, never the gameplay rules.
 const RulesVersion = "ttg-rules-v1"
 
-// CanonicalSchemaVersion is the version of the canonical state serialization
-// covered by the RFC 8785 hash.
-const CanonicalSchemaVersion = 1
+// CanonicalSchemaVersion is the active version of the canonical state
+// serialization covered by the RFC 8785 hash. Version 2 adds the complete
+// persisted session XP collection (`session_progress`) to the schema-v1 field set;
+// gameplay semantics are unchanged and rules_version stays ttg-rules-v1.
+const CanonicalSchemaVersion = 2
+
+// LegacyCanonicalSchemaVersion is the historical canonical serialization still
+// accepted for hash verification of v1 fixtures and checkpoints. It is never used
+// for active gameplay.
+const LegacyCanonicalSchemaVersion = 1
 
 // Simulation cadence and wave geometry.
 const (

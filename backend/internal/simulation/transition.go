@@ -82,10 +82,25 @@ type Input struct {
 	FromTick *int
 }
 
+// validateActiveState validates the state and requires the active canonical
+// schema. Historical schema-v1 states remain hashable and verifiable through the
+// canonical compatibility path, but they are never advanced, queued into, or
+// restored as live sessions.
+func validateActiveState(state domain.SessionState) error {
+	if err := state.Validate(); err != nil {
+		return err
+	}
+	if !state.Revision.Active() {
+		return fmt.Errorf("%w: canonical schema %d is not active (active schema is %d)",
+			ErrInvalidState, state.Revision.SchemaVersion, domain.CanonicalSchemaVersion)
+	}
+	return nil
+}
+
 // Next applies one transition. The input state is never mutated: on error the
 // caller's state is untouched, and on success a deep copy is returned.
 func Next(state domain.SessionState, input Input) (domain.SessionState, []Event, error) {
-	if err := state.Validate(); err != nil {
+	if err := validateActiveState(state); err != nil {
 		return state, nil, fmt.Errorf("%w: %v", ErrInvalidState, err)
 	}
 	if input.FromTick != nil && *input.FromTick != state.Tick() {

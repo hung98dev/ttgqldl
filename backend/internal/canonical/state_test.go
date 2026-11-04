@@ -164,13 +164,12 @@ func TestAnchorPopulationUsesTheLockedAnchor(t *testing.T) {
 	}
 }
 
-// TestPersistedXPOutsideCurrentMembersIsNotHashed documents a binding-contract
-// gap: the canonical member list carries session_xp only for current-wave members,
-// so XP retained by an actor who left the wave cannot be detected by the hash.
-// This is recorded as a limitation rather than silently adding an undocumented
-// field.
-func TestPersistedXPOutsideCurrentMembersIsNotHashed(t *testing.T) {
-	state := baseState(t)
+// TestPersistedXPOutsideCurrentMembersIsNotHashedInV1 documents the historical
+// schema-v1 contract gap. It is retained deliberately: v1 fixtures and checkpoints
+// must keep verifying with their original hashes. The v2 fix is covered by
+// TestRetainedXPIsCoveredByCanonicalV2.
+func TestPersistedXPOutsideCurrentMembersIsNotHashedInV1(t *testing.T) {
+	state := v1Revision(baseState(t))
 	base, err := Hash(state)
 	if err != nil {
 		t.Fatal(err)
@@ -181,7 +180,7 @@ func TestPersistedXPOutsideCurrentMembersIsNotHashed(t *testing.T) {
 		t.Fatal(err)
 	}
 	if changed != base {
-		t.Fatal("contract unexpectedly covers non-member XP; update the evidence")
+		t.Fatal("the historical v1 contract must not hash non-member XP; update the compatibility record")
 	}
 }
 
@@ -202,8 +201,8 @@ func TestProjectRejectsUnsortedAndInvalidStates(t *testing.T) {
 	}
 
 	badSchema := baseState(t)
-	badSchema.Revision.SchemaVersion = 2
+	badSchema.Revision.SchemaVersion = 3
 	if _, err := Project(badSchema); err == nil {
-		t.Fatal("foreign schema version must be rejected")
+		t.Fatal("unknown schema version must be rejected")
 	}
 }

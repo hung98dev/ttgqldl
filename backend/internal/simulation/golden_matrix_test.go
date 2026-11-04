@@ -22,7 +22,7 @@ import (
 const goldenFixtureSchema = 2
 
 // manifestSchema is the backend manifest contract, independent of the fixture.
-const goldenManifestSchema = 2
+const goldenManifestSchema = 3
 
 // expectedSweepRuns is the retained independent sweep evidence. It is not claimed
 // to run through the production reducer.
@@ -40,17 +40,26 @@ var requiredGoldenCaseIDs = []string{
 // --- fixture schema (strictly typed) ---
 
 type goldenManifest struct {
-	Schema                 int      `json:"schema"`
-	FixtureSchema          int      `json:"fixture_schema"`
-	RulesVersion           string   `json:"rules_version"`
-	CanonicalSchemaVersion int      `json:"canonical_schema_version"`
-	Source                 string   `json:"source"`
-	SourceDigestSHA256     string   `json:"source_digest_sha256"`
-	FixtureDigestSHA256    string   `json:"fixture_digest_sha256"`
-	CaseCount              int      `json:"case_count"`
-	CaseIDs                []string `json:"case_ids"`
-	Provenance             string   `json:"provenance"`
-	Regeneration           string   `json:"regeneration"`
+	Schema                 int                     `json:"schema"`
+	FixtureSchema          int                     `json:"fixture_schema"`
+	RulesVersion           string                  `json:"rules_version"`
+	CanonicalSchemaVersion int                     `json:"canonical_schema_version"`
+	Source                 string                  `json:"source"`
+	SourceDigestSHA256     string                  `json:"source_digest_sha256"`
+	FixtureDigestSHA256    string                  `json:"fixture_digest_sha256"`
+	CaseCount              int                     `json:"case_count"`
+	CaseIDs                []string                `json:"case_ids"`
+	Historical             *goldenHistoricalRecord `json:"historical"`
+	Provenance             string                  `json:"provenance"`
+	Regeneration           string                  `json:"regeneration"`
+}
+
+// goldenHistoricalRecord pins the retained schema-v1 reference artifact.
+type goldenHistoricalRecord struct {
+	CanonicalSchemaVersion int    `json:"canonical_schema_version"`
+	FixtureDigestSHA256    string `json:"fixture_digest_sha256"`
+	SourceCommit           string `json:"source_commit"`
+	Note                   string `json:"note"`
 }
 
 type goldenFile struct {
@@ -324,6 +333,29 @@ func verifyManifestAndFixture(t *testing.T, manifest goldenManifest, fixture gol
 		}
 		seen[id] = true
 	}
+	// The schema-v1 reference artifact is retained as an explicit historical
+	// baseline; gameplay expectations are unchanged, only version metadata and the
+	// reference state digests differ under v2.
+	if manifest.Historical == nil {
+		t.Fatal("manifest is missing the retained schema-v1 historical record")
+	}
+	if manifest.Historical.CanonicalSchemaVersion != domain.LegacyCanonicalSchemaVersion {
+		t.Fatalf("historical canonical schema = %d, want %d",
+			manifest.Historical.CanonicalSchemaVersion, domain.LegacyCanonicalSchemaVersion)
+	}
+	if len(manifest.Historical.FixtureDigestSHA256) != 64 {
+		t.Fatalf("historical fixture digest = %q", manifest.Historical.FixtureDigestSHA256)
+	}
+	if _, err := hex.DecodeString(manifest.Historical.FixtureDigestSHA256); err != nil {
+		t.Fatalf("historical fixture digest is not hex: %v", err)
+	}
+	if manifest.Historical.SourceCommit == "" || manifest.Historical.Note == "" {
+		t.Fatal("historical record must carry its source commit and provenance note")
+	}
+	if manifest.Historical.FixtureDigestSHA256 == manifest.FixtureDigestSHA256 {
+		t.Fatal("the historical v1 artifact must not be the current v2 artifact")
+	}
+
 	// The independent sweep is retained as reference evidence only: it is not
 	// claimed to run through the production reducer.
 	if fixture.SweepRuns != expectedSweepRuns || fixture.SweepDigest == "" {

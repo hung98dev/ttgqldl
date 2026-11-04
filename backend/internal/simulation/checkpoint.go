@@ -62,10 +62,10 @@ type CheckpointEnvelope struct {
 //	   BossIncoming and the wave Result); supersedes the incremental exception list
 const checkpointEnvelopeVersion = 4
 
-// BuildCheckpointEnvelope validates the state, computes the canonical v1 hash and
-// the complete private restoration digest.
+// BuildCheckpointEnvelope validates the state, computes the active canonical hash
+// and the complete private restoration digest.
 func BuildCheckpointEnvelope(state domain.SessionState, queue RoleQueue) (CheckpointEnvelope, error) {
-	if err := state.Validate(); err != nil {
+	if err := validateActiveState(state); err != nil {
 		return CheckpointEnvelope{}, fmt.Errorf("%w: checkpoint state is invalid: %v", ErrInvalidState, err)
 	}
 	stateHash, err := canonical.Hash(state)
@@ -98,7 +98,7 @@ func VerifyCheckpointEnvelope(envelope CheckpointEnvelope, state domain.SessionS
 	if envelope.RulesVersion != state.Revision.RulesVersion || state.Revision.RulesVersion != domain.RulesVersion {
 		return fmt.Errorf("%w: checkpoint rules version mismatch", ErrInvalidState)
 	}
-	if err := state.Validate(); err != nil {
+	if err := validateActiveState(state); err != nil {
 		return fmt.Errorf("%w: checkpoint state is invalid: %v", ErrInvalidState, err)
 	}
 	stateHash, err := canonical.Hash(state)

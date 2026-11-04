@@ -221,7 +221,7 @@ func collisionCases() []collisionCase {
 }
 
 // TestPrivateStateCollisions reproduces, for every authoritative field that
-// canonical v1 omits, a pair of independently valid states that share the canonical
+// canonical v2 (A1 scope) omits, a pair of independently valid states that share the canonical
 // hash. The complete private digest must separate them and verification must reject
 // a mismatched restore. Only fields whose collision is actually reproduced are
 // claimed here.
@@ -248,7 +248,7 @@ func TestPrivateStateCollisions(t *testing.T) {
 				t.Fatal(err)
 			}
 			if baseHash != mutatedHash {
-				t.Fatalf("canonical v1 already separates %s; the recorded gap is stale", testCase.name)
+				t.Fatalf("the canonical hash already separates %s; the recorded gap is stale", testCase.name)
 			}
 			canonicalCollisions++
 
@@ -269,7 +269,7 @@ func TestPrivateStateCollisions(t *testing.T) {
 			}
 			rejected++
 			collisions++
-			t.Logf("collision %-24s canonical_v1=equal private_digest=differs continuation=%s",
+			t.Logf("collision %-24s canonical_hash=equal private_digest=differs continuation=%s",
 				testCase.name, testCase.behavior)
 		})
 	}
@@ -277,13 +277,13 @@ func TestPrivateStateCollisions(t *testing.T) {
 		t.Fatalf("collision accounting: cases=%d canonical=%d separated=%d rejected=%d",
 			len(collisionCases()), canonicalCollisions, separated, rejected)
 	}
-	t.Logf("private_integrity: collision_cases=%d canonical_v1_collisions=%d private_digest_separations=%d rejected_restores=%d",
+	t.Logf("private_integrity: collision_cases=%d canonical_collisions=%d private_digest_separations=%d rejected_restores=%d",
 		collisions, canonicalCollisions, separated, rejected)
 }
 
 // TestPrivateStateCollisionsChangeContinuation proves that the omitted fields are
 // not cosmetic: each subtest runs the same deterministic continuation from two
-// states that share the canonical v1 hash and shows a different result.
+// states that share the canonical hash and shows a different result.
 func TestPrivateStateCollisionsChangeContinuation(t *testing.T) {
 	t.Run("militia_attack_changes_combat", func(t *testing.T) {
 		base := lockedFixtureState(t, 7, 1800, 30, 30, 238)

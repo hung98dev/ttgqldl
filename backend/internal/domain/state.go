@@ -11,12 +11,24 @@ type Revision struct {
 	RulesVersion  string
 }
 
-// CurrentRevision returns the only revision this package produces.
+// CurrentRevision returns the only revision this package produces for active play.
 func CurrentRevision() Revision {
 	return Revision{SchemaVersion: CanonicalSchemaVersion, RulesVersion: RulesVersion}
 }
 
+// Valid reports whether the revision is a known, verifiable contract: the current
+// gameplay rules with either the active canonical schema or the historical v1
+// serialization retained for fixture and checkpoint hash verification.
 func (r Revision) Valid() bool {
+	if r.RulesVersion != RulesVersion {
+		return false
+	}
+	return r.SchemaVersion == CanonicalSchemaVersion || r.SchemaVersion == LegacyCanonicalSchemaVersion
+}
+
+// Active reports whether the revision is the one active gameplay may execute.
+// Historical v1 states remain verifiable/hashable but are never advanced.
+func (r Revision) Active() bool {
 	return r.SchemaVersion == CanonicalSchemaVersion && r.RulesVersion == RulesVersion
 }
 

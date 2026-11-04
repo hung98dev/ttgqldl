@@ -22,8 +22,12 @@ import (
 // ErrInvalidState reports a state that cannot be canonically projected.
 var ErrInvalidState = errors.New("canonical: invalid state")
 
-// SchemaVersion is the canonical projection version covered by the hash.
+// SchemaVersion is the active canonical projection version covered by the hash.
 const SchemaVersion = domain.CanonicalSchemaVersion
+
+// LegacySchemaVersion is the historical v1 projection, retained so previously
+// accepted v1 fixture hashes and checkpoints remain verifiable byte-for-byte.
+const LegacySchemaVersion = domain.LegacyCanonicalSchemaVersion
 
 // maxSafeInteger is the largest magnitude representable exactly by an IEEE-754
 // double (2^53-1). The restricted JCS profile rejects larger integers rather than
@@ -31,15 +35,29 @@ const SchemaVersion = domain.CanonicalSchemaVersion
 // such fields, and no current canonical field requires one.
 const maxSafeInteger int64 = 1<<53 - 1
 
-// Project returns the canonical, versioned game-state representation. Fields are
-// exactly the documented binding set; no timestamps, device or provider data are
-// included.
+// Project returns the canonical, versioned game-state representation selected by
+// the state's own revision:
+//
+//   - schema v1 (historical): exactly the previously accepted field set. It is
+//     retained so v1 fixtures and v1 checkpoints keep verifying with their original
+//     SHA-256 values. v1 states are never advanced by the simulation.
+//   - schema v2 (active): the v1 field set plus the complete persisted session XP
+//     collection `session_progress`, which includes actors outside the current-wave
+//     member list.
+//
+// Fields are exactly the documented binding set; no timestamps, device or provider
+// data are included. The two versions share one projection implementation, so the
+// historical field set cannot drift while v2 is maintained.
 func Project(state domain.SessionState) (map[string]any, error) {
 	if err := state.Validate(); err != nil {
 		return nil, fmt.Errorf("%w: %v", ErrInvalidState, err)
 	}
-	if state.Revision.RulesVersion != domain.RulesVersion || state.Revision.SchemaVersion != SchemaVersion {
+	if state.Revision.RulesVersion != domain.RulesVersion {
 		return nil, fmt.Errorf("%w: unsupported revision %+v", ErrInvalidState, state.Revision)
+	}
+	schemaVersion := state.Revision.SchemaVersion
+	if schemaVersion != SchemaVersion && schemaVersion != LegacySchemaVersion {
+		return nil, fmt.Errorf("%w: unsupported canonical schema %d", ErrInvalidState, schemaVersion)
 	}
 	for index := 1; index < len(state.Members); index++ {
 		if state.Members[index-1].ActorKey >= state.Members[index].ActorKey {
@@ -116,8 +134,8 @@ func Project(state domain.SessionState) (map[string]any, error) {
 		selected = state.Wave.Vote.Selected.String()
 	}
 
-	return map[string]any{
-		"schema_version":     int64(SchemaVersion),
+	return addSchemaProjection(map[string]any{
+		"schema_version":     int64(schemaVersion),
 		"rules_version":      state.Revision.RulesVersion,
 		"session_id":         string(state.ID),
 		"village_id":         string(state.VillageID),
@@ -154,7 +172,31 @@ func Project(state domain.SessionState) (map[string]any, error) {
 		"members":          members,
 		"queued_next_wave": queued,
 		"privacy_epoch":    state.PrivacyEpoch,
-	}, nil
+	}, state, schemaVersion), nil
+}
+
+// addSchemaProjection adds the fields introduced by a canonical schema version to
+// the shared v1 field set. Keeping one shared builder is what guarantees that the
+// historical v1 contract cannot drift while v2 is developed: v1 output is the same
+// map minus the version-gated fields.
+func addSchemaProjection(projection map[string]any, state domain.SessionState, schemaVersion int) map[string]any {
+	if schemaVersion >= SchemaVersion {
+		// session_progress is the complete persisted XP collection, including actors
+		// who are not current-wave members. It is always an explicit array: an empty
+		// collection serializes as [] (never null or omitted). Domain validation
+		// enforces canonical ActorKey order, unique actor keys, valid scoped keys and
+		// session XP within 0..300; the projection never synthesizes a record that the
+		// authoritative state does not contain.
+		progress := make([]any, 0, len(state.XP))
+		for _, row := range state.XP {
+			progress = append(progress, map[string]any{
+				"actor_key":  string(row.ActorKey),
+				"session_xp": row.XP,
+			})
+		}
+		projection["session_progress"] = progress
+	}
+	return projection
 }
 
 // MarshalJCS serializes the projection as RFC 8785 canonical JSON bytes.

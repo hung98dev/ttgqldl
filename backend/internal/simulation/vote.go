@@ -47,7 +47,7 @@ func (e *VoteDeferredError) Is(target error) bool { return target == ErrInputDef
 // authoritative ballot state. A ballot becomes effective only through
 // ApplyDueVotes at its scheduled tick.
 func AcceptVoteCommands(state domain.SessionState, queue RoleQueue, commands []VoteCommand) (domain.SessionState, RoleQueue, []VoteDecision, error) {
-	if err := state.Validate(); err != nil {
+	if err := validateActiveState(state); err != nil {
 		return state, queue, nil, fmt.Errorf("%w: %v", ErrInvalidState, err)
 	}
 	switch state.Lifecycle {
@@ -149,6 +149,11 @@ func AcceptVoteCommands(state domain.SessionState, queue RoleQueue, commands []V
 func ApplyDueVotes(state domain.SessionState, queue RoleQueue) (domain.SessionState, RoleQueue, error) {
 	if len(queue.Ballots) == 0 {
 		return state, queue, nil
+	}
+	// Ballots only become due for an active canonical revision. The check runs only
+	// when ballots are actually queued, so the quiet-tick path pays nothing.
+	if err := validateActiveState(state); err != nil {
+		return state, queue, fmt.Errorf("%w: %v", ErrInvalidState, err)
 	}
 	if state.Lifecycle != domain.LifecycleRunning || len(state.PauseReasons) > 0 {
 		return state, queue, nil

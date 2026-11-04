@@ -2,7 +2,7 @@
   "generated_by": "tooling/refeval (independent reference evaluator)",
   "fixture_schema": 2,
   "rules_version": "ttg-rules-v1",
-  "canonical_schema_version": 1,
+  "canonical_schema_version": 2,
   "sweep_note": "P=1,3,4,5,10,30,100,1000,10000 x fighter share 0/25/50/75/100% x ordinary/boss x consecutive_wins 0/3/9 x consecutive_losses 0/1/3 + vote A/B/C at the clean baseline. cw\u003e0 with cl\u003e0 is an arithmetic stress pair, not a reachable game state (a win resets consecutive_losses).",
   "sweep_runs": 1080,
   "sweep_digest": "e0866644436bca658345ae210e5be723f7cd2b75491a2677c879e5177631a9dd",
@@ -366,7 +366,7 @@
         "session_xp_total": 100,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "e90f7e547fa47821bbdc14c15b904ba3e53095e92f9d0440a53c258e550866e9"
+        "state_digest": "b29e4fa0e1bb0840982ba56813cab007b18036df55b83fb221eec35170b877e7"
       },
       "boundary_trace": [
         {
@@ -707,7 +707,7 @@
         "session_xp_total": 300,
         "boss_hp_at_2600": 16,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "6b0fa425e4740dfa5d160eceeff51c328ad17291f379899f29704436d206b99b"
+        "state_digest": "063f97a1a97908af8f4c7a8144897b8dbaea6a4404f85ef5e2596a3b76bdbea7"
       },
       "boundary_trace": [
         {
@@ -1048,7 +1048,7 @@
         "session_xp_total": 10,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "23c49459a1d91ab3d3f6ee813274ad75d7c848e9159a2e11db045ae454f2eff3"
+        "state_digest": "2801c8fe2edc27d4611f79bd4293fa5c3b5196364d36e42a107fb9fac686970c"
       },
       "boundary_trace": [
         {
@@ -1389,7 +1389,7 @@
         "session_xp_total": 10,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "5a54ec65360ae0c61ea238d574be16442018cb8d7646a88178d2e88446e77238"
+        "state_digest": "1995dd1a3bd586683d50b791fc1e48acdcf203b7049db0fe3319450002ad45ba"
       },
       "boundary_trace": [
         {
@@ -1731,7 +1731,7 @@
         "session_xp_total": 100,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "1f82160d60b1fc18e13b8bb81d7d4884e1ec7d030e3bb3f15a75e92b17ee24d7",
+        "state_digest": "78f98a3c7f3d0fe93e86342b97d2cd99f3682bf662e94b22ae2a3de4adf0e2a2",
         "vote_counts": {
           "a": 10,
           "b": 0,
@@ -2078,7 +2078,7 @@
         "session_xp_total": 100,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "99302a27a00ef04c010520b98e2d660e83b4c5bf671f404c0379de16e37f59a5",
+        "state_digest": "27ccff7a23b1b7ab595f4b0cb9de157cddaff4308f638e38c6723353dbe00942",
         "vote_counts": {
           "a": 0,
           "b": 10,
@@ -2425,7 +2425,7 @@
         "session_xp_total": 100,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 52,
-        "state_digest": "baaacff8f6e00be160c5fe3f015ebfd73e3cbb948084cf8f0064af7937f464bf",
+        "state_digest": "b24d454c95162101683a328b637d50e17a0e7df4466d9011126c48405ecf1e4d",
         "vote_counts": {
           "a": 0,
           "b": 0,
@@ -2771,7 +2771,7 @@
         "session_xp_total": 20,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "d4d6d6e1fee3950b346787cf69a6e38537b5d10465441366a04acd793b5c9c02",
+        "state_digest": "4f772132d0d9568da8e344c0ae07c5c7ae32d6cb02833cf2fca893078531debd",
         "vote_counts": {
           "a": 0,
           "b": 0,
@@ -3117,7 +3117,7 @@
         "session_xp_total": 20,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "8b913a31f6c7345aaa207205fb1af267d35d1f592a71d9787a91da7e0278a38b",
+        "state_digest": "ad0f374b834cfad7a2c97e6011294d5a36130af61a4f9a18ca8933622472fb85",
         "vote_counts": {
           "a": 0,
           "b": 0,
@@ -3497,7 +3497,7 @@
         "session_xp_total": 30,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "cecf61359a4d5273f3b92c032d9e36d41818ea6f45642a92f885f03690861609",
+        "state_digest": "e859a9f7e468b74b0ea897959ebd850e3e4473aa55fd0ea91c462f52b1662641",
         "vote_counts": {
           "a": 1,
           "b": 1,
@@ -3872,7 +3872,7 @@
         "session_xp_total": 300,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "d159bc2425d193326c76bf4018f5812bf2163ad1cc5da3a8fde590d667129566"
+        "state_digest": "6be9663fce65a124306133bbc2bd1205bb302665e5ef63596ad9f80033dc541d"
       },
       "boundary_trace": [
         {
@@ -4129,7 +4129,7 @@
         "session_xp_total": 660,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "55252882cbb31c3b25de2f543a7472c8a2bd33c8146af0223126544a503036b2"
+        "state_digest": "a979dad1d973f9f68d3d336a495608b612a27e506e9e70051370623d2f048fa9"
       },
       "boundary_trace": [
         {
@@ -4470,7 +4470,7 @@
         "session_xp_total": 660,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "3f92332af8d46e99fd6d3383c5c6c06ef39b8ccb913d2ab28c0674dd9862efaf"
+        "state_digest": "f3595d9567a70bde82863066a298b429c29ca7e989f8e29891a870fafda4aabf"
       },
       "boundary_trace": [
         {
@@ -4811,7 +4811,7 @@
         "session_xp_total": 400,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "ddfc239a86d4cb4664a70f3587eca44ad674f224ae71d398e84e53ac14105fb1"
+        "state_digest": "c7d8af1706241202084fb535b1a3e09691701e8abfecc4a627b304aaa2766f0e"
       },
       "boundary_trace": [
         {
@@ -5152,7 +5152,7 @@
         "session_xp_total": 100000,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "6e2f4fb964483c0499834dd1c4d647c4bef26a457c0adb123fcef5b2fb66a06f"
+        "state_digest": "f383f483197f63e93f5c26921c7fb53076dd28e12c99972704a0cfc4ffe1799b"
       },
       "boundary_trace": [
         {
@@ -5493,7 +5493,7 @@
         "session_xp_total": 300,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "430c7bbadf70b17fa92623cbba45b876f47086f674a3561166c07e4a61cda473"
+        "state_digest": "74ddf33721d5e4b379c104f597bdf72e42dff0294ff0e308d1f29eb8cb5a3014"
       },
       "boundary_trace": [
         {
@@ -5834,7 +5834,7 @@
         "session_xp_total": 300,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "84b053ee0eae7aa753bbf2344e8f496124fa3e0ddbc4c29f45bce1418a980d39"
+        "state_digest": "a5d134a7089313f3f7e78f52700df68402fc7ae32e635e1eac87c27175246d44"
       },
       "boundary_trace": [
         {
@@ -6175,7 +6175,7 @@
         "session_xp_total": 100,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 142,
-        "state_digest": "ebc09d1e4df733063186b2044c6007f392bd7597860a2a4a9b4b27a92598a01f"
+        "state_digest": "0a6e4fc6df3ebd53237fba7763e5972d8fb65a0575ab97fcb3fc312a8e5e72c2"
       },
       "boundary_trace": [
         {
@@ -6516,7 +6516,7 @@
         "session_xp_total": 40,
         "boss_hp_at_2600": 9,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "641f376b12710c4bc28ceb43442a6efb61b7fd92a90d57e7cd351a2bdda8265f"
+        "state_digest": "05a3e6656ab5c7aea9ede8a764e92ebab190407647a40f503d07ed6ad14e17e1"
       },
       "boundary_trace": [
         {
@@ -6857,7 +6857,7 @@
         "session_xp_total": 50,
         "boss_hp_at_2600": 24,
         "ordinary_hp_at_2600": 5,
-        "state_digest": "4c39163c5766db13e0d197d4d2bf5095ccef1612ee062b71202e7b3b9adf775c"
+        "state_digest": "90f0b3acb8078ae615b0b1059070e12ae68c96220ed73cc34340a4f34ec9ae82"
       },
       "boundary_trace": [
         {
@@ -7198,7 +7198,7 @@
         "session_xp_total": 300,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "34b0f48931141784aa3c5b0e48dc70f00a3358527a898bbb34c0b83e96dab69a"
+        "state_digest": "7f33b915e6ceffa1559607a000bc06ae1e7c0a741a10308d963823005e343889"
       },
       "boundary_trace": [
         {
@@ -7561,7 +7561,7 @@
         "session_xp_total": 40,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "ab0fdc612d5c36b0becc1b520916e5ac06e707df48ab46526b2b28f67fcaf71a",
+        "state_digest": "445fa62c1858cb72886808ebb3846cc4d6cc80857c5f11a9042f3505633a1ff5",
         "member_state": [
           {
             "actor_key": "anchor_edge",
@@ -7964,7 +7964,7 @@
         "session_xp_total": 10,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "c0109a0aaeb556a0d210336cecda35fe01ccb5db68ad4f96322ce8470a9e09f0",
+        "state_digest": "8ef0bce87a2f5c682a664560888ea6ea31e7d6b8a64677f625492437e66a8b56",
         "member_state": [
           {
             "actor_key": "solo",
@@ -8378,7 +8378,7 @@
         "session_xp_total": 30,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "bda5d44721c9d541fd8d245e0cd373240820dc5b043ac1b7c647d5ef64ad7ead",
+        "state_digest": "8468f242d104203b9458ec36e844f67616eb0a0ec81319fd6f85d0b57fa5c395",
         "vote_counts": {
           "a": 1,
           "b": 1,
@@ -8792,7 +8792,7 @@
         "session_xp_total": 30,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "fa68d7f88b3dd3594471fdb04d9e63c282f6196eaa10ce686dd665b7a8fc5f3e",
+        "state_digest": "353256a67fbc4c839e693d77283fef54465c2c84c5e6b4e892490d2fcd67c7a9",
         "vote_counts": {
           "a": 1,
           "b": 0,

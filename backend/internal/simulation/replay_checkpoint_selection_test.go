@@ -67,7 +67,7 @@ func TestSelectCheckpointIdentity(t *testing.T) {
 			t.Fatal(err)
 		}
 		if hashFirst != hashSecond {
-			t.Fatal("fixture must share the canonical v1 hash to prove the private identity is used")
+			t.Fatal("fixture must share the canonical hash to prove the private identity is used")
 		}
 		steps := []replayStep{
 			selectionStep(t, first, RoleQueue{}, 0, 10),
@@ -95,7 +95,7 @@ func TestSelectCheckpointIdentity(t *testing.T) {
 			t.Fatal(err)
 		}
 		if hashFirst != hashSecond {
-			t.Fatal("fixture must share the canonical v1 hash to prove pause reasons are part of the identity")
+			t.Fatal("fixture must share the canonical hash to prove pause reasons are part of the identity")
 		}
 		steps := []replayStep{
 			selectionStep(t, first, queue, 0, 10),

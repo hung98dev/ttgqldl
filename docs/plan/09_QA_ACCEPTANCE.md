@@ -21,8 +21,9 @@ QA-BAL-01 simulated P=1,3,4,5,10,30,100,1000,10000 at 0/20/25/40/50/60/75/100% f
 QA-BAL-02 1,000 generated session/wave fixtures, test transparent scaling, bounded XP, resource and load. Target 65-80% first-three-wave win rate is hypothesis, NOT mandatory or faked until viewer research.
 QA-ECO-01 construction/repair, one upgrade max per boundary, resource caps, vote deductions and rewards exactly once.
 QA-VOTE-01 close boundary t1200, ties A>B>C, insufficient-resource fallback and no invalid ballot.
-QA-DET-01 same accepted inputs+rules_version -> RFC8785 hash equal on >=100 checkpoint/restarts/crash locations.
+QA-DET-01 same accepted inputs+active canonical schema -> RFC8785 hash equal on >=100 checkpoint/restarts/crash locations. Active canonical schema is 2 (v1 field set plus complete persisted `session_progress`); historical schema-v1 states must still hash to their original v1 SHA-256 values through the explicit compatibility path.
 QA-DET-02 no iteration, RNG or unstable timestamps influence combat hash.
+QA-DET-03 versioned contracts must not be conflated: a serialization-only canonical schema bump keeps `ttg-rules-v1`, the private checkpoint envelope version is independent of the canonical schema tag, and the reference fixture schema changes only for structural fixture changes. Unknown canonical schema versions are rejected, and schema-v1 states can never be advanced, queued into or restored as live sessions.
 QA-DB-01 up/down migrations, FK/unique/check constraints, indexes and least-privileged credentials.
 QA-DB-05 durable input and reducer-outbox atomic transactions; reject stale fencing epochs.
 QA-API-01 OpenAPI3.1 all endpoints, error schemas, status codes, idempotency and negative tests.

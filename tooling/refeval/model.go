@@ -20,8 +20,13 @@ import (
 // Rules and format identifiers are part of the authoritative contract
 // (01_PRODUCT_SCOPE.md, 02_GAME_RULES.md, 04_DATABASE.md).
 const (
-	RulesVersion           = "ttg-rules-v1"
-	CanonicalSchemaVersion = 1
+	RulesVersion = "ttg-rules-v1"
+	// CanonicalSchemaVersion is the canonical serialization schema the reference
+	// evaluator's state digest declares. It tracks the authoritative contract:
+	// schema 2 adds the complete persisted session XP collection while gameplay
+	// rules stay ttg-rules-v1. Gameplay expectations are unchanged from the v1
+	// artifact and remain independently derived.
+	CanonicalSchemaVersion = 2
 	// FixtureSchemaVersion versions the independently generated fixture input
 	// model. It is deliberately separate from the gameplay rules identifier, the
 	// canonical game-state schema and the production private checkpoint format.

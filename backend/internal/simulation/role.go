@@ -197,7 +197,7 @@ func (e *DeferredError) Is(target error) bool { return target == ErrInputDeferre
 // scheduled at 3000 after tick 2999) update only the explicit NEXT-wave pending
 // queue, never the current wave. Any invalid command rejects the whole batch.
 func AcceptRoleCommands(state domain.SessionState, queue RoleQueue, commands []RoleCommand) (domain.SessionState, RoleQueue, []RoleDecision, error) {
-	if err := state.Validate(); err != nil {
+	if err := validateActiveState(state); err != nil {
 		return state, queue, nil, fmt.Errorf("%w: %v", ErrInvalidState, err)
 	}
 	switch state.Lifecycle {
@@ -257,7 +257,7 @@ func AcceptRoleCommands(state domain.SessionState, queue RoleQueue, commands []R
 // change current-wave membership, so a command scheduled at tick 800 cannot affect
 // tick 600.
 func ApplyDueRoles(state domain.SessionState, queue RoleQueue) (domain.SessionState, RoleQueue, []RoleEvent, []RoleDecision, error) {
-	if err := state.Validate(); err != nil {
+	if err := validateActiveState(state); err != nil {
 		return state, queue, nil, nil, fmt.Errorf("%w: %v", ErrInvalidState, err)
 	}
 	if len(queue.Entries) == 0 {

@@ -286,7 +286,7 @@ func TestSessionIdentityAndLifecycleInvariants(t *testing.T) {
 		{"village id mismatch", func(s *SessionState) { s.Village.ID = VillageID("33333333-3333-4333-8333-333333333333") }, errVillageIDMismatch},
 		{"invalid mode", func(s *SessionState) { s.Mode = SourceMode(7) }, errSourceModeInvalid},
 		{"invalid lifecycle", func(s *SessionState) { s.Lifecycle = Lifecycle(9) }, errLifecycleInvalid},
-		{"schema version drift", func(s *SessionState) { s.Revision.SchemaVersion = 2 }, errRevisionSchema},
+		{"unknown schema version", func(s *SessionState) { s.Revision.SchemaVersion = 3 }, errRevisionSchema},
 		{"rules version drift", func(s *SessionState) { s.Revision.RulesVersion = "ttg-rules-v2" }, errRevisionRules},
 		{"pause reason without lifecycle", func(s *SessionState) {
 			s.PauseReasons = []PauseReason{PauseOperatorPaused}
