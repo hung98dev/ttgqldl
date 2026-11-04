@@ -137,6 +137,9 @@ func totalWaveSteps(t *testing.T) int {
 }
 
 func TestMultiWaveSerializedRestoreHundred(t *testing.T) {
+	if raceDetectorEnabled {
+		t.Skip("148 serialized restores are compute-bound; they run in the non-race unit gate")
+	}
 	baselineState := multiWaveStart(t, 10)
 	actions := multiWaveActions()
 	total := totalWaveSteps(t)
