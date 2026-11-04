@@ -33,6 +33,9 @@ func qaBal05Outcome(t *testing.T, population, fighters int) domain.WaveResult {
 }
 
 func TestQABal05MinimumFighterCurve(t *testing.T) {
+	if raceDetectorEnabled {
+		t.Skip("QA-BAL-05 runs the full 3,000-tick pipeline; it is executed by the non-race unit gate")
+	}
 	for _, tc := range qaBal05Curve {
 		tc := tc
 		t.Run("population_"+strconv.Itoa(tc.population), func(t *testing.T) {
