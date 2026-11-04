@@ -92,13 +92,25 @@ type WaveState struct {
 	Ballots  []Ballot
 	Defeated bool
 	Result   WaveResult
+	// BossIncoming records that the canonical boss_incoming signal was emitted
+	// because ordinary pools are empty before the boss spawn.
+	BossIncoming bool
 }
 
 // Difficulty is the derived wave difficulty and the locked population anchor.
-// PopulationAnchor is 0 until the anchor locks at PopulationLockTick.
+// PopulationAnchor is 0 until the anchor locks at PopulationLockTick. The derived
+// fields are populated exactly once at the lock and never change during the wave.
 type Difficulty struct {
 	Level            int
 	PopulationAnchor int
+	Locked           bool
+	// ActualPopulation is the truthful unique participant count; the anchor and
+	// all formulas use min(actual,10000) with a mathematical minimum of 1.
+	ActualPopulation int
+	RecoveryPercent  int
+	BaseHP           int64
+	MilitiaAttack    int64
+	BossMaxHP        int64
 }
 
 // SessionState is the complete authoritative state of one session. It is a

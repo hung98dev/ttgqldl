@@ -180,10 +180,13 @@ func (s SessionState) Validate() error {
 	appendProblems(ValidatePending(s.Pending, s.Wave.Number))
 	appendProblems(ValidateXP(s.XP))
 
-	if s.Difficulty.Level < 1 || s.Difficulty.Level > 10 {
+	if lock := validateEnemyLock(s.Wave, s.Difficulty); lock != nil {
+		errs.Problems = append(errs.Problems, lock.Problems...)
+	}
+	if !s.Difficulty.Locked && (s.Difficulty.Level < 1 || s.Difficulty.Level > 10) {
 		errs.add("session.difficulty.level", "must be within 1..10")
 	}
-	if s.Difficulty.PopulationAnchor < 0 || s.Difficulty.PopulationAnchor > MaxPopulationAnchor {
+	if !s.Difficulty.Locked && (s.Difficulty.PopulationAnchor < 0 || s.Difficulty.PopulationAnchor > MaxPopulationAnchor) {
 		errs.add("session.difficulty.population_anchor", "must be within 0..10000")
 	}
 	if s.ConsecutiveWins < 0 || s.ConsecutiveWins > MaxConsecutiveWins {
