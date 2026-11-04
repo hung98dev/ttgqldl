@@ -127,9 +127,13 @@ func BenchmarkCombatBoundary(b *testing.B) {
 	}
 }
 
-// BenchmarkBossBoundary measures boss spawn plus combat at tick 2600.
+// BenchmarkBossBoundary measures the tick-2600 boss spawn plus combat from a
+// valid pre-spawn state.
 func BenchmarkBossBoundary(b *testing.B) {
 	state := benchStateAt(b, 100, 5, 2599)
+	if state.Wave.Boss.Exists {
+		b.Fatal("boss existed before its spawn tick")
+	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		if _, _, _, _, err := AdvanceWithRoles(state, RoleQueue{}, Input{Kind: KindAdvanceTick}); err != nil {
@@ -138,9 +142,28 @@ func BenchmarkBossBoundary(b *testing.B) {
 	}
 }
 
-// BenchmarkFinalSettlement measures tick-2800 final combat plus settlement.
+// benchStateAfterTransitions prepares a fixture by running the real reducer from
+// an earlier tick, so boss state at 2799 is reachable gameplay rather than manual.
+func benchStateAfterTransitions(b *testing.B, participants, wave, fromTick, toTick int) domain.SessionState {
+	b.Helper()
+	state := benchStateAt(b, participants, wave, fromTick)
+	for state.Tick() < toTick {
+		next, _, _, _, err := AdvanceWithRoles(state, RoleQueue{}, Input{Kind: KindAdvanceTick})
+		if err != nil {
+			b.Fatalf("prepare transition at %d: %v", state.Tick(), err)
+		}
+		state = next
+	}
+	return state
+}
+
+// BenchmarkFinalSettlement measures tick-2800 final combat plus settlement on a
+// state that actually passed through the tick-2600 boss spawn.
 func BenchmarkFinalSettlement(b *testing.B) {
-	state := benchStateAt(b, 100, 5, 2799)
+	state := benchStateAfterTransitions(b, 100, 5, 2599, 2799)
+	if !state.Wave.Boss.Exists {
+		b.Fatal("boss was not spawned by real transitions")
+	}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		if _, _, _, _, err := AdvanceWithRoles(state, RoleQueue{}, Input{Kind: KindAdvanceTick}); err != nil {
