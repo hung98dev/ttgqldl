@@ -18,7 +18,8 @@ func combatIndex(tick int) (int, error) {
 // upgrade for one contribution boundary. It never awards XP (W0207) and never
 // runs for a defeated wave.
 func resolveContribution(state domain.SessionState, events *[]Event) (domain.SessionState, error) {
-	if state.Wave.Defeated || !state.Difficulty.Locked {
+	// Builder work is independent of the enemy lock: it runs through PREP.
+	if state.Wave.Defeated {
 		return state, nil
 	}
 	if state.Lifecycle != domain.LifecycleRunning || len(state.PauseReasons) > 0 {
@@ -187,6 +188,15 @@ func resolveCombat(state domain.SessionState, events *[]Event) (domain.SessionSt
 	if err != nil {
 		return state, err
 	}
+	// Vote B raises the complete attack before lane splitting; no other option
+	// changes attack. Odd waves and unselected votes keep 100%.
+	attackPercent, guardPercent := VoteModifiers(next)
+	if attackPercent != 100 {
+		totalAttack, err = domain.ApplyVotePercent(totalAttack, attackPercent)
+		if err != nil {
+			return state, err
+		}
+	}
 
 	distributed, err := distributeAttack(next, totalAttack, index)
 	if err != nil {
@@ -264,6 +274,14 @@ func resolveCombat(state domain.SessionState, events *[]Event) (domain.SessionSt
 	guardBlock, err := domain.MulInt64(8, guardRoot)
 	if err != nil {
 		return state, err
+	}
+	// Vote A raises and vote C lowers the guard block after the base block is
+	// computed; the modifier never changes the guard player count.
+	if guardPercent != 100 {
+		guardBlock, err = domain.ApplyVotePercent(guardBlock, guardPercent)
+		if err != nil {
+			return state, err
+		}
 	}
 	damage := int64(0)
 	if raw > guardBlock {

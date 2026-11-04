@@ -264,7 +264,7 @@ func TestEarlyDefeatStopsAllFurtherEffects(t *testing.T) {
 
 func TestFinalCombatRunsOnceAndLeavesResultPending(t *testing.T) {
 	state := lockedAt(t, 2799, domain.PhaseFinale)
-	next, events, err := Next(state, Input{Kind: KindAdvanceTick})
+	next, _, events, _, err := AdvanceWithRoles(state, RoleQueue{}, Input{Kind: KindAdvanceTick})
 	if err != nil {
 		t.Fatal(err)
 	}

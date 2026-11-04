@@ -30,7 +30,7 @@ func lockedFixture(t *testing.T, members []domain.WaveMember, wins, losses int64
 
 func advanceOne(t *testing.T, state domain.SessionState) (domain.SessionState, []Event) {
 	t.Helper()
-	next, events, err := Next(state, Input{Kind: KindAdvanceTick})
+	next, _, events, _, err := AdvanceWithRoles(state, RoleQueue{}, Input{Kind: KindAdvanceTick})
 	if err != nil {
 		t.Fatalf("advance from %d: %v", state.Tick(), err)
 	}

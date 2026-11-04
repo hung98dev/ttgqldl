@@ -34,11 +34,14 @@ type PlayerXP struct {
 	XP       int64
 }
 
-// Ballot is one vote with its acceptance tick.
+// Ballot is one vote: the accepted input sequence, the effective tick inside the
+// open window and the chosen option. The canonical collection stores the latest
+// ballot per actor, sorted by ActorKey.
 type Ballot struct {
 	ActorKey ActorKey
 	Option   VoteOption
 	Tick     int
+	InputSeq int64
 }
 
 // VoteCounts are the three tally values.
@@ -54,6 +57,7 @@ func (c VoteCounts) Total() int64 { return c.A + c.B + c.C }
 // VoteState is the vote window for the current wave.
 type VoteState struct {
 	Open     bool
+	Closed   bool
 	Selected VoteOption
 	Counts   VoteCounts
 }
@@ -220,12 +224,13 @@ func ValidateBallots(ballots []Ballot, waveTick int) *ValidationError {
 		if !ballot.Option.Valid() || ballot.Option == VoteOptionNone {
 			errs.add(field+".option", errVoteOptionInvalid)
 		}
-		if ballot.Tick < 0 || ballot.Tick >= VoteCloseTick {
+		if ballot.InputSeq <= 0 {
+			errs.add(field+".input_seq", "must be positive")
+		}
+		if !BallotTickEligible(ballot.Tick) {
 			errs.add(field+".tick", "must be inside the voting window [0,1200)")
 		}
-		if waveTick >= 0 && ballot.Tick > waveTick {
-			errs.add(field+".tick", "must not be in the future")
-		}
+
 	}
 	if len(errs.Problems) == 0 {
 		return nil
@@ -243,8 +248,19 @@ func ValidateVoteState(vote VoteState, waveTick int) *ValidationError {
 	if vote.Open && vote.Selected != VoteOptionNone {
 		errs.add("vote.selected", "an open vote cannot have a selected option")
 	}
-	if vote.Open && waveTick >= VoteCloseTick {
+	if vote.Open && vote.Closed {
+		errs.add("vote.closed", "a vote cannot be open and closed")
+	}
+	if vote.Open && waveTick > VoteCloseTick {
 		errs.add("vote.open", "voting closes at tick 1200")
+	}
+	if vote.Closed {
+		if vote.Open {
+			errs.add("vote.closed", "a closed vote cannot be open")
+		}
+		if vote.Selected == VoteOptionNone {
+			errs.add("vote.selected", "a closed vote needs a selected option")
+		}
 	}
 	if vote.Counts.A < 0 || vote.Counts.B < 0 || vote.Counts.C < 0 {
 		errs.add("vote.counts", "must not be negative")

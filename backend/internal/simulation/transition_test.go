@@ -60,7 +60,7 @@ func mustStart(t *testing.T, state domain.SessionState) (domain.SessionState, []
 func advanceTo(t *testing.T, state domain.SessionState, target int) domain.SessionState {
 	t.Helper()
 	for state.Tick() < target {
-		next, _, err := Next(state, Input{Kind: KindAdvanceTick})
+		next, _, _, _, err := AdvanceWithRoles(state, RoleQueue{}, Input{Kind: KindAdvanceTick})
 		if err != nil {
 			t.Fatalf("advance to %d at tick %d: %v", target, state.Tick(), err)
 		}
@@ -88,7 +88,7 @@ func hasBoundary(events []Event, boundary Boundary) bool {
 
 func TestWaitingStateIsFrozen(t *testing.T) {
 	state := newState(t)
-	next, events, err := Next(state, Input{Kind: KindAdvanceTick})
+	next, _, events, _, err := AdvanceWithRoles(state, RoleQueue{}, Input{Kind: KindAdvanceTick})
 	if !errors.Is(err, ErrNotRunning) {
 		t.Fatalf("advance in waiting: error = %v, want ErrNotRunning", err)
 	}
@@ -192,7 +192,7 @@ func TestPhaseBoundariesEmitSinglePhaseChange(t *testing.T) {
 	for _, tc := range cases {
 		state, _ := mustStart(t, newState(t))
 		state = advanceTo(t, state, tc.tick-1)
-		next, events, err := Next(state, Input{Kind: KindAdvanceTick})
+		next, _, events, _, err := AdvanceWithRoles(state, RoleQueue{}, Input{Kind: KindAdvanceTick})
 		if err != nil {
 			t.Fatalf("tick %d: %v", tc.tick, err)
 		}
@@ -219,7 +219,7 @@ func TestPhaseBoundariesEmitSinglePhaseChange(t *testing.T) {
 func TestBoundarySignalsAtCriticalTicks(t *testing.T) {
 	state, _ := mustStart(t, newState(t))
 	state = advanceTo(t, state, 1199)
-	next, events, err := Next(state, Input{Kind: KindAdvanceTick})
+	next, _, events, _, err := AdvanceWithRoles(state, RoleQueue{}, Input{Kind: KindAdvanceTick})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -271,7 +271,7 @@ func TestBoundarySignalsAtCriticalTicks(t *testing.T) {
 func TestSettlementIsRequiredWhenEntering2800(t *testing.T) {
 	state, _ := mustStart(t, newState(t))
 	state = advanceTo(t, state, 2799)
-	next, events, err := Next(state, Input{Kind: KindAdvanceTick})
+	next, _, events, _, err := AdvanceWithRoles(state, RoleQueue{}, Input{Kind: KindAdvanceTick})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -307,7 +307,7 @@ func TestSettlementIsRequiredWhenEntering2800(t *testing.T) {
 func TestTick3000IsControlOnly(t *testing.T) {
 	state, _ := mustStart(t, newState(t))
 	state = advanceTo(t, state, 2999)
-	next, events, err := Next(state, Input{Kind: KindAdvanceTick})
+	next, _, events, _, err := AdvanceWithRoles(state, RoleQueue{}, Input{Kind: KindAdvanceTick})
 	if err != nil {
 		t.Fatal(err)
 	}

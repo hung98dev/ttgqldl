@@ -18,7 +18,7 @@ func validState(t *testing.T) SessionState {
 		{Lane: LaneCenter, Archetype: ArchetypeGrunt, HP: 20},
 	}
 	state.Wave.Vote = VoteState{Open: false, Selected: VoteOptionB, Counts: VoteCounts{A: 1, B: 2, C: 3}}
-	state.Wave.Ballots = []Ballot{{ActorKey: actorOne, Option: VoteOptionA, Tick: 50}}
+	state.Wave.Ballots = []Ballot{{ActorKey: actorOne, Option: VoteOptionA, Tick: 900, InputSeq: 1}}
 	state.Members = []WaveMember{
 		{ActorKey: actorOne, Role: RoleBuilder, JoinedTick: 0, LastChangeTick: intPtr(10), FirstSwitchUsed: true},
 		{ActorKey: actorTwo, Role: RoleGuard, JoinedTick: 5},

@@ -160,7 +160,7 @@ func TestRolloverRequiresTheControlTick(t *testing.T) {
 
 func TestRolloverResetsWaveStateButKeepsProgress(t *testing.T) {
 	state := stateAtRollover(t)
-	state.Wave.Ballots = []domain.Ballot{{ActorKey: actorKey('a'), Option: domain.VoteOptionA, Tick: 10}}
+	state.Wave.Ballots = []domain.Ballot{{ActorKey: actorKey('a'), Option: domain.VoteOptionA, Tick: 900, InputSeq: 1}}
 	state.Wave.Vote = domain.VoteState{Open: false, Selected: domain.VoteOptionA, Counts: domain.VoteCounts{A: 1}}
 	state.Wave.Defeated = true
 	state.Wave.Result = domain.WaveResultDefeat

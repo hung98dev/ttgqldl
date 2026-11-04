@@ -58,6 +58,9 @@ const (
 	EventAttackResolved EventType = "attack_resolved"
 	EventDamageApplied  EventType = "damage_applied"
 	EventWallUpgraded   EventType = "wall_upgraded"
+	// Canonical W0206 vote signals.
+	EventVoteOpened EventType = "vote_opened"
+	EventVoteClosed EventType = "vote_closed"
 )
 
 // Event is one deterministic transition signal. It carries no participant

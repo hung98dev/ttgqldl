@@ -38,6 +38,7 @@ const (
 
 // Scheduling boundaries from the rules.
 const (
+	VoteOpenTick           = 800
 	VoteCloseTick          = 1200
 	PopulationLockTick     = 1600
 	CombatStartTick        = 1800

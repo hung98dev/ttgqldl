@@ -252,12 +252,15 @@ func ApplyDueRoles(state domain.SessionState, queue RoleQueue) (domain.SessionSt
 	}
 
 	for _, command := range queue.Entries {
+		if command.TargetWave != work.Wave.Number {
+			return state, queue, nil, nil, fmt.Errorf("%w: command targets wave %d while the session is on %d", ErrStaleSchedule, command.TargetWave, work.Wave.Number)
+		}
+		if command.ScheduledTick < 0 || command.ScheduledTick > domain.FinalCombatTick {
+			return state, queue, nil, nil, fmt.Errorf("%w: queued command tick %d is invalid", ErrStaleSchedule, command.ScheduledTick)
+		}
 		if command.ScheduledTick > state.Tick() {
 			remaining.Entries = append(remaining.Entries, command)
 			continue
-		}
-		if command.TargetWave != work.Wave.Number {
-			return state, queue, nil, nil, fmt.Errorf("%w: command targets wave %d while the session is on %d", ErrStaleSchedule, command.TargetWave, work.Wave.Number)
 		}
 		decision := RoleDecision{
 			InputSeq:   command.InputSeq,
@@ -355,13 +358,14 @@ func ApplyDueRoles(state domain.SessionState, queue RoleQueue) (domain.SessionSt
 	return work, remaining, events, decisions, nil
 }
 
-// AdvanceWithRoles advances the logical clock with the W0202 transition and then
-// applies every role command that becomes effective at the new tick.
+// AdvanceWithRoles is the authoritative boundary orchestration: it advances the
+// logical clock, applies every command that becomes effective at the new tick in
+// deterministic order, and only then resolves gameplay for that boundary. On any
+// failure the original state and queue are returned unchanged.
 //
 // KindStartWave is authorized only through the accepted queue: the queue must be
 // non-empty and its first command must be the tick-0 registration whose actor and
-// role exactly match the supplied registration. That command is consumed once, so
-// a caller cannot inject an unrelated participant to start a wave.
+// role exactly match the supplied registration. That command is consumed once.
 func AdvanceWithRoles(state domain.SessionState, queue RoleQueue, input Input) (domain.SessionState, RoleQueue, []Event, []RoleEvent, error) {
 	if input.Kind == KindStartWave {
 		if len(queue.Entries) == 0 {
@@ -375,37 +379,47 @@ func AdvanceWithRoles(state domain.SessionState, queue RoleQueue, input Input) (
 			return state, queue, nil, nil, fmt.Errorf("%w: registration does not match the accepted command", ErrStartMismatch)
 		}
 		remaining := RoleQueue{Entries: append([]RoleCommand(nil), queue.Entries[1:]...)}
-		next, events, err := Next(state, Input{
+		next, clockEvents, err := Next(state, Input{
 			Kind:         KindStartWave,
 			Registration: &Registration{ActorKey: head.ActorKey, Role: head.Role},
 		})
 		if err != nil {
 			return state, queue, nil, nil, err
 		}
+		applied, leftover, dueEvents, _, applyErr := ApplyDueRoles(next, remaining)
+		if applyErr != nil {
+			return state, queue, nil, nil, applyErr
+		}
+		resolved, gameplayEvents, resolveErr := resolveBoundary(applied)
+		if resolveErr != nil {
+			return state, queue, nil, nil, resolveErr
+		}
 		roleEvents := []RoleEvent{{
 			Type:       EventRoleAccepted,
-			WaveNo:     next.Wave.Number,
+			WaveNo:     resolved.Wave.Number,
 			Tick:       0,
 			Role:       head.Role,
-			TargetWave: next.Wave.Number,
+			TargetWave: resolved.Wave.Number,
 		}}
-		applied, leftover, dueEvents, _, err := ApplyDueRoles(next, remaining)
-		if err != nil {
-			return state, queue, nil, nil, err
-		}
 		roleEvents = append(roleEvents, dueEvents...)
-		return applied, leftover, events, roleEvents, nil
+		events := mergeBoundaryEvents(resolved, clockEvents, roleEvents, gameplayEvents)
+		return resolved, leftover, events, roleEvents, nil
 	}
 
-	next, events, err := Next(state, input)
+	next, clockEvents, err := Next(state, input)
 	if err != nil {
 		return state, queue, nil, nil, err
 	}
-	applied, remaining, roleEvents, _, err := ApplyDueRoles(next, queue)
-	if err != nil {
-		return state, queue, nil, nil, err
+	applied, remaining, roleEvents, _, applyErr := ApplyDueRoles(next, queue)
+	if applyErr != nil {
+		return state, queue, nil, nil, applyErr
 	}
-	return applied, remaining, events, roleEvents, nil
+	resolved, gameplayEvents, resolveErr := resolveBoundary(applied)
+	if resolveErr != nil {
+		return state, queue, nil, nil, resolveErr
+	}
+	events := mergeBoundaryEvents(resolved, clockEvents, roleEvents, gameplayEvents)
+	return resolved, remaining, events, roleEvents, nil
 }
 
 // validateRoleCommands validates the batch before any mutation and returns it in
