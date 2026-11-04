@@ -24,6 +24,23 @@ import (
 // authentication mechanism: an attacker who can rewrite both the payload and the
 // digest can recompute the digest. Signing or an external trusted anchor is out of
 // scope for M02.
+//
+// Restoration contract boundaries:
+//
+//   - Production integrity covers exactly this envelope (format version, rules
+//     version, canonical v1 state hash, private digest, pending role and ballot
+//     queues) and the authoritative SessionState it is verified against. The
+//     queue contract is reconstructed semantically in validateCheckpointQueue, so
+//     a recomputed digest cannot smuggle in a command the reducer could never have
+//     queued.
+//   - The replay test harness additionally stores script_cursor and global_step.
+//     Those are harness scheduling metadata, not SessionState fields: they never
+//     influence reducer output, so they are deliberately outside the private
+//     digest. A future runtime cursor must not copy that choice.
+//   - If M04 adds a durable replay/restoration cursor, it must bind that cursor to
+//     the checkpoint identity (store it in this envelope and cover it with the
+//     private digest, or tag it against a trusted anchor). M02 does not provide
+//     that binding, nor database crash transactions, fencing or outbox durability.
 type CheckpointEnvelope struct {
 	SchemaVersion int           `json:"schema_version"`
 	RulesVersion  string        `json:"rules_version"`
@@ -117,10 +134,38 @@ func VerifyCheckpointEnvelope(envelope CheckpointEnvelope, state domain.SessionS
 	return nil
 }
 
-// validateCheckpointQueue enforces the accepted-command contract on the private
-// payload itself, so a tampered queue with a recomputed digest still fails.
+// validateCheckpointQueue reconstructs the legal relationship between the pending
+// commands and the committed state. It is a semantic contract, not a syntax check:
+// a payload whose digest was recomputed by an attacker must still describe a queue
+// that the production acceptance path could actually have produced.
+//
+// Rules, derived from role.go, vote.go and clock.go:
+//
+//   - The role queue only holds current-wave work. NEXT-wave registrations are
+//     promoted to the authoritative pending-member state at acceptance, so they can
+//     never be queued here.
+//   - A running session accepts a command at or before the committed tick and makes
+//     it effective strictly after that tick. A command scheduled at or before the
+//     committed tick would already have been applied, so it is stale.
+//   - A WAITING session may hold the accepted wave-start registration: accepted at
+//     the -1 sentinel and effective at tick 0.
+//   - Ballots are only ever queued for the immediately next committed tick, because
+//     acceptance requires scheduled_tick == committed_tick+1 and a ballot whose tick
+//     has been reached is applied before the next checkpoint can be observed.
+//   - A ballot actor must be a current-wave participant effective at the ballot's
+//     scheduled tick, exactly like AcceptVoteCommands.
+//   - Both queues persist in deterministic (scheduled_tick, input_seq) ascending
+//     order, the order sortQueue/sortBallotQueue produce.
+//   - Input sequences are positive and unique across both kinds.
+//
+// Pause state deliberately does not invalidate a queued input: the logical clock is
+// frozen, so a future command legitimately stays pending across a pause.
 func validateCheckpointQueue(state domain.SessionState, roles []RoleCommand, ballots []VoteCommand) error {
+	waiting := state.Lifecycle == domain.LifecycleWaiting
+	committed := state.Tick()
 	seen := make(map[int64]bool, len(roles)+len(ballots))
+
+	previousTick, previousSeq := -1, int64(0)
 	for _, command := range roles {
 		if command.InputSeq <= 0 || !command.ActorKey.Valid() || !command.Role.Valid() {
 			return fmt.Errorf("%w: invalid queued role command", ErrInvalidState)
@@ -129,28 +174,60 @@ func validateCheckpointQueue(state domain.SessionState, roles []RoleCommand, bal
 			return fmt.Errorf("%w: duplicate input sequence %d", ErrInvalidState, command.InputSeq)
 		}
 		seen[command.InputSeq] = true
-		if command.TargetWave != state.Wave.Number && command.TargetWave != state.Wave.Number+1 {
-			return fmt.Errorf("%w: queued role command targets an invalid wave %d", ErrInvalidState, command.TargetWave)
+		if command.TargetWave != state.Wave.Number {
+			return fmt.Errorf("%w: role queue command targets wave %d while the session is on %d; NEXT-wave registrations live in pending state",
+				ErrInvalidState, command.TargetWave, state.Wave.Number)
+		}
+		if command.ScheduledTick < previousTick ||
+			(command.ScheduledTick == previousTick && command.InputSeq <= previousSeq) {
+			return fmt.Errorf("%w: role queue is not in canonical (scheduled_tick, input_seq) order at %d", ErrInvalidState, command.ScheduledTick)
+		}
+		previousTick, previousSeq = command.ScheduledTick, command.InputSeq
+
+		if waiting {
+			// The only legal queued command before a wave starts is a start
+			// registration: accepted at the waiting sentinel, effective at tick 0.
+			if command.ScheduledTick != 0 {
+				return fmt.Errorf("%w: waiting role command must be effective at tick 0, got %d", ErrInvalidState, command.ScheduledTick)
+			}
+			if command.AcceptedTick != domain.WaitingTick {
+				return fmt.Errorf("%w: waiting role command accepted tick %d, want the waiting sentinel", ErrInvalidState, command.AcceptedTick)
+			}
+			continue
 		}
 		if command.ScheduledTick < 0 || command.ScheduledTick > domain.FinalCombatTick {
 			return fmt.Errorf("%w: queued role command tick %d is out of range", ErrInvalidState, command.ScheduledTick)
 		}
-		if command.TargetWave == state.Wave.Number+1 {
-			if command.ScheduledTick != 0 {
-				return fmt.Errorf("%w: next-wave role command must be effective at tick 0", ErrInvalidState)
-			}
-			continue
+		if command.ScheduledTick <= committed {
+			return fmt.Errorf("%w: queued role command is already effective at committed tick %d (scheduled %d)",
+				ErrInvalidState, committed, command.ScheduledTick)
 		}
-		// A current-wave command was accepted at an already committed tick and is
-		// effective strictly later; a retroactive command is rejected.
-		if command.AcceptedTick < 0 || command.AcceptedTick > domain.RolloverTick {
-			return fmt.Errorf("%w: queued role command accepted tick %d is out of range", ErrInvalidState, command.AcceptedTick)
+		if command.AcceptedTick < 0 || command.AcceptedTick > committed {
+			return fmt.Errorf("%w: queued role command accepted tick %d is outside 0..%d", ErrInvalidState, command.AcceptedTick, committed)
 		}
-		if command.ScheduledTick <= command.AcceptedTick {
+		if command.AcceptedTick >= command.ScheduledTick {
 			return fmt.Errorf("%w: queued role command is retroactive (scheduled %d, accepted %d)",
 				ErrInvalidState, command.ScheduledTick, command.AcceptedTick)
 		}
 	}
+
+	if len(ballots) > 0 {
+		if waiting {
+			return fmt.Errorf("%w: a waiting session cannot hold queued ballots", ErrInvalidState)
+		}
+		if !domain.VoteAvailable(state.Wave.Number) {
+			return fmt.Errorf("%w: queued ballots require an even wave, session is on %d", ErrInvalidState, state.Wave.Number)
+		}
+	}
+	applied := make(map[int64]bool, len(state.Wave.Ballots))
+	for _, ballot := range state.Wave.Ballots {
+		applied[ballot.InputSeq] = true
+	}
+	members := make(map[domain.ActorKey]int, len(state.Members))
+	for _, member := range state.Members {
+		members[member.ActorKey] = member.JoinedTick
+	}
+	previousTick, previousSeq = -1, int64(0)
 	for _, command := range ballots {
 		if command.InputSeq <= 0 || !command.ActorKey.Valid() {
 			return fmt.Errorf("%w: invalid queued ballot", ErrInvalidState)
@@ -166,12 +243,33 @@ func validateCheckpointQueue(state domain.SessionState, roles []RoleCommand, bal
 			return fmt.Errorf("%w: queued ballot targets wave %d while the session is on %d",
 				ErrInvalidState, command.TargetWave, state.Wave.Number)
 		}
+		if command.ScheduledTick < previousTick ||
+			(command.ScheduledTick == previousTick && command.InputSeq <= previousSeq) {
+			return fmt.Errorf("%w: ballot queue is not in canonical (scheduled_tick, input_seq) order at %d", ErrInvalidState, command.ScheduledTick)
+		}
+		previousTick, previousSeq = command.ScheduledTick, command.InputSeq
 		if !domain.BallotTickEligible(command.ScheduledTick) {
 			return fmt.Errorf("%w: queued ballot tick %d is outside the voting window", ErrInvalidState, command.ScheduledTick)
 		}
-		if command.AcceptedTick < 0 || command.ScheduledTick != command.AcceptedTick+1 {
-			return fmt.Errorf("%w: queued ballot is not scheduled at accepted+1 (%d/%d)",
-				ErrInvalidState, command.ScheduledTick, command.AcceptedTick)
+		// Acceptance pins a ballot to committed+1; once that tick is reached the
+		// ballot is applied, so a pending ballot later than the next tick cannot exist.
+		if command.ScheduledTick != committed+1 {
+			return fmt.Errorf("%w: queued ballot is not effective at the next committed tick %d (scheduled %d)",
+				ErrInvalidState, committed+1, command.ScheduledTick)
+		}
+		if command.AcceptedTick != committed {
+			return fmt.Errorf("%w: queued ballot accepted tick %d must equal the committed tick %d", ErrInvalidState, command.AcceptedTick, committed)
+		}
+		if applied[command.InputSeq] {
+			return fmt.Errorf("%w: queued ballot input sequence %d was already applied", ErrInvalidState, command.InputSeq)
+		}
+		joined, participant := members[command.ActorKey]
+		if !participant {
+			return fmt.Errorf("%w: queued ballot actor is not a current-wave participant", ErrInvalidState)
+		}
+		if joined > command.ScheduledTick {
+			return fmt.Errorf("%w: queued ballot actor is not effective at ballot tick %d (joined %d)",
+				ErrInvalidState, command.ScheduledTick, joined)
 		}
 	}
 	return nil

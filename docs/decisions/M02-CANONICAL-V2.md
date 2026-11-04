@@ -161,18 +161,111 @@ restore vulnerability while the owner decides: a checkpoint whose state or queue
 were altered — including the persisted-XP gap in section 1 — fails verification
 before any simulation step runs. `CanonicalSchemaVersion` remains 1.
 
+## 9b. Proposed versioning policy (explicit owner decision required)
+
+`docs/plan/03_SIMULATION.md` states that any change to "tick ordering, rounding,
+hashing fields or boundary handling" requires a rules-version bump. The v2 proposal
+keeps `ttg-rules-v1` while changing the hashed field set, so the binding documents
+currently conflict. **This ADR does not rewrite that policy.** It proposes the
+following split for owner approval:
+
+| Change class | Version axis | Examples |
+|---|---|---|
+| Gameplay mathematics, event ordering, reducer semantics, boundary handling | gameplay rules version (`ttg-rules-v1` → `ttg-rules-v2`) | fighter coefficient, militia formula, vote priority, tick order |
+| Canonical serialization only: which authoritative fields are projected/hashed, encoding rules, schema tag | canonical schema version (`1` → `2`) | adding `session_progress`, hashing applied ballot identities |
+| Private checkpoint format or digest payload | private envelope version (`4` → `5`) | changing `privateRestorationPayload`, digest encoding |
+| Independent reference fixture shape | fixture schema version (`2` → `3`) | typed input model changes in `tooling/refeval` |
+
+Proposed rules:
+
+- A change may touch more than one axis, but each axis is bumped only for its own
+  reason; none is a substitute for another.
+- A canonical schema bump must never change gameplay. If a newly hashed field is
+  itself changing semantics, the gameplay rules version must be bumped as well.
+- A canonical field addition changes every hash. v1 hashes remain verifiable as
+  historical v1 vectors, and `schema_version` is inside the hashed payload, so v1
+  and v2 payloads cannot be confused semantically.
+- Every axis bump lands with same-commit updates to the affected binding documents,
+  regenerated reference vectors and a reviewed replay/fixture impact statement.
+- Historical replay traces keep their original version tag; comparison switches to
+  v2 only after approval and implementation.
+
+Status: **PROPOSED — PENDING OWNER APPROVAL**. Until the owner accepts this split,
+the stricter reading (rules-version bump for any hashing-field change) remains
+binding, which is one more reason canonical v2 is not implemented.
+
+## 9c. Canonical v2 scope: A1 versus A2
+
+Canonical v1 projects exactly: `schema_version`, `rules_version`, `session_id`,
+`village_id`, `wave_no`, `wave_tick`, `lifecycle`, `defeated`, `wall_tier`,
+`wall_hp`, `townhall_hp`, `wood`, `stone`, `food`, `construction_work`,
+`total_wins`, `consecutive_wins`, `consecutive_losses`, `anchor_population`,
+`difficulty`, `base_hp`, `lane_pools` (nine subpools), `boss_spawned`, `boss_hp`,
+`vote{open,closed,selected,counts}`, `members[7 fields incl session_xp]`,
+`queued_next_wave`, `privacy_epoch`.
+
+### Option A1 — targeted canonical v2 (complete persisted XP only)
+
+Adds exactly one structure:
+
+```json
+{"session_progress": [{"actor_key": "<scoped actor key>", "session_xp": 100}]}
+```
+
+All persisted XP rows, sorted by `actor_key`, including actors who are no longer
+current-wave members. It deliberately does not add the other canonical omissions;
+the private checkpoint envelope v4 remains the complete restoration-integrity
+contract. Compatibility cost: one new canonical array, every v2 hash differs from
+v1, v1 fixtures stay as historical vectors.
+
+### Option A2 — expanded canonical v2
+
+Adds A1 plus every remaining continuation-affecting authoritative field identified
+by the audit:
+
+| Added field | Why it matters | Canonical collision reproduced today |
+|---|---|---|
+| `source_mode` | source admission / audit provenance | yes |
+| `input_sequence` | accepted-input namespace, replay ordering | yes |
+| `applied_ballots[{actor_key,option,tick,input_seq}]` | same-tick latest-wins re-vote accounting | yes (counts/selected only today) |
+| `wave_result` | settlement state; rollover fails while pending | yes |
+| `boss_incoming` | suppresses duplicate `boss_incoming` events | yes |
+| `village_level` | persistent progression | yes |
+| `difficulty.actual_population` | truthful participant count | yes (capped anchor is only a proxy) |
+| `difficulty.recovery_percent` | derived recovery modifier | yes |
+| `difficulty.militia_attack` | added to combat attack | yes |
+| `difficulty.boss_max_hp` | tick-2600 boss pool size | yes |
+| `difficulty.locked` | population-lock state | implied by anchor today |
+
+Optional, only if the owner explicitly includes it: `pause_reasons[]` (the
+independent operator/source/storage blocker set; already covered by private v4).
+
+Trade-offs. A1 has the smallest compatibility and review surface and keeps the
+canonical hash an XP-integrity contract, while private v4 carries the rest. A2 makes
+the canonical hash a near-complete authoritative-state contract, which reduces
+reliance on the private digest for replay integrity, but it changes every hash, adds
+ordering/determinism obligations for ballot and difficulty projections, and expands
+the privacy review of the canonical projection (private data, never published).
+
+**Neither option is implemented.** Option B (reject/defer and supply an alternative)
+remains available for both scopes.
+
 ## 10. Owner decision
 
 ```text
 Decision status: PENDING OWNER APPROVAL
 
-Option A: Approve canonical schema v2 with complete session_progress.
-Option B: Reject/defer; provide the required alternative that restores full XP hash coverage.
+Scope decision: no option selected.
+Versioning policy: NOT ACCEPTED (proposal in 9b).
 
-No option is selected.
+A1: Approve targeted schema v2 — complete persisted XP only.
+A2: Approve expanded schema v2 — A1 plus the reviewed authoritative fields in 9c.
+B:  Reject/defer and supply an alternative that satisfies canonical integrity requirements.
+V:  Accept or reject the versioning-policy split proposed in 9b.
 ```
 
 No schema version constant, fixture or hash was changed by this record. The owner
 has not approved v2, and no task may self-approve it. M02 therefore stays
-IN_PROGRESS until the owner selects an option and the selected implementation,
-compatibility verification and exact-HEAD CI all succeed.
+IN_PROGRESS until the owner selects an option, accepts or rejects the versioning
+policy, and the selected implementation, compatibility verification and exact-HEAD
+CI all succeed.
