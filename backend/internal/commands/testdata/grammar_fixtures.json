@@ -1,0 +1,345 @@
+{
+  "rules_version": "ttg-rules-v1",
+  "canonical_schema_version": 2,
+  "comment": "Frozen cross-platform grammar fixtures for backend/internal/commands. raw_hex is the exact UTF-8 byte sequence; expected tokens, actions and error categories must be identical on Windows and Linux. Generated once from the reviewed grammar and never from the production parser.",
+  "positive": [
+    {
+      "raw_hex": "584159",
+      "token": "xay",
+      "kind": "role",
+      "role": "builder"
+    },
+    {
+      "raw_hex": "786179",
+      "token": "xay",
+      "kind": "role",
+      "role": "builder"
+    },
+    {
+      "raw_hex": "58c3a279",
+      "token": "xay",
+      "kind": "role",
+      "role": "builder"
+    },
+    {
+      "raw_hex": "58c38259",
+      "token": "xay",
+      "kind": "role",
+      "role": "builder"
+    },
+    {
+      "raw_hex": "5861cc8259",
+      "token": "xay",
+      "kind": "role",
+      "role": "builder"
+    },
+    {
+      "raw_hex": "202058c382592020",
+      "token": "xay",
+      "kind": "role",
+      "role": "builder"
+    },
+    {
+      "raw_hex": "095448e1bba60a",
+      "token": "thu",
+      "kind": "role",
+      "role": "guard"
+    },
+    {
+      "raw_hex": "544855",
+      "token": "thu",
+      "kind": "role",
+      "role": "guard"
+    },
+    {
+      "raw_hex": "7468e1bba7",
+      "token": "thu",
+      "kind": "role",
+      "role": "guard"
+    },
+    {
+      "raw_hex": "546875cc8920",
+      "token": "thu",
+      "kind": "role",
+      "role": "guard"
+    },
+    {
+      "raw_hex": "c2a0c490c3814e48c2a0",
+      "token": "danh",
+      "kind": "role",
+      "role": "fighter"
+    },
+    {
+      "raw_hex": "44414e48",
+      "token": "danh",
+      "kind": "role",
+      "role": "fighter"
+    },
+    {
+      "raw_hex": "c490c3a16e68",
+      "token": "danh",
+      "kind": "role",
+      "role": "fighter"
+    },
+    {
+      "raw_hex": "c49061cc816e68",
+      "token": "danh",
+      "kind": "role",
+      "role": "fighter"
+    },
+    {
+      "raw_hex": "4255494c44",
+      "token": "build",
+      "kind": "role",
+      "role": "builder"
+    },
+    {
+      "raw_hex": "6275696c64",
+      "token": "build",
+      "kind": "role",
+      "role": "builder"
+    },
+    {
+      "raw_hex": "446546654e64",
+      "token": "defend",
+      "kind": "role",
+      "role": "guard"
+    },
+    {
+      "raw_hex": "41545441434b",
+      "token": "attack",
+      "kind": "role",
+      "role": "fighter"
+    },
+    {
+      "raw_hex": "61747461636b",
+      "token": "attack",
+      "kind": "role",
+      "role": "fighter"
+    },
+    {
+      "raw_hex": "efbca1efbcb4efbcb4efbca1efbca3efbcab",
+      "token": "attack",
+      "kind": "role",
+      "role": "fighter"
+    },
+    {
+      "raw_hex": "efbca1",
+      "token": "a",
+      "kind": "ballot",
+      "ballot": "A"
+    },
+    {
+      "raw_hex": "efbca2",
+      "token": "b",
+      "kind": "ballot",
+      "ballot": "B"
+    },
+    {
+      "raw_hex": "efbca3",
+      "token": "c",
+      "kind": "ballot",
+      "ballot": "C"
+    },
+    {
+      "raw_hex": "61",
+      "token": "a",
+      "kind": "ballot",
+      "ballot": "A"
+    },
+    {
+      "raw_hex": "42",
+      "token": "b",
+      "kind": "ballot",
+      "ballot": "B"
+    },
+    {
+      "raw_hex": "63",
+      "token": "c",
+      "kind": "ballot",
+      "ballot": "C"
+    },
+    {
+      "raw_hex": "20e3808041e3808020",
+      "token": "a",
+      "kind": "ballot",
+      "ballot": "A"
+    },
+    {
+      "raw_hex": "e280a842e280a9",
+      "token": "b",
+      "kind": "ballot",
+      "ballot": "B"
+    }
+  ],
+  "negative": [
+    {
+      "raw_hex": "",
+      "error": "ErrEmpty"
+    },
+    {
+      "raw_hex": "20",
+      "error": "ErrEmpty"
+    },
+    {
+      "raw_hex": "090a0d",
+      "error": "ErrEmpty"
+    },
+    {
+      "raw_hex": "c2a0",
+      "error": "ErrEmpty"
+    },
+    {
+      "raw_hex": "585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858",
+      "error": "ErrTooLong"
+    },
+    {
+      "raw_hex": "5858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858585858",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "5841592044414e48",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "4255494c442041545441434b",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "5820c3822059",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "4220552049204c2044",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "58415921",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "21584159",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "5841593f",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "2f584159",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "23584159",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "313233584159",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "584159313233",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "544f49204d554f4e20584159",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "584159205448552044414e48",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "4141",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "4142",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "41545441434b204e4f57",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "5841",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "4154544143",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "584159f09f94a5",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "f09f94a5",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "d0a5d090d0a3",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "ce91",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "efbc91",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "584159e2808b",
+      "error": "ErrForbiddenCharacter"
+    },
+    {
+      "raw_hex": "584159e2808d",
+      "error": "ErrForbiddenCharacter"
+    },
+    {
+      "raw_hex": "e280ae584159",
+      "error": "ErrForbiddenCharacter"
+    },
+    {
+      "raw_hex": "584159e280ac",
+      "error": "ErrForbiddenCharacter"
+    },
+    {
+      "raw_hex": "e281a6584159e281a9",
+      "error": "ErrForbiddenCharacter"
+    },
+    {
+      "raw_hex": "584159efbbbf",
+      "error": "ErrForbiddenCharacter"
+    },
+    {
+      "raw_hex": "cc81584159",
+      "error": "ErrForbiddenCharacter"
+    },
+    {
+      "raw_hex": "58415900",
+      "error": "ErrForbiddenCharacter"
+    },
+    {
+      "raw_hex": "58415907",
+      "error": "ErrForbiddenCharacter"
+    },
+    {
+      "raw_hex": "584159c285",
+      "error": "ErrForbiddenCharacter"
+    },
+    {
+      "raw_hex": "584159cc81cc81cc81cc81cc81cc81cc81cc81cc81",
+      "error": "ErrExcessiveCombining"
+    },
+    {
+      "raw_hex": "5841590a544855",
+      "error": "ErrNotACommand"
+    },
+    {
+      "raw_hex": "efbbbf584159",
+      "error": "ErrForbiddenCharacter"
+    }
+  ]
+}
