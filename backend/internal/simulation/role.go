@@ -510,6 +510,9 @@ func validateRoleCommands(state domain.SessionState, queue RoleQueue, commands [
 
 		if command.TargetWave == state.Wave.Number+1 {
 			// NEXT-wave registration: only during RESULTS, always effective at 0.
+			if state.Tick() >= domain.RolloverTick {
+				return nil, fmt.Errorf("%w: NEXT-wave registration closed at the tick-3000 control boundary", ErrInvalidCommand)
+			}
 			if state.Tick() < domain.FinalCombatTick {
 				return nil, fmt.Errorf("%w: NEXT-wave registration is only accepted during RESULTS", ErrInvalidCommand)
 			}
