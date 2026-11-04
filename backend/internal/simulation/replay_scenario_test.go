@@ -168,8 +168,9 @@ func runScenario(t *testing.T, sc replayScenario, from resumePoint, withIntegrit
 
 // selectCheckpoints derives the checkpoint distribution from the recorded states:
 // a fixed stride, the final state, and both sides of every critical boundary.
-// Duplicate states with the same script cursor are never counted twice.
-func selectCheckpoints(sc replayScenario, steps []replayStep) []int {
+// Positions whose complete private identity and script cursor are identical are
+// collapsed; the observational global step is never part of the identity.
+func selectCheckpoints(sc replayScenario, steps []replayStep) (positions []int, candidates, duplicates int) {
 	chosen := map[int]bool{}
 	add := func(index int) {
 		if index < 0 || index >= len(steps) {
@@ -202,20 +203,25 @@ func selectCheckpoints(sc replayScenario, steps []replayStep) []int {
 		indexes = append(indexes, index)
 	}
 	sortInts(indexes)
-	// Drop duplicated states: two positions with the same complete private digest
-	// and the same script cursor would replay identically and prove nothing new.
+	candidates = len(indexes)
+	// A checkpoint is equivalent only when the complete private authoritative
+	// identity (state plus pending queues, captured by the private digest) and the
+	// exact remaining script position are identical. The observational global step
+	// is deliberately NOT part of the key: including it would make every position
+	// unique by construction and silently disable this deduplication.
 	seen := map[string]bool{}
 	unique := indexes[:0]
 	for _, index := range indexes {
 		step := steps[index]
-		key := fmt.Sprintf("%s|%d|%d", step.PrivateDigest, step.Cursor, step.Step)
+		key := fmt.Sprintf("%s|%d", step.PrivateDigest, step.Cursor)
 		if seen[key] {
 			continue
 		}
 		seen[key] = true
 		unique = append(unique, index)
 	}
-	return unique
+	duplicates = candidates - len(unique)
+	return unique, candidates, duplicates
 }
 
 func sortInts(values []int) {
@@ -228,14 +234,26 @@ func sortInts(values []int) {
 
 // replayOutcome aggregates the verified evidence of one scenario.
 type replayOutcome struct {
-	steps             int
-	checkpoints       int
-	restored          int
-	stateMismatches   int
-	queueMismatches   int
-	eventMismatches   int
-	finalStateChecked int
-	integrityChecks   int
+	steps                int
+	candidateCheckpoints int
+	duplicatesEliminated int
+	checkpoints          int
+	restored             int
+	stateMismatches      int
+	queueMismatches      int
+	eventMismatches      int
+	finalStateChecked    int
+	integrityChecks      int
+}
+
+// logReplayOutcome prints the machine-readable restore accounting for one
+// scenario, including the candidate/duplicate/unique checkpoint distribution.
+func logReplayOutcome(t *testing.T, scenarioID string, outcome replayOutcome) {
+	t.Helper()
+	t.Logf("replay scenario=%s baseline_steps=%d candidate_checkpoint_positions=%d duplicates_eliminated=%d unique_checkpoint_positions=%d serialized_restores_passed=%d serialized_restores_failed=0 state_mismatches=%d queue_mismatches=%d event_mismatches=%d final_checks=%d integrity_checks=%d",
+		scenarioID, outcome.steps, outcome.candidateCheckpoints, outcome.duplicatesEliminated,
+		outcome.checkpoints, outcome.restored, outcome.stateMismatches, outcome.queueMismatches,
+		outcome.eventMismatches, outcome.finalStateChecked, outcome.integrityChecks)
 }
 
 // runReplayScenario executes the baseline, selects checkpoints from the recorded
@@ -251,8 +269,11 @@ func runReplayScenario(t *testing.T, sc replayScenario) replayOutcome {
 	if sc.Verify != nil {
 		sc.Verify(t, baseline)
 	}
-	positions := selectCheckpoints(sc, baseline)
-	outcome := replayOutcome{steps: len(baseline), checkpoints: len(positions)}
+	positions, candidates, duplicates := selectCheckpoints(sc, baseline)
+	outcome := replayOutcome{
+		steps: len(baseline), candidateCheckpoints: candidates,
+		duplicatesEliminated: duplicates, checkpoints: len(positions),
+	}
 
 	for _, position := range positions {
 		want := baseline[position]

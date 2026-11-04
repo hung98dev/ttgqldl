@@ -20,6 +20,10 @@ var (
 	ErrInputDeferred      = errors.New("simulation: input deferred while paused")
 	ErrStaleSchedule      = errors.New("simulation: scheduled role command is stale")
 	ErrStartMismatch      = errors.New("simulation: start registration does not match the accepted command")
+	// ErrStartPending rejects a registration while another wave-start registration
+	// is already accepted and the session is still WAITING: a WAITING session owns
+	// at most one start registration, and production never queues a second one.
+	ErrStartPending = errors.New("simulation: a wave-start registration is already pending")
 )
 
 // RoleCommand is one already-canonicalized, authorized role selection. Text
@@ -495,8 +499,28 @@ func validateRoleCommands(state domain.SessionState, queue RoleQueue, commands [
 		if command.TargetWave < 1 {
 			return nil, fmt.Errorf("%w: invalid target wave", ErrInvalidCommand)
 		}
+		// One monotonic input_seq namespace covers queue entries and ballots, for
+		// every lifecycle including WAITING. The check reads the accepted queue, not
+		// just the current batch, so a second call cannot reuse an accepted sequence.
+		for _, queued := range queue.Entries {
+			if queued.InputSeq == command.InputSeq {
+				return nil, fmt.Errorf("%w: %d", ErrDuplicateInputSeq, command.InputSeq)
+			}
+		}
+		for _, queued := range queue.Ballots {
+			if queued.InputSeq == command.InputSeq {
+				return nil, fmt.Errorf("%w: %d (already queued as a ballot)", ErrDuplicateInputSeq, command.InputSeq)
+			}
+		}
 
 		if waiting {
+			// A WAITING session owns at most one accepted wave-start registration.
+			// Only the first eligible registration starts the wave; a later arrival
+			// must be rejected explicitly instead of becoming a competing tick-0
+			// start that could overwrite the accepted role.
+			if len(queue.Entries) > 0 {
+				return nil, fmt.Errorf("%w: %d registration(s) already queued", ErrStartPending, len(queue.Entries))
+			}
 			if !first {
 				return nil, fmt.Errorf("%w: only the first registration may start a wave", ErrInvalidCommand)
 			}
@@ -531,17 +555,6 @@ func validateRoleCommands(state domain.SessionState, queue RoleQueue, commands [
 		// the final boundary at 2800 when accepted at 2799.
 		if command.ScheduledTick <= state.Tick() {
 			return nil, fmt.Errorf("%w: tick %d already committed at %d", ErrRetroactiveInput, command.ScheduledTick, state.Tick())
-		}
-		for _, queued := range queue.Entries {
-			if queued.InputSeq == command.InputSeq {
-				return nil, fmt.Errorf("%w: %d", ErrDuplicateInputSeq, command.InputSeq)
-			}
-		}
-		// One monotonic input_seq namespace covers roles and votes.
-		for _, queued := range queue.Ballots {
-			if queued.InputSeq == command.InputSeq {
-				return nil, fmt.Errorf("%w: %d (already queued as a ballot)", ErrDuplicateInputSeq, command.InputSeq)
-			}
 		}
 	}
 	return ordered, nil

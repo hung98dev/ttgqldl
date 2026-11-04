@@ -250,6 +250,56 @@ the privacy review of the canonical projection (private data, never published).
 **Neither option is implemented.** Option B (reject/defer and supply an alternative)
 remains available for both scopes.
 
+## 9d. Final recommendation and evaluation (task 030)
+
+The recommendation below is engineering advice, **not approval**. It weighs the two
+canonical scopes against the documented acceptance criteria and the evidence
+actually produced by W0208.
+
+| Criterion | A1 (targeted) | A2 (expanded) |
+|---|---|---|
+| QA-DET-01 (same inputs → same hash at ≥100 restores) | satisfied | satisfied; no additional benefit for M02, whose replay proof already compares complete states |
+| QA-DET-02 (no RNG, map iteration or timestamps) | neutral | neutral, but adds ordered arrays (applied ballots) whose canonical ordering must be maintained forever |
+| QA-DB-05 and QA-OPS-03 (retained XP integrity) | **closes the documented gap** | closes it too |
+| Canonical-state hash completeness | XP-complete only, by design | near-complete for continuation-affecting fields |
+| Replay integrity | private envelope v4 remains the full restoration contract | canonical hash becomes a second, largely duplicative detector |
+| Persistence compatibility | serializer only, no schema/data migration | serializer only, but every hash changes with a wider review surface |
+| Public/private separation | canonical projection stays private | unchanged, but a wider private projection to review |
+| Hash/snapshot performance | one added array | larger payload and more per-hash work (ballots, difficulty internals) |
+| Migration and rollback | small, bounded | larger; more v1→v2 fixture churn and review |
+
+**Recommendation: A1.**
+
+1. The only documented *canonical* integrity gap is persisted XP outside current
+   membership (QA-DB-05/QA-OPS-03). A1 closes exactly that with the smallest
+   compatibility surface.
+2. Private checkpoint envelope v4 already covers every authoritative field the audit
+   identified and is **required** for restoration; A2's extra canonical fields would
+   duplicate that guarantee, not create it.
+3. A2 changes every hash and adds permanent ordering obligations without a
+   demonstrated M02 or accepted-plan requirement. It remains a valid future upgrade
+   if M04 decides the canonical hash must be self-sufficient.
+
+**If the owner prefers A2**, the frozen field list is the 9c table
+(`source_mode`, `input_sequence`, applied ballots, `wave_result`, `boss_incoming`,
+`village_level`, `difficulty.actual_population`, `difficulty.recovery_percent`,
+`difficulty.militia_attack`, `difficulty.boss_max_hp`, `difficulty.locked`) plus
+A1's `session_progress`. Explicit decision for the optional field:
+**`pause_reasons` = NO** — `lifecycle` is already canonical, the blocker set is
+transient operational state, and private v4 already covers it.
+
+**Versioning policy: recommend ACCEPT the four-axis split in 9b.** Keeping
+`ttg-rules-v1` while introducing canonical schema v2 is correct because gameplay
+mathematics, event ordering and reducer semantics do not change; only which
+authoritative fields the serialization contract hashes. Without the split, the
+binding `03_SIMULATION.md` wording would demand a gameplay-rules bump for a purely
+serialization change, conflating two contracts that are versioned independently.
+Because this is a policy change, it requires explicit owner acceptance; until then
+the stricter wording remains binding and v2 stays unimplemented.
+
+Option **B** remains available: if the owner rejects both scopes, M02 stays open
+until an alternative that satisfies canonical integrity requirements is specified.
+
 ## 10. Owner decision
 
 ```text
@@ -258,10 +308,10 @@ Decision status: PENDING OWNER APPROVAL
 Scope decision: no option selected.
 Versioning policy: NOT ACCEPTED (proposal in 9b).
 
-A1: Approve targeted schema v2 — complete persisted XP only.
-A2: Approve expanded schema v2 — A1 plus the reviewed authoritative fields in 9c.
+A1: Approve targeted schema v2 — complete persisted XP only.   [recommended]
+A2: Approve expanded schema v2 — A1 plus the frozen field list in 9c (pause_reasons = NO).
 B:  Reject/defer and supply an alternative that satisfies canonical integrity requirements.
-V:  Accept or reject the versioning-policy split proposed in 9b.
+V:  Accept or reject the versioning-policy split proposed in 9b. [accept recommended]
 ```
 
 No schema version constant, fixture or hash was changed by this record. The owner

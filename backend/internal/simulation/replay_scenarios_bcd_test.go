@@ -234,9 +234,7 @@ func TestScenarioCBossRollover(t *testing.T) {
 			scenario := scenarioBoss(5, testCase.b, testCase.g, testCase.f,
 				"C-"+testCase.name, testCase.bossAt2600, testCase.wood, testCase.stone)
 			outcome := runReplayScenario(t, scenario)
-			t.Logf("replay scenario=C-%s steps=%d checkpoints=%d restores=%d state_mismatches=%d queue_mismatches=%d event_mismatches=%d final_checks=%d",
-				testCase.name, outcome.steps, outcome.checkpoints, outcome.restored, outcome.stateMismatches,
-				outcome.queueMismatches, outcome.eventMismatches, outcome.finalStateChecked)
+			logReplayOutcome(t, "C-"+testCase.name, outcome)
 		})
 	}
 }
@@ -496,16 +494,12 @@ func pauseAction(name string, reason domain.PauseReason) replayAction {
 
 func TestScenarioBDefeatRecovery(t *testing.T) {
 	outcome := runReplayScenario(t, scenarioDefeatRecovery(t))
-	t.Logf("replay scenario=B steps=%d checkpoints=%d restores=%d state_mismatches=%d queue_mismatches=%d event_mismatches=%d final_checks=%d",
-		outcome.steps, outcome.checkpoints, outcome.restored, outcome.stateMismatches,
-		outcome.queueMismatches, outcome.eventMismatches, outcome.finalStateChecked)
+	logReplayOutcome(t, "B", outcome)
 }
 
 func TestScenarioDMultiplePauseReasons(t *testing.T) {
 	outcome := runReplayScenario(t, scenarioPauseResume(t))
-	t.Logf("replay scenario=D steps=%d checkpoints=%d restores=%d state_mismatches=%d queue_mismatches=%d event_mismatches=%d final_checks=%d",
-		outcome.steps, outcome.checkpoints, outcome.restored, outcome.stateMismatches,
-		outcome.queueMismatches, outcome.eventMismatches, outcome.finalStateChecked)
+	logReplayOutcome(t, "D", outcome)
 }
 
 func containsEvent(events []Event, eventType EventType) bool {

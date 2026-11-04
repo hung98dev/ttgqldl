@@ -165,6 +165,13 @@ func validateCheckpointQueue(state domain.SessionState, roles []RoleCommand, bal
 	committed := state.Tick()
 	seen := make(map[int64]bool, len(roles)+len(ballots))
 
+	// A WAITING session owns at most one accepted wave-start registration
+	// (AcceptRoleCommands rejects a second admission with ErrStartPending), so a
+	// checkpoint carrying several cannot have been produced by production.
+	if waiting && len(roles) > 1 {
+		return fmt.Errorf("%w: a waiting session may hold at most one wave-start registration, found %d", ErrInvalidState, len(roles))
+	}
+
 	previousTick, previousSeq := -1, int64(0)
 	for _, command := range roles {
 		if command.InputSeq <= 0 || !command.ActorKey.Valid() || !command.Role.Valid() {

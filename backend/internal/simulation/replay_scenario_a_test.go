@@ -111,7 +111,5 @@ func TestScenarioAMultiWaveRestore(t *testing.T) {
 	if outcome.checkpoints < 148 {
 		t.Fatalf("scenario A produced %d checkpoints, the retained minimum is 148", outcome.checkpoints)
 	}
-	t.Logf("replay scenario=A steps=%d checkpoints=%d restores=%d state_mismatches=%d queue_mismatches=%d event_mismatches=%d final_checks=%d integrity_checks=%d",
-		outcome.steps, outcome.checkpoints, outcome.restored, outcome.stateMismatches,
-		outcome.queueMismatches, outcome.eventMismatches, outcome.finalStateChecked, outcome.integrityChecks)
+	logReplayOutcome(t, "A", outcome)
 }

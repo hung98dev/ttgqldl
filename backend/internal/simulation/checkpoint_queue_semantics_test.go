@@ -215,6 +215,72 @@ func TestCheckpointQueueAlreadyAppliedBallot(t *testing.T) {
 	}
 }
 
+// TestCheckpointWaitingQueueContract pins the WAITING half of the queue contract:
+// zero or one wave-start registration, correct ownership and ticks, and no
+// competing start entries. A WAITING session cannot legitimately hold more than one
+// (AcceptRoleCommands rejects a second admission with ErrStartPending).
+func TestCheckpointWaitingQueueContract(t *testing.T) {
+	waiting := newState(t)
+	startCommand := RoleCommand{
+		InputSeq: 1, ActorKey: actorKey('a'), Role: domain.RoleBuilder,
+		TargetWave: waiting.Wave.Number, ScheduledTick: 0, AcceptedTick: domain.WaitingTick,
+	}
+	legit := RoleQueue{Entries: []RoleCommand{startCommand}}
+	if err := VerifyCheckpointEnvelope(envelopeWithQueue(t, waiting, legit), waiting, legit); err != nil {
+		t.Fatalf("legitimate waiting start registration rejected: %v", err)
+	}
+	if err := VerifyCheckpointEnvelope(envelopeWithQueue(t, waiting, RoleQueue{}), waiting, RoleQueue{}); err != nil {
+		t.Fatalf("legitimate empty waiting queue rejected: %v", err)
+	}
+
+	rejected := map[string]func() (CheckpointEnvelope, RoleQueue){
+		"two start registrations": func() (CheckpointEnvelope, RoleQueue) {
+			queue := RoleQueue{Entries: []RoleCommand{
+				startCommand,
+				{InputSeq: 2, ActorKey: actorKey('b'), Role: domain.RoleFighter, TargetWave: 1, ScheduledTick: 0, AcceptedTick: domain.WaitingTick},
+			}}
+			return envelopeWithQueue(t, waiting, queue), queue
+		},
+		"conflicting duplicate start for one actor": func() (CheckpointEnvelope, RoleQueue) {
+			queue := RoleQueue{Entries: []RoleCommand{
+				startCommand,
+				{InputSeq: 2, ActorKey: actorKey('a'), Role: domain.RoleGuard, TargetWave: 1, ScheduledTick: 0, AcceptedTick: domain.WaitingTick},
+			}}
+			return envelopeWithQueue(t, waiting, queue), queue
+		},
+		"wrong wave ownership": func() (CheckpointEnvelope, RoleQueue) {
+			bad := startCommand
+			bad.TargetWave = 2
+			queue := RoleQueue{Entries: []RoleCommand{bad}}
+			return envelopeWithQueue(t, waiting, queue), queue
+		},
+		"not effective at tick 0": func() (CheckpointEnvelope, RoleQueue) {
+			bad := startCommand
+			bad.ScheduledTick = 5
+			queue := RoleQueue{Entries: []RoleCommand{bad}}
+			return envelopeWithQueue(t, waiting, queue), queue
+		},
+		"accepted after the waiting sentinel": func() (CheckpointEnvelope, RoleQueue) {
+			bad := startCommand
+			bad.AcceptedTick = 0
+			queue := RoleQueue{Entries: []RoleCommand{bad}}
+			return envelopeWithQueue(t, waiting, queue), queue
+		},
+	}
+	for name, build := range rejected {
+		t.Run(name, func(t *testing.T) {
+			envelope, corrupted := build()
+			before := waiting.Clone()
+			if err := VerifyCheckpointEnvelope(envelope, waiting, corrupted); !errors.Is(err, ErrInvalidState) {
+				t.Fatalf("waiting checkpoint with %s was accepted (err=%v)", name, err)
+			}
+			if !reflect.DeepEqual(waiting, before) {
+				t.Fatal("rejected waiting restore mutated the state")
+			}
+		})
+	}
+}
+
 // TestCheckpointQueueAcceptsLegitimateStates guards against over-rejection. A
 // queued wave-start registration exists in production between AcceptRoleCommands and
 // AdvanceWithRoles(KindStartWave), and a paused session legitimately keeps future
