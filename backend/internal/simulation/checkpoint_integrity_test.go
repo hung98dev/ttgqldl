@@ -246,6 +246,49 @@ func TestCheckpointRejectsInvalidSourceMode(t *testing.T) {
 	}
 }
 
+// TestCheckpointRejectsAppliedBallotTampering covers the applied-ballot half of
+// the restore contract. Both variants keep the state internally valid (ballots and
+// tally agree), so only the integrity values can reject them.
+func TestCheckpointRejectsAppliedBallotTampering(t *testing.T) {
+	base := collisionAssaultBase(t)
+	envelope, err := BuildCheckpointEnvelope(base, RoleQueue{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(base.Wave.Ballots) != 2 {
+		t.Fatalf("fixture has %d applied ballots, want 2", len(base.Wave.Ballots))
+	}
+
+	t.Run("modified applied ballot", func(t *testing.T) {
+		tampered := base.Clone()
+		tampered.Wave.Ballots[0].Option = domain.VoteOptionB
+		tampered.Wave.Vote.Counts = domain.VoteCounts{A: 0, B: 1, C: 1}
+		if err := tampered.Validate(); err != nil {
+			t.Fatalf("modified-ballot fixture is invalid: %v", err)
+		}
+		if err := VerifyCheckpointEnvelope(envelope, tampered, RoleQueue{}); err == nil {
+			t.Fatal("checkpoint accepted a state whose applied ballot was modified")
+		}
+	})
+
+	t.Run("missing applied ballot", func(t *testing.T) {
+		tampered := base.Clone()
+		removed := tampered.Wave.Ballots[0].Option
+		tampered.Wave.Ballots = append([]domain.Ballot(nil), tampered.Wave.Ballots[1:]...)
+		if removed == domain.VoteOptionA {
+			tampered.Wave.Vote.Counts = domain.VoteCounts{C: 1}
+		} else {
+			tampered.Wave.Vote.Counts = domain.VoteCounts{A: 1}
+		}
+		if err := tampered.Validate(); err != nil {
+			t.Fatalf("missing-ballot fixture is invalid: %v", err)
+		}
+		if err := VerifyCheckpointEnvelope(envelope, tampered, RoleQueue{}); err == nil {
+			t.Fatal("checkpoint accepted a state with a missing applied ballot")
+		}
+	})
+}
+
 // Canonical v1 hashes lifecycle but not the independent pause-reason set, so two
 // paused states with different blockers can share a canonical hash while resuming
 // differently. The private envelope must separate them.
