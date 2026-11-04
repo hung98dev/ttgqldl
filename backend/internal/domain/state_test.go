@@ -13,6 +13,8 @@ const (
 	actorTwo  = ActorKey("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
 )
 
+func intPtr(value int) *int { return &value }
+
 func initial(t *testing.T) SessionState {
 	t.Helper()
 	state, err := NewInitialState(villageID, sessionID, SourceModeMock)
@@ -132,7 +134,7 @@ func TestCloneIsDeep(t *testing.T) {
 	state := initial(t)
 	state.PauseReasons = append(state.PauseReasons, PauseOperatorPaused)
 	state.Lifecycle = LifecyclePaused
-	state.Members = append(state.Members, WaveMember{ActorKey: actorOne, Role: RoleBuilder, JoinedTick: 0, LastChangeTick: -1})
+	state.Members = append(state.Members, WaveMember{ActorKey: actorOne, Role: RoleBuilder, JoinedTick: 0})
 	state.Pending = append(state.Pending, PendingMember{ActorKey: actorTwo, Role: RoleGuard, TargetWave: 2})
 	state.XP = append(state.XP, PlayerXP{ActorKey: actorOne, XP: 10})
 	state.Wave.Pools = append(state.Wave.Pools, EnemyPool{Lane: LaneWest, Archetype: ArchetypeRunner, HP: 10})

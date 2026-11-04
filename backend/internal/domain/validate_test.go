@@ -20,8 +20,8 @@ func validState(t *testing.T) SessionState {
 	state.Wave.Vote = VoteState{Open: false, Selected: VoteOptionB, Counts: VoteCounts{A: 1, B: 2, C: 3}}
 	state.Wave.Ballots = []Ballot{{ActorKey: actorOne, Option: VoteOptionA, Tick: 50}}
 	state.Members = []WaveMember{
-		{ActorKey: actorOne, Role: RoleBuilder, JoinedTick: 0, LastChangeTick: 10},
-		{ActorKey: actorTwo, Role: RoleGuard, JoinedTick: 5, LastChangeTick: -1},
+		{ActorKey: actorOne, Role: RoleBuilder, JoinedTick: 0, LastChangeTick: intPtr(10), FirstSwitchUsed: true},
+		{ActorKey: actorTwo, Role: RoleGuard, JoinedTick: 5},
 	}
 	state.Pending = []PendingMember{{ActorKey: actorKeyFor(3), Role: RoleFighter, TargetWave: 4}}
 	state.XP = []PlayerXP{{ActorKey: actorOne, XP: 10}, {ActorKey: actorTwo, XP: 20}}
@@ -42,6 +42,13 @@ func actorKeyFor(i int) ActorKey {
 func assertInvalid(t *testing.T, state SessionState, want string) {
 	t.Helper()
 	err := state.Validate()
+	if want == "" {
+		// An empty expectation marks a case that must remain valid after the fix.
+		if err != nil {
+			t.Fatalf("state must be valid: %v", err)
+		}
+		return
+	}
 	if err == nil {
 		t.Fatalf("state was accepted but %q must fail", want)
 	}
@@ -128,22 +135,54 @@ func TestWaveInvariants(t *testing.T) {
 			s.Wave.Phase = PhaseFinale
 			s.Wave.Boss = BossPool{Exists: true, HP: 11, MaxHP: 10}
 		}, errBossHP},
-		{"boss hp zero while existing", func(s *SessionState) {
+		{"boss killed immediately is valid", func(s *SessionState) {
+			s.Wave.Number = 5
+			s.Wave.Tick = 2600
+			s.Wave.Phase = PhaseFinale
+			s.Pending = nil
+			s.Wave.Boss = BossPool{Exists: true, HP: 0, MaxHP: 10}
+		}, ""},
+		{"boss killed at final combat is valid", func(s *SessionState) {
+			s.Wave.Number = 5
+			s.Wave.Tick = 2800
+			s.Wave.Phase = PhaseResults
+			s.Pending = nil
+			s.Wave.Boss = BossPool{Exists: true, HP: 0, MaxHP: 10}
+		}, ""},
+		{"negative boss hp", func(s *SessionState) {
 			s.Wave.Number = 5
 			s.Wave.Tick = 2700
 			s.Wave.Phase = PhaseFinale
-			s.Wave.Boss = BossPool{Exists: true, HP: 0, MaxHP: 10}
+			s.Pending = nil
+			s.Wave.Boss = BossPool{Exists: true, HP: -1, MaxHP: 10}
 		}, errBossHP},
 		{"boss hp without existence", func(s *SessionState) {
 			s.Wave.Boss = BossPool{Exists: false, HP: 5, MaxHP: 10}
 		}, "must be zero"},
 		{"defeat during prep", func(s *SessionState) { s.Wave.Defeated = true }, "wave.defeated"},
+		{"defeat before combat starts", func(s *SessionState) {
+			s.Wave.Tick = 1700
+			s.Wave.Phase = PhaseAssault
+			s.Wave.Defeated = true
+		}, "wave.defeated"},
+		{"defeat at first combat boundary is valid", func(s *SessionState) {
+			s.Wave.Tick = 1800
+			s.Wave.Phase = PhaseAssault
+			s.Wave.Defeated = true
+		}, ""},
 		{"result before results phase", func(s *SessionState) { s.Wave.Result = WaveResultVictory }, errResultBeforeResults},
-		{"defeat result without flag", func(s *SessionState) {
+		{"loss without defeat is valid", func(s *SessionState) {
 			s.Wave.Tick = 2900
 			s.Wave.Phase = PhaseResults
+			s.Wave.Defeated = false
 			s.Wave.Result = WaveResultDefeat
-		}, errResultDefeatFlag},
+		}, ""},
+		{"loss after defeat is valid", func(s *SessionState) {
+			s.Wave.Tick = 2900
+			s.Wave.Phase = PhaseResults
+			s.Wave.Defeated = true
+			s.Wave.Result = WaveResultDefeat
+		}, ""},
 		{"victory with defeat flag", func(s *SessionState) {
 			s.Wave.Tick = 2900
 			s.Wave.Phase = PhaseResults
@@ -198,9 +237,19 @@ func TestMembershipInvariants(t *testing.T) {
 		{"negative joined tick", func(s *SessionState) { s.Members[0].JoinedTick = -1 }, errJoinTickRange},
 		{"change before join", func(s *SessionState) {
 			s.Members[0].JoinedTick = 20
-			s.Members[0].LastChangeTick = 10
+			s.Members[0].LastChangeTick = intPtr(10)
+			s.Members[0].FirstSwitchUsed = true
 		}, errChangeTickRange},
-		{"change at wave end", func(s *SessionState) { s.Members[0].LastChangeTick = WaveTicks }, errChangeTickRange},
+		{"change at wave end", func(s *SessionState) {
+			s.Members[0].LastChangeTick = intPtr(WaveTicks)
+			s.Members[0].FirstSwitchUsed = true
+		}, errChangeTickRange},
+		{"first switch used without a change", func(s *SessionState) {
+			s.Members[1].FirstSwitchUsed = true
+		}, "cannot be used before the first accepted role change"},
+		{"change without first switch flag", func(s *SessionState) {
+			s.Members[0].FirstSwitchUsed = false
+		}, "must be true once a role change is recorded"},
 		{"invalid actor key", func(s *SessionState) { s.Members[0].ActorKey = "not-a-key" }, errActorKeyFormat},
 		{"pending target not future", func(s *SessionState) { s.Pending[0].TargetWave = 3 }, errTargetWaveRange},
 		{"pending duplicate", func(s *SessionState) {
@@ -234,7 +283,7 @@ func TestSessionIdentityAndLifecycleInvariants(t *testing.T) {
 		{"pause reason without lifecycle", func(s *SessionState) {
 			s.PauseReasons = []PauseReason{PauseOperatorPaused}
 			s.Lifecycle = LifecycleRunning
-		}, "active pause reasons require"},
+		}, "active pause reason requires"},
 		{"paused without reason", func(s *SessionState) { s.Lifecycle = LifecyclePaused }, "needs at least one explicit reason"},
 		{"invalid pause reason", func(s *SessionState) {
 			s.Lifecycle = LifecyclePaused
@@ -284,9 +333,9 @@ func errorsAs(err error, target **ValidationError) bool {
 
 func TestSortHelpersProduceCanonicalOrder(t *testing.T) {
 	members := []WaveMember{
-		{ActorKey: actorKeyFor(2), Role: RoleGuard, JoinedTick: 0, LastChangeTick: -1},
-		{ActorKey: actorKeyFor(1), Role: RoleBuilder, JoinedTick: 0, LastChangeTick: -1},
-		{ActorKey: actorKeyFor(3), Role: RoleFighter, JoinedTick: 0, LastChangeTick: -1},
+		{ActorKey: actorKeyFor(2), Role: RoleGuard, JoinedTick: 0},
+		{ActorKey: actorKeyFor(1), Role: RoleBuilder, JoinedTick: 0},
+		{ActorKey: actorKeyFor(3), Role: RoleFighter, JoinedTick: 0},
 	}
 	SortWaveMembers(members)
 	for i := 1; i < len(members); i++ {

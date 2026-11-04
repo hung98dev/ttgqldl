@@ -34,7 +34,8 @@ workflow colour.
 | M00 | PASS (regression re-checked: plan validator 15 checks, 0 errors) |
 | M01 | **PASS** |
 | W0106 | **PASS** - revised policy: local licensed execution + static CI (Unity CI NOT EXECUTED / OPTIONAL) |
-| M02-M09 | NOT_STARTED (M01 dependency gate not satisfied) |
+| M02 | IN_PROGRESS (W0201 PASS, W0202 PASS, W0203–W0208 NOT_STARTED) |
+| M03-M09 | NOT_STARTED |
 | M10-M11 | BLOCKED (external rights) |
 
 ## Work-package audit

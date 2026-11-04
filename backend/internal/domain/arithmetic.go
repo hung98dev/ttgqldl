@@ -3,6 +3,7 @@ package domain
 import (
 	"errors"
 	"math"
+	"math/big"
 	"strconv"
 )
 
@@ -119,64 +120,44 @@ func Clamp(v, lo, hi int64) (int64, error) {
 	return v, nil
 }
 
-// SafePercent returns floor(part*100/den) for part >= 0 and den > 0, failing
-// instead of overflowing when part is large.
+// SafePercent returns floor(part*100/den) using SafeRatio.
 func SafePercent(part, den int64) (int64, error) {
-	if den == 0 {
-		return 0, ErrDivisionByZero
-	}
-	if den < 0 || part < 0 {
-		return 0, ErrNegative
-	}
-	if part > math.MaxInt64/100 {
-		// Compute part*100/den as (part/den)*100 + (part%den)*100/den.
-		whole := part / den
-		remainder := part % den
-		wholePercent, err := MulInt64(whole, 100)
-		if err != nil {
-			return 0, err
-		}
-		remainderPercent, err := MulInt64(remainder, 100)
-		if err != nil {
-			return 0, err
-		}
-		extra := remainderPercent / den
-		return AddInt64(wholePercent, extra)
-	}
-	scaled, err := MulInt64(part, 100)
-	if err != nil {
-		return 0, err
-	}
-	return scaled / den, nil
+	return SafeRatio(part, den, 100)
 }
 
-// SafeRatio returns floor(num*scale/den) with checked intermediate values.
+// SafeRatio returns floor(num*scale/den) exactly, with no floating point and no
+// false overflow: when the intermediate product does not fit in int64 it is
+// computed with math/big and the final quotient is range-checked.
+//
+// Errors: ErrDivisionByZero for den == 0, ErrNegative for negative operands,
+// ErrOverflow when the exact result does not fit in int64.
 func SafeRatio(num, den, scale int64) (int64, error) {
+	// Zero denominators are checked before any division, including the fast-path
+	// bound test, so no input can panic.
 	if den == 0 {
 		return 0, ErrDivisionByZero
 	}
 	if den < 0 || num < 0 || scale < 0 {
 		return 0, ErrNegative
 	}
-	if num > math.MaxInt64/scale && scale != 0 {
-		// Split num into quotient and remainder to avoid the overflow.
-		whole := num / den
-		remainder := num % den
-		wholeScaled, err := MulInt64(whole, scale)
-		if err != nil {
-			return 0, err
-		}
-		remainderScaled, err := MulInt64(remainder, scale)
-		if err != nil {
-			return 0, err
-		}
-		return AddInt64(wholeScaled, remainderScaled/den)
+	if num == 0 || scale == 0 {
+		return 0, nil
 	}
-	scaled, err := MulInt64(num, scale)
-	if err != nil {
-		return 0, err
+	// Fast path: the product fits in int64, so plain integer arithmetic is exact.
+	if num <= math.MaxInt64/scale {
+		return (num * scale) / den, nil
 	}
-	return scaled / den, nil
+	// Exact path: arbitrary precision for the product, then a range check.
+	var product, factor, quotient big.Int
+	product.SetInt64(num)
+	factor.SetInt64(scale)
+	product.Mul(&product, &factor)
+	factor.SetInt64(den)
+	quotient.Quo(&product, &factor)
+	if !quotient.IsInt64() {
+		return 0, ErrOverflow
+	}
+	return quotient.Int64(), nil
 }
 
 // ParseInt64Decimal parses a canonical base-10 integer string without accepting

@@ -73,7 +73,7 @@ func (w WaveState) Validate() *ValidationError {
 	if pools := ValidatePools(w.Pools, w.Boss, w.Number, w.Tick); pools != nil {
 		errs.Problems = append(errs.Problems, pools.Problems...)
 	}
-	if vote := ValidateVoteState(w.Vote); vote != nil {
+	if vote := ValidateVoteState(w.Vote, w.Tick); vote != nil {
 		errs.Problems = append(errs.Problems, vote.Problems...)
 	}
 	if ballots := ValidateBallots(w.Ballots, w.Tick); ballots != nil {
@@ -82,15 +82,21 @@ func (w WaveState) Validate() *ValidationError {
 	if !w.Result.Valid() {
 		errs.add("wave.result", "must be pending, victory or defeat")
 	}
-	if w.Defeated && w.Phase != PhaseFinale && w.Phase != PhaseResults {
-		errs.add("wave.defeated", errDefeatedPhase)
+	// Combat starts at tick 1800 inside ASSAULT, so a defeated village is a
+	// legitimate state from that boundary onward. Defeat during PREP is not.
+	if w.Defeated {
+		if w.Tick < CombatStartTick {
+			errs.add("wave.defeated", errDefeatedPhase)
+		}
+		if w.Phase != PhaseAssault && w.Phase != PhaseFinale && w.Phase != PhaseResults {
+			errs.add("wave.defeated", errDefeatedPhase)
+		}
 	}
 	if w.Result != WaveResultPending && w.Phase != PhaseResults {
 		errs.add("wave.result", errResultBeforeResults)
 	}
-	if w.Result == WaveResultDefeat && !w.Defeated {
-		errs.add("wave.result", errResultDefeatFlag)
-	}
+	// A wave can be lost with the town hall still standing: settlement decides
+	// victory conditions, while the defeated flag only records townhall HP 0.
 	if w.Result == WaveResultVictory && w.Defeated {
 		errs.add("wave.result", "a defeated wave cannot also be a victory")
 	}
@@ -145,14 +151,27 @@ func (s SessionState) Validate() error {
 		}
 		seen[reason] = true
 	}
-	if len(s.PauseReasons) > 0 {
-		switch s.Lifecycle {
-		case LifecyclePaused, LifecycleSourceDisconnected, LifecycleStorageUnavailable:
-		default:
-			errs.add("session.pause_reasons", "active pause reasons require a paused or blocked lifecycle")
+	switch s.Lifecycle {
+	case LifecyclePaused:
+		if len(s.PauseReasons) == 0 {
+			errs.add("session.pause_reasons", "a paused session needs at least one explicit reason")
 		}
-	} else if s.Lifecycle == LifecyclePaused {
-		errs.add("session.pause_reasons", "a paused session needs at least one explicit reason")
+	case LifecycleSourceDisconnected:
+		if !seen[PauseSourceDisconnected] {
+			errs.add("session.pause_reasons", "source_disconnected requires the source_disconnected reason")
+		}
+	case LifecycleStorageUnavailable:
+		if !seen[PauseStorageUnavailable] {
+			errs.add("session.pause_reasons", "storage_unavailable requires the storage_unavailable reason")
+		}
+	case LifecycleWaiting, LifecycleRunning:
+		if len(s.PauseReasons) > 0 {
+			errs.add("session.pause_reasons", "an active pause reason requires a paused or blocked lifecycle")
+		}
+	case LifecycleStopped:
+		if len(s.PauseReasons) > 0 {
+			errs.add("session.pause_reasons", "a stopped session cannot carry pause reasons")
+		}
 	}
 
 	appendProblems(s.Village.Validate())
@@ -164,8 +183,8 @@ func (s SessionState) Validate() error {
 	if s.Difficulty.Level < 1 || s.Difficulty.Level > 10 {
 		errs.add("session.difficulty.level", "must be within 1..10")
 	}
-	if s.Difficulty.PopulationAnchor < 0 {
-		errs.add("session.difficulty.population_anchor", "must not be negative")
+	if s.Difficulty.PopulationAnchor < 0 || s.Difficulty.PopulationAnchor > MaxPopulationAnchor {
+		errs.add("session.difficulty.population_anchor", "must be within 0..10000")
 	}
 	if s.ConsecutiveWins < 0 || s.ConsecutiveWins > MaxConsecutiveWins {
 		errs.add("session.consecutive_wins", errConsecutiveWins)

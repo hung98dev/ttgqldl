@@ -2,14 +2,17 @@ package domain
 
 import "sort"
 
-// WaveMember is one participant of the current wave. JoinedTick is the
-// acceptance tick at which the registration became effective.
+// WaveMember is one participant of the current wave and mirrors the canonical
+// wave_members columns: joined_tick, nullable last_change_tick, first_switch_used
+// and xp_awarded. LastChangeTick is nil until the first accepted role change, so
+// "no change yet" is represented explicitly rather than with a magic number.
 type WaveMember struct {
-	ActorKey       ActorKey
-	Role           Role
-	JoinedTick     int
-	LastChangeTick int // -1 when the initial join was the only role decision
-	XPAwarded      bool
+	ActorKey        ActorKey
+	Role            Role
+	JoinedTick      int
+	LastChangeTick  *int
+	FirstSwitchUsed bool
+	XPAwarded       bool
 }
 
 // PendingMember is a registration queued for the next wave during RESULTS.
@@ -93,9 +96,19 @@ func ValidateMembers(members []WaveMember, waveNo int64) *ValidationError {
 		if member.JoinedTick < 0 || member.JoinedTick >= WaveTicks {
 			errs.add(field+".joined_tick", errJoinTickRange)
 		}
-		if member.LastChangeTick != -1 &&
-			(member.LastChangeTick < member.JoinedTick || member.LastChangeTick >= WaveTicks) {
-			errs.add(field+".last_change_tick", errChangeTickRange)
+		switch {
+		case member.LastChangeTick == nil:
+			// No accepted change yet: the free first switch is still available.
+			if member.FirstSwitchUsed {
+				errs.add(field+".first_switch_used", "cannot be used before the first accepted role change")
+			}
+		default:
+			if !member.FirstSwitchUsed {
+				errs.add(field+".first_switch_used", "must be true once a role change is recorded")
+			}
+			if *member.LastChangeTick < member.JoinedTick || *member.LastChangeTick >= WaveTicks {
+				errs.add(field+".last_change_tick", errChangeTickRange)
+			}
 		}
 		if waveNo < 1 {
 			errs.add(field, errWaveNumberRange)
@@ -128,7 +141,9 @@ func ValidatePending(pending []PendingMember, currentWave int64) *ValidationErro
 		if !entry.Role.Valid() {
 			errs.add(field+".role", errRoleInvalid)
 		}
-		if entry.TargetWave <= currentWave {
+		// A NEXT-wave registration queued during RESULTS always targets exactly
+		// current+1: a distant future wave would silently drop the registration.
+		if entry.TargetWave != currentWave+1 {
 			errs.add(field+".target_wave", errTargetWaveRange)
 		}
 	}
@@ -186,8 +201,11 @@ func ValidateBallots(ballots []Ballot, waveTick int) *ValidationError {
 		if !ballot.Option.Valid() || ballot.Option == VoteOptionNone {
 			errs.add(field+".option", errVoteOptionInvalid)
 		}
-		if ballot.Tick < 0 || (waveTick >= 0 && ballot.Tick > waveTick) {
-			errs.add(field+".tick", "must not be negative or in the future")
+		if ballot.Tick < 0 || ballot.Tick >= VoteCloseTick {
+			errs.add(field+".tick", "must be inside the voting window [0,1200)")
+		}
+		if waveTick >= 0 && ballot.Tick > waveTick {
+			errs.add(field+".tick", "must not be in the future")
 		}
 	}
 	if len(errs.Problems) == 0 {
@@ -196,14 +214,18 @@ func ValidateBallots(ballots []Ballot, waveTick int) *ValidationError {
 	return errs
 }
 
-// ValidateVoteState checks the vote window and its counters.
-func ValidateVoteState(vote VoteState) *ValidationError {
+// ValidateVoteState checks the vote window and its counters. The window itself
+// is validated against the wave tick by the caller.
+func ValidateVoteState(vote VoteState, waveTick int) *ValidationError {
 	errs := &ValidationError{}
 	if !vote.Selected.Valid() {
 		errs.add("vote.selected", errVoteOptionInvalid)
 	}
 	if vote.Open && vote.Selected != VoteOptionNone {
 		errs.add("vote.selected", "an open vote cannot have a selected option")
+	}
+	if vote.Open && waveTick >= VoteCloseTick {
+		errs.add("vote.open", "voting closes at tick 1200")
 	}
 	if vote.Counts.A < 0 || vote.Counts.B < 0 || vote.Counts.C < 0 {
 		errs.add("vote.counts", "must not be negative")

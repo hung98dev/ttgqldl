@@ -64,13 +64,18 @@ func ValidatePools(pools []EnemyPool, boss BossPool, waveNo int64, tick int) *Va
 	}
 
 	if boss.Exists {
+		// Exists records that the boss spawned; HP is the remaining pool and may
+		// legitimately reach zero after the killing blow, until rollover.
 		if !IsBossWave(waveNo) {
 			errs.add("wave.boss", errBossWaveMismatch)
 		}
 		if tick < BossSpawnTick {
 			errs.add("wave.boss", errBossBeforeSpawn)
 		}
-		if boss.HP <= 0 || boss.MaxHP <= 0 || boss.HP > boss.MaxHP {
+		if boss.MaxHP <= 0 {
+			errs.add("wave.boss", "maximum HP must be positive once the boss spawned")
+		}
+		if boss.HP < 0 || boss.HP > boss.MaxHP {
 			errs.add("wave.boss", errBossHP)
 		}
 	} else {

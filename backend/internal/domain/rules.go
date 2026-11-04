@@ -81,6 +81,10 @@ const (
 	InitialWaveNo           = 1
 )
 
+// MaxPopulationAnchor bounds the population anchor: effective role counts are
+// capped at 10,000 each by the binding rules.
+const MaxPopulationAnchor = 10_000
+
 // LaneCount is the number of enemy approach lanes (west, center, east).
 const LaneCount = 3
 
