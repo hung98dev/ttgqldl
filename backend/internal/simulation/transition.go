@@ -20,6 +20,11 @@ var (
 	ErrOutOfOrder      = errors.New("simulation: out-of-order transition")
 	ErrNoRegistration  = errors.New("simulation: start requires an accepted registration")
 	ErrUnsupported     = errors.New("simulation: transition not supported in W0202")
+
+	// ErrUnsettledWave rejects a rollover of a wave whose result is still pending.
+	ErrUnsettledWave = errors.New("simulation: wave is not settled")
+	// ErrOverflow rejects a wave-number increment that would overflow int64.
+	ErrOverflow = errors.New("simulation: integer overflow")
 )
 
 // Kind identifies a transition request.

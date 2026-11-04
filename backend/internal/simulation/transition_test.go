@@ -13,12 +13,27 @@ const (
 	sessionID = domain.SessionID("22222222-2222-4222-8222-222222222222")
 )
 
+// actorKey returns a valid scoped actor key: 64 copies of one lowercase hex
+// digit. The input byte selects the digit, so arbitrary test bytes stay valid.
 func actorKey(ch byte) domain.ActorKey {
+	digit := "0123456789abcdef"[int(ch)%16]
 	raw := make([]byte, 64)
 	for i := range raw {
-		raw[i] = ch
+		raw[i] = digit
 	}
 	return domain.ActorKey(raw)
+}
+
+// findMember returns the index of an actor in the canonical member slice.
+func findMember(t *testing.T, state domain.SessionState, key domain.ActorKey) int {
+	t.Helper()
+	for i, member := range state.Members {
+		if member.ActorKey == key {
+			return i
+		}
+	}
+	t.Fatalf("member %s not found", key)
+	return -1
 }
 
 func newState(t *testing.T) domain.SessionState {
@@ -263,20 +278,28 @@ func TestSettlementIsRequiredWhenEntering2800(t *testing.T) {
 	if next.Tick() != 2800 || next.Wave.Phase != domain.PhaseResults {
 		t.Fatalf("tick %d phase %s", next.Tick(), next.Wave.Phase)
 	}
-	found := false
-	for _, event := range events {
-		if event.Type == EventSettlementRequired {
-			found = true
-		}
+	// The complete ordered sequence is contractual: final contribution, final
+	// combat, settlement, and only then RESULTS publication.
+	want := []struct {
+		Type     EventType
+		Boundary Boundary
+		Stage    Stage
+	}{
+		{EventScheduleBoundary, BoundaryRoleResolution, StageFinalContribution},
+		{EventScheduleBoundary, BoundaryFinalCombat, StageFinalCombat},
+		{EventSettlementRequired, "", StageSettlement},
+		{EventPhaseChanged, "", StageEnterResults},
 	}
-	if !found {
-		t.Fatalf("entering 2800 must emit settlement_required: %v", eventTypes(events))
+	if len(events) != len(want) {
+		t.Fatalf("tick 2800 events = %v, want %d", eventTypes(events), len(want))
+	}
+	for i, expected := range want {
+		if events[i].Type != expected.Type || events[i].Boundary != expected.Boundary || events[i].Stage != expected.Stage {
+			t.Fatalf("event %d = %+v, want type=%s boundary=%s stage=%s", i, events[i], expected.Type, expected.Boundary, expected.Stage)
+		}
 	}
 	if next.Wave.Result != domain.WaveResultPending {
 		t.Fatalf("no result may be produced in W0202: %s", next.Wave.Result)
-	}
-	if !hasBoundary(events, BoundaryFinalCombat) {
-		t.Fatalf("tick 2800 must signal final combat: %v", eventTypes(events))
 	}
 }
 

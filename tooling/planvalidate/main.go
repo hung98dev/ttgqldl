@@ -258,6 +258,7 @@ func (v *validator) run() {
 	v.checkTraceability()
 	v.loadEvidence()
 	v.checkEvidence()
+	v.checkTextIntegrity()
 	v.checkStatusHonesty()
 	v.checkIndexCoverage()
 	v.summary()
@@ -941,6 +942,32 @@ var (
 	treeSHA = regexp.MustCompile(`^WORKTREE@[0-9a-f]{40}$`)
 )
 
+// checkTextIntegrity rejects embedded control characters in canonical Markdown.
+// Tabs and CRLF/LF line endings are legitimate; every other C0 code point and DEL
+// is corruption that has previously mangled API, event and file names in evidence.
+func (v *validator) checkTextIntegrity() {
+	v.begin("text-integrity")
+	for rel := range v.files {
+		data, err := os.ReadFile(filepath.Join(v.root, filepath.FromSlash(rel)))
+		if err != nil {
+			v.addf("text-integrity", sevError, rel, 0, "cannot read file: %v", err)
+			continue
+		}
+		line := 1
+		for _, b := range data {
+			if b == '\n' {
+				line++
+				continue
+			}
+			if b == '\r' || b == '\t' {
+				continue
+			}
+			if b < 0x20 || b == 0x7F {
+				v.addf("text-integrity", sevError, rel, line, "embedded control character 0x%02X", b)
+			}
+		}
+	}
+}
 func (v *validator) checkEvidence() {
 	v.begin("evidence-schema")
 	for wp, rec := range v.evidence {

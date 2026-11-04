@@ -203,6 +203,20 @@ func TestValidatorCatchesSeededDefects(t *testing.T) {
 			},
 		},
 		{
+			name:  "evidence contains an embedded control character",
+			check: "text-integrity",
+			mutate: func(root string, t *testing.T) {
+				path := filepath.Join(root, "docs", "evidence", "M02-W0201.md")
+				data, err := os.ReadFile(path)
+				if err != nil {
+					t.Fatalf("read evidence: %v", err)
+				}
+				data = append(data, 0x07) // BEL
+				if err := os.WriteFile(path, data, 0o644); err != nil {
+					t.Fatalf("write evidence: %v", err)
+				}
+			},
+		}, {
 			name:  "narrative status disagrees with matrix",
 			check: "status-evidence",
 			mutate: func(root string, t *testing.T) {

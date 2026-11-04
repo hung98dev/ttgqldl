@@ -24,8 +24,8 @@ func TestBoundariesAt(t *testing.T) {
 		{1800, false, []Boundary{BoundaryRoleResolution, BoundaryCombat}},
 		{2400, false, []Boundary{BoundaryRoleResolution, BoundaryCombat}},
 		{2600, false, []Boundary{BoundaryRoleResolution, BoundaryCombat}},
-		{2600, true, []Boundary{BoundaryRoleResolution, BoundaryCombat, BoundaryBossSpawn}},
-		{2800, true, []Boundary{BoundaryRoleResolution, BoundaryCombat, BoundaryFinalCombat}},
+		{2600, true, []Boundary{BoundaryRoleResolution, BoundaryBossSpawn, BoundaryCombat}},
+		{2800, true, []Boundary{BoundaryRoleResolution, BoundaryFinalCombat}},
 		{2999, false, nil},
 		{3000, false, []Boundary{BoundaryRollover}},
 	}

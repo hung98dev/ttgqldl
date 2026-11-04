@@ -2,17 +2,54 @@ package simulation
 
 import (
 	"errors"
+	"math"
 	"reflect"
 	"testing"
 
 	"github.com/hung98dev/ttgqldl/backend/internal/domain"
 )
 
-// stateAtRollover drives a started wave to the control tick.
+// stateAtRollover drives a started wave to the control tick and applies the
+// explicit synthetic settlement fixture required by the fail-closed gate. W0202
+// does not implement settlement; tests identify it clearly as a fixture.
 func stateAtRollover(t *testing.T) domain.SessionState {
 	t.Helper()
 	state, _ := mustStart(t, newState(t))
-	return advanceTo(t, state, domain.RolloverTick)
+	state = advanceTo(t, state, domain.RolloverTick)
+	state.Wave.Result = domain.WaveResultVictory
+	return state
+}
+
+func TestRolloverRejectsUnsettledWave(t *testing.T) {
+	state, _ := mustStart(t, newState(t))
+	state = advanceTo(t, state, domain.RolloverTick)
+	snapshot := state.Clone()
+	if state.Wave.Result != domain.WaveResultPending {
+		t.Fatal("fixture must be unsettled")
+	}
+	next, events, err := Next(state, Input{Kind: KindRollover})
+	if !errors.Is(err, ErrUnsettledWave) {
+		t.Fatalf("unsettled rollover: %v", err)
+	}
+	if len(events) != 0 {
+		t.Fatal("a rejected rollover must not emit events")
+	}
+	if !reflect.DeepEqual(next, state) || !reflect.DeepEqual(state, snapshot) {
+		t.Fatal("a rejected rollover changed the state")
+	}
+}
+
+func TestRolloverRejectsWaveNumberOverflow(t *testing.T) {
+	state := stateAtRollover(t)
+	state.Wave.Number = math.MaxInt64
+	state.Pending = nil
+	next, _, err := Next(state, Input{Kind: KindRollover})
+	if !errors.Is(err, ErrOverflow) {
+		t.Fatalf("overflow rollover: %v", err)
+	}
+	if next.Wave.Number != math.MaxInt64 {
+		t.Fatal("overflow rejection changed the wave number")
+	}
 }
 
 func TestRolloverWithoutPendingReturnsToWaiting(t *testing.T) {

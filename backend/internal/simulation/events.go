@@ -62,6 +62,10 @@ type Event struct {
 	Phase    domain.Phase       `json:"phase"`
 	Boundary Boundary           `json:"boundary,omitempty"`
 	Reason   domain.PauseReason `json:"reason,omitempty"`
+	// Stage marks the ordered work item this event schedules. It is what lets a
+	// later reducer prove that final contribution and combat ran before
+	// settlement, and that RESULTS was published only afterwards.
+	Stage Stage `json:"stage,omitempty"`
 }
 
 // BoundariesAt returns the scheduling boundaries that fall on a tick, in the
@@ -77,11 +81,14 @@ func BoundariesAt(tick int, bossWave bool) []Boundary {
 	if tick > 0 && tick <= domain.FinalCombatTick && tick%200 == 0 {
 		result = append(result, BoundaryRoleResolution)
 	}
-	if tick >= domain.CombatStartTick && tick <= domain.FinalCombatTick && tick%200 == 0 {
-		result = append(result, BoundaryCombat)
-	}
+	// The boss spawns after role contribution and before the attack phase.
 	if tick == domain.BossSpawnTick && bossWave {
 		result = append(result, BoundaryBossSpawn)
+	}
+	// Ordinary combat boundaries stop at 2780; tick 2800 is the named final
+	// combat, so it is never reported twice.
+	if tick >= domain.CombatStartTick && tick < domain.FinalCombatTick && tick%200 == 0 {
+		result = append(result, BoundaryCombat)
 	}
 	if tick == domain.FinalCombatTick {
 		result = append(result, BoundaryFinalCombat)

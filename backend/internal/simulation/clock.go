@@ -2,6 +2,7 @@ package simulation
 
 import (
 	"fmt"
+	"math"
 
 	"github.com/hung98dev/ttgqldl/backend/internal/domain"
 )
@@ -95,15 +96,11 @@ func advanceTick(state domain.SessionState, _ Input) (domain.SessionState, []Eve
 	phaseChanged := phase != next.Wave.Phase
 	next.Wave.Phase = phase
 
-	events := make([]Event, 0, 4)
-	if phaseChanged {
-		events = append(events, Event{
-			Type:   EventPhaseChanged,
-			WaveNo: next.Wave.Number,
-			Tick:   next.Wave.Tick,
-			Phase:  phase,
-		})
-	}
+	// Deterministic event order: scheduling boundaries in canonical order, then
+	// the settlement requirement, then the phase notification. A later reducer can
+	// therefore never observe RESULTS before the settlement it belongs to.
+	events := make([]Event, 0, 5)
+	final := next.Wave.Tick == domain.FinalCombatTick
 	bossWave := domain.IsBossWave(next.Wave.Number)
 	for _, boundary := range BoundariesAt(next.Wave.Tick, bossWave) {
 		events = append(events, Event{
@@ -112,20 +109,58 @@ func advanceTick(state domain.SessionState, _ Input) (domain.SessionState, []Eve
 			Tick:     next.Wave.Tick,
 			Phase:    phase,
 			Boundary: boundary,
+			Stage:    stageForBoundary(boundary, final),
 		})
 	}
 	// W0202 cannot settle a wave: the final boundary is reported as required work
-	// so W0203-W0207 can run the stages in order before RESULTS is treated as
+	// so W0205/W0207 can run the stages in order before RESULTS is treated as
 	// settled. The wave result deliberately stays pending.
-	if next.Wave.Tick == domain.FinalCombatTick {
+	if final {
 		events = append(events, Event{
 			Type:   EventSettlementRequired,
 			WaveNo: next.Wave.Number,
 			Tick:   next.Wave.Tick,
 			Phase:  phase,
+			Stage:  StageSettlement,
+		})
+	}
+	if phaseChanged {
+		events = append(events, Event{
+			Type:   EventPhaseChanged,
+			WaveNo: next.Wave.Number,
+			Tick:   next.Wave.Tick,
+			Phase:  phase,
+			Stage:  stageForPhaseChange(final),
 		})
 	}
 	return commit(state, next, events)
+}
+
+// stageForBoundary labels a scheduling boundary with the stage that must run it.
+func stageForBoundary(boundary Boundary, final bool) Stage {
+	switch boundary {
+	case BoundaryRoleResolution:
+		if final {
+			return StageFinalContribution
+		}
+		return StageConsumeInputs
+	case BoundaryCombat:
+		return StageConsumeInputs
+	case BoundaryBossSpawn:
+		return StageConsumeInputs
+	case BoundaryFinalCombat:
+		return StageFinalCombat
+	default:
+		return ""
+	}
+}
+
+// stageForPhaseChange labels the phase notification at the final boundary.
+func stageForPhaseChange(final bool) Stage {
+	if final {
+		return StageEnterResults
+	}
+	return ""
 }
 
 // rollover performs the single tick-3000 control transition: one wave increment,
@@ -137,6 +172,14 @@ func rollover(state domain.SessionState, _ Input) (domain.SessionState, []Event,
 	}
 	if tickOf(state) != domain.RolloverTick {
 		return state, nil, fmt.Errorf("%w: state is at tick %d", ErrNotAtRollover, tickOf(state))
+	}
+	// Fail closed: an unsettled wave must never be rolled over. Settlement itself
+	// belongs to W0207; W0202 only requires that it already happened.
+	if state.Wave.Result == domain.WaveResultPending {
+		return state, nil, fmt.Errorf("%w: wave %d has no completed settlement", ErrUnsettledWave, state.Wave.Number)
+	}
+	if state.Wave.Number == math.MaxInt64 {
+		return state, nil, fmt.Errorf("%w: wave number overflow", ErrOverflow)
 	}
 	if len(state.PauseReasons) > 0 {
 		return state, nil, fmt.Errorf("%w: rollover requires clear pause reasons", ErrTickFrozen)
