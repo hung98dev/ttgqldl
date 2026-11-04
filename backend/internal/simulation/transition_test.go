@@ -287,6 +287,7 @@ func TestSettlementIsRequiredWhenEntering2800(t *testing.T) {
 	}{
 		{EventScheduleBoundary, BoundaryRoleResolution, StageFinalContribution},
 		{EventScheduleBoundary, BoundaryFinalCombat, StageFinalCombat},
+		{EventAttackResolved, "", ""},
 		{EventSettlementRequired, "", StageSettlement},
 		{EventPhaseChanged, "", StageEnterResults},
 	}
@@ -334,9 +335,8 @@ func TestPureProgressionChangesNoGameplayValues(t *testing.T) {
 	before := state
 	state = advanceTo(t, state, 2999)
 
-	if !reflect.DeepEqual(state.Village, before.Village) {
-		t.Fatal("pure tick progression must not change the village")
-	}
+	// W0205 now resolves economy and combat at 200-tick boundaries, so village
+	// values legitimately change; only participant identity and XP must not.
 	if len(state.XP) != len(before.XP) {
 		t.Fatal("pure tick progression must not award XP")
 	}

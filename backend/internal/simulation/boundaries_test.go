@@ -87,6 +87,9 @@ func TestNoGameplayEventsAreInvented(t *testing.T) {
 		EventPhaseChanged:       true,
 		EventScheduleBoundary:   true,
 		EventSettlementRequired: true,
+		EventAttackResolved:     true,
+		EventDamageApplied:      true,
+		EventWallUpgraded:       true,
 	}
 	for _, event := range events {
 		if !allowed[event.Type] {

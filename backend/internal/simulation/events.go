@@ -54,6 +54,10 @@ const (
 	// Canonical W0204 enemy signals.
 	EventBossIncoming EventType = "boss_incoming"
 	EventBossSpawned  EventType = "boss_spawned"
+	// Canonical W0205 gameplay signals.
+	EventAttackResolved EventType = "attack_resolved"
+	EventDamageApplied  EventType = "damage_applied"
+	EventWallUpgraded   EventType = "wall_upgraded"
 )
 
 // Event is one deterministic transition signal. It carries no participant
@@ -63,6 +67,7 @@ type Event struct {
 	WaveNo   int64              `json:"wave_no"`
 	Tick     int                `json:"tick"`
 	Phase    domain.Phase       `json:"phase"`
+	Amount   int64              `json:"amount,omitempty"`
 	Boundary Boundary           `json:"boundary,omitempty"`
 	Reason   domain.PauseReason `json:"reason,omitempty"`
 	// Stage marks the ordered work item this event schedules. It is what lets a
