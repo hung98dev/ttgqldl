@@ -474,3 +474,22 @@ func TestReplayLifecycleStartOnceAndStopBeforeStart(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestReplayRejectsManifestPathTraversal(t *testing.T) {
+	body := []byte(`{"schema_version":1,"source_session":"synthetic-session-001","event_seq":1,"provider":"replay","event_kind":"comment","message":"XÂY"}` + "\n")
+	digest := sha256.Sum256(body)
+	for _, name := range []string{"../escape.ndjson", "sub/escape.ndjson", "/tmp/escape.ndjson"} {
+		directory := t.TempDir()
+		manifest := fmt.Sprintf(`{"schema":1,"fixtures":[{"name":"fixture.ndjson","schema_version":1,"sha256":%q,"records":1},{"name":%q,"schema_version":1,"sha256":%q,"records":1}]}`,
+			hex.EncodeToString(digest[:]), name, strings.Repeat("0", 64))
+		if err := os.WriteFile(filepath.Join(directory, "fixture.ndjson"), body, 0o600); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(filepath.Join(directory, "manifest.json"), []byte(manifest), 0o600); err != nil {
+			t.Fatal(err)
+		}
+		if _, err := NewReplay(ReplayConfig{Session: replaySession(), Directory: directory, Fixture: "fixture.ndjson"}); !errors.Is(err, ErrInvalidFixture) {
+			t.Fatalf("manifest name %q error = %v, want ErrInvalidFixture", name, err)
+		}
+	}
+}

@@ -92,7 +92,10 @@ func NewReplay(config ReplayConfig) (*Replay, error) {
 	if config.Fixture == "" || filepath.Base(config.Fixture) != config.Fixture || strings.Contains(config.Fixture, "..") {
 		return nil, fmt.Errorf("%w: fixture name must be a plain file name", ErrInvalidFixture)
 	}
-	manifestPath := filepath.Join(config.Directory, "manifest.json")
+	manifestPath, err := resolveFixturePath(config.Directory, "manifest.json")
+	if err != nil {
+		return nil, err
+	}
 	manifest, err := loadReplayManifest(manifestPath)
 	if err != nil {
 		return nil, err
@@ -104,7 +107,10 @@ func NewReplay(config ReplayConfig) (*Replay, error) {
 	if entry.SchemaVersion != replayRecordSchema {
 		return nil, fmt.Errorf("%w: fixture schema %d", ErrSchemaUnsupported, entry.SchemaVersion)
 	}
-	path := filepath.Join(config.Directory, entry.Name)
+	path, err := resolveFixturePath(config.Directory, entry.Name)
+	if err != nil {
+		return nil, err
+	}
 	digest, records, err := inspectFixture(path)
 	if err != nil {
 		return nil, err
@@ -122,8 +128,29 @@ func NewReplay(config ReplayConfig) (*Replay, error) {
 		sourceID:  digest,
 		records:   records,
 	}
+	// #nosec G304 -- path is resolved and confined to the operator-configured fixture
+	// directory; entry.Name is a plain manifest-declared base name.
 	replay.open = func() (io.ReadCloser, error) { return os.Open(path) }
 	return replay, nil
+}
+
+// resolveFixturePath joins a plain fixture name to the configured directory and
+// verifies the result stays inside that directory. It rejects traversal and absolute
+// names before any file operation.
+func resolveFixturePath(directory, name string) (string, error) {
+	if name == "" || filepath.Base(name) != name || strings.Contains(name, "..") {
+		return "", fmt.Errorf("%w: fixture name must be a plain file name", ErrInvalidFixture)
+	}
+	base, err := filepath.Abs(directory)
+	if err != nil {
+		return "", fmt.Errorf("%w: fixture directory", ErrInvalidFixture)
+	}
+	candidate := filepath.Join(base, name)
+	relative, err := filepath.Rel(base, candidate)
+	if err != nil || relative == ".." || strings.HasPrefix(relative, ".."+string(os.PathSeparator)) || filepath.IsAbs(relative) {
+		return "", fmt.Errorf("%w: fixture path escapes the fixture directory", ErrInvalidFixture)
+	}
+	return candidate, nil
 }
 
 // SourceID returns the digest-bound adapter identity used by cursors.
@@ -142,10 +169,12 @@ func (m replayManifest) fixture(name string) (replayFixtureEntry, bool) {
 }
 
 func loadReplayManifest(path string) (replayManifest, error) {
+	// #nosec G304 -- path is resolved and confined by the caller before this call.
 	info, err := os.Stat(path)
 	if err != nil || info.Size() > maxManifestBytes {
 		return replayManifest{}, fmt.Errorf("%w: manifest is missing or too large", ErrInvalidFixture)
 	}
+	// #nosec G304 -- path is resolved and confined by the caller before this call.
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return replayManifest{}, fmt.Errorf("%w: manifest cannot be read", ErrInvalidFixture)
@@ -188,6 +217,7 @@ func loadReplayManifest(path string) (replayManifest, error) {
 // inspectFixture hashes and counts one fixture in a bounded streaming pass. It never
 // loads the whole file.
 func inspectFixture(path string) (string, int, error) {
+	// #nosec G304 -- path is resolved and confined by the caller before this call.
 	file, err := os.Open(path)
 	if err != nil {
 		return "", 0, fmt.Errorf("%w: fixture cannot be opened", ErrInvalidFixture)
@@ -207,7 +237,9 @@ func inspectFixture(path string) (string, int, error) {
 					records++
 				}
 			}
-			last = buffer[n-1]
+			for _, b := range buffer[:n] {
+				last = b
+			}
 			total += n
 		}
 		if errors.Is(readErr, io.EOF) {
@@ -353,9 +385,11 @@ func (r *Replay) run(ctx context.Context, session Session, cursor Cursor, sink S
 		if err := validateCursorBinding(cursor, session, r.sourceID); err != nil {
 			return err
 		}
+		// #nosec G115 -- r.records is a verified non-negative record count.
 		if cursor.NextEvent > uint64(r.records) {
 			return fmt.Errorf("%w: position %d beyond %d records", ErrInvalidCursor, cursor.NextEvent, r.records)
 		}
+		// #nosec G115 -- the bound above proves the value fits in int.
 		start = int(cursor.NextEvent)
 	}
 	runCtx, cancel := context.WithCancel(ctx)
