@@ -259,13 +259,26 @@ func validateEnemyLock(w WaveState, d Difficulty) *ValidationError {
 	if len(w.Pools) != LaneCount*3 {
 		errs.add("wave.pools", fmt.Sprintf("locked wave needs %d pools, got %d", LaneCount*3, len(w.Pools)))
 	} else {
-		total := int64(0)
-		for _, pool := range w.Pools {
-			total += pool.HP
-		}
-		// Combat only depletes HP, so the live total can never exceed base_hp.
-		if total > d.BaseHP {
-			errs.add("wave.pools", fmt.Sprintf("HP total %d exceeds base_hp %d", total, d.BaseHP))
+		// Every pool is bounded by its immutable initial allocation, not only by a
+		// global total: combat may only deplete an individual pool.
+		initial, buildErr := BuildEnemyPools(d.BaseHP)
+		if buildErr != nil {
+			errs.add("session.difficulty.base_hp", buildErr.Error())
+		} else {
+			total := int64(0)
+			for index, pool := range w.Pools {
+				expected := initial[index]
+				if pool.Lane != expected.Lane || pool.Archetype != expected.Archetype {
+					errs.add("wave.pools", fmt.Sprintf("pool %d must be %s/%s", index, expected.Lane, expected.Archetype))
+				}
+				if pool.HP > expected.HP {
+					errs.add("wave.pools", fmt.Sprintf("pool %d HP %d exceeds its initial allocation %d", index, pool.HP, expected.HP))
+				}
+				total += pool.HP
+			}
+			if total > d.BaseHP {
+				errs.add("wave.pools", fmt.Sprintf("HP total %d exceeds base_hp %d", total, d.BaseHP))
+			}
 		}
 	}
 	if w.Boss.Exists {

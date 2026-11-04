@@ -116,6 +116,26 @@ func advanceTick(state domain.SessionState, _ Input) (domain.SessionState, []Eve
 			bossSpawnEvent = &spawnEvents[0]
 		}
 	}
+	// W0205: contribution and combat run on 200-tick boundaries in the canonical
+	// order (economy, repair, upgrade, attack, retaliation, guard, damage).
+	var combatEvents []Event
+	if next.Wave.Tick > 0 && next.Wave.Tick%200 == 0 && next.Wave.Tick <= domain.FinalCombatTick {
+		if !next.Wave.Defeated && next.Difficulty.Locked {
+			resolved, resolveErr := resolveContribution(next, &combatEvents)
+			if resolveErr != nil {
+				return state, nil, resolveErr
+			}
+			next = resolved
+			if next.Wave.Tick >= domain.CombatStartTick {
+				resolvedCombat, combatErr := resolveCombat(next, &combatEvents)
+				if combatErr != nil {
+					return state, nil, combatErr
+				}
+				next = resolvedCombat
+			}
+		}
+	}
+
 	bossIncoming := false
 	if next.Difficulty.Locked && domain.IsBossWave(next.Wave.Number) && !next.Wave.Boss.Exists &&
 		next.Wave.Tick < domain.BossSpawnTick && !next.Wave.BossIncoming {
@@ -150,6 +170,7 @@ func advanceTick(state domain.SessionState, _ Input) (domain.SessionState, []Eve
 			events = append(events, *bossSpawnEvent)
 		}
 	}
+	events = append(events, combatEvents...)
 	if bossIncoming {
 		events = append(events, Event{
 			Type:   EventBossIncoming,
@@ -238,6 +259,7 @@ func rollover(state domain.SessionState, _ Input) (domain.SessionState, []Event,
 	next.Wave.Vote = domain.VoteState{}
 	next.Wave.Ballots = []domain.Ballot{}
 	next.Wave.Defeated = false
+	next.Wave.BossIncoming = false
 	next.Wave.Result = domain.WaveResultPending
 	// Per-wave enemy state and derived difficulty reset; the next wave derives its
 	// own lock at 1600 from persistent progress.

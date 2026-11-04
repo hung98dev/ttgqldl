@@ -3,6 +3,7 @@ package simulation
 import (
 	"errors"
 	"fmt"
+	"math"
 	"sort"
 
 	"github.com/hung98dev/ttgqldl/backend/internal/domain"
@@ -18,6 +19,7 @@ var (
 	ErrStorageUnavailable = errors.New("simulation: storage is unavailable")
 	ErrInputDeferred      = errors.New("simulation: input deferred while paused")
 	ErrStaleSchedule      = errors.New("simulation: scheduled role command is stale")
+	ErrStartMismatch      = errors.New("simulation: start registration does not match the accepted command")
 )
 
 // RoleCommand is one already-canonicalized, authorized role selection. Text
@@ -29,12 +31,22 @@ var (
 // wave has ended. In the latter case TargetWave must be current+1 and the
 // registration becomes effective at tick 0 of that wave.
 type RoleCommand struct {
-	InputSeq      int64
-	ActorKey      domain.ActorKey
-	Role          domain.Role
+	InputSeq int64
+	ActorKey domain.ActorKey
+	Role     domain.Role
+	// TargetWave is the wave that owns the effect; ScheduledTick is the effective
+	// tick inside that wave. NEXT-wave registrations use ScheduledTick 0 and are
+	// accepted only during RESULTS, never by a numeric tick alone.
 	TargetWave    int64
 	ScheduledTick int
+	// AcceptedTick is the committed session tick when the command was accepted.
+	// AcceptedTickUnspecified lets a caller mean "the current committed tick"; an
+	// explicit mismatch is rejected so a command can never be applied retroactively.
+	AcceptedTick int
 }
+
+// AcceptedTickUnspecified asks the engine to record the current committed tick.
+const AcceptedTickUnspecified = -2
 
 // RoleQueue holds accepted but not yet effective current-wave commands. A future
 // command lives here until the logical clock reaches its scheduled tick, so it can
@@ -191,9 +203,10 @@ func AcceptRoleCommands(state domain.SessionState, queue RoleQueue, commands []R
 			TargetWave: command.TargetWave,
 			Tick:       command.ScheduledTick,
 		}
-		// RESULTS (including a command scheduled at 3000 after tick 2999) queues
-		// the NEXT wave. It never modifies current-wave membership or combat state.
-		if command.ScheduledTick >= domain.FinalCombatTick {
+		// Ownership comes from TargetWave, never from the numeric scheduled tick:
+		// a command for the current wave effective at 2800 is final-boundary work,
+		// while a NEXT-wave command is accepted only during RESULTS.
+		if command.TargetWave == work.Wave.Number+1 {
 			decision.Outcome = queueNextWave(&work, command)
 			decisions = append(decisions, decision)
 			continue
@@ -343,10 +356,47 @@ func ApplyDueRoles(state domain.SessionState, queue RoleQueue) (domain.SessionSt
 }
 
 // AdvanceWithRoles advances the logical clock with the W0202 transition and then
-// applies every role command that becomes effective at the new tick. This is the
-// composition point later packages use; it preserves the canonical order
-// (commands are consumed at the boundary before effects are resolved).
+// applies every role command that becomes effective at the new tick.
+//
+// KindStartWave is authorized only through the accepted queue: the queue must be
+// non-empty and its first command must be the tick-0 registration whose actor and
+// role exactly match the supplied registration. That command is consumed once, so
+// a caller cannot inject an unrelated participant to start a wave.
 func AdvanceWithRoles(state domain.SessionState, queue RoleQueue, input Input) (domain.SessionState, RoleQueue, []Event, []RoleEvent, error) {
+	if input.Kind == KindStartWave {
+		if len(queue.Entries) == 0 {
+			return state, queue, nil, nil, fmt.Errorf("%w: start requires an accepted registration", ErrNoRegistration)
+		}
+		head := queue.Entries[0]
+		if head.ScheduledTick != 0 || head.TargetWave != state.Wave.Number {
+			return state, queue, nil, nil, fmt.Errorf("%w: queued registration is not a valid wave start", ErrStaleSchedule)
+		}
+		if input.Registration == nil || input.Registration.ActorKey != head.ActorKey || input.Registration.Role != head.Role {
+			return state, queue, nil, nil, fmt.Errorf("%w: registration does not match the accepted command", ErrStartMismatch)
+		}
+		remaining := RoleQueue{Entries: append([]RoleCommand(nil), queue.Entries[1:]...)}
+		next, events, err := Next(state, Input{
+			Kind:         KindStartWave,
+			Registration: &Registration{ActorKey: head.ActorKey, Role: head.Role},
+		})
+		if err != nil {
+			return state, queue, nil, nil, err
+		}
+		roleEvents := []RoleEvent{{
+			Type:       EventRoleAccepted,
+			WaveNo:     next.Wave.Number,
+			Tick:       0,
+			Role:       head.Role,
+			TargetWave: next.Wave.Number,
+		}}
+		applied, leftover, dueEvents, _, err := ApplyDueRoles(next, remaining)
+		if err != nil {
+			return state, queue, nil, nil, err
+		}
+		roleEvents = append(roleEvents, dueEvents...)
+		return applied, leftover, events, roleEvents, nil
+	}
+
 	next, events, err := Next(state, input)
 	if err != nil {
 		return state, queue, nil, nil, err
@@ -359,7 +409,9 @@ func AdvanceWithRoles(state domain.SessionState, queue RoleQueue, input Input) (
 }
 
 // validateRoleCommands validates the batch before any mutation and returns it in
-// deterministic input-seq order.
+// deterministic input-seq order. Acceptance position (AcceptedTick), target-wave
+// ownership and effective tick are validated together, so a numeric tick alone can
+// never reserve a future wave.
 func validateRoleCommands(state domain.SessionState, queue RoleQueue, commands []RoleCommand) ([]RoleCommand, error) {
 	ordered := make([]RoleCommand, len(commands))
 	copy(ordered, commands)
@@ -368,7 +420,8 @@ func validateRoleCommands(state domain.SessionState, queue RoleQueue, commands [
 	seen := make(map[int64]bool, len(ordered))
 	waiting := state.Lifecycle == domain.LifecycleWaiting
 	first := true
-	for _, command := range ordered {
+	for index := range ordered {
+		command := &ordered[index]
 		if command.InputSeq <= 0 {
 			return nil, fmt.Errorf("%w: input_seq must be positive", ErrInvalidCommand)
 		}
@@ -382,35 +435,51 @@ func validateRoleCommands(state domain.SessionState, queue RoleQueue, commands [
 		if !command.Role.Valid() {
 			return nil, fmt.Errorf("%w: invalid role", ErrInvalidCommand)
 		}
-		if command.ScheduledTick < 0 || command.ScheduledTick > domain.RolloverTick {
-			return nil, fmt.Errorf("%w: scheduled tick %d outside 0..3000", ErrInvalidCommand, command.ScheduledTick)
+		if command.AcceptedTick == AcceptedTickUnspecified {
+			command.AcceptedTick = state.Tick()
+		}
+		if command.AcceptedTick != state.Tick() {
+			return nil, fmt.Errorf("%w: command accepted at %d but the committed tick is %d", ErrRetroactiveInput, command.AcceptedTick, state.Tick())
+		}
+		if command.ScheduledTick < 0 || command.ScheduledTick > domain.FinalCombatTick {
+			return nil, fmt.Errorf("%w: scheduled tick %d outside 0..2800", ErrInvalidCommand, command.ScheduledTick)
 		}
 		if command.TargetWave < 1 {
 			return nil, fmt.Errorf("%w: invalid target wave", ErrInvalidCommand)
 		}
-		if waiting && first {
-			if command.ScheduledTick != 0 {
-				return nil, fmt.Errorf("%w: the first registration must be effective at tick 0", ErrInvalidCommand)
+
+		if waiting {
+			if !first {
+				return nil, fmt.Errorf("%w: only the first registration may start a wave", ErrInvalidCommand)
 			}
-			if command.TargetWave != state.Wave.Number {
-				return nil, fmt.Errorf("%w: first registration targets wave %d", ErrInvalidCommand, command.TargetWave)
+			if command.ScheduledTick != 0 || command.TargetWave != state.Wave.Number {
+				return nil, fmt.Errorf("%w: the first registration must target wave %d at tick 0", ErrInvalidCommand, state.Wave.Number)
 			}
 			first = false
 			continue
 		}
 		first = false
-		if command.ScheduledTick >= domain.FinalCombatTick {
-			// RESULTS window or after tick 2999: queue the NEXT wave.
-			if command.TargetWave != state.Wave.Number+1 {
-				return nil, fmt.Errorf("%w: RESULTS registration must target wave %d", ErrInvalidCommand, state.Wave.Number+1)
+
+		if command.TargetWave == state.Wave.Number+1 {
+			// NEXT-wave registration: only during RESULTS, always effective at 0.
+			if state.Tick() < domain.FinalCombatTick {
+				return nil, fmt.Errorf("%w: NEXT-wave registration is only accepted during RESULTS", ErrInvalidCommand)
+			}
+			if command.ScheduledTick != 0 {
+				return nil, fmt.Errorf("%w: NEXT-wave registration is effective at tick 0", ErrInvalidCommand)
+			}
+			if state.Wave.Number == math.MaxInt64 {
+				return nil, fmt.Errorf("%w: wave number overflow", ErrInvalidCommand)
 			}
 			continue
 		}
-		if command.ScheduledTick <= state.Tick() {
-			return nil, fmt.Errorf("%w: tick %d already committed at %d", ErrRetroactiveInput, command.ScheduledTick, state.Tick())
-		}
 		if command.TargetWave != state.Wave.Number {
 			return nil, fmt.Errorf("%w: command targets wave %d while the session is on %d", ErrInvalidCommand, command.TargetWave, state.Wave.Number)
+		}
+		// Current-wave work: effective strictly after the committed tick, including
+		// the final boundary at 2800 when accepted at 2799.
+		if command.ScheduledTick <= state.Tick() {
+			return nil, fmt.Errorf("%w: tick %d already committed at %d", ErrRetroactiveInput, command.ScheduledTick, state.Tick())
 		}
 		for _, queued := range queue.Entries {
 			if queued.InputSeq == command.InputSeq {
@@ -420,7 +489,6 @@ func validateRoleCommands(state domain.SessionState, queue RoleQueue, commands [
 	}
 	return ordered, nil
 }
-
 func sortQueue(queue RoleQueue) {
 	sort.SliceStable(queue.Entries, func(i, j int) bool {
 		if queue.Entries[i].ScheduledTick != queue.Entries[j].ScheduledTick {

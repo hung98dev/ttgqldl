@@ -10,7 +10,7 @@ import (
 )
 
 func roleCommand(seq int64, actor domain.ActorKey, role domain.Role, wave int64, tick int) RoleCommand {
-	return RoleCommand{InputSeq: seq, ActorKey: actor, Role: role, TargetWave: wave, ScheduledTick: tick}
+	return RoleCommand{InputSeq: seq, ActorKey: actor, Role: role, TargetWave: wave, ScheduledTick: tick, AcceptedTick: AcceptedTickUnspecified}
 }
 
 func acceptRoles(t *testing.T, state domain.SessionState, queue RoleQueue, commands ...RoleCommand) (domain.SessionState, RoleQueue, []RoleDecision) {
@@ -193,22 +193,23 @@ func TestCooldownAppliesOnlyAfterFirstSwitch(t *testing.T) {
 }
 
 func TestResultsCommandsQueueNextWaveIncludingTick3000(t *testing.T) {
-	for _, scheduled := range []int{2800, 2900, 3000} {
+	for _, acceptedAt := range []int{2800, 2900, 3000} {
 		state, _ := startWithRole(t, 'a', domain.RoleBuilder)
-		state, _ = advanceWithRoles(t, state, RoleQueue{}, 2799)
+		state, _ = advanceWithRoles(t, state, RoleQueue{}, acceptedAt)
 		state.Wave.Number = 5
 		state.Difficulty = domain.Difficulty{Level: 1}
+		_ = state.Validate()
 
 		next, queue, decisions := acceptRoles(t, state, RoleQueue{},
-			roleCommand(9, actorKey('m'), domain.RoleFighter, 6, scheduled))
+			roleCommand(9, actorKey('m'), domain.RoleFighter, 6, 0))
 		if decisions[0].Outcome != OutcomeNextWaveQueued {
-			t.Fatalf("tick %d outcome = %s", scheduled, decisions[0].Outcome)
+			t.Fatalf("accepted at %d: outcome = %s", acceptedAt, decisions[0].Outcome)
 		}
 		if queue.Len() != 0 {
 			t.Fatal("RESULTS command entered the current-wave queue")
 		}
 		if len(next.Pending) != 1 || next.Pending[0].TargetWave != 6 || next.Pending[0].Role != domain.RoleFighter {
-			t.Fatalf("tick %d pending = %+v", scheduled, next.Pending)
+			t.Fatalf("accepted at %d: pending = %+v", acceptedAt, next.Pending)
 		}
 		if len(next.Members) != 1 {
 			t.Fatal("RESULTS command changed current membership")
@@ -218,10 +219,10 @@ func TestResultsCommandsQueueNextWaveIncludingTick3000(t *testing.T) {
 		advanced.Wave.Result = domain.WaveResultVictory
 		rolled, _, err := Next(advanced, Input{Kind: KindRollover})
 		if err != nil {
-			t.Fatalf("tick %d rollover: %v", scheduled, err)
+			t.Fatalf("accepted at %d: rollover: %v", acceptedAt, err)
 		}
 		if len(rolled.Members) != 1 || rolled.Members[0].ActorKey != actorKey('m') || rolled.Members[0].JoinedTick != 0 {
-			t.Fatalf("tick %d promoted = %+v", scheduled, rolled.Members)
+			t.Fatalf("accepted at %d: promoted = %+v", acceptedAt, rolled.Members)
 		}
 		if rolled.Members[0].Role != domain.RoleFighter {
 			t.Fatal("queued role was lost")
@@ -231,21 +232,21 @@ func TestResultsCommandsQueueNextWaveIncludingTick3000(t *testing.T) {
 
 func TestResultsDuplicateQueuesOneRegistration(t *testing.T) {
 	state, _ := startWithRole(t, 'a', domain.RoleBuilder)
-	state, _ = advanceWithRoles(t, state, RoleQueue{}, 2799)
+	state, _ = advanceWithRoles(t, state, RoleQueue{}, 2800)
 	state.Wave.Number = 5
 	state.Difficulty = domain.Difficulty{Level: 1}
 
 	next, _, _ := acceptRoles(t, state, RoleQueue{},
-		roleCommand(1, actorKey('n'), domain.RoleBuilder, 6, 2800),
-		roleCommand(2, actorKey('n'), domain.RoleBuilder, 6, 2801))
+		roleCommand(1, actorKey('n'), domain.RoleBuilder, 6, 0),
+		roleCommand(2, actorKey('n'), domain.RoleBuilder, 6, 0))
 	if len(next.Pending) != 1 {
 		t.Fatalf("pending = %d", len(next.Pending))
 	}
-	next, _, _ = acceptRoles(t, next, RoleQueue{}, roleCommand(3, actorKey('n'), domain.RoleGuard, 6, 2802))
+	next, _, _ = acceptRoles(t, next, RoleQueue{}, roleCommand(3, actorKey('n'), domain.RoleGuard, 6, 0))
 	if next.Pending[0].Role != domain.RoleGuard {
 		t.Fatal("queued role update lost")
 	}
-	next, _, decisions := acceptRoles(t, next, RoleQueue{}, roleCommand(4, actorKey('n'), domain.RoleFighter, 6, 2803))
+	next, _, decisions := acceptRoles(t, next, RoleQueue{}, roleCommand(4, actorKey('n'), domain.RoleFighter, 6, 0))
 	if decisions[0].Outcome != OutcomeCooldownRejected {
 		t.Fatalf("second queued change = %s", decisions[0].Outcome)
 	}

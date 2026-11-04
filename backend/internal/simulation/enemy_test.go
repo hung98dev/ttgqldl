@@ -214,7 +214,8 @@ func TestBossSpawnsOnlyOnBossWaves(t *testing.T) {
 	bossMax := locked.Difficulty.BossMaxHP
 
 	at2600, _ := advanceWithRoles(t, locked, RoleQueue{}, 2600)
-	if !at2600.Wave.Boss.Exists || at2600.Wave.Boss.HP != bossMax || at2600.Wave.Boss.MaxHP != bossMax {
+	// The boss spawns at 2600 and combat in the same tick may already kill it.
+	if !at2600.Wave.Boss.Exists || at2600.Wave.Boss.MaxHP != bossMax {
 		t.Fatalf("boss at 2600 = %+v", at2600.Wave.Boss)
 	}
 	if len(at2600.Wave.Pools) != 9 {
@@ -261,8 +262,11 @@ func TestBossSpawnEmittedBeforeCombatBoundary(t *testing.T) {
 	if combatIndex < 0 || spawnIndex > combatIndex {
 		t.Fatalf("boss spawn must precede the combat boundary: %+v", events)
 	}
-	if at2600.Wave.Boss.HP != at2600.Difficulty.BossMaxHP {
-		t.Fatal("boss HP was not set to the derived maximum")
+	if at2600.Wave.Boss.MaxHP != at2600.Difficulty.BossMaxHP {
+		t.Fatal("boss maximum was not set to the derived value")
+	}
+	if at2600.Wave.Boss.HP < 0 || at2600.Wave.Boss.HP > at2600.Wave.Boss.MaxHP {
+		t.Fatalf("boss HP out of range: %+v", at2600.Wave.Boss)
 	}
 }
 
@@ -270,7 +274,6 @@ func TestBossIncomingWhenPoolsEmptyBeforeSpawn(t *testing.T) {
 	members := []domain.WaveMember{{ActorKey: uniqueActor(1), Role: domain.RoleBuilder, JoinedTick: 0}}
 	state := lockedFixture(t, members, 0, 0, 5)
 	state, _ = advanceOne(t, state) // locked at 1600
-	state, _ = advanceWithRoles(t, state, RoleQueue{}, 2200)
 	for i := range state.Wave.Pools {
 		state.Wave.Pools[i].HP = 0
 	}
@@ -363,13 +366,30 @@ func TestLockDeterminismAndImmutability(t *testing.T) {
 	}
 }
 
-func TestLockAndSpawnOverflowSafety(t *testing.T) {
-	if _, err := domain.BaseEnemyHP(1, 1, 1<<62); err != nil {
-		if err == nil {
-			t.Fatal("loss overflow must be rejected")
-		}
+func TestLockAndSpawnArithmeticBounds(t *testing.T) {
+	// Negative or out-of-range inputs fail closed.
+	if _, err := domain.BaseEnemyHP(0, 1, 0); err == nil {
+		t.Fatal("difficulty 0 must fail")
+	}
+	if _, err := domain.BaseEnemyHP(1, 0, 0); err == nil {
+		t.Fatal("population 0 must fail")
+	}
+	if _, err := domain.BaseEnemyHP(1, 1, -1); err == nil {
+		t.Fatal("negative losses must fail")
 	}
 	if _, err := domain.BossMaxHP(-1); err == nil {
 		t.Fatal("negative boss base must fail")
+	}
+	// Huge losses clamp to the documented 3-loss floor instead of overflowing.
+	hp, err := domain.BaseEnemyHP(1, 1, 1<<62)
+	if err != nil {
+		t.Fatalf("clamped losses: %v", err)
+	}
+	if hp != 47 { // 86 * 55 / 100 = 47
+		t.Fatalf("hp with clamped losses = %d, want 47", hp)
+	}
+	// Valid maximum inputs remain exact.
+	if hp, err := domain.BaseEnemyHP(10, domain.MaxPopulationAnchor, 0); err != nil || hp != 3920 {
+		t.Fatalf("max inputs hp = %d, err %v", hp, err)
 	}
 }
