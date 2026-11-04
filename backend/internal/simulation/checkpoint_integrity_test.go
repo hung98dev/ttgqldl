@@ -128,3 +128,18 @@ func TestCheckpointDetectsRetainedXPTampering(t *testing.T) {
 		t.Fatal("tampered envelope passed its integrity digest")
 	}
 }
+func TestLegacyEnvelopeVersionRejected(t *testing.T) {
+	state, queue := queuedCheckpointFixture(t)
+	envelope, err := BuildCheckpointEnvelope(state, queue)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if envelope.SchemaVersion != checkpointEnvelopeVersion {
+		t.Fatalf("envelope version = %d", envelope.SchemaVersion)
+	}
+	legacy := envelope
+	legacy.SchemaVersion = 1
+	if err := VerifyCheckpointEnvelope(legacy, state, queue); err == nil {
+		t.Fatal("version-1 envelope without complete XP coverage was accepted")
+	}
+}

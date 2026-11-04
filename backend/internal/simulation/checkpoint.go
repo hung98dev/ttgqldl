@@ -21,9 +21,11 @@ type CheckpointEnvelope struct {
 	IntegrityHash string            `json:"integrity_hash"`
 }
 
-// checkpointEnvelopeVersion is the private envelope version (distinct from the
-// canonical state schema).
-const checkpointEnvelopeVersion = 1
+// checkpointEnvelopeVersion is the private restoration format version, separate
+// from the canonical game-state schema. Version 2 adds the complete persisted
+// session XP set to the payload and digest; version 1 envelopes cannot be treated
+// as equivalent because they lack that coverage, so they are rejected.
+const checkpointEnvelopeVersion = 2
 
 // BuildCheckpointEnvelope computes the integrity digest over the full restoration
 // payload: canonical state hash plus every queued role and ballot command.
