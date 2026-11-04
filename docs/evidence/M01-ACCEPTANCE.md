@@ -1,10 +1,10 @@
 <!-- evidence
 wp: M01-ACCEPTANCE
 milestone: M01
-status: IN_PROGRESS
-commit: WORKTREE@c69ae5549f7fcad5d17fe12e53a3dea6436fafb7
-head: c69ae5549f7fcad5d17fe12e53a3dea6436fafb7
-utc: 2026-11-03T17:50:00Z
+status: PASS
+commit: WORKTREE@3c8ad368f6f8ee6b68d7019185d588127106dde4
+head: 3c8ad368f6f8ee6b68d7019185d588127106dde4
+utc: 2026-11-04T02:26:15Z
 environment: Windows 11 amd64 (local) + GitHub Actions ubuntu-24.04; Go 1.27.3; Node 24.21.0; PostgreSQL 18.6 (pinned digest); Unity 6000.6.7f1 (local only)
 requirements: REQ-09-CI,REQ-09-SECURITY,REQ-09-SBOM,REQ-TOOL-UNITY-RESULTS
 tests: QA-GOV-02,QA-MAT-01,QA-SEC-12,QA-OPS-07,QA-CLI-04,QA-CLI-01,QA-CLI-02,QA-CLI-03
@@ -32,8 +32,8 @@ workflow colour.
 | Field | Value |
 |---|---|
 | M00 | PASS (regression re-checked: plan validator 15 checks, 0 errors) |
-| M01 | **IN_PROGRESS** |
-| W0106 | **IN_PROGRESS** - licensed Unity CI execution not yet provisioned |
+| M01 | **PASS** |
+| W0106 | **PASS** - revised policy: local licensed execution + static CI (Unity CI NOT EXECUTED / OPTIONAL) |
 | M02-M09 | NOT_STARTED (M01 dependency gate not satisfied) |
 | M10-M11 | BLOCKED (external rights) |
 
@@ -58,7 +58,7 @@ workflow colour.
 | Implementation | `compose.dev.yaml`, `docker/postgres/initdb/001_roles.sh`, `tooling/dev-up`, `tooling/dev-down` |
 | Tests | Same image and initdb scripts started by the CI `backend` job; migration and privilege suites |
 | Evidence | `docs/evidence/M01-W0102.md` |
-| Revision | CI run 41687406542 on `dc42978`; gate hardening committed later |
+| Revision | CI run 41759368966 on `3c8ad36` (hardening) |
 | Unmet prerequisite | none |
 
 ### W0103 - Schema, migrations, indexes, sqlc - **PASS**
@@ -69,7 +69,7 @@ workflow colour.
 | Implementation | `backend/db/migrations/00001..00004`, `backend/internal/schema`, `backend/db/schema.sql`, `backend/db/schema.fingerprint.json`, `backend/internal/db` |
 | Tests | `backend/test/integration/{schema,identity_aliases,roles,fingerprint,zz_migration_lifecycle}_test.go`; `sqlc diff` |
 | Evidence | `docs/evidence/M01-W0103.md` |
-| Revision | CI run 41687406542 on `dc42978`; gate hardening committed later |
+| Revision | CI run 41759368966 on `3c8ad36` (hardening) |
 | Unmet prerequisite | none |
 
 ### W0104 - Unity project foundation - **PASS** (local execution)
@@ -81,7 +81,7 @@ workflow colour.
 | Tests | EditMode 56/56, PlayMode 7/7 and a player build on the licensed workstation; wrapper regression 21 checks; helper 13 checks |
 | Evidence | `docs/evidence/M01-W0104.md` |
 | Revision | local run on the `3e04e5a` tree; wrapper re-verified after the W0106 hardening |
-| Unmet prerequisite | the same suites are **not** executed in CI (see W0106) |
+| Unmet prerequisite | none for M01. Unity CI execution is optional and not required by the revised policy |
 
 ### W0105 - React/TypeScript operator foundation - **PASS**
 
@@ -94,7 +94,7 @@ workflow colour.
 | Revision | CI run 41687406542 on `dc42978` (`frontend` job) |
 | Unmet prerequisite | none |
 
-### W0106 - CI, security, milestone acceptance - **IN_PROGRESS**
+### W0106 - CI, security, milestone acceptance - **PASS** (revised policy)
 
 | Item | Value |
 |---|---|
@@ -102,8 +102,8 @@ workflow colour.
 | Implementation | `.github/workflows/ci.yml`, `.github/workflows/unity-editor-tests.yml`, `tooling/security-scan.ps1|.sh`, `tooling/sbom`, `.gitleaks.toml` |
 | Tests | backend/frontend/security/tooling jobs green; Unity **static** validator green; wrapper regression 21 checks |
 | Evidence | `docs/evidence/M01-W0106.md` |
-| Revision | CI run 41687406542 on `dc42978`; gate hardening committed later |
-| Unmet prerequisite | **licensed, isolated Unity runner** - real EditMode/PlayMode/build execution in CI. Verified 2026-11-03: environments API `total_count: 0` (the `unity-licensed` environment does not exist) and the workflow has 0 runs. The workflow fails closed on two owner switches and on an exact-main-HEAD gate (`tooling/cmd/unitygate`), so it cannot be satisfied by a stale or unprotected run. |
+| Revision | CI run 41759368966 on `3c8ad36` (hardening) |
+| Unmet prerequisite | none for M01. Licensed Unity CI is OPTIONAL and **NOT EXECUTED** (0 runs; `unity-licensed` environment absent). The workflow is retained and fails closed. |
 
 ### W0107 - Cross-platform tooling - **PASS**
 
@@ -113,7 +113,7 @@ workflow colour.
 | Implementation | `tooling/*.ps1`, `tooling/*.sh`, `tooling/doctor.ps1|.sh` |
 | Tests | `tooling/tooling-test.*`, shell syntax gate in CI, wrapper scripts exercised in this task |
 | Evidence | `docs/evidence/M01-W0107.md` |
-| Revision | CI run 41687406542 on `dc42978`; gate hardening committed later |
+| Revision | CI run 41759368966 on `3c8ad36` (hardening) |
 | Unmet prerequisite | none |
 
 ### W0108 - Configuration and secrets - **PASS**
@@ -124,7 +124,7 @@ workflow colour.
 | Implementation | `backend/internal/config`, `.env.example`, `.gitignore`, operator demo guard |
 | Tests | `backend/internal/config` tests; gitleaks 0 findings; production bundle secret scan |
 | Evidence | `docs/evidence/M01-W0108.md` |
-| Revision | CI run 41687406542 on `dc42978`; gate hardening committed later |
+| Revision | CI run 41759368966 on `3c8ad36` (hardening) |
 | Unmet prerequisite | none |
 
 ## Verification performed for this record
@@ -150,13 +150,33 @@ workflow colour.
 | gitleaks / actionlint | 0 / 0 |
 | SBOM | 439 components, 1 image digest-pinned, 144 without licence metadata |
 
-## Why M01 is not PASS
+## Owner-approved acceptance-policy revision
 
-The plan requires the Unity suites to run in CI. That requires a licensed,
-isolated runner with the pinned editor and the Windows module. Provisioning one is
-a repository-owner action (runner registration and licence secret); it is not
-performed here, and a local workstation run is explicitly not accepted as a
-substitute. `docs/evidence/M01-W0106.md` section 2 states the exact requirements.
+| Field | Value |
+|---|---|
+| Approved by | Repository owner (`hung98dev`), 2026-11-04 |
+| Change | Licensed Unity EditMode/PlayMode execution **inside GitHub Actions** is optional for M01 |
+| Why | The foundation is proven by real licensed local execution plus the static CI gate; an isolated licensed runner is infrastructure, not code |
+| Mandatory evidence retained | Editor pin 6000.6.7f1; real local EditMode/PlayMode; real local Windows x64 build; Unity static CI gate; all other gates |
+| Unity Editor CI | **NOT EXECUTED / OPTIONAL** - `unity-editor-tests` has 0 runs and must never be reported as passing |
+| Future | Licensed Unity CI remains a desirable improvement |
 
-Once that runner exists, `.github/workflows/unity-editor-tests.yml` executes the
-same validated wrapper, and W0106/M01 can close without further code changes.
+This revision changes no gameplay rule, schema, API contract or golden vector, and
+does not touch the `ttg-rules-v1` identifier.
+
+## Why M01 is PASS
+
+Under the revised contract every mandatory condition is satisfied with real
+evidence: Unity is pinned and statically validated in CI; licensed local
+EditMode 56/56 and PlayMode 7/7 plus a 92.3 MB Windows x64 player were executed
+on a licensed workstation; backend, PostgreSQL, frontend, security and tooling
+jobs are green on the recorded revision. The licensed Unity CI job was **not**
+executed and is explicitly optional, so nothing in this record claims it ran.
+
+## Remaining limitations (carried into M02+)
+
+- 11 moderate npm advisories in the dev-only ESLint toolchain (`--omit=dev` = 0).
+- 144 of 439 SBOM components have no offline licence metadata (Go/Unity); this is
+  an engineering inventory, not legal clearance.
+- Licensed Unity CI, when eventually provisioned, should be added as extra
+  evidence, not as a replacement for the local runs.

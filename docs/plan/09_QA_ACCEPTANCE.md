@@ -65,7 +65,7 @@ For each Mxx-Wxxxx: docs/evidence/Mxx-Wxxxx.md starts with a machine-readable bl
 and then records, in prose or tables: files inspected and modified, an exact command list, expected versus actual output, metric summary, log path, outstanding blockers and rerun instructions. `docs/traceability.csv` has exactly these columns: requirement_id,document_anchor,owner_module,work_package,test_id,priority,verification_method,spec_status,impl_status,evidence_uri; document_anchor is `<module>.md#<github-heading-slug>`, test_id lists QA ids, spec_status is VERIFIED|FIXED|BLOCKED, impl_status uses the matrix vocabulary and evidence_uri is a repository path that exists. `tooling/planvalidate` (run from `tooling/` as `go run ./planvalidate -root ..`) fails if any MUST is unmapped, any QA id is missing or duplicated, any anchor does not resolve, or any PASS lacks a matching evidence record. Weekly or on milestones review drift in doc/fixture versions and lint links.
 
 ## Required CI stages
-Go test ./... + -race, fuzz seeds, sqlc/generation check, goose migrate up/down PG18.6, determinism golden, OpenAPI/JSON schema contract tests, security SAST/secret/SBOM/license, Unity EditMode/PlayMode with license, TS UI tests, k6/Go load harness on dedicated runner. Manual OBS, privacy, streamer and legal gates are never spoofed by headless CI.
+Go test ./... + -race, fuzz seeds, sqlc/generation check, goose migrate up/down PG18.6, determinism golden, OpenAPI/JSON schema contract tests, security SAST/secret/SBOM/license, Unity EditMode/PlayMode with a licensed editor (local licensed execution is accepted for M01; CI execution is optional - see "Acceptance-policy revision"), TS UI tests, k6/Go load harness on dedicated runner. Manual OBS, privacy, streamer and legal gates are never spoofed by headless CI.
 
 ## Additional binding QA cases for audit gaps
 QA-SIM-06 First join on WAITING=-1 initializes tick0 only; 10Hz execution never calls a tick outside [0,2999] for gameplay; rollover tick3000 is a control boundary only.
@@ -129,3 +129,28 @@ QA-SIM-12 (owner M05, consuming M01-W0104) Authoritative wave result: the public
 
 QA-SEC-12 Security pipeline: CI runs pinned scanners against the real repository - `govulncheck` for Go advisories, `gosec` for Go static analysis, `npm audit` failing on high/critical runtime advisories, `gitleaks` with a reviewed config, and `actionlint` for workflows - and a missing scanner makes the gate BLOCKED rather than green. Every finding is classified by severity, location, reachability and disposition; critical or high exploitable findings block acceptance; no gate uses `|| true`, blanket ignores or unconditional `continue-on-error`.
 QA-OPS-07 Dependency inventory: a deterministic CycloneDX SBOM covers Go modules, npm packages, Unity packages and pinned container images, reports missing licence metadata explicitly instead of inventing it, fails on a container image without an immutable `sha256` digest, and reproduces byte-for-byte for an unchanged checkout.
+
+## Acceptance-policy revision (repository owner, 2026-11-04)
+
+The repository owner approved one change to the M01 Unity acceptance contract:
+**licensed Unity EditMode/PlayMode execution inside GitHub Actions is OPTIONAL for
+M01.** It was previously mandatory and could not be satisfied because no licensed
+runner or protected environment exists.
+
+Mandatory for M01 instead:
+
+1. The Unity project is pinned to Editor 6000.6.7f1.
+2. Real licensed local Editor execution shows EditMode and PlayMode passing with zero failures.
+3. A real local Windows x64 standalone player build succeeds.
+4. The Unity static project validation passes in GitHub Actions (`tooling/unitycheck`).
+5. Backend, PostgreSQL, frontend, security, tooling and M00 regression gates pass.
+
+The optional workflow `.github/workflows/unity-editor-tests.yml` is retained
+unchanged in intent and has **NOT EXECUTED**. Its truthful state is
+`NOT_STARTED / OPTIONAL`; it must never be reported as a passing gate. Future
+licensed Unity CI remains a desirable improvement, not an M01 condition.
+
+Evidence rule: a local Unity run is accepted only when the evidence names the
+Editor version, the exact tested revision, the executed counts and the build
+result, and only when the Unity sources have not changed materially since that
+run. A historical run must never be presented as a new run on the latest commit.
