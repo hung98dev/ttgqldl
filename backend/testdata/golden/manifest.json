@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "source": "tooling/refeval/testdata/golden_vectors.json",
+  "source_digest_sha256": "0134c70d3040f2ba0b531bd52fd6ce74583c33561728ef07fd40a60403358993",
+  "case_count": 23,
+  "selected_simple_cases": 15,
+  "selected_ids": [
+    "C001",
+    "C002",
+    "C003",
+    "C004",
+    "C011",
+    "C012",
+    "C013",
+    "C014",
+    "C015",
+    "C016",
+    "C017",
+    "C018",
+    "C019",
+    "C020",
+    "C021"
+  ],
+  "provenance": "Independent reference evaluator committed in this repository; copied byte-identically into backend/testdata/golden/matrix.json",
+  "regeneration": "tooling/refeval is regenerated only by its own reviewed command; normal tests never rewrite this file"
+}
