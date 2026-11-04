@@ -21,8 +21,7 @@ func (r Revision) Valid() bool {
 }
 
 var (
-	uuidPattern     = regexp.MustCompile(`^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$`)
-	actorKeyPattern = regexp.MustCompile(`^[0-9a-f]{64}$`)
+	uuidPattern = regexp.MustCompile(`^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$`)
 )
 
 // VillageID is a canonical lowercase UUID.
@@ -39,7 +38,26 @@ func (s SessionID) Valid() bool { return uuidPattern.MatchString(string(s)) }
 // identifiers never enter the domain.
 type ActorKey string
 
-func (a ActorKey) Valid() bool { return actorKeyPattern.MatchString(string(a)) }
+// Valid reports whether the key is exactly 64 lowercase hex characters.
+//
+// This is deliberately a byte scan rather than a regular expression: Validate
+// runs over every participant at every committed tick, and the 10,000-participant
+// acceptance case makes a per-member regex the dominant cost of the whole golden
+// matrix. The accepted language is identical to ^[0-9a-f]{64}$ — no character
+// class, length or case rule changed.
+func (a ActorKey) Valid() bool {
+	if len(a) != 64 {
+		return false
+	}
+	for index := 0; index < len(a); index++ {
+		character := a[index]
+		if (character >= '0' && character <= '9') || (character >= 'a' && character <= 'f') {
+			continue
+		}
+		return false
+	}
+	return true
+}
 
 // Resources are the three persistent resource counters.
 type Resources struct {

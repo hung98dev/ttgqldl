@@ -22,6 +22,12 @@ import (
 const (
 	RulesVersion           = "ttg-rules-v1"
 	CanonicalSchemaVersion = 1
+	// FixtureSchemaVersion versions the independently generated fixture input
+	// model. It is deliberately separate from the gameplay rules identifier, the
+	// canonical game-state schema and the production private checkpoint format.
+	// A change to the fixture shape bumps this value so a production test fails
+	// until the new shape is reviewed.
+	FixtureSchemaVersion = 2
 )
 
 // Documented integer bounds.
@@ -177,6 +183,53 @@ type Ballot struct {
 	Tick   int
 }
 
+// ScheduleKind enumerates the explicit input events a curated case can schedule.
+// They are applied at their effective tick, exactly like the production reducer
+// applies an accepted command when the logical clock reaches it.
+type ScheduleKind int8
+
+const (
+	// ScheduleJoin registers a new participant for the current wave.
+	ScheduleJoin ScheduleKind = 1
+	// ScheduleRoleChange is a role selection by an already registered participant;
+	// it exercises the free-first-switch and 600-tick cooldown contract.
+	ScheduleRoleChange ScheduleKind = 2
+	// ScheduleBallot is one ballot effective inside the voting window.
+	ScheduleBallot ScheduleKind = 3
+)
+
+// scheduledEvent is one typed, explicit input event with its effective tick.
+type scheduledEvent struct {
+	Tick   int
+	Seq    int
+	Kind   ScheduleKind
+	Actor  string
+	Role   Role
+	Option string
+}
+
+// RoleLogRow records the independent model's outcome for one accepted role
+// selection. It is the reference counterpart of the production role events.
+type RoleLogRow struct {
+	Tick         int    `json:"tick"`
+	Actor        string `json:"actor_key"`
+	Role         string `json:"role"`
+	PreviousRole string `json:"previous_role,omitempty"`
+	Outcome      string `json:"outcome"`
+}
+
+// MemberSnapshot is one participant's authoritative state, used to prove that a
+// case genuinely exercises registration and role-change bookkeeping.
+type MemberSnapshot struct {
+	Actor           string `json:"actor_key"`
+	Role            string `json:"role"`
+	JoinedTick      int    `json:"joined_tick"`
+	LastChangeTick  *int   `json:"last_change_tick"`
+	FirstSwitchUsed bool   `json:"first_switch_used"`
+	XPAwarded       bool   `json:"xp_awarded"`
+	SessionXP       int64  `json:"session_xp"`
+}
+
 // TraceRow is one deterministic boundary observation.
 type TraceRow struct {
 	Tick       int    `json:"tick"`
@@ -239,11 +292,19 @@ type Sim struct {
 	Queued    []*Member
 	SessionXP map[string]int64
 
+	// Pending holds explicit role/ballot events that become effective at a future
+	// tick. They are applied when the clock reaches that tick, so a future input
+	// can never mutate an already observed boundary.
+	Pending []scheduledEvent
+	// RoleLog records every role decision the model produced, in input order.
+	RoleLog []RoleLogRow
+
 	Trace   []TraceRow
 	Log     []string
 	Applied int
 
-	lastBossState string
+	lastBossState    string
+	lastPreviousRole string
 }
 
 // NewSim returns a session in the documented initial state
@@ -335,6 +396,19 @@ const (
 // Join applies one authorized role command at the given acceptance tick
 // (02_GAME_RULES.md "Exact player action model", 03_SIMULATION.md).
 func (s *Sim) Join(actor string, role Role, tick int) JoinResult {
+	outcome := s.join(actor, role, tick)
+	switch outcome {
+	case JoinRegistered:
+		s.RoleLog = append(s.RoleLog, RoleLogRow{Tick: tick, Actor: actor, Role: role.String(), Outcome: "registered"})
+	case JoinRoleChanged:
+		s.RoleLog = append(s.RoleLog, RoleLogRow{Tick: tick, Actor: actor, Role: role.String(), PreviousRole: s.lastPreviousRole, Outcome: "role_changed"})
+	case JoinCooldown:
+		s.RoleLog = append(s.RoleLog, RoleLogRow{Tick: tick, Actor: actor, Role: role.String(), Outcome: "cooldown_rejected"})
+	}
+	return outcome
+}
+
+func (s *Sim) join(actor string, role Role, tick int) JoinResult {
 	if s.Lifecycle == "waiting" {
 		// WAITING accepts the first authorized role and starts the wave at tick 0.
 		s.Lifecycle = "running"
@@ -377,12 +451,14 @@ func (s *Sim) applyRoleChange(m *Member, role Role, tick int, queued bool) JoinR
 		return JoinNoopSameRole
 	}
 	if !m.FirstSwitch {
+		s.lastPreviousRole = m.Role.String()
 		m.Role = role
 		m.FirstSwitch = true
 		m.LastChangeTick = tick
 		return JoinRoleChanged
 	}
 	if tick-m.LastChangeTick >= RoleChangeCooldownTicks {
+		s.lastPreviousRole = m.Role.String()
 		m.Role = role
 		m.LastChangeTick = tick
 		return JoinRoleChanged
@@ -840,11 +916,29 @@ func (s *Sim) rollover() {
 	s.Lifecycle = "waiting"
 }
 
+// applyDue applies every explicit input whose effective tick has been reached, in
+// (tick, declaration order). Role events are declared before ballot events, which
+// matches the production order: due role commands, then due ballots, then the
+// boundary resolution itself.
+func (s *Sim) applyDue() {
+	for len(s.Pending) > 0 && s.Pending[0].Tick <= s.Tick {
+		event := s.Pending[0]
+		s.Pending = s.Pending[1:]
+		switch event.Kind {
+		case ScheduleJoin, ScheduleRoleChange:
+			s.Join(event.Actor, event.Role, event.Tick)
+		case ScheduleBallot:
+			s.Vote(event.Actor, event.Option, event.Tick)
+		}
+	}
+}
+
 // ProcessTick applies the documented total order for the current tick.
 func (s *Sim) ProcessTick() {
 	if s.Lifecycle != "running" {
 		return
 	}
+	s.applyDue()
 	t := s.Tick
 	if t == VoteCloseTick {
 		s.closeBallot()
@@ -882,6 +976,36 @@ func (s *Sim) ProcessTick() {
 	if t == FinalCombatTick {
 		s.settle()
 	}
+}
+
+// memberSnapshots returns the authoritative participant state sorted by actor.
+func (s *Sim) memberSnapshots() []MemberSnapshot {
+	out := make([]MemberSnapshot, 0, len(s.Members))
+	for _, member := range s.Members {
+		var lastChange *int
+		if member.FirstSwitch {
+			tick := member.LastChangeTick
+			lastChange = &tick
+		}
+		out = append(out, MemberSnapshot{
+			Actor:           member.Actor,
+			Role:            member.Role.String(),
+			JoinedTick:      member.JoinedTick,
+			LastChangeTick:  lastChange,
+			FirstSwitchUsed: member.FirstSwitch,
+			XPAwarded:       member.XPAwarded,
+			SessionXP:       s.SessionXP[member.Actor],
+		})
+	}
+	sort.Slice(out, func(i, j int) bool { return out[i].Actor < out[j].Actor })
+	return out
+}
+
+// VoteTally is the applied-ballot tally of one even wave.
+type VoteTally struct {
+	A int64 `json:"a"`
+	B int64 `json:"b"`
+	C int64 `json:"c"`
 }
 
 // StateDigest is a stable SHA-256 over the authoritative pure state fields,

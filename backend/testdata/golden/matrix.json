@@ -1,5 +1,6 @@
 {
   "generated_by": "tooling/refeval (independent reference evaluator)",
+  "fixture_schema": 2,
   "rules_version": "ttg-rules-v1",
   "canonical_schema_version": 1,
   "sweep_note": "P=1,3,4,5,10,30,100,1000,10000 x fighter share 0/25/50/75/100% x ordinary/boss x consecutive_wins 0/3/9 x consecutive_losses 0/1/3 + vote A/B/C at the clean baseline. cw\u003e0 with cl\u003e0 is an arithmetic stress pair, not a reachable game state (a win resets consecutive_losses).",
@@ -365,7 +366,7 @@
         "session_xp_total": 100,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "d7c96ac4f767dd980300e059cf24035dce909518eef804c417d6bf3d729f0094"
+        "state_digest": "e90f7e547fa47821bbdc14c15b904ba3e53095e92f9d0440a53c258e550866e9"
       },
       "boundary_trace": [
         {
@@ -706,7 +707,7 @@
         "session_xp_total": 300,
         "boss_hp_at_2600": 16,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "f0e955e90191f273b06c65ef8d5bf38ee0a0feb028bd056852d6189199b85c49"
+        "state_digest": "6b0fa425e4740dfa5d160eceeff51c328ad17291f379899f29704436d206b99b"
       },
       "boundary_trace": [
         {
@@ -1730,7 +1731,12 @@
         "session_xp_total": 100,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "a27a6eaab5883171915693ff69fc16b13edc924e6ddffdca5b2370a625f520ee"
+        "state_digest": "1f82160d60b1fc18e13b8bb81d7d4884e1ec7d030e3bb3f15a75e92b17ee24d7",
+        "vote_counts": {
+          "a": 10,
+          "b": 0,
+          "c": 0
+        }
       },
       "boundary_trace": [
         {
@@ -2072,7 +2078,12 @@
         "session_xp_total": 100,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "7cc9610eb7c7d58cb780cbdb892a78735dfa3feba5dc94ddd8150da40f74b697"
+        "state_digest": "99302a27a00ef04c010520b98e2d660e83b4c5bf671f404c0379de16e37f59a5",
+        "vote_counts": {
+          "a": 0,
+          "b": 10,
+          "c": 0
+        }
       },
       "boundary_trace": [
         {
@@ -2414,7 +2425,12 @@
         "session_xp_total": 100,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 52,
-        "state_digest": "b62f2998c668ae3efef1a2b9c91ea61ca9e9af8fda813dbe1ab5553f09359805"
+        "state_digest": "baaacff8f6e00be160c5fe3f015ebfd73e3cbb948084cf8f0064af7937f464bf",
+        "vote_counts": {
+          "a": 0,
+          "b": 0,
+          "c": 10
+        }
       },
       "boundary_trace": [
         {
@@ -2755,7 +2771,12 @@
         "session_xp_total": 20,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "b74d0ef15bf0b2f1f3e64fc22db26ef06080e21f9882ae221c39b5828fdb0799"
+        "state_digest": "d4d6d6e1fee3950b346787cf69a6e38537b5d10465441366a04acd793b5c9c02",
+        "vote_counts": {
+          "a": 0,
+          "b": 0,
+          "c": 0
+        }
       },
       "boundary_trace": [
         {
@@ -3096,7 +3117,12 @@
         "session_xp_total": 20,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "0f63f2b9a876a549cec63062ad1a1ca2e0f22e5399d3001f6769a95a28ef789e"
+        "state_digest": "8b913a31f6c7345aaa207205fb1af267d35d1f592a71d9787a91da7e0278a38b",
+        "vote_counts": {
+          "a": 0,
+          "b": 0,
+          "c": 0
+        }
       },
       "boundary_trace": [
         {
@@ -3397,7 +3423,7 @@
     },
     {
       "id": "C010",
-      "note": "Tie A/B/C on an even wave: lexicographic A wins",
+      "note": "Genuine A/B/C tie: three ballots at tick 900, tally 1/1/1, deterministic priority selects A",
       "inputs": {
         "wave_no": 4,
         "consecutive_wins": 0,
@@ -3421,12 +3447,29 @@
           {
             "actor_key": "a2",
             "role": "builder",
-            "scheduled_tick": 0
+            "scheduled_tick": 1
           },
           {
             "actor_key": "a3",
             "role": "builder",
-            "scheduled_tick": 0
+            "scheduled_tick": 1
+          }
+        ],
+        "ballot_events": [
+          {
+            "actor_key": "a1",
+            "option": "A",
+            "scheduled_tick": 900
+          },
+          {
+            "actor_key": "a2",
+            "option": "B",
+            "scheduled_tick": 900
+          },
+          {
+            "actor_key": "a3",
+            "option": "C",
+            "scheduled_tick": 900
           }
         ]
       },
@@ -3454,7 +3497,41 @@
         "session_xp_total": 30,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "84b6ec2f3a7b8b580f227853465b412c3fdde785f9e8de8f5817d4477d53fbf6"
+        "state_digest": "cecf61359a4d5273f3b92c032d9e36d41818ea6f45642a92f885f03690861609",
+        "vote_counts": {
+          "a": 1,
+          "b": 1,
+          "c": 1
+        },
+        "member_state": [
+          {
+            "actor_key": "a1",
+            "role": "builder",
+            "joined_tick": 0,
+            "last_change_tick": null,
+            "first_switch_used": false,
+            "xp_awarded": true,
+            "session_xp": 10
+          },
+          {
+            "actor_key": "a2",
+            "role": "builder",
+            "joined_tick": 1,
+            "last_change_tick": null,
+            "first_switch_used": false,
+            "xp_awarded": true,
+            "session_xp": 10
+          },
+          {
+            "actor_key": "a3",
+            "role": "builder",
+            "joined_tick": 1,
+            "last_change_tick": null,
+            "first_switch_used": false,
+            "xp_awarded": true,
+            "session_xp": 10
+          }
+        ]
       },
       "boundary_trace": [
         {
@@ -3795,7 +3872,7 @@
         "session_xp_total": 300,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "88208313105530d23cbae6e59cf8a4556a18dcb25231391125649a58e8978ee2"
+        "state_digest": "d159bc2425d193326c76bf4018f5812bf2163ad1cc5da3a8fde590d667129566"
       },
       "boundary_trace": [
         {
@@ -4052,7 +4129,7 @@
         "session_xp_total": 660,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "4ebd77972fe40f15390e295719fc18ac7465533b6ad45333bad1390fb9063a34"
+        "state_digest": "55252882cbb31c3b25de2f543a7472c8a2bd33c8146af0223126544a503036b2"
       },
       "boundary_trace": [
         {
@@ -4393,7 +4470,7 @@
         "session_xp_total": 660,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "925787da51040ad5c57681a66704fbd52cdad6b1d48070a61038c49d59914557"
+        "state_digest": "3f92332af8d46e99fd6d3383c5c6c06ef39b8ccb913d2ab28c0674dd9862efaf"
       },
       "boundary_trace": [
         {
@@ -4734,7 +4811,7 @@
         "session_xp_total": 400,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "7b85a259f539e8a86aa68ddc8e15c1c93acbd86a5db299756684c1cd6be6cefe"
+        "state_digest": "ddfc239a86d4cb4664a70f3587eca44ad674f224ae71d398e84e53ac14105fb1"
       },
       "boundary_trace": [
         {
@@ -5075,7 +5152,7 @@
         "session_xp_total": 100000,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "cc905622bf3ccc50980bf5ffd01d636dabea75900cf7dd600b07a33ad6b0a496"
+        "state_digest": "6e2f4fb964483c0499834dd1c4d647c4bef26a457c0adb123fcef5b2fb66a06f"
       },
       "boundary_trace": [
         {
@@ -5416,7 +5493,7 @@
         "session_xp_total": 300,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "68200e5ab95d875a885122aab55164af4ff13755644769b06c2b7230c37c6012"
+        "state_digest": "430c7bbadf70b17fa92623cbba45b876f47086f674a3561166c07e4a61cda473"
       },
       "boundary_trace": [
         {
@@ -5757,7 +5834,7 @@
         "session_xp_total": 300,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "667ea02021931d24fcacf6a3298d2e7485b27703a71437085edf60e0b388b7e6"
+        "state_digest": "84b053ee0eae7aa753bbf2344e8f496124fa3e0ddbc4c29f45bce1418a980d39"
       },
       "boundary_trace": [
         {
@@ -6098,7 +6175,7 @@
         "session_xp_total": 100,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 142,
-        "state_digest": "6885312da1fe8013d9f1ac6c2cf7192e3867f4c84a498a5c9ecf8a314ae8c5e7"
+        "state_digest": "ebc09d1e4df733063186b2044c6007f392bd7597860a2a4a9b4b27a92598a01f"
       },
       "boundary_trace": [
         {
@@ -6439,7 +6516,7 @@
         "session_xp_total": 40,
         "boss_hp_at_2600": 9,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "ad8b8a2f8c768d09aedd460d1a02b0dd9b731c9a03c98fb6c12b2f337f19ad86"
+        "state_digest": "641f376b12710c4bc28ceb43442a6efb61b7fd92a90d57e7cd351a2bdda8265f"
       },
       "boundary_trace": [
         {
@@ -6780,7 +6857,7 @@
         "session_xp_total": 50,
         "boss_hp_at_2600": 24,
         "ordinary_hp_at_2600": 5,
-        "state_digest": "3a3c07fdad41f9c6e43922fdb8851eb11f639b52b265a34649fb774100d1b957"
+        "state_digest": "4c39163c5766db13e0d197d4d2bf5095ccef1612ee062b71202e7b3b9adf775c"
       },
       "boundary_trace": [
         {
@@ -7121,7 +7198,7 @@
         "session_xp_total": 300,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "8e572271c744b42eb3d3833ec46a6f3a37ff4367699c8ba5aa60f3db91338f96"
+        "state_digest": "34b0f48931141784aa3c5b0e48dc70f00a3358527a898bbb34c0b83e96dab69a"
       },
       "boundary_trace": [
         {
@@ -7484,7 +7561,45 @@
         "session_xp_total": 40,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "ab0fdc612d5c36b0becc1b520916e5ac06e707df48ab46526b2b28f67fcaf71a"
+        "state_digest": "ab0fdc612d5c36b0becc1b520916e5ac06e707df48ab46526b2b28f67fcaf71a",
+        "member_state": [
+          {
+            "actor_key": "anchor_edge",
+            "role": "fighter",
+            "joined_tick": 1599,
+            "last_change_tick": null,
+            "first_switch_used": false,
+            "xp_awarded": true,
+            "session_xp": 10
+          },
+          {
+            "actor_key": "early",
+            "role": "fighter",
+            "joined_tick": 0,
+            "last_change_tick": null,
+            "first_switch_used": false,
+            "xp_awarded": true,
+            "session_xp": 10
+          },
+          {
+            "actor_key": "late",
+            "role": "fighter",
+            "joined_tick": 1999,
+            "last_change_tick": null,
+            "first_switch_used": false,
+            "xp_awarded": true,
+            "session_xp": 10
+          },
+          {
+            "actor_key": "post_anchor",
+            "role": "fighter",
+            "joined_tick": 1600,
+            "last_change_tick": null,
+            "first_switch_used": false,
+            "xp_awarded": true,
+            "session_xp": 10
+          }
+        ]
       },
       "boundary_trace": [
         {
@@ -7785,7 +7900,7 @@
     },
     {
       "id": "C023",
-      "note": "Role change: first immediate, later \u003e=600 ticks",
+      "note": "Role change: first switch immediate, 599-tick attempt rejected, exact 600-tick switch accepted",
       "inputs": {
         "wave_no": 7,
         "consecutive_wins": 0,
@@ -7806,6 +7921,23 @@
             "role": "builder",
             "scheduled_tick": 0
           }
+        ],
+        "role_events": [
+          {
+            "actor_key": "solo",
+            "role": "fighter",
+            "scheduled_tick": 1
+          },
+          {
+            "actor_key": "solo",
+            "role": "guard",
+            "scheduled_tick": 600
+          },
+          {
+            "actor_key": "solo",
+            "role": "guard",
+            "scheduled_tick": 601
+          }
         ]
       },
       "outcome": {
@@ -7818,13 +7950,13 @@
         "difficulty": 1,
         "base_hp": 86,
         "wall_tier": 1,
-        "wall_hp": 1000,
+        "wall_hp": 996,
         "wall_max": 1000,
         "townhall_hp": 500,
-        "wood": 524,
-        "stone": 324,
+        "wood": 500,
+        "stone": 310,
         "food": 350,
-        "construction_work": 98,
+        "construction_work": 0,
         "total_wins": 1,
         "consecutive_wins": 1,
         "consecutive_losses": 0,
@@ -7832,7 +7964,46 @@
         "session_xp_total": 10,
         "boss_hp_at_2600": 0,
         "ordinary_hp_at_2600": 0,
-        "state_digest": "876cd559c7c348a0bf73987311d2c96c1369d70290ae92389dc9c6316661f065"
+        "state_digest": "c0109a0aaeb556a0d210336cecda35fe01ccb5db68ad4f96322ce8470a9e09f0",
+        "member_state": [
+          {
+            "actor_key": "solo",
+            "role": "guard",
+            "joined_tick": 0,
+            "last_change_tick": 601,
+            "first_switch_used": true,
+            "xp_awarded": true,
+            "session_xp": 10
+          }
+        ],
+        "role_events": [
+          {
+            "tick": 0,
+            "actor_key": "solo",
+            "role": "builder",
+            "outcome": "registered"
+          },
+          {
+            "tick": 1,
+            "actor_key": "solo",
+            "role": "fighter",
+            "previous_role": "builder",
+            "outcome": "role_changed"
+          },
+          {
+            "tick": 600,
+            "actor_key": "solo",
+            "role": "guard",
+            "outcome": "cooldown_rejected"
+          },
+          {
+            "tick": 601,
+            "actor_key": "solo",
+            "role": "guard",
+            "previous_role": "fighter",
+            "outcome": "role_changed"
+          }
+        ]
       },
       "boundary_trace": [
         {
@@ -7841,10 +8012,10 @@
           "wall_hp": 1000,
           "wall_max": 1000,
           "townhall_hp": 500,
-          "wood": 402,
-          "stone": 251,
+          "wood": 400,
+          "stone": 250,
           "food": 300,
-          "construction_work": 8,
+          "construction_work": 0,
           "wall_tier": 1,
           "ordinary_hp": 0,
           "boss_hp": 0,
@@ -7862,10 +8033,10 @@
           "wall_hp": 1000,
           "wall_max": 1000,
           "townhall_hp": 500,
-          "wood": 404,
-          "stone": 252,
+          "wood": 400,
+          "stone": 250,
           "food": 300,
-          "construction_work": 16,
+          "construction_work": 0,
           "wall_tier": 1,
           "ordinary_hp": 0,
           "boss_hp": 0,
@@ -7883,10 +8054,10 @@
           "wall_hp": 1000,
           "wall_max": 1000,
           "townhall_hp": 500,
-          "wood": 406,
-          "stone": 253,
+          "wood": 400,
+          "stone": 250,
           "food": 300,
-          "construction_work": 24,
+          "construction_work": 0,
           "wall_tier": 1,
           "ordinary_hp": 0,
           "boss_hp": 0,
@@ -7904,10 +8075,10 @@
           "wall_hp": 1000,
           "wall_max": 1000,
           "townhall_hp": 500,
-          "wood": 408,
-          "stone": 254,
+          "wood": 400,
+          "stone": 250,
           "food": 300,
-          "construction_work": 32,
+          "construction_work": 0,
           "wall_tier": 1,
           "ordinary_hp": 0,
           "boss_hp": 0,
@@ -7925,10 +8096,10 @@
           "wall_hp": 1000,
           "wall_max": 1000,
           "townhall_hp": 500,
-          "wood": 410,
-          "stone": 255,
+          "wood": 400,
+          "stone": 250,
           "food": 300,
-          "construction_work": 40,
+          "construction_work": 0,
           "wall_tier": 1,
           "ordinary_hp": 0,
           "boss_hp": 0,
@@ -7946,10 +8117,10 @@
           "wall_hp": 1000,
           "wall_max": 1000,
           "townhall_hp": 500,
-          "wood": 412,
-          "stone": 256,
+          "wood": 400,
+          "stone": 250,
           "food": 300,
-          "construction_work": 48,
+          "construction_work": 0,
           "wall_tier": 1,
           "ordinary_hp": 0,
           "boss_hp": 0,
@@ -7967,10 +8138,10 @@
           "wall_hp": 1000,
           "wall_max": 1000,
           "townhall_hp": 500,
-          "wood": 414,
-          "stone": 257,
+          "wood": 400,
+          "stone": 250,
           "food": 300,
-          "construction_work": 56,
+          "construction_work": 0,
           "wall_tier": 1,
           "ordinary_hp": 0,
           "boss_hp": 0,
@@ -7988,10 +8159,10 @@
           "wall_hp": 1000,
           "wall_max": 1000,
           "townhall_hp": 500,
-          "wood": 416,
-          "stone": 258,
+          "wood": 400,
+          "stone": 250,
           "food": 300,
-          "construction_work": 64,
+          "construction_work": 0,
           "wall_tier": 1,
           "ordinary_hp": 86,
           "boss_hp": 0,
@@ -8006,20 +8177,20 @@
         {
           "tick": 1800,
           "phase": "assault",
-          "wall_hp": 988,
+          "wall_hp": 996,
           "wall_max": 1000,
           "townhall_hp": 500,
-          "wood": 418,
-          "stone": 259,
+          "wood": 400,
+          "stone": 250,
           "food": 300,
-          "construction_work": 72,
+          "construction_work": 0,
           "wall_tier": 1,
           "ordinary_hp": 46,
           "boss_hp": 0,
-          "guard_block": 0,
+          "guard_block": 8,
           "attack": 40,
           "raw_damage": 12,
-          "damage_applied": 12,
+          "damage_applied": 4,
           "defeated": false,
           "session_xp_total": 10,
           "boss_state": "absent"
@@ -8027,20 +8198,20 @@
         {
           "tick": 2000,
           "phase": "assault",
-          "wall_hp": 994,
+          "wall_hp": 996,
           "wall_max": 1000,
           "townhall_hp": 500,
-          "wood": 418,
-          "stone": 260,
+          "wood": 400,
+          "stone": 250,
           "food": 300,
-          "construction_work": 72,
+          "construction_work": 0,
           "wall_tier": 1,
           "ordinary_hp": 6,
           "boss_hp": 0,
-          "guard_block": 0,
+          "guard_block": 8,
           "attack": 40,
           "raw_damage": 2,
-          "damage_applied": 2,
+          "damage_applied": 0,
           "defeated": false,
           "session_xp_total": 10,
           "boss_state": "absent"
@@ -8048,17 +8219,17 @@
         {
           "tick": 2200,
           "phase": "assault",
-          "wall_hp": 1000,
+          "wall_hp": 996,
           "wall_max": 1000,
           "townhall_hp": 500,
-          "wood": 418,
-          "stone": 261,
+          "wood": 400,
+          "stone": 250,
           "food": 300,
-          "construction_work": 74,
+          "construction_work": 0,
           "wall_tier": 1,
           "ordinary_hp": 0,
           "boss_hp": 0,
-          "guard_block": 0,
+          "guard_block": 8,
           "attack": 40,
           "raw_damage": 0,
           "damage_applied": 0,
@@ -8069,17 +8240,17 @@
         {
           "tick": 2400,
           "phase": "assault",
-          "wall_hp": 1000,
+          "wall_hp": 996,
           "wall_max": 1000,
           "townhall_hp": 500,
-          "wood": 420,
-          "stone": 262,
+          "wood": 400,
+          "stone": 250,
           "food": 300,
-          "construction_work": 82,
+          "construction_work": 0,
           "wall_tier": 1,
           "ordinary_hp": 0,
           "boss_hp": 0,
-          "guard_block": 0,
+          "guard_block": 8,
           "attack": 40,
           "raw_damage": 0,
           "damage_applied": 0,
@@ -8090,17 +8261,17 @@
         {
           "tick": 2600,
           "phase": "finale",
-          "wall_hp": 1000,
+          "wall_hp": 996,
           "wall_max": 1000,
           "townhall_hp": 500,
-          "wood": 422,
-          "stone": 263,
+          "wood": 400,
+          "stone": 250,
           "food": 300,
-          "construction_work": 90,
+          "construction_work": 0,
           "wall_tier": 1,
           "ordinary_hp": 0,
           "boss_hp": 0,
-          "guard_block": 0,
+          "guard_block": 8,
           "attack": 40,
           "raw_damage": 0,
           "damage_applied": 0,
@@ -8111,22 +8282,845 @@
         {
           "tick": 2800,
           "phase": "results",
-          "wall_hp": 1000,
+          "wall_hp": 996,
           "wall_max": 1000,
           "townhall_hp": 500,
-          "wood": 424,
-          "stone": 264,
+          "wood": 400,
+          "stone": 250,
           "food": 300,
-          "construction_work": 98,
+          "construction_work": 0,
           "wall_tier": 1,
           "ordinary_hp": 0,
           "boss_hp": 0,
-          "guard_block": 0,
+          "guard_block": 8,
           "attack": 40,
           "raw_damage": 0,
           "damage_applied": 0,
           "defeated": false,
           "session_xp_total": 10,
+          "boss_state": "absent"
+        }
+      ]
+    },
+    {
+      "id": "C024",
+      "note": "Genuine 1/1/1 tie with unaffordable A: affordability filter selects B",
+      "inputs": {
+        "wave_no": 4,
+        "consecutive_wins": 0,
+        "consecutive_losses": 0,
+        "wall_tier": 1,
+        "wall_hp": 1000,
+        "townhall_hp": 500,
+        "wood": 40,
+        "stone": 250,
+        "food": 300,
+        "construction_work": 0,
+        "builders": 0,
+        "guards": 0,
+        "fighters": 0,
+        "explicit_joins": [
+          {
+            "actor_key": "u1",
+            "role": "fighter",
+            "scheduled_tick": 0
+          },
+          {
+            "actor_key": "u2",
+            "role": "fighter",
+            "scheduled_tick": 1
+          },
+          {
+            "actor_key": "u3",
+            "role": "fighter",
+            "scheduled_tick": 1
+          }
+        ],
+        "ballot_events": [
+          {
+            "actor_key": "u1",
+            "option": "A",
+            "scheduled_tick": 900
+          },
+          {
+            "actor_key": "u2",
+            "option": "B",
+            "scheduled_tick": 900
+          },
+          {
+            "actor_key": "u3",
+            "option": "C",
+            "scheduled_tick": 900
+          }
+        ]
+      },
+      "outcome": {
+        "result": "victory",
+        "wave_no": 4,
+        "tick": 2999,
+        "lifecycle": "running",
+        "defeated": false,
+        "anchor_population": 3,
+        "difficulty": 1,
+        "base_hp": 86,
+        "wall_tier": 1,
+        "wall_hp": 992,
+        "wall_max": 1000,
+        "townhall_hp": 500,
+        "wood": 140,
+        "stone": 310,
+        "food": 300,
+        "construction_work": 0,
+        "total_wins": 1,
+        "consecutive_wins": 1,
+        "consecutive_losses": 0,
+        "vote_chosen": "B",
+        "session_xp_total": 30,
+        "boss_hp_at_2600": 0,
+        "ordinary_hp_at_2600": 0,
+        "state_digest": "bda5d44721c9d541fd8d245e0cd373240820dc5b043ac1b7c647d5ef64ad7ead",
+        "vote_counts": {
+          "a": 1,
+          "b": 1,
+          "c": 1
+        },
+        "member_state": [
+          {
+            "actor_key": "u1",
+            "role": "fighter",
+            "joined_tick": 0,
+            "last_change_tick": null,
+            "first_switch_used": false,
+            "xp_awarded": true,
+            "session_xp": 10
+          },
+          {
+            "actor_key": "u2",
+            "role": "fighter",
+            "joined_tick": 1,
+            "last_change_tick": null,
+            "first_switch_used": false,
+            "xp_awarded": true,
+            "session_xp": 10
+          },
+          {
+            "actor_key": "u3",
+            "role": "fighter",
+            "joined_tick": 1,
+            "last_change_tick": null,
+            "first_switch_used": false,
+            "xp_awarded": true,
+            "session_xp": 10
+          }
+        ]
+      },
+      "boundary_trace": [
+        {
+          "tick": 200,
+          "phase": "prep",
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 40,
+          "stone": 250,
+          "food": 300,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 0,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 400,
+          "phase": "prep",
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 40,
+          "stone": 250,
+          "food": 300,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 0,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 600,
+          "phase": "prep",
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 40,
+          "stone": 250,
+          "food": 300,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 0,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 800,
+          "phase": "prep",
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 40,
+          "stone": 250,
+          "food": 300,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 0,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 1000,
+          "phase": "prep",
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 40,
+          "stone": 250,
+          "food": 300,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 0,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 1200,
+          "phase": "prep",
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 40,
+          "stone": 250,
+          "food": 250,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 0,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 1400,
+          "phase": "prep",
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 40,
+          "stone": 250,
+          "food": 250,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 0,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 1600,
+          "phase": "assault",
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 40,
+          "stone": 250,
+          "food": 250,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 86,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 0,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 1800,
+          "phase": "assault",
+          "wall_hp": 992,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 40,
+          "stone": 250,
+          "food": 250,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 29,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 57,
+          "raw_damage": 8,
+          "damage_applied": 8,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 2000,
+          "phase": "assault",
+          "wall_hp": 992,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 40,
+          "stone": 250,
+          "food": 250,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 57,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 2200,
+          "phase": "assault",
+          "wall_hp": 992,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 40,
+          "stone": 250,
+          "food": 250,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 57,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 2400,
+          "phase": "assault",
+          "wall_hp": 992,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 40,
+          "stone": 250,
+          "food": 250,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 57,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 2600,
+          "phase": "finale",
+          "wall_hp": 992,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 40,
+          "stone": 250,
+          "food": 250,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 57,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 2800,
+          "phase": "results",
+          "wall_hp": 992,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 40,
+          "stone": 250,
+          "food": 250,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 57,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        }
+      ]
+    },
+    {
+      "id": "C025",
+      "note": "Re-vote latest-wins: v1 A-\u003eC at tick 1000, applied tally A=1 C=2, C selected",
+      "inputs": {
+        "wave_no": 4,
+        "consecutive_wins": 0,
+        "consecutive_losses": 0,
+        "wall_tier": 1,
+        "wall_hp": 1000,
+        "townhall_hp": 500,
+        "wood": 400,
+        "stone": 250,
+        "food": 300,
+        "construction_work": 0,
+        "builders": 0,
+        "guards": 0,
+        "fighters": 0,
+        "explicit_joins": [
+          {
+            "actor_key": "v1",
+            "role": "fighter",
+            "scheduled_tick": 0
+          },
+          {
+            "actor_key": "v2",
+            "role": "fighter",
+            "scheduled_tick": 1
+          },
+          {
+            "actor_key": "v3",
+            "role": "fighter",
+            "scheduled_tick": 1
+          }
+        ],
+        "ballot_events": [
+          {
+            "actor_key": "v1",
+            "option": "A",
+            "scheduled_tick": 900
+          },
+          {
+            "actor_key": "v2",
+            "option": "A",
+            "scheduled_tick": 900
+          },
+          {
+            "actor_key": "v3",
+            "option": "C",
+            "scheduled_tick": 900
+          },
+          {
+            "actor_key": "v1",
+            "option": "C",
+            "scheduled_tick": 1000
+          }
+        ]
+      },
+      "outcome": {
+        "result": "victory",
+        "wave_no": 4,
+        "tick": 2999,
+        "lifecycle": "running",
+        "defeated": false,
+        "anchor_population": 3,
+        "difficulty": 1,
+        "base_hp": 86,
+        "wall_tier": 1,
+        "wall_hp": 990,
+        "wall_max": 1000,
+        "townhall_hp": 500,
+        "wood": 500,
+        "stone": 310,
+        "food": 350,
+        "construction_work": 0,
+        "total_wins": 1,
+        "consecutive_wins": 1,
+        "consecutive_losses": 0,
+        "vote_chosen": "C",
+        "session_xp_total": 30,
+        "boss_hp_at_2600": 0,
+        "ordinary_hp_at_2600": 0,
+        "state_digest": "fa68d7f88b3dd3594471fdb04d9e63c282f6196eaa10ce686dd665b7a8fc5f3e",
+        "vote_counts": {
+          "a": 1,
+          "b": 0,
+          "c": 2
+        },
+        "member_state": [
+          {
+            "actor_key": "v1",
+            "role": "fighter",
+            "joined_tick": 0,
+            "last_change_tick": null,
+            "first_switch_used": false,
+            "xp_awarded": true,
+            "session_xp": 10
+          },
+          {
+            "actor_key": "v2",
+            "role": "fighter",
+            "joined_tick": 1,
+            "last_change_tick": null,
+            "first_switch_used": false,
+            "xp_awarded": true,
+            "session_xp": 10
+          },
+          {
+            "actor_key": "v3",
+            "role": "fighter",
+            "joined_tick": 1,
+            "last_change_tick": null,
+            "first_switch_used": false,
+            "xp_awarded": true,
+            "session_xp": 10
+          }
+        ]
+      },
+      "boundary_trace": [
+        {
+          "tick": 200,
+          "phase": "prep",
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 400,
+          "stone": 250,
+          "food": 300,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 0,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 400,
+          "phase": "prep",
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 400,
+          "stone": 250,
+          "food": 300,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 0,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 600,
+          "phase": "prep",
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 400,
+          "stone": 250,
+          "food": 300,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 0,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 800,
+          "phase": "prep",
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 400,
+          "stone": 250,
+          "food": 300,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 0,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 1000,
+          "phase": "prep",
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 400,
+          "stone": 250,
+          "food": 300,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 0,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 1200,
+          "phase": "prep",
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 400,
+          "stone": 250,
+          "food": 300,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 0,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 1400,
+          "phase": "prep",
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 400,
+          "stone": 250,
+          "food": 300,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 0,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 1600,
+          "phase": "assault",
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 400,
+          "stone": 250,
+          "food": 300,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 86,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 0,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 1800,
+          "phase": "assault",
+          "wall_hp": 990,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 400,
+          "stone": 250,
+          "food": 300,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 36,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 50,
+          "raw_damage": 10,
+          "damage_applied": 10,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 2000,
+          "phase": "assault",
+          "wall_hp": 990,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 400,
+          "stone": 250,
+          "food": 300,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 50,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 2200,
+          "phase": "assault",
+          "wall_hp": 990,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 400,
+          "stone": 250,
+          "food": 300,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 50,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 2400,
+          "phase": "assault",
+          "wall_hp": 990,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 400,
+          "stone": 250,
+          "food": 300,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 50,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 2600,
+          "phase": "finale",
+          "wall_hp": 990,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 400,
+          "stone": 250,
+          "food": 300,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 50,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
+          "boss_state": "absent"
+        },
+        {
+          "tick": 2800,
+          "phase": "results",
+          "wall_hp": 990,
+          "wall_max": 1000,
+          "townhall_hp": 500,
+          "wood": 400,
+          "stone": 250,
+          "food": 300,
+          "construction_work": 0,
+          "wall_tier": 1,
+          "ordinary_hp": 0,
+          "boss_hp": 0,
+          "guard_block": 0,
+          "attack": 50,
+          "raw_damage": 0,
+          "damage_applied": 0,
+          "defeated": false,
+          "session_xp_total": 30,
           "boss_state": "absent"
         }
       ]

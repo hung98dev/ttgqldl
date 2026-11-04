@@ -8,30 +8,59 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"path/filepath"
 	"sort"
 )
 
 // CaseInputs is the documented, fully explicit input of one reference scenario.
+// Every field is typed: there is no []any and no permissive blend of registrations
+// and ballots. A case either names its explicit joins and role/ballot events or it
+// describes a synthetic population by role counts.
 type CaseInputs struct {
-	WaveNo            int64  `json:"wave_no"`
-	ConsecutiveWins   int    `json:"consecutive_wins"`
-	ConsecutiveLosses int    `json:"consecutive_losses"`
-	WallTier          int    `json:"wall_tier"`
-	WallHP            int64  `json:"wall_hp"`
-	TownhallHP        int64  `json:"townhall_hp"`
-	Wood              int64  `json:"wood"`
-	Stone             int64  `json:"stone"`
-	Food              int64  `json:"food"`
-	ConstructionWork  int64  `json:"construction_work"`
-	Builders          int    `json:"builders"`
-	Guards            int    `json:"guards"`
-	Fighters          int    `json:"fighters"`
-	Ballot            string `json:"ballot_option,omitempty"`
-	Joins             []Join `json:"explicit_joins,omitempty"`
+	WaveNo            int64 `json:"wave_no"`
+	ConsecutiveWins   int   `json:"consecutive_wins"`
+	ConsecutiveLosses int   `json:"consecutive_losses"`
+	WallTier          int   `json:"wall_tier"`
+	WallHP            int64 `json:"wall_hp"`
+	TownhallHP        int64 `json:"townhall_hp"`
+	Wood              int64 `json:"wood"`
+	Stone             int64 `json:"stone"`
+	Food              int64 `json:"food"`
+	ConstructionWork  int64 `json:"construction_work"`
+	Builders          int   `json:"builders"`
+	Guards            int   `json:"guards"`
+	Fighters          int   `json:"fighters"`
+	// Ballot is the legacy shorthand: every synthetic participant casts this option
+	// at tick 900. Explicit ballots use BallotEvents instead.
+	Ballot string `json:"ballot_option,omitempty"`
+	// Joins are explicit registrations with their effective tick. The first entry
+	// must be effective at tick 0 because it is the registration that starts the
+	// wave; every other entry is accepted in advance and applied at its own tick.
+	Joins []Join `json:"explicit_joins,omitempty"`
+	// BallotEvents are explicit ballots with their actor, option and effective
+	// tick. At least one actor votes A, B and C in the genuine tie case.
+	BallotEvents []BallotEvent `json:"ballot_events,omitempty"`
+	// RoleEvents are explicit role selections (including cooldown attempts) for
+	// already registered participants.
+	RoleEvents []RoleEventInput `json:"role_events,omitempty"`
 }
 
-// Join is one scheduled role input.
+// Join is one scheduled registration.
 type Join struct {
+	Actor string `json:"actor_key"`
+	Role  string `json:"role"`
+	Tick  int    `json:"scheduled_tick"`
+}
+
+// BallotEvent is one scheduled ballot.
+type BallotEvent struct {
+	Actor  string `json:"actor_key"`
+	Option string `json:"option"`
+	Tick   int    `json:"scheduled_tick"`
+}
+
+// RoleEventInput is one scheduled role selection for an existing participant.
+type RoleEventInput struct {
 	Actor string `json:"actor_key"`
 	Role  string `json:"role"`
 	Tick  int    `json:"scheduled_tick"`
@@ -64,6 +93,16 @@ type CaseOutcome struct {
 	BossHPAt2600      int64  `json:"boss_hp_at_2600"`
 	OrdinaryHPAt2600  int64  `json:"ordinary_hp_at_2600"`
 	StateDigest       string `json:"state_digest"`
+	// VoteCounts is the applied-ballot tally; it proves a tie is a real 1/1/1 tie
+	// rather than a label. It is emitted only for even (voting) waves.
+	VoteCounts *VoteTally `json:"vote_counts,omitempty"`
+	// MemberState is the complete participant state. It is emitted for cases with
+	// explicit registrations, so registration and cooldown bookkeeping is compared
+	// field by field instead of being inferred from aggregates.
+	MemberState []MemberSnapshot `json:"member_state,omitempty"`
+	// RoleEvents is the independent model's role decision log, emitted only for
+	// cases that script explicit role selections.
+	RoleEvents []RoleLogRow `json:"role_events,omitempty"`
 }
 
 // GoldenCase is one curated, reproducible reference vector.
@@ -87,6 +126,7 @@ type SweepAggregate struct {
 // GoldenFile is the machine-consumable artifact M02 must consume.
 type GoldenFile struct {
 	GeneratedBy            string           `json:"generated_by"`
+	FixtureSchema          int              `json:"fixture_schema"`
 	RulesVersion           string           `json:"rules_version"`
 	CanonicalSchemaVersion int              `json:"canonical_schema_version"`
 	SweepNote              string           `json:"sweep_note"`
@@ -94,6 +134,22 @@ type GoldenFile struct {
 	SweepDigest            string           `json:"sweep_digest"`
 	Aggregates             []SweepAggregate `json:"sweep_aggregates"`
 	Cases                  []GoldenCase     `json:"cases"`
+}
+
+// GoldenManifest pins the generated fixture so a production test can enforce its
+// count, identity, versions and file digest instead of trusting a prose claim.
+type GoldenManifest struct {
+	Schema                 int      `json:"schema"`
+	FixtureSchema          int      `json:"fixture_schema"`
+	RulesVersion           string   `json:"rules_version"`
+	CanonicalSchemaVersion int      `json:"canonical_schema_version"`
+	Source                 string   `json:"source"`
+	SourceDigestSHA256     string   `json:"source_digest_sha256"`
+	FixtureDigestSHA256    string   `json:"fixture_digest_sha256"`
+	CaseCount              int      `json:"case_count"`
+	CaseIDs                []string `json:"case_ids"`
+	Provenance             string   `json:"provenance"`
+	Regeneration           string   `json:"regeneration"`
 }
 
 // Case is a scenario definition with a convenient literal form.
@@ -115,6 +171,116 @@ func defaultInputs() CaseInputs {
 	}
 }
 
+// inputEvent is one typed explicit input with its effective tick.
+type inputEvent struct {
+	Tick   int
+	Kind   ScheduleKind
+	Actor  string
+	Role   Role
+	Option string
+}
+
+// inputEvents validates the typed case inputs and returns them ordered by
+// effective tick, preserving declaration order inside one tick. Invalid inputs
+// abort generation: a case must never silently drop a registration or a ballot.
+func inputEvents(in CaseInputs) []inputEvent {
+	var events []inputEvent
+	registered := map[string]bool{}
+	if len(in.Joins) > 0 {
+		for _, join := range in.Joins {
+			role, ok := ParseRole(join.Role)
+			if !ok {
+				panic(fmt.Sprintf("case input: unknown role %q", join.Role))
+			}
+			if registered[join.Actor] {
+				panic(fmt.Sprintf("case input: duplicate join actor %q", join.Actor))
+			}
+			if join.Tick < 0 || join.Tick > FinalCombatTick {
+				panic(fmt.Sprintf("case input: join tick %d outside 0..2800", join.Tick))
+			}
+			registered[join.Actor] = true
+			events = append(events, inputEvent{Tick: join.Tick, Kind: ScheduleJoin, Actor: join.Actor, Role: role})
+		}
+		if events[0].Tick != 0 {
+			panic("case input: the first explicit join must be effective at tick 0")
+		}
+		for _, join := range in.Joins[1:] {
+			if join.Tick == 0 {
+				panic("case input: only the starting registration can be effective at tick 0")
+			}
+		}
+	} else {
+		for index, actor := range syntheticActors(in) {
+			// The production contract starts a wave with exactly one accepted
+			// registration at tick 0; every later registration is accepted at tick 0
+			// and becomes effective at tick 1. The reference model uses the same
+			// shape so participant state is directly comparable.
+			tick := 1
+			if index == 0 {
+				tick = 0
+			}
+			registered[actor.Actor] = true
+			events = append(events, inputEvent{Tick: tick, Kind: ScheduleJoin, Actor: actor.Actor, Role: actor.Role})
+		}
+	}
+	for _, event := range in.RoleEvents {
+		role, ok := ParseRole(event.Role)
+		if !ok {
+			panic(fmt.Sprintf("case input: unknown role %q", event.Role))
+		}
+		if !registered[event.Actor] {
+			panic(fmt.Sprintf("case input: role event for unregistered actor %q", event.Actor))
+		}
+		if event.Tick < 1 || event.Tick > FinalCombatTick {
+			panic(fmt.Sprintf("case input: role event tick %d outside 1..2800", event.Tick))
+		}
+		events = append(events, inputEvent{Tick: event.Tick, Kind: ScheduleRoleChange, Actor: event.Actor, Role: role})
+	}
+	if in.Ballot != "" {
+		if !validOption(in.Ballot) {
+			panic(fmt.Sprintf("case input: unknown ballot option %q", in.Ballot))
+		}
+		for _, actor := range in.actorNames() {
+			events = append(events, inputEvent{Tick: 900, Kind: ScheduleBallot, Actor: actor, Option: in.Ballot})
+		}
+	}
+	for _, ballot := range in.BallotEvents {
+		if !validOption(ballot.Option) {
+			panic(fmt.Sprintf("case input: unknown ballot option %q", ballot.Option))
+		}
+		if ballot.Tick < VoteWindowStart || ballot.Tick > VoteWindowEnd {
+			panic(fmt.Sprintf("case input: ballot tick %d outside [800,1199]", ballot.Tick))
+		}
+		if !registered[ballot.Actor] {
+			panic(fmt.Sprintf("case input: ballot for unregistered actor %q", ballot.Actor))
+		}
+		events = append(events, inputEvent{Tick: ballot.Tick, Kind: ScheduleBallot, Actor: ballot.Actor, Option: ballot.Option})
+	}
+	sort.SliceStable(events, func(i, j int) bool { return events[i].Tick < events[j].Tick })
+	return events
+}
+
+func validOption(option string) bool {
+	return option == "A" || option == "B" || option == "C"
+}
+
+// actorNames lists the registered actor names in declaration order.
+func (in CaseInputs) actorNames() []string {
+	if len(in.Joins) > 0 {
+		names := make([]string, 0, len(in.Joins))
+		for _, join := range in.Joins {
+			names = append(names, join.Actor)
+		}
+		return names
+	}
+	synthetic := syntheticActors(in)
+	names := make([]string, 0, len(synthetic))
+	for _, actor := range synthetic {
+		names = append(names, actor.Actor)
+	}
+	return names
+}
+
 func buildSim(in CaseInputs) *Sim {
 	s := NewSim()
 	s.WaveNo = in.WaveNo
@@ -130,24 +296,19 @@ func buildSim(in CaseInputs) *Sim {
 	s.Lifecycle = "running"
 	s.Tick = 0
 
-	if len(in.Joins) > 0 {
-		for _, j := range in.Joins {
-			r, ok := ParseRole(j.Role)
-			if !ok {
-				panic("bad role " + j.Role)
-			}
-			s.Join(j.Actor, r, j.Tick)
-		}
-	} else {
-		for _, a := range syntheticActors(in) {
-			s.Join(a.Actor, a.Role, 0)
-		}
+	for index, event := range inputEvents(in) {
+		s.Pending = append(s.Pending, scheduledEvent{
+			Tick:   event.Tick,
+			Seq:    index,
+			Kind:   event.Kind,
+			Actor:  event.Actor,
+			Role:   event.Role,
+			Option: event.Option,
+		})
 	}
-	if in.Ballot != "" {
-		for _, m := range append([]*Member{}, s.Members...) {
-			s.Vote(m.Actor, in.Ballot, 900)
-		}
-	}
+	// Tick-0 inputs belong to the wave start and are effective before the first
+	// gameplay tick.
+	s.applyDue()
 	return s
 }
 
@@ -193,15 +354,15 @@ func (s *Sim) RunWave() {
 	s.CloseWave()
 }
 
-func outcomeOf(s *Sim) CaseOutcome {
+func outcomeOf(s *Sim, inputs CaseInputs) CaseOutcome {
 	var boss2600, ord2600 int64
-	for _, r := range s.Trace {
-		if r.Tick == 2600 {
-			boss2600 = r.BossHP
-			ord2600 = r.OrdinaryHP
+	for _, row := range s.Trace {
+		if row.Tick == 2600 {
+			boss2600 = row.BossHP
+			ord2600 = row.OrdinaryHP
 		}
 	}
-	return CaseOutcome{
+	out := CaseOutcome{
 		Result:            s.Result,
 		WaveNo:            s.WaveNo,
 		Tick:              s.Tick,
@@ -227,12 +388,26 @@ func outcomeOf(s *Sim) CaseOutcome {
 		OrdinaryHPAt2600:  ord2600,
 		StateDigest:       s.StateDigest(),
 	}
+	if VoteAvailableForFixture(s.WaveNo) {
+		a, b, c := s.voteScores()
+		out.VoteCounts = &VoteTally{A: a, B: b, C: c}
+	}
+	if len(inputs.Joins) > 0 {
+		out.MemberState = s.memberSnapshots()
+	}
+	if len(inputs.RoleEvents) > 0 {
+		out.RoleEvents = append([]RoleLogRow(nil), s.RoleLog...)
+	}
+	return out
 }
+
+// VoteAvailableForFixture mirrors the documented even-wave voting rule.
+func VoteAvailableForFixture(waveNo int64) bool { return waveNo > 0 && waveNo%2 == 0 }
 
 func runCase(c Case) GoldenCase {
 	s := buildSim(c.Inputs)
 	s.RunTo(WaveTicks - 1) // settlement at 2800, before the rollover reset
-	return GoldenCase{ID: c.ID, Note: c.Note, Inputs: c.Inputs, Outcome: outcomeOf(s), Trace: s.Trace}
+	return GoldenCase{ID: c.ID, Note: c.Note, Inputs: c.Inputs, Outcome: outcomeOf(s, c.Inputs), Trace: s.Trace}
 }
 
 // curatedCases returns the reference vectors. Every expectation asserted in
@@ -279,12 +454,53 @@ func curatedCases() []Case {
 	zeroVoteUnaffordable.Wood = 40
 	zeroVoteUnaffordable.Fighters = 2
 
+	// C010: the previous fixture only registered three builders and never cast a
+	// ballot, so the label "tie" was never executed. This fixture casts one A, one
+	// B and one C ballot at a legal tick, producing a genuine 1/1/1 tie.
 	tieVote := defaultInputs()
 	tieVote.WaveNo = 4
 	tieVote.Joins = []Join{
 		{Actor: "a1", Role: "builder", Tick: 0},
-		{Actor: "a2", Role: "builder", Tick: 0},
-		{Actor: "a3", Role: "builder", Tick: 0},
+		{Actor: "a2", Role: "builder", Tick: 1},
+		{Actor: "a3", Role: "builder", Tick: 1},
+	}
+	tieVote.BallotEvents = []BallotEvent{
+		{Actor: "a1", Option: "A", Tick: 900},
+		{Actor: "a2", Option: "B", Tick: 900},
+		{Actor: "a3", Option: "C", Tick: 900},
+	}
+
+	// C024: the same 1/1/1 tie with an unaffordable A. The documented selection
+	// must skip A and choose B, proving the affordability filter runs inside the
+	// tie-break order rather than only for the zero-ballot default.
+	tieUnaffordableA := defaultInputs()
+	tieUnaffordableA.WaveNo = 4
+	tieUnaffordableA.Wood = 40
+	tieUnaffordableA.Joins = []Join{
+		{Actor: "u1", Role: "fighter", Tick: 0},
+		{Actor: "u2", Role: "fighter", Tick: 1},
+		{Actor: "u3", Role: "fighter", Tick: 1},
+	}
+	tieUnaffordableA.BallotEvents = []BallotEvent{
+		{Actor: "u1", Option: "A", Tick: 900},
+		{Actor: "u2", Option: "B", Tick: 900},
+		{Actor: "u3", Option: "C", Tick: 900},
+	}
+
+	// C025: one latest ballot per player wins. u1 first votes A and later changes
+	// to C at a legal later tick, so the applied tally must be A=1, C=2.
+	revote := defaultInputs()
+	revote.WaveNo = 4
+	revote.Joins = []Join{
+		{Actor: "v1", Role: "fighter", Tick: 0},
+		{Actor: "v2", Role: "fighter", Tick: 1},
+		{Actor: "v3", Role: "fighter", Tick: 1},
+	}
+	revote.BallotEvents = []BallotEvent{
+		{Actor: "v1", Option: "A", Tick: 900},
+		{Actor: "v2", Option: "A", Tick: 900},
+		{Actor: "v3", Option: "C", Tick: 900},
+		{Actor: "v1", Option: "C", Tick: 1000},
 	}
 
 	defeat := defaultInputs()
@@ -349,9 +565,18 @@ func curatedCases() []Case {
 		{Actor: "late", Role: "fighter", Tick: 1999},
 	}
 
+	// C023: the previous fixture registered one builder and never selected another
+	// role, so the advertised cooldown path was never executed. This script covers
+	// the free first switch, a rejected attempt 599 ticks later, and the accepted
+	// switch at the exact 600-tick boundary.
 	cooldown := defaultInputs()
 	cooldown.WaveNo = 7
 	cooldown.Joins = []Join{{Actor: "solo", Role: "builder", Tick: 0}}
+	cooldown.RoleEvents = []RoleEventInput{
+		{Actor: "solo", Role: "fighter", Tick: 1}, // first switch: permitted immediately
+		{Actor: "solo", Role: "guard", Tick: 600}, // 599 ticks since the last change: rejected
+		{Actor: "solo", Role: "guard", Tick: 601}, // exactly 600 ticks: accepted
+	}
 
 	return []Case{
 		{ID: "C001", Note: "QA-BAL-03 P=10 boss B2/G2/F6; boss dies at 2600, victory settled at 2800", Inputs: bal03a},
@@ -363,7 +588,7 @@ func curatedCases() []Case {
 		{ID: "C007", Note: "Vote C: guard block 90% and halved loss penalties", Inputs: voteC},
 		{ID: "C008", Note: "Zero ballots, A affordable: deterministic default A is charged", Inputs: zeroVoteAffordable},
 		{ID: "C009", Note: "Zero ballots, wood<50: fallback C, no deduction", Inputs: zeroVoteUnaffordable},
-		{ID: "C010", Note: "Tie A/B/C on an even wave: lexicographic A wins", Inputs: tieVote},
+		{ID: "C010", Note: "Genuine A/B/C tie: three ballots at tick 900, tally 1/1/1, deterministic priority selects A", Inputs: tieVote},
 		{ID: "C011", Note: "DEFEATED at 2200: later economy/XP skipped, exactly one settlement, recovery floors", Inputs: defeat},
 		{ID: "C012", Note: "Eight builders: construction work reaches 200 and one upgrade is applied at 2600", Inputs: upgrade},
 		{ID: "C013", Note: "Damaged wall repaired from capacity, wood cost ceil(repair/5)", Inputs: repair},
@@ -376,7 +601,9 @@ func curatedCases() []Case {
 		{ID: "C020", Note: "Militia cliff: P=5 all-builder loses", Inputs: cliffP5},
 		{ID: "C021", Note: "Boss incoming: ordinary cleared at 2200, boss spawn 2600, victory 2800", Inputs: bossIncoming},
 		{ID: "C022", Note: "Anchor P counts joined_tick<=1599 only", Inputs: lateJoin},
-		{ID: "C023", Note: "Role change: first immediate, later >=600 ticks", Inputs: cooldown},
+		{ID: "C023", Note: "Role change: first switch immediate, 599-tick attempt rejected, exact 600-tick switch accepted", Inputs: cooldown},
+		{ID: "C024", Note: "Genuine 1/1/1 tie with unaffordable A: affordability filter selects B", Inputs: tieUnaffordableA},
+		{ID: "C025", Note: "Re-vote latest-wins: v1 A->C at tick 1000, applied tally A=1 C=2, C selected", Inputs: revote},
 	}
 }
 
@@ -562,7 +789,44 @@ func assertions() []string {
 	c9 := byID["C009"]
 	add(c9.Outcome.VoteChosen == "C", "C009 unaffordable default=%s want C", c9.Outcome.VoteChosen)
 	add(c9.Outcome.Wood == 140, "C009 wood=%d want 140 (no 50 deduction)", c9.Outcome.Wood)
-	add(byID["C010"].Outcome.VoteChosen == "A", "C010 tie=%s want A", byID["C010"].Outcome.VoteChosen)
+	// Genuine tie: three ballots, one per option, at a legal tick.
+	c10 := byID["C010"]
+	add(c10.Outcome.VoteChosen == "A", "C010 tie=%s want A", c10.Outcome.VoteChosen)
+	if c10.Outcome.VoteCounts == nil {
+		add(false, "C010 must publish its applied ballot tally")
+	} else {
+		add(c10.Outcome.VoteCounts.A == 1 && c10.Outcome.VoteCounts.B == 1 && c10.Outcome.VoteCounts.C == 1,
+			"C010 tally=%+v want 1/1/1", *c10.Outcome.VoteCounts)
+	}
+	add(len(c10.Inputs.BallotEvents) == 3, "C010 must script three explicit ballots")
+	if len(c10.Outcome.MemberState) == 3 {
+		for _, member := range c10.Outcome.MemberState {
+			add(member.XPAwarded, "C010 member %s must be an XP-awarded contributor", member.Actor)
+		}
+	} else {
+		add(false, "C010 must publish three participant states")
+	}
+
+	// Affordability filter inside the tie-break order.
+	c24 := byID["C024"]
+	add(c24.Outcome.VoteChosen == "B", "C024 unaffordable-A tie=%s want B", c24.Outcome.VoteChosen)
+	if c24.Outcome.VoteCounts != nil {
+		add(c24.Outcome.VoteCounts.A == 1 && c24.Outcome.VoteCounts.B == 1 && c24.Outcome.VoteCounts.C == 1,
+			"C024 tally=%+v want 1/1/1", *c24.Outcome.VoteCounts)
+	} else {
+		add(false, "C024 must publish its applied ballot tally")
+	}
+	add(c24.Outcome.Wood == 140, "C024 wood=%d want 140 (40 start + 100 victory, no A charge)", c24.Outcome.Wood)
+
+	// Latest-ballot-per-player re-vote.
+	c25 := byID["C025"]
+	add(c25.Outcome.VoteChosen == "C", "C025 re-vote=%s want C", c25.Outcome.VoteChosen)
+	if c25.Outcome.VoteCounts != nil {
+		add(c25.Outcome.VoteCounts.A == 1 && c25.Outcome.VoteCounts.B == 0 && c25.Outcome.VoteCounts.C == 2,
+			"C025 tally=%+v want A=1 B=0 C=2", *c25.Outcome.VoteCounts)
+	} else {
+		add(false, "C025 must publish its applied ballot tally")
+	}
 
 	// Defeat handling.
 	d := byID["C011"]
@@ -625,6 +889,43 @@ func assertions() []string {
 
 	// Anchor boundary.
 	add(byID["C022"].Outcome.AnchorPopulation == 2, "C022 anchor=%d want 2", byID["C022"].Outcome.AnchorPopulation)
+
+	// Role-change cooldown: the case must execute the free switch, a rejected
+	// attempt 599 ticks later and the accepted switch exactly at 600 ticks.
+	c23 := byID["C023"]
+	add(len(c23.Inputs.RoleEvents) == 3, "C023 must script three explicit role selections")
+	add(c23.Outcome.AnchorPopulation == 1, "C023 anchor=%d want 1", c23.Outcome.AnchorPopulation)
+	if len(c23.Outcome.RoleEvents) != 4 {
+		add(false, "C023 role log=%d rows want 4 (registration + three selections)", len(c23.Outcome.RoleEvents))
+	} else {
+		type wantEvent struct {
+			tick     int
+			role     string
+			previous string
+			outcome  string
+		}
+		for index, want := range []wantEvent{
+			{tick: 0, role: "builder", outcome: "registered"},
+			{tick: 1, role: "fighter", previous: "builder", outcome: "role_changed"},
+			{tick: 600, role: "guard", outcome: "cooldown_rejected"},
+			{tick: 601, role: "guard", previous: "fighter", outcome: "role_changed"},
+		} {
+			got := c23.Outcome.RoleEvents[index]
+			add(got.Tick == want.tick && got.Role == want.role && got.PreviousRole == want.previous && got.Outcome == want.outcome,
+				"C023 role log[%d]=%+v want %+v", index, got, want)
+		}
+	}
+	if len(c23.Outcome.MemberState) != 1 {
+		add(false, "C023 must publish the participant state")
+	} else {
+		member := c23.Outcome.MemberState[0]
+		add(member.Role == "guard", "C023 final role=%s want guard", member.Role)
+		add(member.JoinedTick == 0, "C023 joined_tick=%d want 0", member.JoinedTick)
+		add(member.LastChangeTick != nil && *member.LastChangeTick == 601,
+			"C023 last_change_tick=%v want 601", member.LastChangeTick)
+		add(member.FirstSwitchUsed, "C023 first_switch_used must be true")
+		add(member.XPAwarded, "C023 participant must be XP-awarded")
+	}
 
 	// Global invariants over every trace row.
 	for id, c := range byID {
@@ -884,6 +1185,7 @@ func buildGolden() GoldenFile {
 	}
 	return GoldenFile{
 		GeneratedBy:            "tooling/refeval (independent reference evaluator)",
+		FixtureSchema:          FixtureSchemaVersion,
 		RulesVersion:           RulesVersion,
 		CanonicalSchemaVersion: CanonicalSchemaVersion,
 		SweepNote:              "P=1,3,4,5,10,30,100,1000,10000 x fighter share 0/25/50/75/100% x ordinary/boss x consecutive_wins 0/3/9 x consecutive_losses 0/1/3 + vote A/B/C at the clean baseline. cw>0 with cl>0 is an arithmetic stress pair, not a reachable game state (a win resets consecutive_losses).",
@@ -894,41 +1196,87 @@ func buildGolden() GoldenFile {
 	}
 }
 
-func marshalGolden(g GoldenFile) []byte {
-	b, err := json.MarshalIndent(g, "", "  ")
+// buildManifest pins the generated fixture. The backend differential test reads
+// this file and refuses to run if the count, identity, versions or digests do not
+// match, so a silently stale or hand-edited matrix cannot pass.
+func buildManifest(g GoldenFile, data []byte) GoldenManifest {
+	ids := make([]string, 0, len(g.Cases))
+	for _, c := range g.Cases {
+		ids = append(ids, c.ID)
+	}
+	sum := sha256.Sum256(data)
+	digest := hex.EncodeToString(sum[:])
+	return GoldenManifest{
+		Schema:                 2,
+		FixtureSchema:          g.FixtureSchema,
+		RulesVersion:           g.RulesVersion,
+		CanonicalSchemaVersion: g.CanonicalSchemaVersion,
+		Source:                 "tooling/refeval/testdata/golden_vectors.json",
+		SourceDigestSHA256:     digest,
+		FixtureDigestSHA256:    digest,
+		CaseCount:              len(g.Cases),
+		CaseIDs:                ids,
+		Provenance:             "Independent reference evaluator committed in this repository; the backend matrix is generated by `go run ./refeval -write`, never hand-edited.",
+		Regeneration:           "Run `go run ./refeval -write` from tooling/; normal tests never rewrite these files.",
+	}
+}
+
+func marshalJSON(value any) []byte {
+	b, err := json.MarshalIndent(value, "", "  ")
 	if err != nil {
 		panic(err)
 	}
 	return append(b, '\n')
 }
 
+func marshalGolden(g GoldenFile) []byte { return marshalJSON(g) }
+
 func main() {
-	write := flag.Bool("write", false, "regenerate the golden vector file")
-	check := flag.Bool("check", false, "verify the golden vector file is byte-identical")
+	write := flag.Bool("write", false, "regenerate the golden vector file and the backend fixture copy")
+	check := flag.Bool("check", false, "verify the golden vectors, backend matrix copy and manifest are byte-identical")
 	goldenPath := flag.String("golden", "refeval/testdata/golden_vectors.json", "golden vector path")
+	matrixPath := flag.String("matrix", "../backend/testdata/golden/matrix.json", "backend fixture copy path")
+	manifestPath := flag.String("manifest", "../backend/testdata/golden/manifest.json", "backend fixture manifest path")
 	list := flag.Bool("sweep", false, "print the population/role sweep aggregate table")
 	flag.Parse()
 
 	errs := assertions()
 	g := buildGolden()
 	data := marshalGolden(g)
+	manifestData := marshalJSON(buildManifest(g, data))
+
+	writeFile := func(path string, content []byte) {
+		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+			fmt.Fprintf(os.Stderr, "mkdir %s: %v\n", filepath.Dir(path), err)
+			os.Exit(1)
+		}
+		if err := os.WriteFile(path, content, 0o644); err != nil {
+			fmt.Fprintf(os.Stderr, "write %s: %v\n", path, err)
+			os.Exit(1)
+		}
+		fmt.Printf("wrote %s (%d bytes)\n", path, len(content))
+	}
+	checkFile := func(path string, content []byte) {
+		existing, err := os.ReadFile(path)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "read %s: %v\n", path, err)
+			errs = append(errs, fmt.Sprintf("cannot read %s", path))
+			return
+		}
+		if !bytes.Equal(existing, content) {
+			errs = append(errs, fmt.Sprintf("fixture drift: %s differs from the reference evaluator output", path))
+		}
+	}
 
 	if *write {
-		if err := os.WriteFile(*goldenPath, data, 0o644); err != nil {
-			fmt.Fprintf(os.Stderr, "write golden: %v\n", err)
-			os.Exit(1)
-		}
-		fmt.Printf("wrote %s (%d bytes)\n", *goldenPath, len(data))
+		writeFile(*goldenPath, data)
+		writeFile(*matrixPath, data)
+		writeFile(*manifestPath, manifestData)
 	}
 	if *check {
-		existing, err := os.ReadFile(*goldenPath)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "read golden: %v\n", err)
-			os.Exit(1)
-		}
-		if !bytes.Equal(existing, data) {
-			errs = append(errs, fmt.Sprintf("golden vector drift: %s differs from the reference evaluator output", *goldenPath))
-		}
+		checkFile(*goldenPath, data)
+		checkFile(*matrixPath, data)
+		checkFile(*manifestPath, manifestData)
 	}
 	if *list {
 		fmt.Printf("%-10s %-14s %-6s %-6s %s\n", "population", "fighter_share", "wins", "runs", "min_fighters")
@@ -937,8 +1285,8 @@ func main() {
 		}
 	}
 
-	fmt.Printf("refeval: %d curated cases, %d sweep runs, sweep_digest=%s\n",
-		len(g.Cases), g.SweepRuns, g.SweepDigest[:16])
+	fmt.Printf("refeval: fixture_schema=%d, %d curated cases, %d sweep runs, sweep_digest=%s\n",
+		g.FixtureSchema, len(g.Cases), g.SweepRuns, g.SweepDigest[:16])
 	if len(errs) > 0 {
 		fmt.Printf("FAIL (%d assertion(s))\n", len(errs))
 		for _, e := range errs {

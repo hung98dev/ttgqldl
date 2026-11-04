@@ -12,6 +12,13 @@
 go.mod text eol=lf
 go.sum text eol=lf
 
+# Golden fixture digests are SHA-256 over the exact file bytes. A CRLF checkout
+# on Windows would break fixture verification locally even though the committed
+# bytes are unchanged, so the independently generated vectors and the backend copy
+# must always be checked out with LF.
+tooling/refeval/testdata/*.json text eol=lf
+backend/testdata/golden/*.json   text eol=lf
+
 # Binary assets are never normalised.
 *.png  binary
 *.jpg  binary

@@ -4,6 +4,19 @@ Status: **PENDING OWNER APPROVAL** (not approved, not implemented)
 Owners: repository owner (`hung98dev`)
 Scope: M02 canonical serialization contract; gameplay rules unchanged (`ttg-rules-v1`)
 
+## 0. Version identifiers (do not conflate)
+
+| Identifier | Current value | Meaning |
+|---|---|---|
+| Gameplay rules version | `ttg-rules-v1` | Every number, formula, ordering and bound in 02_GAME_RULES.md. A change requires a rules-version bump. |
+| Canonical schema version | `1` | The canonical game-state JSON projection and its SHA-256 hash (04_DATABASE.md). This ADR proposes `2`. |
+| Private checkpoint envelope version | `4` | Private replay/restoration integrity payload (canonical hash + complete authoritative SessionState + pending queues). Version 4 supersedes the incremental v1/v2/v3 exception lists; it is a private format, not the canonical schema. |
+| Reference fixture schema version | `2` | Shape of the independently generated golden fixtures (`tooling/refeval`). A shape change bumps it and fails the production differential test until reviewed. |
+
+These four numbers move independently. The private envelope version is **not** the
+canonical schema version, and a private checkpoint can be version 4 while the
+canonical game-state schema is still version 1.
+
 ## 1. Problem
 
 Canonical schema v1 hashes `session_xp` only inside the current-wave `members`
@@ -15,8 +28,9 @@ which shows two states with identical v1 hashes and different retained XP.
 
 This matters because QA-DB-05 / QA-OPS-03 rely on the canonical hash to detect
 lost or duplicated XP across checkpoints and replay. The private checkpoint
-envelope (version 2) already covers all persisted XP, but that is a separate
-checksum, not the canonical game-state hash.
+envelope (version 4) covers **all** persisted XP and, since version 4, every other
+authoritative field that canonical v1 omits, but that is a separate private
+integrity payload, not the canonical game-state hash.
 
 ## 2. Proposed schema v2
 
@@ -52,13 +66,53 @@ Requirements:
 
 ## 4. Checkpoints and replay
 
-- Private checkpoint envelope version 2 already stores and digests all persisted
-  XP; it is independent of the canonical schema version.
+- The private checkpoint envelope is at **version 4**. It carries the canonical
+  v1 `state_hash` unchanged plus a `private_digest` computed over the complete
+  authoritative restoration payload: the entire `SessionState` (revision, session
+  and village ids, source mode, lifecycle and pause reasons, village resources and
+  progression, wave pools/boss/vote/ballots/defeat/result/boss-incoming, members,
+  pending next-wave registrations, persisted XP, all difficulty internals, streaks,
+  privacy epoch and input sequence) **and** every accepted but not yet applied role
+  and ballot command. This is independent of the canonical schema version.
+- Version 4 was introduced because the earlier incremental exception list (v1
+  queues, v2 persisted XP, v3 pause reasons) still left valid canonical-hash
+  collisions on fields that change continuation: `Mode`, `InputSequence`, applied
+  ballot identity/sequence, `Difficulty.MilitiaAttack`, `Difficulty.BossMaxHP`,
+  `Difficulty.ActualPopulation`, `Difficulty.RecoveryPercent`, `Wave.BossIncoming`,
+  `Wave.Result` and `Village.Level`. All ten collisions are reproduced and
+  separated in `backend/internal/simulation.TestPrivateStateCollisions`.
+- Unsigned envelope versions 1, 2 and 3 are rejected, never silently migrated.
+- The private digest is an integrity check against corruption and partial edits,
+  **not** authentication: an attacker who can rewrite both payload and digest can
+  recompute it. A trusted external anchor/signature is out of M02 scope.
 - After approval, canonical v2 must be serialized in checkpoints with an explicit
   schema-version tag; restoring a v1 checkpoint under v2 must fail closed rather
   than migrate silently.
 - Replay comparison switches to v2 hashes; existing v1 replay traces remain
   historical artifacts.
+
+## 4a. Canonical v1 omission inventory (measured, not assumed)
+
+Each row is a pair of independently valid states that share the canonical v1 hash
+and differ in exactly one authoritative field. Canonical equality and private
+digest separation are both executed by `TestPrivateStateCollisions`.
+
+| Field | Canonical v1 | Private digest v4 | Continuation impact |
+|---|---|---|---|
+| `SessionState.InputSequence` | omitted (collision) | covered | accepted-input sequence namespace (M03 ingest dedupe, durable replay ordering) |
+| `SessionState.Mode` | omitted (collision) | covered | source admission and audit provenance above the reducer |
+| `WaveState.Ballots` identity | omitted (counts/selected only; collision) | covered | same-tick latest-wins re-vote accounting |
+| `Difficulty.MilitiaAttack` | omitted (collision) | covered | added to fighter attack at every combat boundary |
+| `WaveState.BossIncoming` | omitted (collision) | covered | suppresses duplicate `boss_incoming` events |
+| `WaveState.Result` | omitted (collision) | covered | rollover fails closed while pending |
+| `VillageState.Level` | omitted (collision) | covered | persistent progression value |
+| `Difficulty.ActualPopulation` | omitted; the anchor is a capped proxy (collision above 10,000) | covered | truthful participant count |
+| `Difficulty.RecoveryPercent` | omitted (collision) | covered | derived recovery modifier |
+| `Difficulty.BossMaxHP` | omitted (collision) | covered | tick-2600 boss spawn hit points |
+
+Every field the task brief asked to inspect is therefore covered by the private
+payload, while the fields canonical v1 does hash (`session_id`, `village_id`,
+lifecycle, resources, pools, boss existence/HP) remain canonical.
 
 ## 5. M04 persistence implications
 
@@ -98,6 +152,15 @@ is required because the underlying table is unchanged.
 - Full canonical, checkpoint, replay and M02 regression suite passes; exact-HEAD
   CI green.
 
+## 9a. Independent of this decision (already implemented)
+
+The private checkpoint format is **version 4** and already covers every
+authoritative field plus the pending queues. It is not a substitute for canonical
+v2 (`docs/evidence/M02-W0208.md` records both), but it removes the practical
+restore vulnerability while the owner decides: a checkpoint whose state or queues
+were altered — including the persisted-XP gap in section 1 — fails verification
+before any simulation step runs. `CanonicalSchemaVersion` remains 1.
+
 ## 10. Owner decision
 
 ```text
@@ -109,4 +172,7 @@ Option B: Reject/defer; provide the required alternative that restores full XP h
 No option is selected.
 ```
 
-No schema version constant, fixture or hash was changed by this record.
+No schema version constant, fixture or hash was changed by this record. The owner
+has not approved v2, and no task may self-approve it. M02 therefore stays
+IN_PROGRESS until the owner selects an option and the selected implementation,
+compatibility verification and exact-HEAD CI all succeed.

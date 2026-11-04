@@ -1,6 +1,7 @@
 package simulation
 
 import (
+	"encoding/json"
 	"errors"
 	"testing"
 
@@ -27,6 +28,19 @@ func queuedCheckpointFixture(t *testing.T) (domain.SessionState, RoleQueue) {
 		t.Fatal(err)
 	}
 	return state, queue
+}
+
+// reseal recomputes the private digest for a deliberately tampered payload, so a
+// structural test proves the queue contract is enforced independently of the
+// checksum.
+func reseal(t *testing.T, envelope CheckpointEnvelope, state domain.SessionState, queue RoleQueue) CheckpointEnvelope {
+	t.Helper()
+	digest, err := privateRestorationDigest(state, queue)
+	if err != nil {
+		t.Fatal(err)
+	}
+	envelope.PrivateDigest = digest
+	return envelope
 }
 
 func TestCheckpointEnvelopeDetectsQueueTampering(t *testing.T) {
@@ -67,9 +81,15 @@ func TestCheckpointEnvelopeDetectsQueueTampering(t *testing.T) {
 	}
 
 	tampered = envelope
-	tampered.IntegrityHash = "deadbeef"
+	tampered.PrivateDigest = "deadbeef"
 	if err := VerifyCheckpointEnvelope(tampered, state, queue); err == nil {
-		t.Fatal("tampered integrity hash was accepted")
+		t.Fatal("tampered private digest was accepted")
+	}
+
+	tampered = envelope
+	tampered.StateHash = "deadbeef"
+	if err := VerifyCheckpointEnvelope(tampered, state, queue); err == nil {
+		t.Fatal("tampered canonical state hash was accepted")
 	}
 
 	tampered = envelope
@@ -86,6 +106,61 @@ func TestCheckpointEnvelopeDetectsQueueTampering(t *testing.T) {
 		t.Fatal("restored queue mismatch was accepted")
 	}
 }
+
+// TestCheckpointRejectsMalformedQueuedCommands rewrites both the payload and the
+// digest, so only the semantic queue contract can reject these restores.
+func TestCheckpointRejectsMalformedQueuedCommands(t *testing.T) {
+	state, queue := queuedCheckpointFixture(t)
+	envelope, err := BuildCheckpointEnvelope(state, queue)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Run("invalid target wave", func(t *testing.T) {
+		badQueue := queue.Clone()
+		badQueue.Entries[0].TargetWave = 99
+		badEnvelope := envelope
+		badEnvelope.RoleQueue = append([]RoleCommand(nil), badQueue.Entries...)
+		badEnvelope = reseal(t, badEnvelope, state, badQueue)
+		if err := VerifyCheckpointEnvelope(badEnvelope, state, badQueue); err == nil {
+			t.Fatal("queued command with an invalid target wave was accepted")
+		}
+	})
+
+	t.Run("retroactive queued command", func(t *testing.T) {
+		badQueue := queue.Clone()
+		badQueue.Entries[0].AcceptedTick = 900
+		badEnvelope := envelope
+		badEnvelope.RoleQueue = append([]RoleCommand(nil), badQueue.Entries...)
+		badEnvelope = reseal(t, badEnvelope, state, badQueue)
+		if err := VerifyCheckpointEnvelope(badEnvelope, state, badQueue); err == nil {
+			t.Fatal("retroactive queued command was accepted")
+		}
+	})
+
+	t.Run("VoteOptionNone queue entry", func(t *testing.T) {
+		badQueue := queue.Clone()
+		badQueue.Ballots[0].Option = domain.VoteOptionNone
+		badEnvelope := envelope
+		badEnvelope.BallotQueue = append([]VoteCommand(nil), badQueue.Ballots...)
+		badEnvelope = reseal(t, badEnvelope, state, badQueue)
+		if err := VerifyCheckpointEnvelope(badEnvelope, state, badQueue); err == nil {
+			t.Fatal("a queued ballot without an option was accepted")
+		}
+	})
+
+	t.Run("duplicate cross-kind input sequence", func(t *testing.T) {
+		badQueue := queue.Clone()
+		badQueue.Ballots[0].InputSeq = badQueue.Entries[0].InputSeq
+		badEnvelope := envelope
+		badEnvelope.BallotQueue = append([]VoteCommand(nil), badQueue.Ballots...)
+		badEnvelope = reseal(t, badEnvelope, state, badQueue)
+		if err := VerifyCheckpointEnvelope(badEnvelope, state, badQueue); err == nil {
+			t.Fatal("a cross-kind duplicate input sequence was accepted")
+		}
+	})
+}
+
 func TestCheckpointDetectsRetainedXPTampering(t *testing.T) {
 	state, queue := queuedCheckpointFixture(t)
 	// A retired actor keeps session XP but is not a current-wave member; canonical
@@ -118,16 +193,11 @@ func TestCheckpointDetectsRetainedXPTampering(t *testing.T) {
 	}
 	// An attacker who also edits the envelope copy still fails the digest.
 	rewritten := envelope
-	rewritten.SessionXP = append([]domain.PlayerXP(nil), envelope.SessionXP...)
-	for i := range rewritten.SessionXP {
-		if rewritten.SessionXP[i].ActorKey == actorKey('z') {
-			rewritten.SessionXP[i].XP = 60
-		}
-	}
 	if err := VerifyCheckpointEnvelope(rewritten, tampered, queue); err == nil {
-		t.Fatal("tampered envelope passed its integrity digest")
+		t.Fatal("tampered state passed its integrity digest")
 	}
 }
+
 func TestLegacyEnvelopeVersionRejected(t *testing.T) {
 	state, queue := queuedCheckpointFixture(t)
 	envelope, err := BuildCheckpointEnvelope(state, queue)
@@ -137,10 +207,42 @@ func TestLegacyEnvelopeVersionRejected(t *testing.T) {
 	if envelope.SchemaVersion != checkpointEnvelopeVersion {
 		t.Fatalf("envelope version = %d", envelope.SchemaVersion)
 	}
-	legacy := envelope
-	legacy.SchemaVersion = 1
-	if err := VerifyCheckpointEnvelope(legacy, state, queue); err == nil {
-		t.Fatal("version-1 envelope without complete XP coverage was accepted")
+	for _, version := range []int{1, 2, 3, checkpointEnvelopeVersion + 1} {
+		legacy := envelope
+		legacy.SchemaVersion = version
+		if err := VerifyCheckpointEnvelope(legacy, state, queue); err == nil {
+			t.Fatalf("envelope version %d was accepted", version)
+		}
+	}
+}
+
+func TestCheckpointRejectsMalformedJSON(t *testing.T) {
+	state, queue := queuedCheckpointFixture(t)
+	envelope, err := BuildCheckpointEnvelope(state, queue)
+	if err != nil {
+		t.Fatal(err)
+	}
+	payload, err := json.Marshal(envelope)
+	if err != nil {
+		t.Fatal(err)
+	}
+	broken := append([]byte(nil), payload[:len(payload)/2]...)
+	var restored CheckpointEnvelope
+	if err := json.Unmarshal(broken, &restored); err == nil {
+		t.Fatal("truncated checkpoint JSON was decoded")
+	}
+}
+
+func TestCheckpointRejectsInvalidSourceMode(t *testing.T) {
+	state, queue := queuedCheckpointFixture(t)
+	envelope, err := BuildCheckpointEnvelope(state, queue)
+	if err != nil {
+		t.Fatal(err)
+	}
+	tampered := state.Clone()
+	tampered.Mode = domain.SourceMode(99)
+	if err := VerifyCheckpointEnvelope(envelope, tampered, queue); err == nil {
+		t.Fatal("checkpoint with an invalid source mode was accepted")
 	}
 }
 
@@ -180,7 +282,7 @@ func TestPauseReasonsAffectPrivateCheckpoint(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if envelopeFirst.IntegrityHash == envelopeSecond.IntegrityHash {
+	if envelopeFirst.PrivateDigest == envelopeSecond.PrivateDigest {
 		t.Fatal("private checkpoint does not separate pause reason sets")
 	}
 	if err := VerifyCheckpointEnvelope(envelopeFirst, second, queue); err == nil {
