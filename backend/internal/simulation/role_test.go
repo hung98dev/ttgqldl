@@ -192,44 +192,55 @@ func TestCooldownAppliesOnlyAfterFirstSwitch(t *testing.T) {
 	}
 }
 
-func TestResultsCommandsQueueNextWaveIncludingTick3000(t *testing.T) {
-	for _, acceptedAt := range []int{2800, 2900, 3000} {
-		state, _ := startWithRole(t, 'a', domain.RoleBuilder)
-		state, _ = advanceWithRoles(t, state, RoleQueue{}, acceptedAt)
-		state.Wave.Number = 5
-		state.Difficulty = domain.Difficulty{Level: 1}
-		_ = state.Validate()
-
-		next, queue, decisions := acceptRoles(t, state, RoleQueue{},
-			roleCommand(9, actorKey('m'), domain.RoleFighter, 6, 0))
-		if decisions[0].Outcome != OutcomeNextWaveQueued {
-			t.Fatalf("accepted at %d: outcome = %s", acceptedAt, decisions[0].Outcome)
+func TestNextWaveRegistrationWindow(t *testing.T) {
+	// RESULTS accepts NEXT-wave registrations at committed 2800..2999.
+	for _, committed := range []int{2800, 2900, 2999} {
+		state, _ := realWave(t)
+		state = advanceTo(t, state, committed)
+		before := state.Clone()
+		if before.Wave.Result == domain.WaveResultPending {
+			t.Fatalf("wave not settled before %d", committed)
 		}
-		if queue.Len() != 0 {
-			t.Fatal("RESULTS command entered the current-wave queue")
+		next, queue, decisions, err := AcceptRoleCommands(state, RoleQueue{}, []RoleCommand{{
+			InputSeq: 1, ActorKey: uniqueActor(2), Role: domain.RoleFighter,
+			TargetWave: state.Wave.Number + 1, ScheduledTick: 0, AcceptedTick: AcceptedTickUnspecified,
+		}})
+		if err != nil {
+			t.Fatalf("committed %d: %v", committed, err)
 		}
-		if len(next.Pending) != 1 || next.Pending[0].TargetWave != 6 || next.Pending[0].Role != domain.RoleFighter {
-			t.Fatalf("accepted at %d: pending = %+v", acceptedAt, next.Pending)
+		if decisions[0].Outcome != OutcomeNextWaveQueued || len(next.Pending) != 1 || len(queue.Ballots) != 0 {
+			t.Fatalf("committed %d: outcome=%s pending=%d", committed, decisions[0].Outcome, len(next.Pending))
 		}
-		if len(next.Members) != 1 {
-			t.Fatal("RESULTS command changed current membership")
+		if len(next.Members) != len(before.Members) {
+			t.Fatal("RESULTS registration changed current-wave membership")
 		}
-
-		advanced, _ := advanceWithRoles(t, next, RoleQueue{}, 3000)
-		advanced.Wave.Result = domain.WaveResultVictory
+		advanced, _ := advanceWithRoles(t, next, queue, domain.RolloverTick)
 		rolled, _, err := Next(advanced, Input{Kind: KindRollover})
 		if err != nil {
-			t.Fatalf("accepted at %d: rollover: %v", acceptedAt, err)
+			t.Fatalf("committed %d rollover: %v", committed, err)
 		}
-		if len(rolled.Members) != 1 || rolled.Members[0].ActorKey != actorKey('m') || rolled.Members[0].JoinedTick != 0 {
-			t.Fatalf("accepted at %d: promoted = %+v", acceptedAt, rolled.Members)
+		if rolled.Wave.Number != 2 || rolled.Tick() != 0 {
+			t.Fatalf("committed %d: wave %d tick %d", committed, rolled.Wave.Number, rolled.Tick())
 		}
-		if rolled.Members[0].Role != domain.RoleFighter {
-			t.Fatal("queued role was lost")
+		if len(rolled.Members) != 1 || rolled.Members[0].ActorKey != uniqueActor(2) || rolled.Members[0].JoinedTick != 0 {
+			t.Fatalf("committed %d promoted = %+v", committed, rolled.Members)
 		}
 	}
-}
 
+	// The tick-3000 control boundary rejects new NEXT-wave registrations.
+	state, _ := realWave(t)
+	state = advanceTo(t, state, domain.RolloverTick)
+	before := state.Clone()
+	if _, _, _, err := AcceptRoleCommands(state, RoleQueue{}, []RoleCommand{{
+		InputSeq: 2, ActorKey: uniqueActor(3), Role: domain.RoleFighter,
+		TargetWave: state.Wave.Number + 1, ScheduledTick: 0, AcceptedTick: AcceptedTickUnspecified,
+	}}); err == nil {
+		t.Fatal("NEXT-wave registration accepted at tick 3000")
+	}
+	if len(state.Pending) != len(before.Pending) || state.Wave.Number != before.Wave.Number {
+		t.Fatal("rejected command mutated the checkpoint state")
+	}
+}
 func TestResultsDuplicateQueuesOneRegistration(t *testing.T) {
 	state, _ := startWithRole(t, 'a', domain.RoleBuilder)
 	state, _ = advanceWithRoles(t, state, RoleQueue{}, 2800)
