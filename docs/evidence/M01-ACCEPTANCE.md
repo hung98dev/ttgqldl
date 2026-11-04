@@ -150,6 +150,10 @@ workflow colour.
 | gitleaks / actionlint | 0 / 0 |
 | SBOM | 439 components, 1 image digest-pinned, 144 without licence metadata |
 
+The committed M01 closure revision was verified by CI run `41761343786`
+($runUrl, commit `03e8e8d`): backend (incl. race), frontend, unity-static,
+security and tooling jobs all succeeded.
+
 ## Owner-approved acceptance-policy revision
 
 | Field | Value |
