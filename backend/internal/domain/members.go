@@ -15,11 +15,17 @@ type WaveMember struct {
 	XPAwarded       bool
 }
 
-// PendingMember is a registration queued for the next wave during RESULTS.
+// PendingMember is a registration queued for the next wave during RESULTS. The
+// queued role choice carries the same change bookkeeping as an active member so a
+// second queued change cannot bypass the 600-tick cooldown while it is still in
+// the finishing wave. Promotion itself starts a fresh member: roles and cooldown
+// state expire at rollover, and the canonical first switch is free again.
 type PendingMember struct {
-	ActorKey   ActorKey
-	Role       Role
-	TargetWave int64
+	ActorKey        ActorKey
+	Role            Role
+	TargetWave      int64
+	LastChangeTick  *int
+	FirstSwitchUsed bool
 }
 
 // PlayerXP is the per-session XP of one participant.
@@ -145,6 +151,19 @@ func ValidatePending(pending []PendingMember, currentWave int64) *ValidationErro
 		// current+1: a distant future wave would silently drop the registration.
 		if entry.TargetWave != currentWave+1 {
 			errs.add(field+".target_wave", errTargetWaveRange)
+		}
+		switch {
+		case entry.LastChangeTick == nil:
+			if entry.FirstSwitchUsed {
+				errs.add(field+".first_switch_used", "cannot be used before the first accepted queued change")
+			}
+		default:
+			if !entry.FirstSwitchUsed {
+				errs.add(field+".first_switch_used", "must be true once a queued role change is recorded")
+			}
+			if *entry.LastChangeTick < 0 || *entry.LastChangeTick >= WaveTicks {
+				errs.add(field+".last_change_tick", errChangeTickRange)
+			}
 		}
 	}
 	if len(errs.Problems) == 0 {

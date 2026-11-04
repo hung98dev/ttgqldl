@@ -27,6 +27,12 @@ func (s SessionState) Clone() SessionState {
 		}
 	}
 	clone.Pending = cloneSlice(s.Pending)
+	for index := range clone.Pending {
+		if clone.Pending[index].LastChangeTick != nil {
+			tick := *clone.Pending[index].LastChangeTick
+			clone.Pending[index].LastChangeTick = &tick
+		}
+	}
 	clone.XP = cloneSlice(s.XP)
 
 	clone.Wave = s.Wave.Clone()
