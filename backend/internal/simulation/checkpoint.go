@@ -12,12 +12,13 @@ import (
 // need their own deterministic digest: otherwise a tampered queue would resume
 // into different gameplay while the stored state hash still matched.
 type CheckpointEnvelope struct {
-	SchemaVersion int           `json:"schema_version"`
-	RulesVersion  string        `json:"rules_version"`
-	StateHash     string        `json:"state_hash"`
-	RoleQueue     []RoleCommand `json:"role_queue"`
-	BallotQueue   []VoteCommand `json:"ballot_queue"`
-	IntegrityHash string        `json:"integrity_hash"`
+	SchemaVersion int               `json:"schema_version"`
+	RulesVersion  string            `json:"rules_version"`
+	StateHash     string            `json:"state_hash"`
+	RoleQueue     []RoleCommand     `json:"role_queue"`
+	BallotQueue   []VoteCommand     `json:"ballot_queue"`
+	SessionXP     []domain.PlayerXP `json:"session_xp"`
+	IntegrityHash string            `json:"integrity_hash"`
 }
 
 // checkpointEnvelopeVersion is the private envelope version (distinct from the
@@ -37,6 +38,7 @@ func BuildCheckpointEnvelope(state domain.SessionState, queue RoleQueue) (Checkp
 		StateHash:     stateHash,
 		RoleQueue:     append([]RoleCommand(nil), queue.Entries...),
 		BallotQueue:   append([]VoteCommand(nil), queue.Ballots...),
+		SessionXP:     append([]domain.PlayerXP(nil), state.XP...),
 	}
 	digest, err := envelopeDigest(envelope)
 	if err != nil {
@@ -73,6 +75,16 @@ func VerifyCheckpointEnvelope(envelope CheckpointEnvelope, state domain.SessionS
 	for index := range envelope.BallotQueue {
 		if envelope.BallotQueue[index] != queue.Ballots[index] {
 			return fmt.Errorf("%w: checkpoint ballot queue was tampered", ErrInvalidState)
+		}
+	}
+	// Persisted XP, including actors outside current-wave membership, is part of
+	// the private restoration contract even though canonical v1 does not hash it.
+	if len(envelope.SessionXP) != len(state.XP) {
+		return fmt.Errorf("%w: checkpoint XP records do not match", ErrInvalidState)
+	}
+	for index := range envelope.SessionXP {
+		if envelope.SessionXP[index] != state.XP[index] {
+			return fmt.Errorf("%w: checkpoint XP record was tampered", ErrInvalidState)
 		}
 	}
 	seen := make(map[int64]bool, len(envelope.RoleQueue)+len(envelope.BallotQueue))
@@ -127,12 +139,20 @@ func envelopeDigest(envelope CheckpointEnvelope) (string, error) {
 			"accepted_tick":  int64(command.AcceptedTick),
 		})
 	}
+	xp := make([]any, 0, len(envelope.SessionXP))
+	for _, row := range envelope.SessionXP {
+		xp = append(xp, map[string]any{
+			"actor_key":  string(row.ActorKey),
+			"session_xp": row.XP,
+		})
+	}
 	payload := map[string]any{
 		"schema_version": int64(envelope.SchemaVersion),
 		"rules_version":  envelope.RulesVersion,
 		"state_hash":     envelope.StateHash,
 		"role_queue":     roles,
 		"ballot_queue":   ballots,
+		"session_xp":     xp,
 	}
 	encoded, err := canonical.MarshalJCS(payload)
 	if err != nil {
