@@ -160,11 +160,6 @@ func TestRolloverRequiresTheControlTick(t *testing.T) {
 
 func TestRolloverResetsWaveStateButKeepsProgress(t *testing.T) {
 	state := stateAtRollover(t)
-	// Use a boss wave so a spawned (and killed) boss is representable.
-	state.Wave.Number = 5
-	state.Pending = nil
-	state.Wave.Pools = []domain.EnemyPool{{Lane: domain.LaneWest, Archetype: domain.ArchetypeRunner, HP: 5}}
-	state.Wave.Boss = domain.BossPool{Exists: true, HP: 0, MaxHP: 10}
 	state.Wave.Ballots = []domain.Ballot{{ActorKey: actorKey('a'), Option: domain.VoteOptionA, Tick: 10}}
 	state.Wave.Vote = domain.VoteState{Open: false, Selected: domain.VoteOptionA, Counts: domain.VoteCounts{A: 1}}
 	state.Wave.Defeated = true

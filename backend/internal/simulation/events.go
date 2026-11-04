@@ -48,9 +48,12 @@ const (
 	EventPaused             EventType = "paused"
 	EventResumed            EventType = "resumed"
 	EventStopped            EventType = "stopped"
-	EventRolledOver         EventType = "rolled_over"
+	EventRolledOver         EventType = "wave_rollover"
 	EventScheduleBoundary   EventType = "schedule_boundary"
 	EventSettlementRequired EventType = "settlement_required"
+	// Canonical W0204 enemy signals.
+	EventBossIncoming EventType = "boss_incoming"
+	EventBossSpawned  EventType = "boss_spawned"
 )
 
 // Event is one deterministic transition signal. It carries no participant

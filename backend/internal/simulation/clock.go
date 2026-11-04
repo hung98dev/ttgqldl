@@ -96,6 +96,39 @@ func advanceTick(state domain.SessionState, _ Input) (domain.SessionState, []Eve
 	phaseChanged := phase != next.Wave.Phase
 	next.Wave.Phase = phase
 
+	// W0204 effects run inside the winning tick, before any later stage: lock the
+	// population and derive the enemy pools at 1600, then spawn the boss at 2600.
+	var bossSpawnEvent *Event
+	if next.Wave.Tick == domain.PopulationLockTick && !next.Difficulty.Locked {
+		locked, lockErr := lockPopulation(next)
+		if lockErr != nil {
+			return state, nil, lockErr
+		}
+		next = locked
+	}
+	if next.Wave.Tick == domain.BossSpawnTick && domain.IsBossWave(next.Wave.Number) && !next.Wave.Boss.Exists {
+		spawned, spawnEvents, spawnErr := spawnBoss(next)
+		if spawnErr != nil {
+			return state, nil, spawnErr
+		}
+		next = spawned
+		if len(spawnEvents) == 1 {
+			bossSpawnEvent = &spawnEvents[0]
+		}
+	}
+	bossIncoming := false
+	if next.Difficulty.Locked && domain.IsBossWave(next.Wave.Number) && !next.Wave.Boss.Exists &&
+		next.Wave.Tick < domain.BossSpawnTick && !next.Wave.BossIncoming {
+		var ordinary int64
+		for _, pool := range next.Wave.Pools {
+			ordinary += pool.HP
+		}
+		if ordinary == 0 {
+			next.Wave.BossIncoming = true
+			bossIncoming = true
+		}
+	}
+
 	// Deterministic event order: scheduling boundaries in canonical order, then
 	// the settlement requirement, then the phase notification. A later reducer can
 	// therefore never observe RESULTS before the settlement it belongs to.
@@ -110,6 +143,19 @@ func advanceTick(state domain.SessionState, _ Input) (domain.SessionState, []Eve
 			Phase:    phase,
 			Boundary: boundary,
 			Stage:    stageForBoundary(boundary, final),
+		})
+		// The spawn signal belongs after the boss_spawn boundary and before the
+		// combat boundary that follows it.
+		if boundary == BoundaryBossSpawn && bossSpawnEvent != nil {
+			events = append(events, *bossSpawnEvent)
+		}
+	}
+	if bossIncoming {
+		events = append(events, Event{
+			Type:   EventBossIncoming,
+			WaveNo: next.Wave.Number,
+			Tick:   next.Wave.Tick,
+			Phase:  phase,
 		})
 	}
 	// W0202 cannot settle a wave: the final boundary is reported as required work
@@ -193,7 +239,9 @@ func rollover(state domain.SessionState, _ Input) (domain.SessionState, []Event,
 	next.Wave.Ballots = []domain.Ballot{}
 	next.Wave.Defeated = false
 	next.Wave.Result = domain.WaveResultPending
-	next.Difficulty.PopulationAnchor = 0
+	// Per-wave enemy state and derived difficulty reset; the next wave derives its
+	// own lock at 1600 from persistent progress.
+	next.Difficulty = domain.Difficulty{Level: 1}
 
 	promoted := make([]domain.WaveMember, 0, len(state.Pending))
 	for _, pending := range state.Pending {
