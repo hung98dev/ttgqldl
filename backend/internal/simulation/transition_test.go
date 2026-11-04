@@ -287,7 +287,6 @@ func TestSettlementIsRequiredWhenEntering2800(t *testing.T) {
 		{EventScheduleBoundary, BoundaryFinalCombat, StageFinalCombat},
 		{EventAttackResolved, "", ""},
 		{EventWaveResult, "", ""},
-		{EventSettlementRequired, "", StageSettlement},
 		{EventPhaseChanged, "", StageEnterResults},
 	}
 	if len(events) != len(want) {

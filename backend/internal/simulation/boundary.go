@@ -158,6 +158,17 @@ func mergeBoundaryEvents(state domain.SessionState, clockEvents []Event, roleEve
 			}
 		}
 	}
+	settled := false
+	for _, event := range gameplayEvents {
+		if event.Type == EventWaveResult {
+			settled = true
+		}
+	}
+	// A completed wave_result supersedes the scheduling marker: the observable
+	// stream must never say settlement is required after it already happened.
+	if settled {
+		settlement = nil
+	}
 	merged = append(merged, gameplayEvents...)
 	merged = append(merged, settlement...)
 	merged = append(merged, phase...)

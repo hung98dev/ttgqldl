@@ -87,6 +87,11 @@ func AcceptVoteCommands(state domain.SessionState, queue RoleQueue, commands []V
 				return state, queue, nil, fmt.Errorf("%w: %d", ErrDuplicateInputSeq, command.InputSeq)
 			}
 		}
+		for _, queued := range queue.Entries {
+			if queued.InputSeq == command.InputSeq {
+				return state, queue, nil, fmt.Errorf("%w: %d (already queued as a role command)", ErrDuplicateInputSeq, command.InputSeq)
+			}
+		}
 		if !command.ActorKey.Valid() {
 			return state, queue, nil, fmt.Errorf("%w: invalid actor key", ErrInvalidCommand)
 		}

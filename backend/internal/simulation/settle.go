@@ -24,7 +24,9 @@ func awardXP(state domain.SessionState) (domain.SessionState, error) {
 		}
 		current := xpByActor[member.ActorKey]
 		if current >= domain.CapSessionXP {
+			// Bookkeeping still changes even though no XP can be granted.
 			member.XPAwarded = true
+			changed = true
 			continue
 		}
 		gain := int64(domain.XPPerWave)
@@ -82,6 +84,14 @@ func victoryReached(state domain.SessionState) bool {
 func settleWave(state domain.SessionState) (domain.SessionState, []Event, error) {
 	if state.Wave.Result != domain.WaveResultPending {
 		return state, nil, nil
+	}
+	// Settlement is only legal at the final boundary. This guards against future
+	// callers invoking it at 1600/1800/2600/2799 or after the wave ended.
+	if state.Lifecycle == domain.LifecycleStopped || state.Lifecycle == domain.LifecycleWaiting {
+		return state, nil, fmt.Errorf("%w: settlement requires a running wave", ErrInvalidState)
+	}
+	if state.Wave.Tick != domain.FinalCombatTick || state.Wave.Phase != domain.PhaseResults {
+		return state, nil, fmt.Errorf("%w: settlement requires the tick-2800 final boundary (tick %d)", ErrInvalidState, state.Wave.Tick)
 	}
 	next := state.Clone()
 	if victoryReached(next) {

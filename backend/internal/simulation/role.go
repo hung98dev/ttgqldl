@@ -534,6 +534,12 @@ func validateRoleCommands(state domain.SessionState, queue RoleQueue, commands [
 				return nil, fmt.Errorf("%w: %d", ErrDuplicateInputSeq, command.InputSeq)
 			}
 		}
+		// One monotonic input_seq namespace covers roles and votes.
+		for _, queued := range queue.Ballots {
+			if queued.InputSeq == command.InputSeq {
+				return nil, fmt.Errorf("%w: %d (already queued as a ballot)", ErrDuplicateInputSeq, command.InputSeq)
+			}
+		}
 	}
 	return ordered, nil
 }
