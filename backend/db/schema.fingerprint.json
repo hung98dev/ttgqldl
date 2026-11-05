@@ -299,6 +299,16 @@
           "udt_name": "timestamptz",
           "nullable": false,
           "default": "now()"
+        },
+        {
+          "name": "privacy_epoch",
+          "ordinal": 10,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": "0",
+          "numeric_precision": 64,
+          "numeric_scale": 0
         }
       ]
     },
@@ -855,6 +865,14 @@
           "udt_name": "uuid",
           "nullable": true,
           "default": null
+        },
+        {
+          "name": "scope",
+          "ordinal": 10,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": "'session'::text"
         }
       ]
     },
@@ -1828,6 +1846,12 @@
     },
     {
       "table": "checkpoints",
+      "name": "checkpoints_privacy_epoch_not_null",
+      "type": "n",
+      "definition": "NOT NULL privacy_epoch"
+    },
+    {
+      "table": "checkpoints",
       "name": "checkpoints_revision_not_null",
       "type": "n",
       "definition": "NOT NULL revision"
@@ -2284,6 +2308,12 @@
     },
     {
       "table": "privacy_erase_requests",
+      "name": "privacy_erase_requests_scope_not_null",
+      "type": "n",
+      "definition": "NOT NULL scope"
+    },
+    {
+      "table": "privacy_erase_requests",
       "name": "privacy_erase_requests_session_id_fkey",
       "type": "f",
       "definition": "FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE RESTRICT"
@@ -2430,7 +2460,7 @@
       "table": "reducer_transitions",
       "name": "reducer_transitions_operation_check",
       "type": "c",
-      "definition": "CHECK ((operation = ANY (ARRAY['start'::text, 'advance'::text, 'rollover'::text])))"
+      "definition": "CHECK ((operation = ANY (ARRAY['start'::text, 'advance'::text, 'rollover'::text, 'privacy'::text])))"
     },
     {
       "table": "reducer_transitions",
@@ -3088,6 +3118,11 @@
       "table": "players",
       "name": "players_village_id_id_key",
       "definition": "CREATE UNIQUE INDEX players_village_id_id_key ON ttg.players USING btree (village_id, id)"
+    },
+    {
+      "table": "privacy_erase_requests",
+      "name": "privacy_erase_requests_idempotency",
+      "definition": "CREATE UNIQUE INDEX privacy_erase_requests_idempotency ON ttg.privacy_erase_requests USING btree (session_id, actor_ref_protected, scope)"
     },
     {
       "table": "privacy_erase_requests",

@@ -8,7 +8,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict rGxCrevIKTkTy8k6qh7l0IeFchvfNqz1ojywGQwkwxD5GcBri0WrVZH2f2YsBMD
+\restrict ZpJzigPPUzJAdjf4om5YgUNpvydW53haJnkJSA5ZmeFaF02zHk1csL9sKFKpqEm
 
 -- Dumped from database version 18.6 (Debian 18.6-1.pgdg13+2)
 -- Dumped by pg_dump version 18.6 (Debian 18.6-1.pgdg13+2)
@@ -95,7 +95,8 @@ CREATE TABLE ttg.checkpoints (
     state_json jsonb NOT NULL,
     state_hash character(64) NOT NULL,
     rules_version text NOT NULL,
-    created_at timestamp with time zone DEFAULT now() NOT NULL
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    privacy_epoch bigint DEFAULT 0 NOT NULL
 );
 
 
@@ -242,6 +243,7 @@ CREATE TABLE ttg.privacy_erase_requests (
     applied_at timestamp with time zone,
     privacy_epoch bigint NOT NULL,
     requested_by uuid,
+    scope text DEFAULT 'session'::text NOT NULL,
     CONSTRAINT privacy_erase_requests_status_check CHECK ((status = ANY (ARRAY['queued'::text, 'applied'::text, 'blocked'::text, 'failed'::text])))
 );
 
@@ -307,7 +309,7 @@ CREATE TABLE ttg.reducer_transitions (
     state_hash character(64) NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     input_seq_high bigint DEFAULT 0 NOT NULL,
-    CONSTRAINT reducer_transitions_operation_check CHECK ((operation = ANY (ARRAY['start'::text, 'advance'::text, 'rollover'::text]))),
+    CONSTRAINT reducer_transitions_operation_check CHECK ((operation = ANY (ARRAY['start'::text, 'advance'::text, 'rollover'::text, 'privacy'::text]))),
     CONSTRAINT reducer_transitions_revision_check CHECK ((revision > 0))
 );
 
@@ -711,6 +713,13 @@ CREATE INDEX operator_sessions_account ON ttg.operator_sessions USING btree (acc
 
 
 --
+-- Name: privacy_erase_requests_idempotency; Type: INDEX; Schema: ttg; Owner: -
+--
+
+CREATE UNIQUE INDEX privacy_erase_requests_idempotency ON ttg.privacy_erase_requests USING btree (session_id, actor_ref_protected, scope);
+
+
+--
 -- Name: privacy_erase_requests_session; Type: INDEX; Schema: ttg; Owner: -
 --
 
@@ -901,5 +910,5 @@ ALTER TABLE ONLY ttg.writer_leases
 -- PostgreSQL database dump complete
 --
 
-\unrestrict rGxCrevIKTkTy8k6qh7l0IeFchvfNqz1ojywGQwkwxD5GcBri0WrVZH2f2YsBMD
+\unrestrict ZpJzigPPUzJAdjf4om5YgUNpvydW53haJnkJSA5ZmeFaF02zHk1csL9sKFKpqEm
 

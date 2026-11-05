@@ -53,6 +53,7 @@ type TtgCheckpoint struct {
 	StateHash    string
 	RulesVersion string
 	CreatedAt    pgtype.Timestamptz
+	PrivacyEpoch int64
 }
 
 type TtgDomainEvent struct {
@@ -138,6 +139,7 @@ type TtgPrivacyEraseRequest struct {
 	AppliedAt         pgtype.Timestamptz
 	PrivacyEpoch      int64
 	RequestedBy       pgtype.UUID
+	Scope             string
 }
 
 type TtgPrivacyLedgerOutbox struct {

@@ -1379,3 +1379,87 @@ func TestHistoricalTargetExcludesLaterInputAtSameTick(t *testing.T) {
 		t.Fatalf("replay revisions = %d/%d", before.ToRevision, after.ToRevision)
 	}
 }
+
+func TestPrivacyAnonymizeRemovesActorAndRetiresOldCheckpoints(t *testing.T) {
+	pool := testPool(t)
+	session := newTestSession(t, pool, "waiting", 5*time.Second)
+	actor := actorKey("a")
+	insertRoleInput(t, pool, session.SessionID, 1, -1, 0, 1, actor, domain.RoleBuilder)
+	reducer, err := New(session.Manager, pool)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+		t.Fatal(err)
+	}
+	var playerID string
+	if err := func() error {
+		ctx := context.Background()
+		tx, err := pool.Begin(ctx)
+		if err != nil {
+			return err
+		}
+		defer tx.Rollback(ctx)
+		if err := tx.QueryRow(ctx, `INSERT INTO ttg.players (id, village_id, actor_key, ephemeral, alias) VALUES (gen_random_uuid(), $1, $2, false, 'Alice') RETURNING id::text`, session.VillageID, actor).Scan(&playerID); err != nil {
+			return err
+		}
+		if _, err := tx.Exec(ctx, `INSERT INTO ttg.actor_identity_aliases (village_id, actor_key, key_version, player_id) VALUES ($1, $2, 'v1', $3)`, session.VillageID, actor, playerID); err != nil {
+			return err
+		}
+		if _, err := tx.Exec(ctx, `INSERT INTO ttg.session_player_progress (session_id, actor_key, session_xp) VALUES ($1, $2, 42)`, session.SessionID, actor); err != nil {
+			return err
+		}
+		return tx.Commit(ctx)
+	}(); err != nil {
+		t.Fatal(err)
+	}
+	result, err := reducer.Anonymize(context.Background(), session.Lease, session.SessionID, []string{actor})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if result.Revision != 3 || result.StateHash == "" {
+		t.Fatalf("result %+v", result)
+	}
+	if got := countRows(t, pool, `SELECT count(*) FROM ttg.actor_identity_aliases WHERE village_id = $1`, session.VillageID); got != 0 {
+		t.Fatalf("aliases=%d", got)
+	}
+	if got := countRows(t, pool, `SELECT count(*) FROM ttg.players WHERE village_id = $1`, session.VillageID); got != 0 {
+		t.Fatalf("players=%d", got)
+	}
+	if got := countRows(t, pool, `SELECT count(*) FROM ttg.session_player_progress WHERE session_id = $1`, session.SessionID); got != 0 {
+		t.Fatalf("progress=%d", got)
+	}
+	if got := countRows(t, pool, `SELECT count(*) FROM ttg.wave_members WHERE session_id = $1`, session.SessionID); got != 0 {
+		t.Fatalf("members=%d", got)
+	}
+	if got := countRows(t, pool, `SELECT count(*) FROM ttg.input_events WHERE session_id = $1`, session.SessionID); got != 0 {
+		ctx := context.Background()
+		tx, _ := pool.Begin(ctx)
+		rows, _ := tx.Query(ctx, `SELECT input_seq, actor_key, applied_at_tick FROM ttg.input_events WHERE session_id = $1`, session.SessionID)
+		for rows.Next() {
+			var seq int64
+			var key string
+			var applied *int32
+			_ = rows.Scan(&seq, &key, &applied)
+			t.Logf("left input seq=%d actor=%q applied=%v", seq, key, applied)
+		}
+		rows.Close()
+		tx.Rollback(ctx)
+		t.Fatalf("inputs=%d", got)
+	}
+	if got := countRows(t, pool, `SELECT count(*) FROM ttg.checkpoints WHERE session_id = $1 AND revision = 1`, session.SessionID); got != 0 {
+		t.Fatalf("old checkpoint=%d", got)
+	}
+	if got := countRows(t, pool, `SELECT count(*) FROM ttg.checkpoints WHERE session_id = $1 AND revision = 3`, session.SessionID); got != 1 {
+		t.Fatalf("privacy checkpoint=%d", got)
+	}
+	if got := sessionValue[int64](t, pool, `SELECT privacy_epoch FROM ttg.sessions WHERE id = $1`, session.SessionID); got != 1 {
+		t.Fatalf("privacy epoch=%d", got)
+	}
+	if _, err := reducer.VerifyReplay(context.Background(), session.SessionID, 0); err != nil {
+		t.Fatalf("replay after anonymization: %v", err)
+	}
+}

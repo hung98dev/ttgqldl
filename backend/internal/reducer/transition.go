@@ -112,6 +112,9 @@ func computeTransition(state domain.SessionState, queue simulation.RoleQueue, qu
 
 func checkpointReason(state domain.SessionState, operation string) (string, bool) {
 	tick := state.Tick()
+	if operation == "privacy" {
+		return "privacy", true
+	}
 	switch {
 	case tick == 0 && operation == OperationRollover:
 		return "wave_start", true
