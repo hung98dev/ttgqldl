@@ -1,0 +1,8016 @@
+{
+  "package_id": "ART-006",
+  "rendered_canonical_states": 16,
+  "rendered_overlay_combos": 8,
+  "multi_res_proof_sets": {
+    "1080p": 16,
+    "720p": 16,
+    "360p": 16
+  },
+  "h264_compression": {
+    "mp4_1080p": "art/production/ART-006/previews/compression/hud_stream_1080p_2500kbps.mp4",
+    "mp4_360p": "art/production/ART-006/previews/compression/hud_stream_360p_800kbps.mp4",
+    "proof_png": "art/production/ART-006/previews/compression/h264_compression_readability_proof.png",
+    "psnr_1080p_2500kbps_db": 34.64,
+    "psnr_360p_800kbps_db": 31.71
+  },
+  "screens": [
+    {
+      "fixture_id": "state_01_attract",
+      "canonical_state_id": "ATTRACT",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ]
+      },
+      "castle_bbox": [
+        385,
+        630,
+        515,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 1000/1000",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 406,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 05:00",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 215,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "SẴN SÀNG",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 193,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MOCK",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 112,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 400",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 136,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 250",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 132,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 300",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 214,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "LÀNG BÌNH MINH · GÕ VAI TRÒ MỞ ĐỢT 1",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 744,
+          "overflow": false,
+          "wcag_contrast": 14.87
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "1 bình luận giữ vai cả đợt 5p · Không spam",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 728,
+          "overflow": false,
+          "wcag_contrast": 15.2
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 0",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 109,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 0",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 110,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 0",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 141,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "state_02_waiting_for_viewer",
+      "canonical_state_id": "WAITING_FOR_VIEWER",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ]
+      },
+      "castle_bbox": [
+        385,
+        630,
+        515,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 1000/1000",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 406,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 05:00",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 215,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 1",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 110,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MOCK",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 112,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 400",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 136,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 250",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 132,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 300",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 214,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "CHỜ NGƯỜI CHƠI (P=0) · DỪNG 05:00",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 701,
+          "overflow": false,
+          "wcag_contrast": 14.87
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "P=0 người chơi · Không tự chạy hay tự thua",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 753,
+          "overflow": false,
+          "wcag_contrast": 15.2
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 0",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 109,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 0",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 110,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 0",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 141,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "state_03_prep",
+      "canonical_state_id": "PREP",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "secondary_diag_pill": [
+          56,
+          1208,
+          856,
+          1260
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ],
+        "join_toast_slot": [
+          76,
+          1330,
+          836,
+          1388
+        ]
+      },
+      "castle_bbox": [
+        385,
+        630,
+        515,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 1080/1200",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 403,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 04:00",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 217,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 3",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 116,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MOCK",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 112,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 460",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 135,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 290",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 132,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 300",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 214,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "CHUẨN BỊ 0..160s · GIA CỐ & TẬP HỢP",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 692,
+          "overflow": false,
+          "wcag_contrast": 14.87
+        },
+        {
+          "slot": "secondary_diag_pill",
+          "text": "Dân quân Hệ thống (P≤10 · +12 công)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            56,
+            1208,
+            856,
+            1260
+          ],
+          "available_w": 712,
+          "measured_w": 647,
+          "overflow": false,
+          "wcag_contrast": 15.78
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=8 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 605,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "join_toast",
+          "text": "+1 XÂY · hoang_nam (Đã ghi nhận)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            76,
+            1330,
+            836,
+            1388
+          ],
+          "available_w": 666,
+          "measured_w": 599,
+          "overflow": false,
+          "wcag_contrast": 15.47
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "ĐỢT LẺ 3: Nâng Tường Cấp 3 & đủ 3 vai",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 690,
+          "overflow": false,
+          "wcag_contrast": 15.2
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 3",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 108,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 2",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 108,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 3",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 140,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "state_04_prep_60_warn",
+      "canonical_state_id": "PREP_60_WARN",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ]
+      },
+      "castle_bbox": [
+        385,
+        630,
+        515,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 1160/1200",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 395,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 03:20",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 214,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 3",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 116,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MOCK",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 112,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 510",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 128,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 320",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 132,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 300",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 214,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "CẢNH BÁO: CÒN 60 GIÂY QUÁI TỚI!",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 647,
+          "overflow": false,
+          "wcag_contrast": 12.3
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=44 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 630,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "ĐỢT LẺ 3: Nâng Tường Cấp 3 & đủ 3 vai",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 690,
+          "overflow": false,
+          "wcag_contrast": 15.2
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 14",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 126,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 18",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 126,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 12",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 156,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "state_05_prep_15_warn",
+      "canonical_state_id": "PREP_15_WARN",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ]
+      },
+      "castle_bbox": [
+        385,
+        601,
+        515,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 1400/1400",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 406,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 02:35",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 212,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 4",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 117,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MOCK",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 112,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 540",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 135,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 360",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 133,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 260",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 212,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "KHẨN CẤP: QUÁI TỚI TRONG 15 GIÂY!",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 683,
+          "overflow": false,
+          "wcag_contrast": 15.69
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=59 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 628,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "CHỐT [B] · A:0 · B:0 · C:0",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 430,
+          "overflow": false,
+          "wcag_contrast": 13.66
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 16",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 125,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 24",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 132,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 19",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 157,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "state_06_vote_open",
+      "canonical_state_id": "VOTE_OPEN",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ]
+      },
+      "castle_bbox": [
+        385,
+        601,
+        515,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 1280/1400",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 403,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 03:25",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 212,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 4",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 117,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MOCK",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 112,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 560",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 134,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 350",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 133,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 340",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 214,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "ĐỢT CHẴN BẦU CHỌN · GÕ A / B / C",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 648,
+          "overflow": false,
+          "wcag_contrast": 14.87
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=55 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 628,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "VOTE 25s · A:28(-50G) · B:64(-50L) · C:19",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 728,
+          "overflow": false,
+          "wcag_contrast": 15.2
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 15",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 125,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 22",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 130,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 18",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 157,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "state_07_assault",
+      "canonical_state_id": "ASSAULT",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ],
+        "join_toast_slot": [
+          76,
+          1330,
+          836,
+          1388
+        ]
+      },
+      "castle_bbox": [
+        385,
+        601,
+        515,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 1120/1600",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 395,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 01:44",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 209,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 7",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 114,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MOCK",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 112,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 610",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 128,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 420",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 133,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 350",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 213,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "GIAO TRANH · T:142 · G:134 · Đ:144",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 633,
+          "overflow": false,
+          "wcag_contrast": 12.3
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=77 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 624,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "join_toast",
+          "text": "+1 ĐÁNH · minh_tuan (Đã ghi nhận)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            76,
+            1330,
+            836,
+            1388
+          ],
+          "available_w": 666,
+          "measured_w": 608,
+          "overflow": false,
+          "wcag_contrast": 15.47
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "ĐỢT LẺ 7: Nâng Tường Cấp 5 & đủ 3 vai",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 688,
+          "overflow": false,
+          "wcag_contrast": 15.2
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 19",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 125,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 31",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 126,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 27",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 160,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "state_08_finale",
+      "canonical_state_id": "FINALE",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ]
+      },
+      "castle_bbox": [
+        385,
+        601,
+        515,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 940/1800",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 383,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 00:34",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 216,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 8",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 116,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MOCK",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 112,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 645",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 134,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 440",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 135,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 310",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 207,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "CUỐI ĐỢT · T:38 · G:44 · Đ:41",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 524,
+          "overflow": false,
+          "wcag_contrast": 12.3
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=94 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 629,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "CHỐT [A] · A:0 · B:0 · C:0",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 432,
+          "overflow": false,
+          "wcag_contrast": 13.66
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 22",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 129,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 38",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 132,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 34",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 164,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "state_09_boss",
+      "canonical_state_id": "BOSS",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ],
+        "join_toast_slot": [
+          76,
+          1330,
+          836,
+          1388
+        ]
+      },
+      "castle_bbox": [
+        375,
+        582,
+        524,
+        796
+      ],
+      "boss_bbox": [
+        431,
+        416,
+        506,
+        522
+      ],
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 920/1800",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 381,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 00:38",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 215,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 10",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 135,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MOCK",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 112,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 522",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 131,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 375",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 130,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 310",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 207,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "BOSS 88/88 · TÂY 55 · ĐÔNG 58",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            302
+          ],
+          "available_w": 752,
+          "measured_w": 577,
+          "overflow": false,
+          "wcag_contrast": 15.69
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=106 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 646,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "join_toast",
+          "text": "+12 người chọn THỦ (Đã ghi nhận)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            76,
+            1330,
+            836,
+            1388
+          ],
+          "available_w": 666,
+          "measured_w": 597,
+          "overflow": false,
+          "wcag_contrast": 15.47
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "CHỐT [B] · A:0 · B:0 · C:0",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 430,
+          "overflow": false,
+          "wcag_contrast": 13.66
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 28",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 130,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 56",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 132,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 22",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 161,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "state_10_results_win",
+      "canonical_state_id": "RESULTS_WIN",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ]
+      },
+      "castle_bbox": [
+        375,
+        582,
+        524,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 980/1800",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 382,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 00:14",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 209,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 10",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 135,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MOCK",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 112,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 622",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 131,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 435",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 133,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 360",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 213,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "THẮNG ĐỢT 10! +100G · +60Đ · +50L",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 670,
+          "overflow": false,
+          "wcag_contrast": 13.67
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=106 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 646,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "ĐỢT SAU (11): Vào thẳng đầu đợt (14 chờ)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 730,
+          "overflow": false,
+          "wcag_contrast": 13.66
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 28",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 130,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 56",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 132,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 22",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 161,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "state_11_results_loss",
+      "canonical_state_id": "RESULTS_LOSS",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "secondary_diag_pill": [
+          56,
+          1208,
+          856,
+          1260
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ]
+      },
+      "castle_bbox": [
+        385,
+        601,
+        515,
+        796
+      ],
+      "boss_bbox": [
+        431,
+        416,
+        506,
+        522
+      ],
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 250/1200",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 379,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 00:12",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 207,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 250/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 288,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 5",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 115,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MOCK",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 112,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 100",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 129,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 180",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 127,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 210",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 206,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "THẤT THỦ · Sàn 250 HP & -15% máu quái",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 733,
+          "overflow": false,
+          "wcag_contrast": 15.69
+        },
+        {
+          "slot": "secondary_diag_pill",
+          "text": "HỖ TRỢ PHỤC HỒI: -15% máu quái",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            56,
+            1208,
+            856,
+            1260
+          ],
+          "available_w": 712,
+          "measured_w": 599,
+          "overflow": false,
+          "wcag_contrast": 15.78
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=22 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 626,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "ĐỢT SAU (6): Vào thẳng đầu đợt (9 chờ)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 701,
+          "overflow": false,
+          "wcag_contrast": 13.66
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 8",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 108,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 10",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 127,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 4",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 141,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "state_12_source_reconnecting",
+      "canonical_state_id": "SOURCE_RECONNECTING",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ]
+      },
+      "castle_bbox": [
+        385,
+        601,
+        515,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 1120/1600",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 395,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 01:44",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 209,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 7",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 114,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MẤT NGUỒN",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 227,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 610",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 128,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 420",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 133,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 350",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 213,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "MẤT KẾT NỐI NGUỒN · ĐỒNG HỒ DỪNG",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 716,
+          "overflow": false,
+          "wcag_contrast": 12.3
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=77 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 624,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "Giữ đội hình · Chạy lại khi hết cờ dừng",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 653,
+          "overflow": false,
+          "wcag_contrast": 15.2
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 19",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 125,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 31",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 126,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 27",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 160,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "state_13_paused",
+      "canonical_state_id": "PAUSED",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ]
+      },
+      "castle_bbox": [
+        385,
+        601,
+        515,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 1120/1600",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 395,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 01:44",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 209,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 7",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 114,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "TẠM DỪNG",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 203,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 610",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 128,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 420",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 133,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 350",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 213,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "TẠM DỪNG ĐIỀU HÀNH · ĐỒNG HỒ DỪNG",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 751,
+          "overflow": false,
+          "wcag_contrast": 12.3
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=77 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 624,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "Giữ đội hình · Chạy lại khi hết cờ dừng",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 653,
+          "overflow": false,
+          "wcag_contrast": 15.2
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 19",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 125,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 31",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 126,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 27",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 160,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "state_14_storage_unavailable",
+      "canonical_state_id": "STORAGE_UNAVAILABLE",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ]
+      },
+      "castle_bbox": [
+        385,
+        601,
+        515,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 1120/1600",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 395,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 01:44",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 209,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 7",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 114,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "LỖI DB",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 117,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 610",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 128,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 420",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 133,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 350",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 213,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "LỖI LƯU TRỮ DB · TẠM DỪNG AN TOÀN",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 714,
+          "overflow": false,
+          "wcag_contrast": 15.69
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=77 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 624,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "Giữ đội hình · Chạy lại khi hết cờ dừng",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 653,
+          "overflow": false,
+          "wcag_contrast": 15.2
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 19",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 125,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 31",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 126,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 27",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 160,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "state_15_degraded_drops",
+      "canonical_state_id": "DEGRADED_DROPS",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ]
+      },
+      "castle_bbox": [
+        375,
+        574,
+        525,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 1640/2400",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 411,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 01:18",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 200,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 12",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 133,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MOCK",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 112,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 890",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 134,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 640",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 134,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 510",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 207,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "QUÁ TẢI · LỆNH HỢP LỆ RƠI (17)",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 575,
+          "overflow": false,
+          "wcag_contrast": 15.69
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=1,006 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 681,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "CHỐT [A] · A:0 · B:0 · C:0",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 432,
+          "overflow": false,
+          "wcag_contrast": 13.66
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 312",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 147,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 405",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 157,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 289",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 185,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "state_16_maintenance",
+      "canonical_state_id": "MAINTENANCE",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ]
+      },
+      "castle_bbox": [
+        375,
+        574,
+        525,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 2400/2400",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 418,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ --:--",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 181,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "BẢO TRÌ",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 147,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MOCK",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 112,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 890",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 134,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 640",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 134,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 510",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 207,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "PHIÊN DỪNG / BẢO TRÌ · HẸN GẶP LẠI",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 674,
+          "overflow": false,
+          "wcag_contrast": 15.69
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "Giữ đội hình · Chạy lại khi hết cờ dừng",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 653,
+          "overflow": false,
+          "wcag_contrast": 13.66
+        },
+        {
+          "slot": "primary_cta",
+          "text": "PHIÊN DỪNG · CHỜ MỞ LẠI",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 635,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 0",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 109,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 0",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 110,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 0",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 141,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "combo_01_prep_60_plus_vote_open",
+      "canonical_state_id": "PREP_PLUS_VOTE_OPEN",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ]
+      },
+      "castle_bbox": [
+        385,
+        601,
+        515,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 1320/1400",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 403,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 03:15",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 206,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 6",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 116,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MOCK",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 112,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 520",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 133,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 330",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 133,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 310",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 207,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "CẢNH BÁO: CÒN 60 GIÂY QUÁI TỚI!",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 647,
+          "overflow": false,
+          "wcag_contrast": 12.3
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=64 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 629,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "VOTE 15s · A:41(-50G) · B:52(-50L) · C:14",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 718,
+          "overflow": false,
+          "wcag_contrast": 15.2
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 18",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 125,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 26",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 131,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 20",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 163,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "combo_02_prep_plus_operator_paused",
+      "canonical_state_id": "PREP_PLUS_PAUSED",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ]
+      },
+      "castle_bbox": [
+        385,
+        601,
+        515,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 1260/1400",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 403,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 03:28",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 213,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 6",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 116,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "TẠM DỪNG",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 203,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 480",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 135,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 300",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 134,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 310",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 207,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "TẠM DỪNG ĐIỀU HÀNH · ĐỒNG HỒ DỪNG",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 751,
+          "overflow": false,
+          "wcag_contrast": 12.3
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=38 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 628,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "Giữ đội hình · Chạy lại khi hết cờ dừng",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 653,
+          "overflow": false,
+          "wcag_contrast": 15.2
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 12",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 124,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 15",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 126,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 11",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 151,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "combo_03_assault_plus_source_disconnected",
+      "canonical_state_id": "ASSAULT_PLUS_DISCONNECTED",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ]
+      },
+      "castle_bbox": [
+        385,
+        601,
+        515,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 840/1800",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 383,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 01:30",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 208,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 9",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 116,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MẤT NGUỒN",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 227,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 590",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 134,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 410",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 128,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 290",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 212,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "MẤT KẾT NỐI NGUỒN · ĐỒNG HỒ DỪNG",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 716,
+          "overflow": false,
+          "wcag_contrast": 12.3
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=89 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 628,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "Giữ đội hình · Chạy lại khi hết cờ dừng",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 653,
+          "overflow": false,
+          "wcag_contrast": 15.2
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 24",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 131,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 35",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 132,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 30",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 164,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "combo_04_boss_incoming_pre2600_lanes_empty",
+      "canonical_state_id": "BOSS_INCOMING_PRE2600",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ]
+      },
+      "castle_bbox": [
+        375,
+        582,
+        524,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 1420/1800",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 403,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 00:52",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 213,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 10",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 135,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MOCK",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 112,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 580",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 134,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 390",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 133,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 310",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 207,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "QUÁI HẠ · CẢNH BÁO BOSS GIÂY 260!",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 687,
+          "overflow": false,
+          "wcag_contrast": 15.69
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=128 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 644,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "CHỐT [B] · A:0 · B:0 · C:0",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 430,
+          "overflow": false,
+          "wcag_contrast": 13.66
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 28",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 130,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 56",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 132,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 44",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 165,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "combo_05_boss_plus_storage_unavailable",
+      "canonical_state_id": "BOSS_PLUS_STORAGE_UNAVAILABLE",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "secondary_diag_pill": [
+          56,
+          1208,
+          856,
+          1260
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ]
+      },
+      "castle_bbox": [
+        375,
+        582,
+        524,
+        796
+      ],
+      "boss_bbox": [
+        431,
+        416,
+        506,
+        522
+      ],
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 410/2000",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 383,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 00:32",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 214,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 15",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 133,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "LỖI DB",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 117,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 710",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 126,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 480",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 134,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 340",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 214,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "LỖI LƯU TRỮ DB · TẠM DỪNG AN TOÀN",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 714,
+          "overflow": false,
+          "wcag_contrast": 15.69
+        },
+        {
+          "slot": "secondary_diag_pill",
+          "text": "BOSS 62/104 · TÂY 20 · ĐÔNG 18",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            56,
+            1208,
+            856,
+            1260
+          ],
+          "available_w": 712,
+          "measured_w": 574,
+          "overflow": false,
+          "wcag_contrast": 15.78
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=143 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 646,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "Giữ đội hình · Chạy lại khi hết cờ dừng",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 653,
+          "overflow": false,
+          "wcag_contrast": 15.2
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 35",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 131,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 60",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 133,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 48",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 164,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "combo_06_results_plus_next_wave_registration",
+      "canonical_state_id": "RESULTS_PLUS_NEXT_WAVE_QUEUE",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ],
+        "join_toast_slot": [
+          76,
+          1330,
+          836,
+          1388
+        ]
+      },
+      "castle_bbox": [
+        375,
+        582,
+        524,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 980/1800",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 382,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 00:09",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 216,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 10",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 135,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MOCK",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 112,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 622",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 131,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 435",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 133,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 360",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 213,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "THẮNG ĐỢT 10! +100G · +60Đ · +50L",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 670,
+          "overflow": false,
+          "wcag_contrast": 13.67
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=106 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 646,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "join_toast",
+          "text": "+1 ĐỢT SAU (THỦ) · bao_tram",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            76,
+            1330,
+            836,
+            1388
+          ],
+          "available_w": 666,
+          "measured_w": 519,
+          "overflow": false,
+          "wcag_contrast": 15.47
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "ĐỢT SAU (11): Vào thẳng đầu đợt (23 chờ)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 734,
+          "overflow": false,
+          "wcag_contrast": 13.66
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 28",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 130,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 56",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 132,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 22",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 161,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "combo_07_backpressure_zero_valid_drops",
+      "canonical_state_id": "BACKPRESSURE_NO_LOSS",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "secondary_diag_pill": [
+          56,
+          1208,
+          856,
+          1260
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ]
+      },
+      "castle_bbox": [
+        375,
+        582,
+        524,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 1780/2000",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 407,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 01:56",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 206,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 11",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 128,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MOCK",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 112,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 810",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 128,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 520",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 132,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 440",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 215,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "GIAO TRANH · T:310 · G:295 · Đ:315",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 634,
+          "overflow": false,
+          "wcag_contrast": 12.3
+        },
+        {
+          "slot": "secondary_diag_pill",
+          "text": "HÀNG ĐỢI 84% · Điều tiết (0 lệnh rơi)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            56,
+            1208,
+            856,
+            1260
+          ],
+          "available_w": 712,
+          "measured_w": 638,
+          "overflow": false,
+          "wcag_contrast": 15.78
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=645 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 652,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "ĐỢT LẺ 11: Nâng Tường Cấp 7 & đủ 3 vai",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 699,
+          "overflow": false,
+          "wcag_contrast": 15.2
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 190",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 149,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 240",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 156,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 215",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 179,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "combo_08_source_reconnected_operator_pause_retained",
+      "canonical_state_id": "RECONNECTED_STILL_OPERATOR_PAUSED",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ]
+      },
+      "castle_bbox": [
+        385,
+        601,
+        515,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 840/1800",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 383,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 01:30",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 208,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 9",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 116,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "TẠM DỪNG",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 203,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 590",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 134,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 410",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 128,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 290",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 212,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "TẠM DỪNG ĐIỀU HÀNH · ĐỒNG HỒ DỪNG",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 751,
+          "overflow": false,
+          "wcag_contrast": 12.3
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=89 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 628,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "Giữ đội hình · Chạy lại khi hết cờ dừng",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 653,
+          "overflow": false,
+          "wcag_contrast": 15.2
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 24",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 131,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 35",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 132,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 30",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 164,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "REPLAY · PHÁT LẠI (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 567,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    },
+    {
+      "fixture_id": "proof_16_mobile_stream_overlay",
+      "canonical_state_id": "ASSAULT",
+      "locale": "vi-VN",
+      "hud_bboxes": {
+        "top_status_panel": [
+          36,
+          22,
+          876,
+          242
+        ],
+        "threat_banner": [
+          36,
+          250,
+          876,
+          316
+        ],
+        "vote_or_objective_strip": [
+          36,
+          1396,
+          876,
+          1454
+        ],
+        "primary_cta_plaque": [
+          36,
+          1462,
+          876,
+          1550
+        ],
+        "role_counters_row": [
+          36,
+          1556,
+          876,
+          1630
+        ],
+        "source_watermark_footer": [
+          36,
+          1638,
+          876,
+          1686
+        ],
+        "spotlight_ribbon": [
+          36,
+          1268,
+          876,
+          1320
+        ],
+        "join_toast_slot": [
+          76,
+          1330,
+          836,
+          1388
+        ]
+      },
+      "castle_bbox": [
+        385,
+        601,
+        515,
+        796
+      ],
+      "boss_bbox": null,
+      "text_telemetry": [
+        {
+          "slot": "wall_hp",
+          "text": "TƯỜNG 1120/1600",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            96,
+            33,
+            556,
+            85
+          ],
+          "available_w": 440,
+          "measured_w": 395,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_timer",
+          "text": "GIỜ 01:44",
+          "font_px_1080p": 43,
+          "font_px_360p": 14.33,
+          "box": [
+            568,
+            33,
+            864,
+            85
+          ],
+          "available_w": 226,
+          "measured_w": 209,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "castle_hp",
+          "text": "CHÍNH 500/500",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            90,
+            97,
+            406,
+            149
+          ],
+          "available_w": 300,
+          "measured_w": 290,
+          "overflow": false,
+          "wcag_contrast": 15.32
+        },
+        {
+          "slot": "wave_badge",
+          "text": "ĐỢT 7",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            412,
+            97,
+            620,
+            149
+          ],
+          "available_w": 196,
+          "measured_w": 114,
+          "overflow": false,
+          "wcag_contrast": 14.33
+        },
+        {
+          "slot": "source_pill",
+          "text": "MOCK",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            625,
+            97,
+            871,
+            149
+          ],
+          "available_w": 230,
+          "measured_w": 112,
+          "overflow": false,
+          "wcag_contrast": 15.52
+        },
+        {
+          "slot": "res_wood",
+          "text": "GỖ 610",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            42,
+            164,
+            317,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 128,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_stone",
+          "text": "ĐÁ 420",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            319,
+            164,
+            594,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 133,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "res_food",
+          "text": "LƯƠNG 350",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            596,
+            164,
+            871,
+            226
+          ],
+          "available_w": 221,
+          "measured_w": 213,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "threat_banner",
+          "text": "GIAO TRANH · T:142 · G:134 · Đ:144",
+          "font_px_1080p": 37,
+          "font_px_360p": 12.33,
+          "box": [
+            36,
+            250,
+            876,
+            316
+          ],
+          "available_w": 752,
+          "measured_w": 633,
+          "overflow": false,
+          "wcag_contrast": 12.3
+        },
+        {
+          "slot": "spotlight_ribbon",
+          "text": "ĐỘI HÌNH P=77 · minh_tuan, linh_chi",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1268,
+            876,
+            1320
+          ],
+          "available_w": 764,
+          "measured_w": 624,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "join_toast",
+          "text": "+1 ĐÁNH · minh_tuan (Đã ghi nhận)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            76,
+            1330,
+            836,
+            1388
+          ],
+          "available_w": 666,
+          "measured_w": 608,
+          "overflow": false,
+          "wcag_contrast": 15.47
+        },
+        {
+          "slot": "subordinate_strip",
+          "text": "ĐỢT LẺ 7: Nâng Tường Cấp 5 & đủ 3 vai",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1396,
+            876,
+            1454
+          ],
+          "available_w": 756,
+          "measured_w": 688,
+          "overflow": false,
+          "wcag_contrast": 15.2
+        },
+        {
+          "slot": "primary_cta",
+          "text": "Bình luận XÂY / THỦ / ĐÁNH",
+          "font_px_1080p": 48,
+          "font_px_360p": 16.0,
+          "box": [
+            36,
+            1462,
+            876,
+            1550
+          ],
+          "available_w": 792,
+          "measured_w": 657,
+          "overflow": false,
+          "wcag_contrast": 15.18
+        },
+        {
+          "slot": "role_builder",
+          "text": "XÂY 19",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            54,
+            1556,
+            310,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 125,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_guard",
+          "text": "THỦ 31",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            337,
+            1556,
+            593,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 126,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "role_fighter",
+          "text": "ĐÁNH 27",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            620,
+            1556,
+            876,
+            1630
+          ],
+          "available_w": 188,
+          "measured_w": 160,
+          "overflow": false,
+          "wcag_contrast": 15.94
+        },
+        {
+          "slot": "watermark_footer",
+          "text": "MOCK / REPLAY · MÔ PHỎNG (CHƯA LIVE)",
+          "font_px_1080p": 36,
+          "font_px_360p": 12.0,
+          "box": [
+            36,
+            1638,
+            876,
+            1686
+          ],
+          "available_w": 796,
+          "measured_w": 748,
+          "overflow": false,
+          "wcag_contrast": 12.8
+        }
+      ]
+    }
+  ]
+}

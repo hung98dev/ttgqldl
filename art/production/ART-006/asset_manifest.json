@@ -1,0 +1,1049 @@
+{
+  "package_id": "ART-006",
+  "title": "Bastion Dawn v1 — Production UI/HUD, 16-State Screen System & Unity Integration Handoff",
+  "target_engine": "Unity 6000.6.7f1 (Built-in 2D / com.unity.ugui 2.6.0 / TextMeshPro)",
+  "target_unity_art_root": "unity/Assets/_TTGQLDL/Art/UI/",
+  "m06_milestone_status": "NOT_STARTED",
+  "rights_status": "PENDING_REVIEW",
+  "total_tracked_files": 173,
+  "files": [
+    {
+      "path": "art/production/ART-006/.gitattributes",
+      "bytes": 325,
+      "sha256": "6b8c91d13fa274ab859ee250e6ebc73bbe18ded1e1d9b975c4b49c03a403206d",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/APPROVAL_RECORD.md",
+      "bytes": 5708,
+      "sha256": "458ccb38cb9e1d6df7c58bbf55493fdef4c08b6e4b4ec579aa54fb420924d48c",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/atlas/ui_atlas_01_icons.json",
+      "bytes": 12420,
+      "sha256": "6a0f4feb4a75c266fde765388861668c7ada2f74b9672263b1030f403a565eb7",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/atlas/ui_atlas_01_icons.png",
+      "bytes": 103652,
+      "sha256": "436366e6edf0068b049ed58565ed22b3b7d0bfd4db0fcbb0deae51a78e3605bc",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/atlas/ui_atlas_02_components.json",
+      "bytes": 9765,
+      "sha256": "5f24972cd2fe5165f28855bcd9d8fd2c8b6b650b19e4034f330d1c1483539db1",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/atlas/ui_atlas_02_components.png",
+      "bytes": 10255,
+      "sha256": "93a95fd3ff769ab92a413fe7e19bd4ae58f88f8e67c1926faf315b5faf6c4665",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/components/ui_comp_cta_banner.png",
+      "bytes": 1086,
+      "sha256": "0f9856672d3152f9cf5fa593017072ad9e83f1b3feaefdf5cfd7130fc56673f7",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/components/ui_comp_hp_bar_fill_crit.png",
+      "bytes": 631,
+      "sha256": "09f400dc391575cde7cad06b599cea4577e9b4f0a488d77ce322148763ad8dc1",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/components/ui_comp_hp_bar_fill_healthy.png",
+      "bytes": 336,
+      "sha256": "7b4ec1a9f1084b997941a1c606fd9290670da199b687b3973ddb5ba3899d2516",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/components/ui_comp_hp_bar_fill_warn.png",
+      "bytes": 417,
+      "sha256": "764c1eafd1856e8eab3a6e11bf7c63ac23829a5f7c9fe789124a216953d2e2c1",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/components/ui_comp_hp_bar_frame.png",
+      "bytes": 504,
+      "sha256": "f1e322bc2ba95d18acbfa5cbf3181da1d336cb0641a4c2709837860e03fdbdfd",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/components/ui_comp_resource_bar.png",
+      "bytes": 559,
+      "sha256": "9eaa1b717b9dd14b906b0e5672faad65c3355963dc7723ecc831e387ec8bcb42",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/components/ui_comp_role_counter_builder.png",
+      "bytes": 560,
+      "sha256": "147bb30e4c6cbac0c5a2180bd236d627fb3a2206a7f636d199420e963a3a9766",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/components/ui_comp_role_counter_fighter.png",
+      "bytes": 554,
+      "sha256": "a0851d431c335f1f4699dd653c18cdba4ff982fddab1e20c566eedc3c61bb085",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/components/ui_comp_role_counter_guard.png",
+      "bytes": 560,
+      "sha256": "37bd1e47b4b8faa0cec04df9a396afd46fdee7da0a354319a02d0219372a20fb",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/components/ui_comp_status_pill_err.png",
+      "bytes": 554,
+      "sha256": "663a16a792eb0fe3da7130770e69350996784dc5fd4c9e6062a9a13296952b6f",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/components/ui_comp_status_pill_ok.png",
+      "bytes": 535,
+      "sha256": "5d47a8701bc58747d4be5a637bae4bae9cd79d566d5bc61176ec3d1bd11742b1",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/components/ui_comp_status_pill_warn.png",
+      "bytes": 533,
+      "sha256": "b43f26bcfc4e704cc4cb86cf3d37187811cd983fa38d75a0e8fd593be64aa4dd",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/components/ui_comp_toast_join.png",
+      "bytes": 818,
+      "sha256": "756a7f08ed2d03a245859bace6737849c085feaad8367aa96d8d2eb7d13979e8",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/components/ui_comp_vote_card_locked.png",
+      "bytes": 499,
+      "sha256": "a56283261ea7dd48e05097665e3d28e35ded787e1423a71831054373c9597c7e",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/components/ui_comp_vote_card_open.png",
+      "bytes": 513,
+      "sha256": "e3dfeca15982ff12f8184715754152b800581bb3995fee561175c0fab13b693f",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/combo_01_prep_60_plus_vote_open.json",
+      "bytes": 2374,
+      "sha256": "6c4853d84917fe7bc52a985cffb972b5ed6a3b54dbc90436c4d8f2101e94555a",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/combo_02_prep_plus_operator_paused.json",
+      "bytes": 2400,
+      "sha256": "d28793a797994223662a8583710e1cf1e4b452f923c3c48def42a67cc1c17950",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/combo_03_assault_plus_source_disconnected.json",
+      "bytes": 2410,
+      "sha256": "a4d559ff7494ba8725889554b93c638a661226e6a9ab446d50274fc7712acc07",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/combo_04_boss_incoming_pre2600_lanes_empty.json",
+      "bytes": 2342,
+      "sha256": "f598b7b03809ac23c3d8656abe055120e256ee20110c6573c0cdfd5c91b1c1ae",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/combo_05_boss_plus_storage_unavailable.json",
+      "bytes": 2396,
+      "sha256": "06c5d68870291c6f37bb13f2779ed38425a1e0fe68acf6617263c77652da60ed",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/combo_06_results_plus_next_wave_registration.json",
+      "bytes": 2461,
+      "sha256": "e80ecfc63e2f182877e3e4706caccdeef35a7481ed28859b8cc5cffb1de85cd8",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/combo_07_backpressure_zero_valid_drops.json",
+      "bytes": 2351,
+      "sha256": "8e2a1bfa579701c69818f2f2fa242fea8aed33026a4d852abb092bddea5922e4",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/combo_08_source_reconnected_operator_pause_retained.json",
+      "bytes": 2399,
+      "sha256": "5e7214e4f4a82c5d9cb2d4b37bd3bb830b473bb0d8e872de0312c64259009d0f",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/state_01_attract.json",
+      "bytes": 1940,
+      "sha256": "0aae0ccf8ba1d8e5bafac80140faf145fc6c717366e731f55b1b29257476d70e",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/state_02_waiting_for_viewer.json",
+      "bytes": 1963,
+      "sha256": "1f3c4bd399e1b3a728bebd9a074fa88f81ceda0bb47fb6aa834f0f0827504933",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/state_03_prep.json",
+      "bytes": 2397,
+      "sha256": "1dae1575ef07e442930a0f40b5d229fc3e21ae403e77a70f08c93a846e3cd9a7",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/state_04_prep_60_warn.json",
+      "bytes": 2309,
+      "sha256": "e51ae3cdbc61a7df5b02ea6b5518d7750e248de04879fea004628dc348166abe",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/state_05_prep_15_warn.json",
+      "bytes": 2309,
+      "sha256": "f23c3c614afa7ffff61ecd019bdf7185be607f5f7cc6a065d99fd969b518d104",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/state_06_vote_open.json",
+      "bytes": 2350,
+      "sha256": "0e9c97a20af7748514649955bfdaf11a7f98294726fb2ec1fe68f4b0d417789a",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/state_07_assault.json",
+      "bytes": 2418,
+      "sha256": "f4fcf29aa8f136b387baba821b4dd25799e51dd70406f3f25db0b4ec4cce82aa",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/state_08_finale.json",
+      "bytes": 2300,
+      "sha256": "a514d14a588eff28dceeab70833cf63c9a9fdbeb0008963ba77299d309a77bd9",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/state_09_boss.json",
+      "bytes": 2393,
+      "sha256": "4e427195c589b5ebb979f102f12efca243ab870d393257ec0c40986c9aef1e87",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/state_10_results_win.json",
+      "bytes": 2313,
+      "sha256": "0c36bdff62eea72e31a95ce2b00f34aae477b319a511aa58e073f9a4cb080006",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/state_11_results_loss.json",
+      "bytes": 2311,
+      "sha256": "28d779ce7e1adf61c6c03fc89983f7f98a452b169c0c64fcc64691dee17dfefc",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/state_12_source_reconnecting.json",
+      "bytes": 2387,
+      "sha256": "1d0a4408ddf63a624ae8a6d7ef6090921b8959f6f22f3ad3ecd09e1918c780e1",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/state_13_paused.json",
+      "bytes": 2335,
+      "sha256": "0728d021c45260c3fc2200ff014405be8ea93c0351c7a4dafbd9c180fda5874c",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/state_14_storage_unavailable.json",
+      "bytes": 2379,
+      "sha256": "23e9df7c628ebbb88785585602640dcd0b8271b50514444cfc72e04e53c968e9",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/state_15_degraded_drops.json",
+      "bytes": 2331,
+      "sha256": "a2ed90a419a6a515c98f8bdaf6bd016a829e82215d2fb2508e37e7b3881b257e",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/fixtures/state_16_maintenance.json",
+      "bytes": 1949,
+      "sha256": "34bd38292e68a839db3bd8d06d11532fbfed2e099ee046ef21d0c00218b7a3b5",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/composites/hud_clean_vs_tiktok_overlay_safe_zone.png",
+      "bytes": 640582,
+      "sha256": "a27f89f4d18eb9aa6666639c1cbfbaf6d1dec1dc8f13135ec3e1d0b0d5cdc0de",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/composites/hud_en_us_localization_proof.png",
+      "bytes": 442388,
+      "sha256": "ff41ab7714898650e0092d868580d1b3e135110f50d3383e5045cc84047d80f3",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/composites/hud_six_layer_decomposition_board.png",
+      "bytes": 490242,
+      "sha256": "3d667308ae8a28c32801a17ccf21ee2252b19940337305bb8fc79adbae1d3672",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/mobile/mobile_stream_overlay_360p_720p.png",
+      "bytes": 810087,
+      "sha256": "78d3755159d6581a4ed246c115223be1ac0d9bc2b2e3c09f63e5e02f84c1e25b",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/overlays/combo_01_prep_60_plus_vote_open.png",
+      "bytes": 282907,
+      "sha256": "21a7dd38c77defdc487c7e2c17bf7c4a2fbd92fbe3fa2bbb0112d40aa81f7b55",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/overlays/combo_02_prep_plus_operator_paused.png",
+      "bytes": 275861,
+      "sha256": "5a1b10288624a2f74ad79a6578b5e45520efb7950fd41e1173c4cc70732e2885",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/overlays/combo_03_assault_plus_source_disconnected.png",
+      "bytes": 292354,
+      "sha256": "5874f85a1a14e0f76aa404e85394279dcc59d75c0664b2c4a3db5223028add20",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/overlays/combo_04_boss_incoming_pre2600_lanes_empty.png",
+      "bytes": 275006,
+      "sha256": "f6a3b3899ec82cfa3cf2c0eb500f5631db6eca05852dd94b22c8452b06b719bd",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/overlays/combo_05_boss_plus_storage_unavailable.png",
+      "bytes": 303488,
+      "sha256": "8e5f7752a3fde354be85d0b8cb69698d218d026bbbcbbe28f59eb51f1d373d06",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/overlays/combo_06_results_plus_next_wave_registration.png",
+      "bytes": 288537,
+      "sha256": "6f8b459a55c7305bf4df939f2b6628f4f651e953fba9b7e2a2c82a811674cb86",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/overlays/combo_07_backpressure_zero_valid_drops.png",
+      "bytes": 318024,
+      "sha256": "2dfabc6c81a2569e4988eb83a9a48ed4aaf5adfd049b04bb90effecf55109475",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/overlays/combo_08_source_reconnected_operator_pause_retained.png",
+      "bytes": 285488,
+      "sha256": "59b3645da618eeaefba2f86a426c0c14e8cccac06bb15855b8e62fcdcbbb2962",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/overlays/overlay_combinations_8_board.png",
+      "bytes": 964810,
+      "sha256": "13bfcb72af063479cf3a8133554e2187db4a17e1f8e90b3e5a45c0f047d0f148",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/states/01_attract.png",
+      "bytes": 247020,
+      "sha256": "3b5508f6864f42e510a25e62ef8200968a63d176e083e46b8f56a61a7582a81d",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/states/02_waiting_for_viewer.png",
+      "bytes": 242921,
+      "sha256": "5c8a0c857221c113bad606458ae6350886595c0b6774a00e2110976d483fe357",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/states/03_prep.png",
+      "bytes": 301573,
+      "sha256": "088b717b56ba4430aa5ffcf285fd98c9a00690e14f5ca38c7ab24311584d24ed",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/states/04_prep_60_warn.png",
+      "bytes": 279652,
+      "sha256": "c89a2622fd36ab1e5817342724e0dc915c05521438b671d0d80b28c1f0f9d66b",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/states/05_prep_15_warn.png",
+      "bytes": 272241,
+      "sha256": "f431d85aaeaf9bb3a0004c3356feac5d1cb121b2e2a13a5ed9d36e2a092c5b3d",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/states/06_vote_open.png",
+      "bytes": 278002,
+      "sha256": "b4893abe0e3fb72fbb10a9e0ed353ca64dfb6854a4badbab5ca6d33a8d65edad",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/states/07_assault.png",
+      "bytes": 303179,
+      "sha256": "870f96c7f7720f1787c4b0243907b1347930d32076eb93c8164cb47bd21dfc3c",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/states/08_finale.png",
+      "bytes": 283337,
+      "sha256": "2b944521800fb506e70d119c5884b7d973d954699dc370b08746f11fdb18d61a",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/states/09_boss.png",
+      "bytes": 302447,
+      "sha256": "494166ad6785e7ad2400d7916ca5c04459ffa4d2f73236c2c9166cd4a76538dc",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/states/10_results_win.png",
+      "bytes": 277335,
+      "sha256": "064fb58673dcdab0dfce876d74d612a90b5ffbb15adc847506b2f35c92d08772",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/states/11_results_loss.png",
+      "bytes": 299620,
+      "sha256": "aef4f75e6890c8465d06deb237794aea52b910d82bb769fa21016a346681a485",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/states/12_source_reconnecting.png",
+      "bytes": 289616,
+      "sha256": "fe9403233d98e38f7299c46ba03376afe2183b6101056f660bb9244a3c206848",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/states/13_paused.png",
+      "bytes": 287214,
+      "sha256": "2f6a2b06a72542d371297ac6dafc26bf3559203e5db14462799092fc7d3f419b",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/states/14_storage_unavailable.png",
+      "bytes": 285080,
+      "sha256": "74f3849b7afb34e20f3aa308758131354dd6717fdeaa6ddf7f3961e9e35a84b1",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/states/15_degraded_drops.png",
+      "bytes": 289992,
+      "sha256": "38d3f699f04c910d0f391f2f56dee4e874470234cedcc41ce2471db55f81f1fa",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/states/16_maintenance.png",
+      "bytes": 247207,
+      "sha256": "59a4f44ec24d52445d643c8f7d5da0a040e903213fa2717c3d3ad7f58e283a88",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/hud/states/state_board_16_production.png",
+      "bytes": 1636014,
+      "sha256": "4982a946a127c9aec0f209b2f55a23945fe8dfed3cd282235bd11e264c14f101",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/HUD_STATE_MAPPING.md",
+      "bytes": 8834,
+      "sha256": "e3a52c2b6c98342b2ab78ab9b9d4d6d0ddcae3fbd0c318e1463d62dc5a67b980",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_boss.png",
+      "bytes": 6060,
+      "sha256": "ab24f5918b862d22f09571070ae5311d53ab51c9cbf2a1a04e00f8e3e4f07ad2",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_builder.png",
+      "bytes": 4505,
+      "sha256": "981b986044b527e4c3e37d13b5b6562fa72459db5a9ea432e5a4374b35954f17",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_castle.png",
+      "bytes": 4779,
+      "sha256": "a9883d9b1c542d117945d8aebd46c8c8286195f625bc1a89187c77d76cde2352",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_danger.png",
+      "bytes": 4112,
+      "sha256": "0a381ad883cf6cc80862c86f0373f979b2c858b32d54030f4ea4c2b36255f88f",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_error.png",
+      "bytes": 2903,
+      "sha256": "f4ef2430ca1d008d9c4edbcd063f7f6dbccf9e379eaabc413700826184a37fc4",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_fighter.png",
+      "bytes": 4422,
+      "sha256": "73978b77e3f4b597ea99eff2c5750e7ab5237790b3e9042445e162a5d956f181",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_food.png",
+      "bytes": 6094,
+      "sha256": "2c7e622031bbecbc983e6dfa9ed3ee1288f8fcc014f56fa4489837b620668142",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_guard.png",
+      "bytes": 5063,
+      "sha256": "5bc9c1554dac856152ac7c0fd22e09644b7894904f404b42b75969bcba9af83c",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_militia.png",
+      "bytes": 5106,
+      "sha256": "b4726234b55f03a439111160bb2578b4e8ea0545cff78be3f2178a71ac26ac66",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_pause.png",
+      "bytes": 1955,
+      "sha256": "73125ecc39c8c2a0da8dea9dad6c54bc41e7219fab6f80193008f8cda2729008",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_reconnect.png",
+      "bytes": 7149,
+      "sha256": "42e4737c305badc2326b4d1e9307fa6c0bf552751eb0115bfc7b3351cd4440c5",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_resume.png",
+      "bytes": 2481,
+      "sha256": "36ee0cf33177c543a978cc0e4a37b58da0e8b633a6d1dcba56fe16ebfb4deb92",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_source_health.png",
+      "bytes": 4762,
+      "sha256": "7463589c917480708a9f5dea4079b340d8c2a07ba39c382fc0c94733fd1412fb",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_stone.png",
+      "bytes": 4168,
+      "sha256": "bc637133ceba30044f070785df14d7d3e92fcbecb00b41e1402019080dcf4e8b",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_timer.png",
+      "bytes": 8634,
+      "sha256": "6696c2d2a682eaeabbd9680b5840493f505fdb1559ba55d32954d1b0b2e768c4",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_vote_a.png",
+      "bytes": 4374,
+      "sha256": "a29a93f7bfe75df7a3276e6702754b99b1fa5a65950a4ca72acc50a4f0a1d3e5",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_vote_b.png",
+      "bytes": 5314,
+      "sha256": "ef1a351a009fbbfe5a804e26a91dc0431d2d2f3963817f7429acab1579041fed",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_vote_c.png",
+      "bytes": 2569,
+      "sha256": "755cc0f8bcf0c5f4c3e9fa00d454ad37b12dabe0ee1087b36d628822701dd82d",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_wall.png",
+      "bytes": 2049,
+      "sha256": "a144786f9ba86948570e5b58342b3534de029a887d55f065b5f4994c43e71d81",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/icons/ui_icon_wood.png",
+      "bytes": 6497,
+      "sha256": "b0dc1138cf314aee3bc567ffa21d9b3422ba95f514c4a0f993ed517481901178",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/localization_en.json",
+      "bytes": 3576,
+      "sha256": "7e1dca48265b7898e49aa2599e9b8947f97e97ba2052ad350f42081fb891c975",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/localization_vi.json",
+      "bytes": 3989,
+      "sha256": "73d3f0e53646793d03a65e1dcf548f7b6842613fab7e9b3b8757f3f83cf962b1",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/1080p/art005_vs_art006_vertical_balance_comparison.png",
+      "bytes": 549773,
+      "sha256": "ff596c260891c6d30afab675985014d0ee3de285e1be197e6fd999a382d86c1b",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/1080p/proof_01_base_gameplay_hud.png",
+      "bytes": 279652,
+      "sha256": "c89a2622fd36ab1e5817342724e0dc915c05521438b671d0d80b28c1f0f9d66b",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/1080p/proof_02_waiting_zero_participants.png",
+      "bytes": 242921,
+      "sha256": "5c8a0c857221c113bad606458ae6350886595c0b6774a00e2110976d483fe357",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/1080p/proof_03_prep_builder_activity.png",
+      "bytes": 301573,
+      "sha256": "088b717b56ba4430aa5ffcf285fd98c9a00690e14f5ca38c7ab24311584d24ed",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/1080p/proof_04_even_wave_vote_window.png",
+      "bytes": 278002,
+      "sha256": "b4893abe0e3fb72fbb10a9e0ed353ca64dfb6854a4badbab5ca6d33a8d65edad",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/1080p/proof_05_three_lane_combat.png",
+      "bytes": 303179,
+      "sha256": "870f96c7f7720f1787c4b0243907b1347930d32076eb93c8164cb47bd21dfc3c",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/1080p/proof_06_boss_incoming.png",
+      "bytes": 275006,
+      "sha256": "f6a3b3899ec82cfa3cf2c0eb500f5631db6eca05852dd94b22c8452b06b719bd",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/1080p/proof_07_boss_active.png",
+      "bytes": 302447,
+      "sha256": "494166ad6785e7ad2400d7916ca5c04459ffa4d2f73236c2c9166cd4a76538dc",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/1080p/proof_08_victory.png",
+      "bytes": 277335,
+      "sha256": "064fb58673dcdab0dfce876d74d612a90b5ffbb15adc847506b2f35c92d08772",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/1080p/proof_09_loss_recovery.png",
+      "bytes": 299620,
+      "sha256": "aef4f75e6890c8465d06deb237794aea52b910d82bb769fa21016a346681a485",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/1080p/proof_10_source_disconnected.png",
+      "bytes": 289616,
+      "sha256": "fe9403233d98e38f7299c46ba03376afe2183b6101056f660bb9244a3c206848",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/1080p/proof_11_operator_paused.png",
+      "bytes": 287214,
+      "sha256": "2f6a2b06a72542d371297ac6dafc26bf3559203e5db14462799092fc7d3f419b",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/1080p/proof_12_storage_unavailable.png",
+      "bytes": 285080,
+      "sha256": "74f3849b7afb34e20f3aa308758131354dd6717fdeaa6ddf7f3961e9e35a84b1",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/1080p/proof_13_confirmed_event_loss_degradation.png",
+      "bytes": 289992,
+      "sha256": "38d3f699f04c910d0f391f2f56dee4e874470234cedcc41ce2471db55f81f1fa",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/1080p/proof_14_next_wave_registration.png",
+      "bytes": 288537,
+      "sha256": "6f8b459a55c7305bf4df939f2b6628f4f651e953fba9b7e2a2c82a811674cb86",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/1080p/proof_15_maintenance.png",
+      "bytes": 247207,
+      "sha256": "59a4f44ec24d52445d643c8f7d5da0a040e903213fa2717c3d3ad7f58e283a88",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/1080p/proof_16_mobile_stream_overlay.png",
+      "bytes": 339924,
+      "sha256": "62dbf45a1d3c237aab3b7847c807e7d24c2b22664955e86a7d52f134cd220bdd",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/360p/proof_01_base_gameplay_hud.png",
+      "bytes": 162937,
+      "sha256": "2781910f884ddffbb4cfa4c132420646f1d79f1bc2e1836d07b600a772bd4b79",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/360p/proof_02_waiting_zero_participants.png",
+      "bytes": 151031,
+      "sha256": "536a6b24788f024d773c0d9d8c6136d15adebd008c8e35c7e328b62acc951934",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/360p/proof_03_prep_builder_activity.png",
+      "bytes": 174949,
+      "sha256": "99b72f62fe7761e989b84775d788fa835790d3a8d83318494d8b2447cb859668",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/360p/proof_04_even_wave_vote_window.png",
+      "bytes": 163658,
+      "sha256": "6c79c2b1b18a06ec892b7c0a49456dfe2da411f29a552afbd932c37712c4a020",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/360p/proof_05_three_lane_combat.png",
+      "bytes": 173460,
+      "sha256": "e803d4a8f5d8a671292f5a5856d64c6185b2db2efc5f37bcd7a8320152271c13",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/360p/proof_06_boss_incoming.png",
+      "bytes": 158908,
+      "sha256": "2a6b43d855e4479d54317f7bbb9db005f61b9abdfbae5678c0b3316166f1a895",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/360p/proof_07_boss_active.png",
+      "bytes": 168628,
+      "sha256": "ca88e4c59484b9950fafa082b0cc8260dd262f9569ec950a6fc9cae470399201",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/360p/proof_08_victory.png",
+      "bytes": 164010,
+      "sha256": "ae301ef2be234edc3015c4e4f6123f97c722a7c4c1978a526c48c926c73f764f",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/360p/proof_09_loss_recovery.png",
+      "bytes": 169878,
+      "sha256": "fd0a32a58b1c5767ac4a09af9cd5edbe2b4c56c8df1d7ce0bb099e010f9ef9c5",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/360p/proof_10_source_disconnected.png",
+      "bytes": 168156,
+      "sha256": "6a7af5e69ddf5768dc4db8777e5632f7f5d7df1493705c01d313baa1e915fc2d",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/360p/proof_11_operator_paused.png",
+      "bytes": 167561,
+      "sha256": "56984821d1b69337d5ca655dad5b8493df01abf54c08d73bba7962f7e4e79241",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/360p/proof_12_storage_unavailable.png",
+      "bytes": 166998,
+      "sha256": "19b77a3c8227ef942646eca4c4cc403c64af0cb8d5e3d2656891562887b33898",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/360p/proof_13_confirmed_event_loss_degradation.png",
+      "bytes": 166783,
+      "sha256": "2983155bbc5073262d3d21dd4b350eb07f9b4d94a622d5ce2b20cc6430ab3aa1",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/360p/proof_14_next_wave_registration.png",
+      "bytes": 168683,
+      "sha256": "76e9b4fbaca77a502e8e4428e03ea774947b14decd87c7a36224e7549016ea73",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/360p/proof_15_maintenance.png",
+      "bytes": 151945,
+      "sha256": "fd5516f3517f0326ec36e8d0bf80e0c60eb578426ecdf8ca5f6272e17ed0019c",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/360p/proof_16_mobile_stream_overlay.png",
+      "bytes": 194484,
+      "sha256": "1549271982a4c1f7cbadae69769e5a12429762fc62da22512e28ae4da8541976",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/720p/proof_01_base_gameplay_hud.png",
+      "bytes": 390462,
+      "sha256": "78480a6467a90c2ef89f91207c149d88af07b04a7171b4f399de21f3619da9ad",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/720p/proof_02_waiting_zero_participants.png",
+      "bytes": 355702,
+      "sha256": "3d043b8240a349dbe51000ccf94076a016f99c22948d5f3bfab570b88d11f3ca",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/720p/proof_03_prep_builder_activity.png",
+      "bytes": 421440,
+      "sha256": "f0b89bef1f1a8f2d1f97c51972a7d6326566aa954937636a619df74f2c5ca0db",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/720p/proof_04_even_wave_vote_window.png",
+      "bytes": 393758,
+      "sha256": "4c565cc2c54e2ceff0749c301d5b6feb7693b53b7775f9daaf1932f8e73fc618",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/720p/proof_05_three_lane_combat.png",
+      "bytes": 425151,
+      "sha256": "8ae4e28295be5579d4694b1f1e1f51d2d4926c3db3a3ea946fc87ab809997530",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/720p/proof_06_boss_incoming.png",
+      "bytes": 383563,
+      "sha256": "4d95deb860e5bc3a3ff8c688b0f642df74f498c3e2cb39ab081312f086179218",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/720p/proof_07_boss_active.png",
+      "bytes": 416612,
+      "sha256": "296be6229448d44a00a0ffff9b58a6ad7fc5b9a7d0c2144379a038dea5e7f559",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/720p/proof_08_victory.png",
+      "bytes": 396129,
+      "sha256": "b710d044e4627d9f8b6d0c7ee01784830e4aa8ada098e7e42df3a8c896c14f5e",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/720p/proof_09_loss_recovery.png",
+      "bytes": 415486,
+      "sha256": "119bc862f7e6a902db25fde89149adf0ca278f6332f8af4e407dd4b30f3463eb",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/720p/proof_10_source_disconnected.png",
+      "bytes": 410861,
+      "sha256": "64b6baaf321a220fd6f23c6a20ed20c00c2356e62e8ab4b26c466408dad60317",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/720p/proof_11_operator_paused.png",
+      "bytes": 408095,
+      "sha256": "58271fbd6d9e7e80e794f447f3db22f0d46f071c9cf83bee946cf63ce252f056",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/720p/proof_12_storage_unavailable.png",
+      "bytes": 406455,
+      "sha256": "8960b26f8fef169cbffafd1ff10dad4e3b7f22a05aa79ffa93fe2da736592aff",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/720p/proof_13_confirmed_event_loss_degradation.png",
+      "bytes": 410991,
+      "sha256": "036d80db4c0457f87af9fa467734cba03719e40416ce01ef3cf512a22a031a4b",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/720p/proof_14_next_wave_registration.png",
+      "bytes": 411134,
+      "sha256": "cd58795f94bbfcf11723c37f48c2520197875178e5a6a4dfa8377545313caa4f",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/720p/proof_15_maintenance.png",
+      "bytes": 363696,
+      "sha256": "c292290ad6d448e641c77bc1f8e93605c74f4a8d6a61864340bee202bb5e2608",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/720p/proof_16_mobile_stream_overlay.png",
+      "bytes": 476204,
+      "sha256": "8b6356b9015f3be6e6a9df8b524fbf42cd1cbbde79b6af34daa1035452c38e1b",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/compression/h264_compression_readability_proof.png",
+      "bytes": 951308,
+      "sha256": "83d102e2e3a1a60e84b60fab92c2f6b7acbcd57f03c8f3d231b7ab46d5586a40",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/compression/hud_stream_1080p_2500kbps.mp4",
+      "bytes": 360811,
+      "sha256": "9f33acae7539858c4d9649ebf5d00e8b56aaf06da79f06f7bddc5914861ff88a",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/compression/hud_stream_360p_800kbps.mp4",
+      "bytes": 133501,
+      "sha256": "8bb4701e4b14090f2e3409b1edd2e020a66f4821ab387d33cfaf180d8c568091",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/grayscale/grayscale_and_colorblind_redundancy_board.png",
+      "bytes": 729762,
+      "sha256": "b97a5db428b474378cb54ea91f6af641a4dd440b479bb07295971bfdc602893b",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/grayscale/reduced_motion_accessibility_board.png",
+      "bytes": 479435,
+      "sha256": "1f44dd8165561590fd0049ba9c93134a9ce1a2d57fc7fdff6ddcb0ba4b0c1ec3",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/nine_slice/component_repair_before_after.png",
+      "bytes": 139290,
+      "sha256": "7894e317b21ae19de1595ec11fd43b11dc855973191fd04f920b571defcbc526",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/nine_slice/nine_slice_stress_matrix.png",
+      "bytes": 197841,
+      "sha256": "1a4ba1329063fd220e11729059d96c0ed9b3923cde3f73e1b311bbe5c4279448",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/previews/nine_slice/typography_and_localization_stress_sheet.png",
+      "bytes": 234144,
+      "sha256": "69abf9771f64f6408b6c5a53a0f8b0fe8a7fc7d7eca34a75e4d882956b9c3cb7",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/qa/adversarial_validator_results.json",
+      "bytes": 4436,
+      "sha256": "84fe3b540c9d792bdc3bcc48f170454562f70f6fed4d22d4bca45f72b01a0d48",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/qa/hud_render_telemetry.json",
+      "bytes": 180893,
+      "sha256": "b5655c07645e2ff5cfadd9e8e61628b115550f63a168cf577a009eb91a8f84ab",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/qa/qa_metrics.json",
+      "bytes": 638,
+      "sha256": "676fd46690bc5354e59075176a453732481c346fc130d4e315f4ff47802dd20d",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/qa/qa_report.md",
+      "bytes": 5912,
+      "sha256": "61487e93bdf5f9e2f8f0f56a311cb025ef1179fa0d4ed805b993a685bfc7fa0a",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/qa/unity_isolated_verification.json",
+      "bytes": 645,
+      "sha256": "75815ac0b66b0d170a10d8d97d50cb4aab0b0c6efdb91c8ef35e61c49cd50285",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/README.md",
+      "bytes": 3991,
+      "sha256": "e7a4d67e539a14a65aca01fc1833d89b73b2d354795ff0499da4d3cf5a6ead6a",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/tools/build_hud_previews.py",
+      "bytes": 65523,
+      "sha256": "754db16d25961379eedd06688d4d68cdfc2d4940586634c561d17a729e2cc457",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/tools/build_ui_assets.py",
+      "bytes": 82703,
+      "sha256": "8c5efda1d9d6cb2160295ee8d9d216716dfa186f8118c33d9153fb811c2e9f7e",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/tools/validate_art006.py",
+      "bytes": 34588,
+      "sha256": "76ffd7a8385340e614d76d11bde8060b49899effc7087e4acf1b185949e894a0",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/ui_component_manifest.json",
+      "bytes": 29406,
+      "sha256": "1fce8d423afe162cc871ae088c7095c07abc88799f8b6e352526fee41f174d14",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/UI_DESIGN_SYSTEM.md",
+      "bytes": 8761,
+      "sha256": "eebc9639c35f1ee29e79d3c83216e2296786d24d4dea4d200fedd46705c24fec",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/ui_layout_tokens.json",
+      "bytes": 4957,
+      "sha256": "2c3dabed28c52025ff256104e2e0a4030fce8d7f59456ce0c88689bcfcd81649",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/ui_state_mapping.json",
+      "bytes": 5940,
+      "sha256": "da5c7780d5ee75fbe47aa096d7d138952dbc819c22ce262963ecb1155905b812",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/UNITY_INTEGRATION_GUIDE.md",
+      "bytes": 6230,
+      "sha256": "46b9532ed40220f5bc874d40534acaa559a41d453077f0894216cf9b32df86a8",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/unity_presets/ART006_HUD_UI.spriteatlasv2.yaml",
+      "bytes": 601,
+      "sha256": "21686a07f8dcd14ee6f065cf1ff7e83fcf0a70bee8210f98ccf74c37dd81d959",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/unity_presets/ART006HudPrefabVerifier.cs.txt",
+      "bytes": 18285,
+      "sha256": "bc055dca1273c85e28e8017905820e7db19328c746bdb559ec180e067519154e",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/unity_presets/TTG_ART006_UIIcon_128.preset.yaml",
+      "bytes": 1344,
+      "sha256": "9bc392d236db5ba4f95fd574d65427d471092848a84416f91d2184698871e04d",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/unity_presets/TTG_ART006_UISkin_NineSlice.preset.yaml",
+      "bytes": 1350,
+      "sha256": "0a6aa9e74ba4f704b128c53a3c2c00ce516c9994fe23ad41e7115c17845ae2f2",
+      "rights_status": "PENDING_REVIEW"
+    }
+  ]
+}

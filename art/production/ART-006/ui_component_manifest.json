@@ -1,0 +1,975 @@
+{
+  "package_id": "ART-006",
+  "style_lock": "Bastion Dawn v1",
+  "total_ui_assets": 35,
+  "icons_count": 20,
+  "skins_count": 15,
+  "reused_byte_identical_count": 31,
+  "repaired_count": 4,
+  "newly_invented_count": 0,
+  "target_unity_art_root": "unity/Assets/_TTGQLDL/Art/UI/",
+  "atlases": [
+    {
+      "id": "ui_atlas_01_icons",
+      "path": "art/production/ART-006/atlas/ui_atlas_01_icons.png",
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "memory_mib": 4.0
+    },
+    {
+      "id": "ui_atlas_02_components",
+      "path": "art/production/ART-006/atlas/ui_atlas_02_components.png",
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "memory_mib": 4.0
+    }
+  ],
+  "icons": [
+    {
+      "id": "ui_icon_wood",
+      "semantic": "resource_wood",
+      "hex": "#9E6234",
+      "shape": "Cut oak log cylinder + pale heartwood grain",
+      "path": "art/production/ART-006/icons/ui_icon_wood.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_wood.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "b0dc1138cf314aee3bc567ffa21d9b3422ba95f514c4a0f993ed517481901178",
+      "art002_sha256": "b0dc1138cf314aee3bc567ffa21d9b3422ba95f514c4a0f993ed517481901178",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_icon_stone",
+      "semantic": "resource_stone",
+      "hex": "#9BA5B0",
+      "shape": "Beveled cut-limestone ashlar block",
+      "path": "art/production/ART-006/icons/ui_icon_stone.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_stone.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "bc637133ceba30044f070785df14d7d3e92fcbecb00b41e1402019080dcf4e8b",
+      "art002_sha256": "bc637133ceba30044f070785df14d7d3e92fcbecb00b41e1402019080dcf4e8b",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_icon_food",
+      "semantic": "resource_food",
+      "hex": "#D9822B",
+      "shape": "Scored golden-crust artisan bread loaf",
+      "path": "art/production/ART-006/icons/ui_icon_food.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_food.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "2c7e622031bbecbc983e6dfa9ed3ee1288f8fcc014f56fa4489837b620668142",
+      "art002_sha256": "2c7e622031bbecbc983e6dfa9ed3ee1288f8fcc014f56fa4489837b620668142",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_icon_castle",
+      "semantic": "hp_townhall",
+      "hex": "#3B6EA5",
+      "shape": "Steep cobalt gable roof + sun-crest doorway",
+      "path": "art/production/ART-006/icons/ui_icon_castle.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_castle.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "a9883d9b1c542d117945d8aebd46c8c8286195f625bc1a89187c77d76cde2352",
+      "art002_sha256": "a9883d9b1c542d117945d8aebd46c8c8286195f625bc1a89187c77d76cde2352",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_icon_wall",
+      "semantic": "hp_wall",
+      "hex": "#9BA5B0",
+      "shape": "Three-merlon crenelated stone battlement",
+      "path": "art/production/ART-006/icons/ui_icon_wall.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_wall.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "a144786f9ba86948570e5b58342b3534de029a887d55f065b5f4994c43e71d81",
+      "art002_sha256": "a144786f9ba86948570e5b58342b3534de029a887d55f065b5f4994c43e71d81",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_icon_boss",
+      "semantic": "threat_boss",
+      "hex": "#D946EF",
+      "shape": "Crescent-horned obsidian war-helm + magenta visor",
+      "path": "art/production/ART-006/icons/ui_icon_boss.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_boss.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "ab24f5918b862d22f09571070ae5311d53ab51c9cbf2a1a04e00f8e3e4f07ad2",
+      "art002_sha256": "ab24f5918b862d22f09571070ae5311d53ab51c9cbf2a1a04e00f8e3e4f07ad2",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_icon_danger",
+      "semantic": "warning_danger",
+      "hex": "#FACC15",
+      "shape": "Equilateral warning triangle + vertical bar",
+      "path": "art/production/ART-006/icons/ui_icon_danger.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_danger.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "0a381ad883cf6cc80862c86f0373f979b2c858b32d54030f4ea4c2b36255f88f",
+      "art002_sha256": "0a381ad883cf6cc80862c86f0373f979b2c858b32d54030f4ea4c2b36255f88f",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_icon_timer",
+      "semantic": "wave_timer",
+      "hex": "#EAB308",
+      "shape": "Brass-rimmed stopwatch + 45-deg time sector",
+      "path": "art/production/ART-006/icons/ui_icon_timer.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_timer.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "6696c2d2a682eaeabbd9680b5840493f505fdb1559ba55d32954d1b0b2e768c4",
+      "art002_sha256": "6696c2d2a682eaeabbd9680b5840493f505fdb1559ba55d32954d1b0b2e768c4",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_icon_builder",
+      "semantic": "role_builder",
+      "hex": "#F4C430",
+      "shape": "Orthogonal forged-iron & oak T-mallet",
+      "path": "art/production/ART-006/icons/ui_icon_builder.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_builder.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "981b986044b527e4c3e37d13b5b6562fa72459db5a9ea432e5a4374b35954f17",
+      "art002_sha256": "981b986044b527e4c3e37d13b5b6562fa72459db5a9ea432e5a4374b35954f17",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_icon_guard",
+      "semantic": "role_guard",
+      "hex": "#2E7CF6",
+      "shape": "Steel-rimmed vertical cobalt tower shield",
+      "path": "art/production/ART-006/icons/ui_icon_guard.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_guard.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "5bc9c1554dac856152ac7c0fd22e09644b7894904f404b42b75969bcba9af83c",
+      "art002_sha256": "5bc9c1554dac856152ac7c0fd22e09644b7894904f404b42b75969bcba9af83c",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_icon_fighter",
+      "semantic": "role_fighter",
+      "hex": "#E63946",
+      "shape": "Diagonal broadsword + crimson pommel",
+      "path": "art/production/ART-006/icons/ui_icon_fighter.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_fighter.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "73978b77e3f4b597ea99eff2c5750e7ab5237790b3e9042445e162a5d956f181",
+      "art002_sha256": "73978b77e3f4b597ea99eff2c5750e7ab5237790b3e9042445e162a5d956f181",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_icon_vote_a",
+      "semantic": "vote_option_a",
+      "hex": "#2E7CF6",
+      "shape": "Fortified cobalt shield + upward chevron (text-free)",
+      "path": "art/production/ART-006/icons/ui_icon_vote_a.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_vote_a.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "a29a93f7bfe75df7a3276e6702754b99b1fa5a65950a4ca72acc50a4f0a1d3e5",
+      "art002_sha256": "a29a93f7bfe75df7a3276e6702754b99b1fa5a65950a4ca72acc50a4f0a1d3e5",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_icon_vote_b",
+      "semantic": "vote_option_b",
+      "hex": "#E63946",
+      "shape": "Crossed crimson-hilted steel blades (text-free)",
+      "path": "art/production/ART-006/icons/ui_icon_vote_b.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_vote_b.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "ef1a351a009fbbfe5a804e26a91dc0431d2d2f3963817f7429acab1579041fed",
+      "art002_sha256": "ef1a351a009fbbfe5a804e26a91dc0431d2d2f3963817f7429acab1579041fed",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_icon_vote_c",
+      "semantic": "vote_option_c",
+      "hex": "#22C55E",
+      "shape": "Iron-bound emerald safeguard chest (text-free)",
+      "path": "art/production/ART-006/icons/ui_icon_vote_c.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_vote_c.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "755cc0f8bcf0c5f4c3e9fa00d454ad37b12dabe0ee1087b36d628822701dd82d",
+      "art002_sha256": "755cc0f8bcf0c5f4c3e9fa00d454ad37b12dabe0ee1087b36d628822701dd82d",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_icon_source_health",
+      "semantic": "source_connected_ok",
+      "hex": "#22C55E",
+      "shape": "Concentric broadcast signal arcs + node",
+      "path": "art/production/ART-006/icons/ui_icon_source_health.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_source_health.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "7463589c917480708a9f5dea4079b340d8c2a07ba39c382fc0c94733fd1412fb",
+      "art002_sha256": "7463589c917480708a9f5dea4079b340d8c2a07ba39c382fc0c94733fd1412fb",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_icon_pause",
+      "semantic": "operator_paused",
+      "hex": "#FACC15",
+      "shape": "Twin vertical amber pause bars",
+      "path": "art/production/ART-006/icons/ui_icon_pause.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_pause.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "73125ecc39c8c2a0da8dea9dad6c54bc41e7219fab6f80193008f8cda2729008",
+      "art002_sha256": "73125ecc39c8c2a0da8dea9dad6c54bc41e7219fab6f80193008f8cda2729008",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_icon_resume",
+      "semantic": "resume_or_next_wave",
+      "hex": "#4ADE80",
+      "shape": "Right-pointing emerald play wedge",
+      "path": "art/production/ART-006/icons/ui_icon_resume.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_resume.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "36ee0cf33177c543a978cc0e4a37b58da0e8b633a6d1dcba56fe16ebfb4deb92",
+      "art002_sha256": "36ee0cf33177c543a978cc0e4a37b58da0e8b633a6d1dcba56fe16ebfb4deb92",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_icon_reconnect",
+      "semantic": "source_reconnecting",
+      "hex": "#FACC15",
+      "shape": "Twin circular sync arrows",
+      "path": "art/production/ART-006/icons/ui_icon_reconnect.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_reconnect.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "42e4737c305badc2326b4d1e9307fa6c0bf552751eb0115bfc7b3351cd4440c5",
+      "art002_sha256": "42e4737c305badc2326b4d1e9307fa6c0bf552751eb0115bfc7b3351cd4440c5",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_icon_error",
+      "semantic": "storage_error_halt",
+      "hex": "#DC2626",
+      "shape": "Crimson octagon + white cross",
+      "path": "art/production/ART-006/icons/ui_icon_error.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_error.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "f4ef2430ca1d008d9c4edbcd063f7f6dbccf9e379eaabc413700826184a37fc4",
+      "art002_sha256": "f4ef2430ca1d008d9c4edbcd063f7f6dbccf9e379eaabc413700826184a37fc4",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_icon_militia",
+      "semantic": "system_militia_p_le10",
+      "hex": "#94A3B8",
+      "shape": "Neutral slate buckler + wooden spear",
+      "path": "art/production/ART-006/icons/ui_icon_militia.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_icon_militia.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "dimensions": [
+        128,
+        128
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "sha256": "b4726234b55f03a439111160bb2578b4e8ea0545cff78be3f2178a71ac26ac66",
+      "art002_sha256": "b4726234b55f03a439111160bb2578b4e8ea0545cff78be3f2178a71ac26ac66",
+      "rights_status": "PENDING_REVIEW"
+    }
+  ],
+  "components": [
+    {
+      "id": "ui_comp_resource_bar",
+      "path": "art/production/ART-006/components/ui_comp_resource_bar.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_comp_resource_bar.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "repair_reason": null,
+      "dimensions": [
+        256,
+        64
+      ],
+      "insets_lrtb": [
+        20,
+        20,
+        20,
+        20
+      ],
+      "unity_sprite_border_lbrt": [
+        20,
+        20,
+        20,
+        20
+      ],
+      "unity_image_type": "Sliced",
+      "min_supported_size_px": [
+        96,
+        44
+      ],
+      "max_supported_size_px": [
+        848,
+        224
+      ],
+      "usage": "Top HUD panel, resource containers, wave/timer strips, dock backdrop",
+      "sha256": "9eaa1b717b9dd14b906b0e5672faad65c3355963dc7723ecc831e387ec8bcb42",
+      "art002_sha256": "9eaa1b717b9dd14b906b0e5672faad65c3355963dc7723ecc831e387ec8bcb42",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_comp_hp_bar_frame",
+      "path": "art/production/ART-006/components/ui_comp_hp_bar_frame.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_comp_hp_bar_frame.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "repair_reason": null,
+      "dimensions": [
+        384,
+        44
+      ],
+      "insets_lrtb": [
+        16,
+        16,
+        14,
+        14
+      ],
+      "unity_sprite_border_lbrt": [
+        16,
+        14,
+        16,
+        14
+      ],
+      "unity_image_type": "Sliced",
+      "min_supported_size_px": [
+        80,
+        32
+      ],
+      "max_supported_size_px": [
+        800,
+        56
+      ],
+      "usage": "Recessed Wall, Townhall, and Boss HP bar outer track",
+      "sha256": "f1e322bc2ba95d18acbfa5cbf3181da1d336cb0641a4c2709837860e03fdbdfd",
+      "art002_sha256": "f1e322bc2ba95d18acbfa5cbf3181da1d336cb0641a4c2709837860e03fdbdfd",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_comp_hp_bar_fill_healthy",
+      "path": "art/production/ART-006/components/ui_comp_hp_bar_fill_healthy.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_comp_hp_bar_fill_healthy.png",
+      "disposition": "REPAIRED_FROM_ART002",
+      "repair_reason": "Removed 4 non-scalable baked vertical segment bars inside stretch zone -> 0.0 horizontal 9-slice variance.",
+      "dimensions": [
+        368,
+        30
+      ],
+      "insets_lrtb": [
+        12,
+        12,
+        10,
+        10
+      ],
+      "unity_sprite_border_lbrt": [
+        12,
+        10,
+        12,
+        10
+      ],
+      "unity_image_type": "Sliced",
+      "min_supported_size_px": [
+        26,
+        22
+      ],
+      "max_supported_size_px": [
+        788,
+        42
+      ],
+      "usage": "HP >= 60% emerald cel fill (clipped via RectMask2D down to 0px)",
+      "sha256": "7b4ec1a9f1084b997941a1c606fd9290670da199b687b3973ddb5ba3899d2516",
+      "art002_sha256": "1123f8d08c7f48425351acd9034027956f8583555cdc206f157a85b6c68694a1",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_comp_hp_bar_fill_warn",
+      "path": "art/production/ART-006/components/ui_comp_hp_bar_fill_warn.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_comp_hp_bar_fill_warn.png",
+      "disposition": "REPAIRED_FROM_ART002",
+      "repair_reason": "Removed non-periodic vertical bars and aligned colorblind caution dots to exact 8px tile period (344 = 43*8).",
+      "dimensions": [
+        368,
+        30
+      ],
+      "insets_lrtb": [
+        12,
+        12,
+        10,
+        10
+      ],
+      "unity_sprite_border_lbrt": [
+        12,
+        10,
+        12,
+        10
+      ],
+      "unity_image_type": "Tiled",
+      "min_supported_size_px": [
+        26,
+        22
+      ],
+      "max_supported_size_px": [
+        788,
+        42
+      ],
+      "usage": "HP 25%-59% amber fill + 8px-periodic colorblind caution dots",
+      "sha256": "764c1eafd1856e8eab3a6e11bf7c63ac23829a5f7c9fe789124a216953d2e2c1",
+      "art002_sha256": "3b111081cbf1c663b3398a9193d02e271517093f4d62b321b5b29ea8eff8ebd9",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_comp_hp_bar_fill_crit",
+      "path": "art/production/ART-006/components/ui_comp_hp_bar_fill_crit.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_comp_hp_bar_fill_crit.png",
+      "disposition": "REPAIRED_FROM_ART002",
+      "repair_reason": "Sealed outer #11151C border (alpha=255) and aligned 45-deg dark crimson hatching to exact 8px tile period.",
+      "dimensions": [
+        368,
+        30
+      ],
+      "insets_lrtb": [
+        12,
+        12,
+        10,
+        10
+      ],
+      "unity_sprite_border_lbrt": [
+        12,
+        10,
+        12,
+        10
+      ],
+      "unity_image_type": "Tiled",
+      "min_supported_size_px": [
+        26,
+        22
+      ],
+      "max_supported_size_px": [
+        788,
+        42
+      ],
+      "usage": "HP < 25% coral-red fill + 8px-periodic 45-deg dark crimson hatching",
+      "sha256": "09f400dc391575cde7cad06b599cea4577e9b4f0a488d77ce322148763ad8dc1",
+      "art002_sha256": "0fb805ee96f729605792a8348d7fb43b9eaa3da4aecba254f1b208c45b912b7d",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_comp_role_counter_builder",
+      "path": "art/production/ART-006/components/ui_comp_role_counter_builder.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_comp_role_counter_builder.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "repair_reason": null,
+      "dimensions": [
+        264,
+        72
+      ],
+      "insets_lrtb": [
+        24,
+        20,
+        20,
+        20
+      ],
+      "unity_sprite_border_lbrt": [
+        24,
+        20,
+        20,
+        20
+      ],
+      "unity_image_type": "Sliced",
+      "min_supported_size_px": [
+        140,
+        54
+      ],
+      "max_supported_size_px": [
+        360,
+        88
+      ],
+      "usage": "Builder (XÂY) live participant plaque with #F4C430 left tab",
+      "sha256": "147bb30e4c6cbac0c5a2180bd236d627fb3a2206a7f636d199420e963a3a9766",
+      "art002_sha256": "147bb30e4c6cbac0c5a2180bd236d627fb3a2206a7f636d199420e963a3a9766",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_comp_role_counter_guard",
+      "path": "art/production/ART-006/components/ui_comp_role_counter_guard.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_comp_role_counter_guard.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "repair_reason": null,
+      "dimensions": [
+        264,
+        72
+      ],
+      "insets_lrtb": [
+        24,
+        20,
+        20,
+        20
+      ],
+      "unity_sprite_border_lbrt": [
+        24,
+        20,
+        20,
+        20
+      ],
+      "unity_image_type": "Sliced",
+      "min_supported_size_px": [
+        140,
+        54
+      ],
+      "max_supported_size_px": [
+        360,
+        88
+      ],
+      "usage": "Guard (THỦ) live participant plaque with #2E7CF6 left tab",
+      "sha256": "37bd1e47b4b8faa0cec04df9a396afd46fdee7da0a354319a02d0219372a20fb",
+      "art002_sha256": "37bd1e47b4b8faa0cec04df9a396afd46fdee7da0a354319a02d0219372a20fb",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_comp_role_counter_fighter",
+      "path": "art/production/ART-006/components/ui_comp_role_counter_fighter.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_comp_role_counter_fighter.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "repair_reason": null,
+      "dimensions": [
+        264,
+        72
+      ],
+      "insets_lrtb": [
+        24,
+        20,
+        20,
+        20
+      ],
+      "unity_sprite_border_lbrt": [
+        24,
+        20,
+        20,
+        20
+      ],
+      "unity_image_type": "Sliced",
+      "min_supported_size_px": [
+        140,
+        54
+      ],
+      "max_supported_size_px": [
+        360,
+        88
+      ],
+      "usage": "Fighter (ĐÁNH) live participant plaque with #E63946 left tab",
+      "sha256": "a0851d431c335f1f4699dd653c18cdba4ff982fddab1e20c566eedc3c61bb085",
+      "art002_sha256": "a0851d431c335f1f4699dd653c18cdba4ff982fddab1e20c566eedc3c61bb085",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_comp_vote_card_open",
+      "path": "art/production/ART-006/components/ui_comp_vote_card_open.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_comp_vote_card_open.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "repair_reason": null,
+      "dimensions": [
+        264,
+        54
+      ],
+      "insets_lrtb": [
+        18,
+        18,
+        18,
+        18
+      ],
+      "unity_sprite_border_lbrt": [
+        18,
+        18,
+        18,
+        18
+      ],
+      "unity_image_type": "Sliced",
+      "min_supported_size_px": [
+        120,
+        46
+      ],
+      "max_supported_size_px": [
+        840,
+        72
+      ],
+      "usage": "Subordinate non-button even-wave vote tally / objective strip",
+      "sha256": "e3dfeca15982ff12f8184715754152b800581bb3995fee561175c0fab13b693f",
+      "art002_sha256": "e3dfeca15982ff12f8184715754152b800581bb3995fee561175c0fab13b693f",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_comp_vote_card_locked",
+      "path": "art/production/ART-006/components/ui_comp_vote_card_locked.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_comp_vote_card_locked.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "repair_reason": null,
+      "dimensions": [
+        264,
+        54
+      ],
+      "insets_lrtb": [
+        18,
+        18,
+        18,
+        18
+      ],
+      "unity_sprite_border_lbrt": [
+        18,
+        18,
+        18,
+        18
+      ],
+      "unity_image_type": "Sliced",
+      "min_supported_size_px": [
+        120,
+        46
+      ],
+      "max_supported_size_px": [
+        840,
+        72
+      ],
+      "usage": "Gold-rimmed locked vote buff / victory highlight strip",
+      "sha256": "a56283261ea7dd48e05097665e3d28e35ded787e1423a71831054373c9597c7e",
+      "art002_sha256": "a56283261ea7dd48e05097665e3d28e35ded787e1423a71831054373c9597c7e",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_comp_status_pill_ok",
+      "path": "art/production/ART-006/components/ui_comp_status_pill_ok.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_comp_status_pill_ok.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "repair_reason": null,
+      "dimensions": [
+        184,
+        48
+      ],
+      "insets_lrtb": [
+        26,
+        26,
+        20,
+        20
+      ],
+      "unity_sprite_border_lbrt": [
+        26,
+        20,
+        26,
+        20
+      ],
+      "unity_image_type": "Sliced",
+      "min_supported_size_px": [
+        112,
+        44
+      ],
+      "max_supported_size_px": [
+        840,
+        68
+      ],
+      "usage": "Healthy source / victory / next-wave confirmation pill",
+      "sha256": "5d47a8701bc58747d4be5a637bae4bae9cd79d566d5bc61176ec3d1bd11742b1",
+      "art002_sha256": "5d47a8701bc58747d4be5a637bae4bae9cd79d566d5bc61176ec3d1bd11742b1",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_comp_status_pill_warn",
+      "path": "art/production/ART-006/components/ui_comp_status_pill_warn.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_comp_status_pill_warn.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "repair_reason": null,
+      "dimensions": [
+        184,
+        48
+      ],
+      "insets_lrtb": [
+        26,
+        26,
+        20,
+        20
+      ],
+      "unity_sprite_border_lbrt": [
+        26,
+        20,
+        26,
+        20
+      ],
+      "unity_image_type": "Sliced",
+      "min_supported_size_px": [
+        112,
+        44
+      ],
+      "max_supported_size_px": [
+        840,
+        68
+      ],
+      "usage": "MOCK/REPLAY watermark, STALE, PAUSED, PREP_60/15 warning pill",
+      "sha256": "b43f26bcfc4e704cc4cb86cf3d37187811cd983fa38d75a0e8fd593be64aa4dd",
+      "art002_sha256": "b43f26bcfc4e704cc4cb86cf3d37187811cd983fa38d75a0e8fd593be64aa4dd",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_comp_status_pill_err",
+      "path": "art/production/ART-006/components/ui_comp_status_pill_err.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_comp_status_pill_err.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "repair_reason": null,
+      "dimensions": [
+        184,
+        48
+      ],
+      "insets_lrtb": [
+        26,
+        26,
+        20,
+        20
+      ],
+      "unity_sprite_border_lbrt": [
+        26,
+        20,
+        26,
+        20
+      ],
+      "unity_image_type": "Sliced",
+      "min_supported_size_px": [
+        112,
+        44
+      ],
+      "max_supported_size_px": [
+        840,
+        68
+      ],
+      "usage": "STORAGE_UNAVAILABLE, BOSS alert, DEGRADED_DROPS critical pill",
+      "sha256": "663a16a792eb0fe3da7130770e69350996784dc5fd4c9e6062a9a13296952b6f",
+      "art002_sha256": "663a16a792eb0fe3da7130770e69350996784dc5fd4c9e6062a9a13296952b6f",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_comp_cta_banner",
+      "path": "art/production/ART-006/components/ui_comp_cta_banner.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_comp_cta_banner.png",
+      "disposition": "REUSED_BYTE_IDENTICAL",
+      "repair_reason": null,
+      "dimensions": [
+        834,
+        96
+      ],
+      "insets_lrtb": [
+        28,
+        28,
+        24,
+        24
+      ],
+      "unity_sprite_border_lbrt": [
+        28,
+        24,
+        28,
+        24
+      ],
+      "unity_image_type": "Sliced",
+      "min_supported_size_px": [
+        320,
+        72
+      ],
+      "max_supported_size_px": [
+        848,
+        104
+      ],
+      "usage": "Single dominant primary CTA plaque (Bình luận XÂY / THỦ / ĐÁNH)",
+      "sha256": "0f9856672d3152f9cf5fa593017072ad9e83f1b3feaefdf5cfd7130fc56673f7",
+      "art002_sha256": "0f9856672d3152f9cf5fa593017072ad9e83f1b3feaefdf5cfd7130fc56673f7",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "id": "ui_comp_toast_join",
+      "path": "art/production/ART-006/components/ui_comp_toast_join.png",
+      "art002_source": "art/concepts/ART-002/ui/components/ui_comp_toast_join.png",
+      "disposition": "REPAIRED_FROM_ART002",
+      "repair_reason": "Tightened capsule corner arc by 2px so documented (28,28,22,22) 9-slice insets achieve 0.0 top-strip variance.",
+      "dimensions": [
+        520,
+        56
+      ],
+      "insets_lrtb": [
+        28,
+        28,
+        22,
+        22
+      ],
+      "unity_sprite_border_lbrt": [
+        28,
+        22,
+        28,
+        22
+      ],
+      "unity_image_type": "Sliced",
+      "min_supported_size_px": [
+        220,
+        50
+      ],
+      "max_supported_size_px": [
+        780,
+        64
+      ],
+      "usage": "Single-slot 2.0s accepted join / burst-aggregated toast capsule",
+      "sha256": "756a7f08ed2d03a245859bace6737849c085feaad8367aa96d8d2eb7d13979e8",
+      "art002_sha256": "b70d31096b471bb74b4326f5e277d14a985acbc967186df74ea1444a8f285f8b",
+      "rights_status": "PENDING_REVIEW"
+    }
+  ]
+}

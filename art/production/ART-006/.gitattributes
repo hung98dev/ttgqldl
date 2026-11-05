@@ -1,0 +1,10 @@
+# Pin LF on text files inside ART-006 so exact-byte SHA-256 hashes in asset_manifest.json
+# match identically across Windows (core.autocrlf=true), macOS, and Linux checkouts.
+.gitattributes text eol=lf
+*.md   text eol=lf
+*.json text eol=lf
+*.py   text eol=lf
+*.txt  text eol=lf
+*.yaml text eol=lf
+*.png  binary
+*.mp4  binary

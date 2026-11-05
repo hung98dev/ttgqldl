@@ -1,0 +1,603 @@
+{
+  "atlas_id": "ui_atlas_02_components",
+  "path": "art/production/ART-006/atlas/ui_atlas_02_components.png",
+  "dimensions": [
+    1024,
+    1024
+  ],
+  "format": "RGBA32",
+  "memory_bytes_uncompressed": 4194304,
+  "memory_mib_uncompressed": 4.0,
+  "filter_mode": "Point (preserves crisp 1px inner bevels & periodic 8px tile edges; mipmaps disabled)",
+  "mipmaps": false,
+  "min_gutter_px": 16,
+  "rotation_allowed": false,
+  "slice_count": 15,
+  "slices": [
+    {
+      "id": "ui_comp_resource_bar",
+      "unity_image_type": "Sliced",
+      "rect_top_left_px": [
+        16,
+        16,
+        256,
+        64
+      ],
+      "unity_rect_bottom_left_px": [
+        16,
+        944,
+        256,
+        64
+      ],
+      "uv_bottom_left": [
+        0.015625,
+        0.921875,
+        0.25,
+        0.0625
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        20,
+        20,
+        20,
+        20
+      ],
+      "unity_sprite_border_lbrt": [
+        20,
+        20,
+        20,
+        20
+      ]
+    },
+    {
+      "id": "ui_comp_hp_bar_frame",
+      "unity_image_type": "Sliced",
+      "rect_top_left_px": [
+        288,
+        16,
+        384,
+        44
+      ],
+      "unity_rect_bottom_left_px": [
+        288,
+        964,
+        384,
+        44
+      ],
+      "uv_bottom_left": [
+        0.28125,
+        0.941406,
+        0.375,
+        0.042969
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        16,
+        16,
+        14,
+        14
+      ],
+      "unity_sprite_border_lbrt": [
+        16,
+        14,
+        16,
+        14
+      ]
+    },
+    {
+      "id": "ui_comp_hp_bar_fill_healthy",
+      "unity_image_type": "Sliced",
+      "rect_top_left_px": [
+        16,
+        96,
+        368,
+        30
+      ],
+      "unity_rect_bottom_left_px": [
+        16,
+        898,
+        368,
+        30
+      ],
+      "uv_bottom_left": [
+        0.015625,
+        0.876953,
+        0.359375,
+        0.029297
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        12,
+        12,
+        10,
+        10
+      ],
+      "unity_sprite_border_lbrt": [
+        12,
+        10,
+        12,
+        10
+      ]
+    },
+    {
+      "id": "ui_comp_hp_bar_fill_warn",
+      "unity_image_type": "Tiled",
+      "rect_top_left_px": [
+        400,
+        96,
+        368,
+        30
+      ],
+      "unity_rect_bottom_left_px": [
+        400,
+        898,
+        368,
+        30
+      ],
+      "uv_bottom_left": [
+        0.390625,
+        0.876953,
+        0.359375,
+        0.029297
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        12,
+        12,
+        10,
+        10
+      ],
+      "unity_sprite_border_lbrt": [
+        12,
+        10,
+        12,
+        10
+      ]
+    },
+    {
+      "id": "ui_comp_hp_bar_fill_crit",
+      "unity_image_type": "Tiled",
+      "rect_top_left_px": [
+        16,
+        142,
+        368,
+        30
+      ],
+      "unity_rect_bottom_left_px": [
+        16,
+        852,
+        368,
+        30
+      ],
+      "uv_bottom_left": [
+        0.015625,
+        0.832031,
+        0.359375,
+        0.029297
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        12,
+        12,
+        10,
+        10
+      ],
+      "unity_sprite_border_lbrt": [
+        12,
+        10,
+        12,
+        10
+      ]
+    },
+    {
+      "id": "ui_comp_role_counter_builder",
+      "unity_image_type": "Sliced",
+      "rect_top_left_px": [
+        400,
+        142,
+        264,
+        72
+      ],
+      "unity_rect_bottom_left_px": [
+        400,
+        810,
+        264,
+        72
+      ],
+      "uv_bottom_left": [
+        0.390625,
+        0.791016,
+        0.257812,
+        0.070312
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        24,
+        20,
+        20,
+        20
+      ],
+      "unity_sprite_border_lbrt": [
+        24,
+        20,
+        20,
+        20
+      ]
+    },
+    {
+      "id": "ui_comp_role_counter_guard",
+      "unity_image_type": "Sliced",
+      "rect_top_left_px": [
+        680,
+        142,
+        264,
+        72
+      ],
+      "unity_rect_bottom_left_px": [
+        680,
+        810,
+        264,
+        72
+      ],
+      "uv_bottom_left": [
+        0.664062,
+        0.791016,
+        0.257812,
+        0.070312
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        24,
+        20,
+        20,
+        20
+      ],
+      "unity_sprite_border_lbrt": [
+        24,
+        20,
+        20,
+        20
+      ]
+    },
+    {
+      "id": "ui_comp_role_counter_fighter",
+      "unity_image_type": "Sliced",
+      "rect_top_left_px": [
+        16,
+        230,
+        264,
+        72
+      ],
+      "unity_rect_bottom_left_px": [
+        16,
+        722,
+        264,
+        72
+      ],
+      "uv_bottom_left": [
+        0.015625,
+        0.705078,
+        0.257812,
+        0.070312
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        24,
+        20,
+        20,
+        20
+      ],
+      "unity_sprite_border_lbrt": [
+        24,
+        20,
+        20,
+        20
+      ]
+    },
+    {
+      "id": "ui_comp_vote_card_open",
+      "unity_image_type": "Sliced",
+      "rect_top_left_px": [
+        296,
+        230,
+        264,
+        54
+      ],
+      "unity_rect_bottom_left_px": [
+        296,
+        740,
+        264,
+        54
+      ],
+      "uv_bottom_left": [
+        0.289062,
+        0.722656,
+        0.257812,
+        0.052734
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        18,
+        18,
+        18,
+        18
+      ],
+      "unity_sprite_border_lbrt": [
+        18,
+        18,
+        18,
+        18
+      ]
+    },
+    {
+      "id": "ui_comp_vote_card_locked",
+      "unity_image_type": "Sliced",
+      "rect_top_left_px": [
+        576,
+        230,
+        264,
+        54
+      ],
+      "unity_rect_bottom_left_px": [
+        576,
+        740,
+        264,
+        54
+      ],
+      "uv_bottom_left": [
+        0.5625,
+        0.722656,
+        0.257812,
+        0.052734
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        18,
+        18,
+        18,
+        18
+      ],
+      "unity_sprite_border_lbrt": [
+        18,
+        18,
+        18,
+        18
+      ]
+    },
+    {
+      "id": "ui_comp_status_pill_ok",
+      "unity_image_type": "Sliced",
+      "rect_top_left_px": [
+        16,
+        318,
+        184,
+        48
+      ],
+      "unity_rect_bottom_left_px": [
+        16,
+        658,
+        184,
+        48
+      ],
+      "uv_bottom_left": [
+        0.015625,
+        0.642578,
+        0.179688,
+        0.046875
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        26,
+        26,
+        20,
+        20
+      ],
+      "unity_sprite_border_lbrt": [
+        26,
+        20,
+        26,
+        20
+      ]
+    },
+    {
+      "id": "ui_comp_status_pill_warn",
+      "unity_image_type": "Sliced",
+      "rect_top_left_px": [
+        216,
+        318,
+        184,
+        48
+      ],
+      "unity_rect_bottom_left_px": [
+        216,
+        658,
+        184,
+        48
+      ],
+      "uv_bottom_left": [
+        0.210938,
+        0.642578,
+        0.179688,
+        0.046875
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        26,
+        26,
+        20,
+        20
+      ],
+      "unity_sprite_border_lbrt": [
+        26,
+        20,
+        26,
+        20
+      ]
+    },
+    {
+      "id": "ui_comp_status_pill_err",
+      "unity_image_type": "Sliced",
+      "rect_top_left_px": [
+        416,
+        318,
+        184,
+        48
+      ],
+      "unity_rect_bottom_left_px": [
+        416,
+        658,
+        184,
+        48
+      ],
+      "uv_bottom_left": [
+        0.40625,
+        0.642578,
+        0.179688,
+        0.046875
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        26,
+        26,
+        20,
+        20
+      ],
+      "unity_sprite_border_lbrt": [
+        26,
+        20,
+        26,
+        20
+      ]
+    },
+    {
+      "id": "ui_comp_cta_banner",
+      "unity_image_type": "Sliced",
+      "rect_top_left_px": [
+        16,
+        382,
+        834,
+        96
+      ],
+      "unity_rect_bottom_left_px": [
+        16,
+        546,
+        834,
+        96
+      ],
+      "uv_bottom_left": [
+        0.015625,
+        0.533203,
+        0.814453,
+        0.09375
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        28,
+        28,
+        24,
+        24
+      ],
+      "unity_sprite_border_lbrt": [
+        28,
+        24,
+        28,
+        24
+      ]
+    },
+    {
+      "id": "ui_comp_toast_join",
+      "unity_image_type": "Sliced",
+      "rect_top_left_px": [
+        16,
+        494,
+        520,
+        56
+      ],
+      "unity_rect_bottom_left_px": [
+        16,
+        474,
+        520,
+        56
+      ],
+      "uv_bottom_left": [
+        0.015625,
+        0.462891,
+        0.507812,
+        0.054688
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        28,
+        28,
+        22,
+        22
+      ],
+      "unity_sprite_border_lbrt": [
+        28,
+        22,
+        28,
+        22
+      ]
+    }
+  ]
+}

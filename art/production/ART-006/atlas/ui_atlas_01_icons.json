@@ -1,0 +1,798 @@
+{
+  "atlas_id": "ui_atlas_01_icons",
+  "path": "art/production/ART-006/atlas/ui_atlas_01_icons.png",
+  "dimensions": [
+    1024,
+    1024
+  ],
+  "format": "RGBA32",
+  "memory_bytes_uncompressed": 4194304,
+  "memory_mib_uncompressed": 4.0,
+  "filter_mode": "Bilinear (Point also clean due to binary 0/255 alpha)",
+  "mipmaps": false,
+  "min_gutter_px": 24,
+  "rotation_allowed": false,
+  "slice_count": 20,
+  "slices": [
+    {
+      "id": "ui_icon_wood",
+      "semantic": "resource_wood",
+      "rect_top_left_px": [
+        24,
+        24,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        24,
+        872,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.023438,
+        0.851562,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ui_icon_stone",
+      "semantic": "resource_stone",
+      "rect_top_left_px": [
+        176,
+        24,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        176,
+        872,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.171875,
+        0.851562,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ui_icon_food",
+      "semantic": "resource_food",
+      "rect_top_left_px": [
+        328,
+        24,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        328,
+        872,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.320312,
+        0.851562,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ui_icon_castle",
+      "semantic": "hp_townhall",
+      "rect_top_left_px": [
+        480,
+        24,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        480,
+        872,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.46875,
+        0.851562,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ui_icon_wall",
+      "semantic": "hp_wall",
+      "rect_top_left_px": [
+        632,
+        24,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        632,
+        872,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.617188,
+        0.851562,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ui_icon_boss",
+      "semantic": "threat_boss",
+      "rect_top_left_px": [
+        24,
+        176,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        24,
+        720,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.023438,
+        0.703125,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ui_icon_danger",
+      "semantic": "warning_danger",
+      "rect_top_left_px": [
+        176,
+        176,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        176,
+        720,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.171875,
+        0.703125,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ui_icon_timer",
+      "semantic": "wave_timer",
+      "rect_top_left_px": [
+        328,
+        176,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        328,
+        720,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.320312,
+        0.703125,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ui_icon_builder",
+      "semantic": "role_builder",
+      "rect_top_left_px": [
+        480,
+        176,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        480,
+        720,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.46875,
+        0.703125,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ui_icon_guard",
+      "semantic": "role_guard",
+      "rect_top_left_px": [
+        632,
+        176,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        632,
+        720,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.617188,
+        0.703125,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ui_icon_fighter",
+      "semantic": "role_fighter",
+      "rect_top_left_px": [
+        24,
+        328,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        24,
+        568,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.023438,
+        0.554688,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ui_icon_vote_a",
+      "semantic": "vote_option_a",
+      "rect_top_left_px": [
+        176,
+        328,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        176,
+        568,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.171875,
+        0.554688,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ui_icon_vote_b",
+      "semantic": "vote_option_b",
+      "rect_top_left_px": [
+        328,
+        328,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        328,
+        568,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.320312,
+        0.554688,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ui_icon_vote_c",
+      "semantic": "vote_option_c",
+      "rect_top_left_px": [
+        480,
+        328,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        480,
+        568,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.46875,
+        0.554688,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ui_icon_source_health",
+      "semantic": "source_connected_ok",
+      "rect_top_left_px": [
+        632,
+        328,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        632,
+        568,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.617188,
+        0.554688,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ui_icon_pause",
+      "semantic": "operator_paused",
+      "rect_top_left_px": [
+        24,
+        480,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        24,
+        416,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.023438,
+        0.40625,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ui_icon_resume",
+      "semantic": "resume_or_next_wave",
+      "rect_top_left_px": [
+        176,
+        480,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        176,
+        416,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.171875,
+        0.40625,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ui_icon_reconnect",
+      "semantic": "source_reconnecting",
+      "rect_top_left_px": [
+        328,
+        480,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        328,
+        416,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.320312,
+        0.40625,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ui_icon_error",
+      "semantic": "storage_error_halt",
+      "rect_top_left_px": [
+        480,
+        480,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        480,
+        416,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.46875,
+        0.40625,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ui_icon_militia",
+      "semantic": "system_militia_p_le10",
+      "rect_top_left_px": [
+        632,
+        480,
+        128,
+        128
+      ],
+      "unity_rect_bottom_left_px": [
+        632,
+        416,
+        128,
+        128
+      ],
+      "uv_bottom_left": [
+        0.617188,
+        0.40625,
+        0.125,
+        0.125
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "rotated": false,
+      "border_lrtb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "unity_sprite_border_lbrt": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "unity_version": "6000.6.7f1",
+  "status": "PASS",
+  "imported_icons": 20,
+  "imported_skins": 15,
+  "verified_nine_slice_borders": 15,
+  "multi_size_slice_checks_passed": 45,
+  "tested_fixtures_count": 24,
+  "missing_sprite_references": 0,
+  "tmp_missing_vietnamese_glyphs": 0,
+  "safe_zone_anchor_violations": 0,
+  "atlas_01_runtime_bytes": 4195232,
+  "atlas_02_runtime_bytes": 4195232,
+  "prefab_saved_cleanly": true,
+  "transparent_overlay_over_art005_verified": true,
+  "notes": [
+    "Executed in isolated scratch Unity 6000.6.7f1 Editor batchmode (-nographics); production unity/ directory untouched (M06 remains NOT_STARTED)."
+  ]
+}

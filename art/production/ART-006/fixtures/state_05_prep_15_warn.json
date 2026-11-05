@@ -1,0 +1,104 @@
+{
+  "synthetic_fixture": true,
+  "fixture_notice": "SYNTHETIC_OFFLINE_TEST_FIXTURE — Not live server or real viewer telemetry.",
+  "schema_version": 1,
+  "rules_version": "ttg-rules-v1",
+  "fixture_id": "state_05_prep_15_warn",
+  "canonical_state_id": "PREP_15_WARN",
+  "session_id": "00000000-0000-4000-8000-000000000006",
+  "revision": "1042",
+  "attract_mode": false,
+  "public_snapshot": {
+    "wave_no": 4,
+    "wave_tick": 1450,
+    "lifecycle": "running",
+    "pause_reasons": [],
+    "phase": "prep",
+    "remaining_seconds": 155,
+    "village_level": 12,
+    "wall_tier": 3,
+    "wall_hp": 1400,
+    "wall_max": 1400,
+    "townhall_hp": 500,
+    "townhall_max": 500,
+    "wood": 540,
+    "stone": 360,
+    "food": 260,
+    "counts": {
+      "builder": 16,
+      "guard": 24,
+      "fighter": 19,
+      "unique_joined": 59
+    },
+    "lanes": [
+      {
+        "id": "west",
+        "ordinary_hp": 0,
+        "boss_hp": 0
+      },
+      {
+        "id": "center",
+        "ordinary_hp": 0,
+        "boss_hp": 0
+      },
+      {
+        "id": "east",
+        "ordinary_hp": 0,
+        "boss_hp": 0
+      }
+    ],
+    "boss": {
+      "is_boss_wave": false,
+      "boss_incoming": false,
+      "boss_exists": false,
+      "boss_hp": 0,
+      "boss_max_hp": 0
+    },
+    "vote": {
+      "open": false,
+      "options": [],
+      "counts": {
+        "A": 0,
+        "B": 0,
+        "C": 0
+      },
+      "selected": "B"
+    },
+    "settlement": {
+      "wave_result": null,
+      "is_post_loss_recovery": false,
+      "consecutive_losses": 0,
+      "pending_next_wave_count": 0
+    },
+    "system_assist": {
+      "militia_active": false,
+      "militia_attack_bonus": 0
+    },
+    "diagnostics": {
+      "connection_state": "mock",
+      "metrics_available": true,
+      "queue_fill_pct": 8,
+      "retryable_rejected_count": 0,
+      "confirmed_valid_drops": 0
+    },
+    "source_status": "mock",
+    "spotlights": [
+      {
+        "public_ref": "pub_01_9f2a",
+        "display_alias": "minh_tuan",
+        "role": "fighter"
+      },
+      {
+        "public_ref": "pub_02_4c8b",
+        "display_alias": "linh_chi",
+        "role": "guard"
+      },
+      {
+        "public_ref": "pub_03_7d1e",
+        "display_alias": "hoang_nam",
+        "role": "builder"
+      }
+    ],
+    "join_toast": null
+  }
+}

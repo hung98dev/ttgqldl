@@ -1,0 +1,201 @@
+{
+  "package_id": "ART-006",
+  "rules_version": "ttg-rules-v1",
+  "art002_correction_note": "ART-002 labeled ordinary PREP as ticks 0..999 in prose. Authoritative PREP in 02_GAME_RULES.md and 03_SIMULATION.md is ticks 0..1599 ([0s, 160s)). PREP_60_WARN (tick 1000..1449) and PREP_15_WARN (tick 1450..1599) are visual countdown emphasis substates WITHIN authoritative PREP, never separate gameplay phases. VOTE_OPEN (even waves, ticks 800..1199) is an orthogonal overlay.",
+  "authoritative_phase_ticks": {
+    "WAITING": [
+      -1,
+      -1
+    ],
+    "PREP": [
+      0,
+      1599
+    ],
+    "ASSAULT": [
+      1600,
+      2599
+    ],
+    "FINALE": [
+      2600,
+      2799
+    ],
+    "RESULTS": [
+      2800,
+      2999
+    ],
+    "ROLLOVER_CONTROL_TRANSITION": 3000
+  },
+  "composition_slots_and_priority": [
+    {
+      "slot_order": 1,
+      "slot_id": "session_gate",
+      "values": [
+        "ACTIVE_SESSION",
+        "ATTRACT",
+        "MAINTENANCE"
+      ],
+      "rule": "MAINTENANCE when lifecycle == 'stopped'; ATTRACT for pre-session demo loop (P=0, MOCK watermark mandatory)."
+    },
+    {
+      "slot_order": 2,
+      "slot_id": "freeze_blockers",
+      "coexisting_set": true,
+      "priority_high_to_low": [
+        "storage_unavailable",
+        "source_disconnected",
+        "operator_paused"
+      ],
+      "rule": "pause_reasons is a set; simulation clock freezes while ANY blocker is present and resumes ONLY when ALL blockers clear (QA-OPS-04). Primary banner shows highest-priority blocker while secondary pill lists coexisting active blockers."
+    },
+    {
+      "slot_order": 3,
+      "slot_id": "base_gameplay_phase",
+      "values": [
+        "WAITING_FOR_VIEWER",
+        "PREP",
+        "ASSAULT",
+        "FINALE",
+        "RESULTS_WIN",
+        "RESULTS_LOSS"
+      ],
+      "rule": "Derived strictly from authoritative phase/wave_tick and settled tick-2800 wave_result."
+    },
+    {
+      "slot_order": 4,
+      "slot_id": "prep_warning_substate",
+      "values": [
+        "NONE",
+        "PREP_60_WARN",
+        "PREP_15_WARN"
+      ],
+      "rule": "Active only when phase == 'prep': PREP_60_WARN at tick 1000..1449; PREP_15_WARN at tick 1450..1599."
+    },
+    {
+      "slot_order": 5,
+      "slot_id": "boss_presentation_mode",
+      "values": [
+        "NONE",
+        "BOSS_INCOMING",
+        "BOSS_ACTIVE"
+      ],
+      "rule": "Only on wave_no % 5 == 0. Before tick 2600: boss_exists MUST be false and boss_hp == 0; BOSS_INCOMING warning shown at tick >= 2450 or if ordinary_hp == 0 early (CLEAR forbidden!). At tick >= 2600 and phase == 'finale': BOSS_ACTIVE shows spawned Boss and authoritative boss_hp."
+    },
+    {
+      "slot_order": 6,
+      "slot_id": "subordinate_strip",
+      "values": [
+        "VOTE_OPEN",
+        "VOTE_LOCKED",
+        "ODD_WAVE_OBJECTIVE",
+        "NEXT_WAVE_QUEUE",
+        "ATTRACT_HINT",
+        "WAITING_HINT",
+        "PAUSED_HOLD"
+      ],
+      "rule": "VOTE_OPEN iff wave_no % 2 == 0 and 800 <= wave_tick <= 1199. Primary role CTA ALWAYS remains dominant below it."
+    },
+    {
+      "slot_order": 7,
+      "slot_id": "ingress_degradation_diagnostics",
+      "values": [
+        "HEALTHY",
+        "BACKPRESSURE_NO_LOSS",
+        "METRICS_UNKNOWN_STALE",
+        "CONFIRMED_EVENT_LOSS"
+      ],
+      "rule": "W0306 discipline: 'LỆNH HỢP LỆ BỊ RƠI' (DEGRADED_DROPS) is shown ONLY when metrics_available == true AND confirmed_valid_drops > 0. Queue backpressure or retryable rejection with 0 valid drops shows BACKPRESSURE_NO_LOSS. Missing telemetry shows METRICS_UNKNOWN_STALE, never faking 0."
+    },
+    {
+      "slot_order": 8,
+      "slot_id": "honest_disclosures",
+      "values": [
+        "MOCK_REPLAY_WATERMARK",
+        "SYSTEM_MILITIA_BADGE",
+        "RECOVERY_RELIEF_BADGE"
+      ],
+      "rule": "Watermark mandatory whenever source_status != 'connected'. Militia badge shown when 1 <= P <= 10, never counted as viewer."
+    }
+  ],
+  "canonical_16_states": [
+    {
+      "index": 1,
+      "state_id": "ATTRACT",
+      "fixture_file": "fixtures/state_01_attract.json"
+    },
+    {
+      "index": 2,
+      "state_id": "WAITING_FOR_VIEWER",
+      "fixture_file": "fixtures/state_02_waiting_for_viewer.json"
+    },
+    {
+      "index": 3,
+      "state_id": "PREP",
+      "fixture_file": "fixtures/state_03_prep.json"
+    },
+    {
+      "index": 4,
+      "state_id": "PREP_60_WARN",
+      "fixture_file": "fixtures/state_04_prep_60_warn.json"
+    },
+    {
+      "index": 5,
+      "state_id": "PREP_15_WARN",
+      "fixture_file": "fixtures/state_05_prep_15_warn.json"
+    },
+    {
+      "index": 6,
+      "state_id": "VOTE_OPEN",
+      "fixture_file": "fixtures/state_06_vote_open.json"
+    },
+    {
+      "index": 7,
+      "state_id": "ASSAULT",
+      "fixture_file": "fixtures/state_07_assault.json"
+    },
+    {
+      "index": 8,
+      "state_id": "FINALE",
+      "fixture_file": "fixtures/state_08_finale.json"
+    },
+    {
+      "index": 9,
+      "state_id": "BOSS",
+      "fixture_file": "fixtures/state_09_boss.json"
+    },
+    {
+      "index": 10,
+      "state_id": "RESULTS_WIN",
+      "fixture_file": "fixtures/state_10_results_win.json"
+    },
+    {
+      "index": 11,
+      "state_id": "RESULTS_LOSS",
+      "fixture_file": "fixtures/state_11_results_loss.json"
+    },
+    {
+      "index": 12,
+      "state_id": "SOURCE_RECONNECTING",
+      "fixture_file": "fixtures/state_12_source_reconnecting.json"
+    },
+    {
+      "index": 13,
+      "state_id": "PAUSED",
+      "fixture_file": "fixtures/state_13_paused.json"
+    },
+    {
+      "index": 14,
+      "state_id": "STORAGE_UNAVAILABLE",
+      "fixture_file": "fixtures/state_14_storage_unavailable.json"
+    },
+    {
+      "index": 15,
+      "state_id": "DEGRADED_DROPS",
+      "fixture_file": "fixtures/state_15_degraded_drops.json"
+    },
+    {
+      "index": 16,
+      "state_id": "MAINTENANCE",
+      "fixture_file": "fixtures/state_16_maintenance.json"
+    }
+  ]
+}

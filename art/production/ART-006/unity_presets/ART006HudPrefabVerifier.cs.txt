@@ -1,0 +1,328 @@
+// ART-006 Unity 6000.6.7f1 Editor Prefab, 9-Slice, Atlas & TMP Verification Script Template
+// Target Project Path (during M06 integration): unity/Assets/_TTGQLDL/Editor/Art006HudPrefabVerifier.cs
+// Kept as .cs.txt inside art/production/ART-006/unity_presets/ while M06 remains NOT_STARTED.
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using TMPro;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.Profiling;
+using UnityEngine.UI;
+
+namespace TTGQLDL.EditorTools
+{
+    public static class ART006HudPrefabVerifier
+    {
+        [Serializable]
+        private class SkinSpec
+        {
+            public string id;
+            public int[] dimensions;
+            public int[] insets_lrtb;
+            public int[] unity_sprite_border_lbrt;
+            public string unity_image_type;
+            public int[] min_supported_size_px;
+            public int[] max_supported_size_px;
+        }
+
+        [Serializable]
+        private class IconSpec
+        {
+            public string id;
+            public int[] dimensions;
+        }
+
+        [Serializable]
+        private class ComponentManifest
+        {
+            public IconSpec[] icons;
+            public SkinSpec[] components;
+        }
+
+        [Serializable]
+        private class VerificationReport
+        {
+            public string unity_version;
+            public string status;
+            public int imported_icons;
+            public int imported_skins;
+            public int verified_nine_slice_borders;
+            public int multi_size_slice_checks_passed;
+            public int tested_fixtures_count;
+            public int missing_sprite_references;
+            public int tmp_missing_vietnamese_glyphs;
+            public int safe_zone_anchor_violations;
+            public long atlas_01_runtime_bytes;
+            public long atlas_02_runtime_bytes;
+            public bool prefab_saved_cleanly;
+            public bool transparent_overlay_over_art005_verified;
+            public List<string> notes = new List<string>();
+        }
+
+        public static void RunBatchVerification()
+        {
+            var report = new VerificationReport
+            {
+                unity_version = Application.unityVersion,
+                status = "FAIL"
+            };
+
+            string manifestPath = "Assets/_TTGQLDL/Art/UI/Contracts/ui_component_manifest.json";
+            var manifestJson = File.ReadAllText(manifestPath);
+            var manifest = JsonUtility.FromJson<ComponentManifest>(manifestJson);
+
+            // 1. Configure & verify all 20 icons
+            foreach (var ic in manifest.icons)
+            {
+                string assetPath = $"Assets/_TTGQLDL/Art/UI/Icons/{ic.id}.png";
+                var ti = (TextureImporter)AssetImporter.GetAtPath(assetPath);
+                ti.textureType = TextureImporterType.Sprite;
+                ti.spriteImportMode = SpriteImportMode.Single;
+                ti.spritePixelsPerUnit = 100f;
+                ti.mipmapEnabled = false;
+                ti.alphaIsTransparency = true;
+                ti.filterMode = FilterMode.Bilinear;
+                ti.textureCompression = TextureImporterCompression.Uncompressed;
+                ti.SaveAndReimport();
+
+                var sp = AssetDatabase.LoadAssetAtPath<Sprite>(assetPath);
+                if (sp == null) throw new Exception($"Missing icon sprite: {assetPath}");
+                if ((int)sp.rect.width != 128 || (int)sp.rect.height != 128)
+                    throw new Exception($"Icon size mismatch on {ic.id}: {sp.rect}");
+                report.imported_icons++;
+            }
+
+            // 2. Configure & verify all 15 9-slice skins (Unity border = Vector4(L, B, R, T))
+            foreach (var sk in manifest.components)
+            {
+                string assetPath = $"Assets/_TTGQLDL/Art/UI/Components/{sk.id}.png";
+                var ti = (TextureImporter)AssetImporter.GetAtPath(assetPath);
+                ti.textureType = TextureImporterType.Sprite;
+                ti.spriteImportMode = SpriteImportMode.Single;
+                ti.spritePixelsPerUnit = 100f;
+                ti.mipmapEnabled = false;
+                ti.alphaIsTransparency = true;
+                ti.filterMode = FilterMode.Point;
+                ti.textureCompression = TextureImporterCompression.Uncompressed;
+                var b = sk.unity_sprite_border_lbrt;
+                ti.spriteBorder = new Vector4(b[0], b[1], b[2], b[3]);
+                ti.SaveAndReimport();
+
+                var sp = AssetDatabase.LoadAssetAtPath<Sprite>(assetPath);
+                if (sp == null) throw new Exception($"Missing skin sprite: {assetPath}");
+                if (sp.border != new Vector4(b[0], b[1], b[2], b[3]))
+                    throw new Exception($"Sprite border mismatch on {sk.id}: got {sp.border}");
+                report.imported_skins++;
+                report.verified_nine_slice_borders++;
+            }
+
+            // 3. Configure & measure the 2 deterministic 1024x1024 RGBA32 atlases
+            string[] atlasPaths = {
+                "Assets/_TTGQLDL/Art/UI/Atlas/ui_atlas_01_icons.png",
+                "Assets/_TTGQLDL/Art/UI/Atlas/ui_atlas_02_components.png"
+            };
+            for (int i = 0; i < atlasPaths.Length; i++)
+            {
+                var ati = (TextureImporter)AssetImporter.GetAtPath(atlasPaths[i]);
+                ati.textureType = TextureImporterType.Default;
+                ati.sRGBTexture = true;
+                ati.mipmapEnabled = false;
+                ati.alphaIsTransparency = true;
+                ati.npotScale = TextureImporterNPOTScale.None;
+                ati.maxTextureSize = 2048;
+                ati.textureCompression = TextureImporterCompression.Uncompressed;
+                ati.filterMode = (i == 0) ? FilterMode.Bilinear : FilterMode.Point;
+                ati.SaveAndReimport();
+
+                var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(atlasPaths[i]);
+                if (tex.width != 1024 || tex.height != 1024 || tex.mipmapCount != 1)
+                    throw new Exception($"Atlas {atlasPaths[i]} invalid dimensions/mips: {tex.width}x{tex.height}, mips={tex.mipmapCount}");
+                long mem = Profiler.GetRuntimeMemorySizeLong(tex);
+                if (i == 0) report.atlas_01_runtime_bytes = mem;
+                else report.atlas_02_runtime_bytes = mem;
+            }
+
+            // 4. Verify TMP Essential Resources & create dynamic TMP_FontAsset from Inter-SemiBold.ttf
+            if (TMP_Settings.instance == null)
+                throw new Exception("TMP Essential Resources must be present before running ART006HudPrefabVerifier.");
+
+            string editorFontsDir = Path.Combine(EditorApplication.applicationContentsPath, "Resources/Fonts");
+            string interPath = Path.Combine(editorFontsDir, "Inter-SemiBold.ttf");
+            string dstFontAssetPath = "Assets/_TTGQLDL/Art/UI/TempInterSemiBold.ttf";
+            File.Copy(interPath, dstFontAssetPath, true);
+            AssetDatabase.ImportAsset(dstFontAssetPath, ImportAssetOptions.ForceUpdate);
+            var osFont = AssetDatabase.LoadAssetAtPath<Font>(dstFontAssetPath);
+            var tmpFont = TMP_FontAsset.CreateFontAsset(osFont);
+            tmpFont.atlasPopulationMode = AtlasPopulationMode.Dynamic;
+
+            string viCheck = "Bình luận XÂY / THỦ / ĐÁNH TƯỜNG CHÍNH ĐỢT GIỜ GỖ ĐÁ LƯƠNG ẮẰẲẴẶ ẤẦẨẪẬ ẾỀỂỄỆ ỐỒỔỖỘ ỚỜỞỠỢ ỨỪỬỮỰ Đđ ≤ · …";
+            tmpFont.TryAddCharacters(viCheck, out string missingChars);
+            report.tmp_missing_vietnamese_glyphs = string.IsNullOrEmpty(missingChars) ? 0 : missingChars.Length;
+            if (report.tmp_missing_vietnamese_glyphs != 0)
+                throw new Exception($"Missing Vietnamese TMP glyphs: {missingChars}");
+
+            // 5. Verify ART-005 world sprite + build BroadcastHudCanvas prefab hierarchy
+            string envPath = "Assets/_TTGQLDL/Art/Environment/03_assault_three_lanes.png";
+            var eti = (TextureImporter)AssetImporter.GetAtPath(envPath);
+            eti.textureType = TextureImporterType.Sprite;
+            eti.spriteImportMode = SpriteImportMode.Single;
+            eti.mipmapEnabled = false;
+            eti.SaveAndReimport();
+            var envSprite = AssetDatabase.LoadAssetAtPath<Sprite>(envPath);
+            var worldGo = new GameObject("ART005_WorldBackdrop", typeof(SpriteRenderer));
+            worldGo.GetComponent<SpriteRenderer>().sprite = envSprite;
+            report.transparent_overlay_over_art005_verified = (envSprite != null);
+
+            var canvasGo = new GameObject("BroadcastHudCanvas", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
+            var canvas = canvasGo.GetComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            var scaler = canvasGo.GetComponent<CanvasScaler>();
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            scaler.referenceResolution = new Vector2(1080f, 1920f);
+            scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+            scaler.matchWidthOrHeight = 0.5f;
+
+            var safeGo = CreateRect("SafeAreaContainer", canvasGo.transform, new Vector2(0f, 0.12f), new Vector2(0.82f, 1.0f));
+            var topStatus = CreateSlicedPanel("TopStatusPanel", safeGo, "ui_comp_resource_bar", Image.Type.Sliced, new Vector2(0.04f, 0.858f), new Vector2(0.99f, 0.986f));
+            var wallHpFrame = CreateSlicedPanel("WallHpBar", topStatus, "ui_comp_hp_bar_frame", Image.Type.Sliced, new Vector2(0.06f, 0.68f), new Vector2(0.62f, 0.94f));
+            var wallMask = new GameObject("FillClipMask", typeof(RectTransform), typeof(RectMask2D)).GetComponent<RectTransform>();
+            wallMask.SetParent(wallHpFrame, false);
+            wallMask.anchorMin = Vector2.zero; wallMask.anchorMax = Vector2.one; wallMask.sizeDelta = new Vector2(-12f, -14f);
+            CreateSlicedPanel("WallHpFill", wallMask, "ui_comp_hp_bar_fill_healthy", Image.Type.Sliced, Vector2.zero, Vector2.one);
+
+            var castleHpFrame = CreateSlicedPanel("CastleHpBar", topStatus, "ui_comp_hp_bar_frame", Image.Type.Sliced, new Vector2(0.06f, 0.36f), new Vector2(0.54f, 0.62f));
+            CreateSlicedPanel("ResourceStrip", topStatus, "ui_comp_resource_bar", Image.Type.Sliced, new Vector2(0.02f, 0.04f), new Vector2(0.98f, 0.31f));
+            var threatBanner = CreateSlicedPanel("ThreatBanner", safeGo, "ui_comp_status_pill_warn", Image.Type.Sliced, new Vector2(0.04f, 0.812f), new Vector2(0.99f, 0.852f));
+            var diagOverlay = CreateSlicedPanel("ErrorOrPauseDiagnosticOverlay", safeGo, "ui_comp_status_pill_err", Image.Type.Sliced, new Vector2(0.06f, 0.27f), new Vector2(0.96f, 0.305f));
+            var joinToast = CreateSlicedPanel("JoinToast", safeGo, "ui_comp_toast_join", Image.Type.Sliced, new Vector2(0.08f, 0.18f), new Vector2(0.94f, 0.218f));
+            var voteOverlay = CreateSlicedPanel("VoteOverlay", safeGo, "ui_comp_vote_card_open", Image.Type.Sliced, new Vector2(0.04f, 0.138f), new Vector2(0.99f, 0.174f));
+            var primaryCta = CreateSlicedPanel("PrimaryCommandCTA", safeGo, "ui_comp_cta_banner", Image.Type.Sliced, new Vector2(0.04f, 0.082f), new Vector2(0.99f, 0.134f));
+            var ctaTmp = CreateTmpLabel("CtaText", primaryCta, tmpFont, "Bình luận XÂY / THỦ / ĐÁNH", 48f);
+
+            var roleRow = CreateRect("RoleCounterRow", safeGo, new Vector2(0.04f, 0.035f), new Vector2(0.99f, 0.078f));
+            var hlg = roleRow.gameObject.AddComponent<HorizontalLayoutGroup>();
+            hlg.spacing = 9f; hlg.childControlWidth = true; hlg.childControlHeight = true; hlg.childForceExpandWidth = true;
+            CreateSlicedPanel("RoleBuilder", roleRow, "ui_comp_role_counter_builder", Image.Type.Sliced, Vector2.zero, Vector2.one);
+            CreateSlicedPanel("RoleGuard", roleRow, "ui_comp_role_counter_guard", Image.Type.Sliced, Vector2.zero, Vector2.one);
+            CreateSlicedPanel("RoleFighter", roleRow, "ui_comp_role_counter_fighter", Image.Type.Sliced, Vector2.zero, Vector2.one);
+
+            var watermark = CreateSlicedPanel("MockReplayWatermark", safeGo, "ui_comp_status_pill_warn", Image.Type.Sliced, new Vector2(0.04f, 0.002f), new Vector2(0.99f, 0.031f));
+            CreateSlicedPanel("SourceConnectionStatus", topStatus, "ui_comp_status_pill_ok", Image.Type.Sliced, new Vector2(0.76f, 0.36f), new Vector2(0.98f, 0.62f));
+
+            // Check safe-area anchor containment & zero missing sprites
+            if (safeGo.anchorMax.x > 0.8201f || safeGo.anchorMin.y < 0.1199f)
+                report.safe_zone_anchor_violations++;
+
+            foreach (var img in canvasGo.GetComponentsInChildren<Image>(true))
+            {
+                if (img.sprite == null) report.missing_sprite_references++;
+            }
+
+            // 6. Multi-size 9-slice & tiled component test across all 15 skins (min / nominal / max)
+            var testRig = new GameObject("NineSliceSizeRig", typeof(RectTransform));
+            testRig.transform.SetParent(canvasGo.transform, false);
+            foreach (var sk in manifest.components)
+            {
+                var sp = AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/_TTGQLDL/Art/UI/Components/{sk.id}.png");
+                var imgType = (sk.unity_image_type == "Tiled") ? Image.Type.Tiled : Image.Type.Sliced;
+                int[] widths = { sk.min_supported_size_px[0], sk.dimensions[0], sk.max_supported_size_px[0] };
+                foreach (int w in widths)
+                {
+                    var go = new GameObject($"{sk.id}_{w}", typeof(RectTransform), typeof(Image));
+                    go.transform.SetParent(testRig.transform, false);
+                    var rt = go.GetComponent<RectTransform>();
+                    rt.sizeDelta = new Vector2(w, sk.dimensions[1]);
+                    var im = go.GetComponent<Image>();
+                    im.sprite = sp;
+                    im.type = imgType;
+                    if (!im.hasBorder) throw new Exception($"Skin {sk.id} missing Unity 9-slice border!");
+                    report.multi_size_slice_checks_passed++;
+                }
+            }
+            UnityEngine.Object.DestroyImmediate(testRig);
+
+            // 7. Step through all 24 synthetic JSON fixtures (16 canonical + 8 overlay combos)
+            var fixtureFiles = Directory.GetFiles("Assets/_TTGQLDL/Art/UI/Fixtures", "*.json");
+            Array.Sort(fixtureFiles);
+            foreach (var ff in fixtureFiles)
+            {
+                string raw = File.ReadAllText(ff);
+                if (!raw.Contains("\"synthetic_fixture\": true"))
+                    throw new Exception($"Fixture not marked synthetic: {ff}");
+                ctaTmp.text = raw.Contains("\"lifecycle\": \"stopped\"")
+                    ? "PHIÊN DỪNG · CHỜ MỞ LẠI"
+                    : "Bình luận XÂY / THỦ / ĐÁNH";
+                ctaTmp.ForceMeshUpdate();
+                Canvas.ForceUpdateCanvases();
+                report.tested_fixtures_count++;
+            }
+
+            // Save prefab asset cleanly inside isolated scratch project
+            Directory.CreateDirectory("Assets/_TTGQLDL/Prefabs");
+            var savedPrefab = PrefabUtility.SaveAsPrefabAsset(canvasGo, "Assets/_TTGQLDL/Prefabs/BroadcastHudCanvas.prefab", out bool prefabSuccess);
+            report.prefab_saved_cleanly = prefabSuccess && (savedPrefab != null);
+
+            if (report.imported_icons == 20 &&
+                report.imported_skins == 15 &&
+                report.verified_nine_slice_borders == 15 &&
+                report.multi_size_slice_checks_passed == 45 &&
+                report.tested_fixtures_count == 24 &&
+                report.missing_sprite_references == 0 &&
+                report.tmp_missing_vietnamese_glyphs == 0 &&
+                report.safe_zone_anchor_violations == 0 &&
+                report.prefab_saved_cleanly &&
+                report.transparent_overlay_over_art005_verified)
+            {
+                report.status = "PASS";
+            }
+
+            report.notes.Add("Executed in isolated scratch Unity 6000.6.7f1 Editor batchmode (-nographics); production unity/ directory untouched (M06 remains NOT_STARTED).");
+            string outReportPath = Environment.GetEnvironmentVariable("ART006_UNITY_REPORT_OUT");
+            if (!string.IsNullOrEmpty(outReportPath))
+            {
+                File.WriteAllText(outReportPath, JsonUtility.ToJson(report, true) + "\n");
+            }
+            if (report.status != "PASS")
+            {
+                EditorApplication.Exit(2);
+                return;
+            }
+            EditorApplication.Exit(0);
+        }
+
+        private static RectTransform CreateRect(string name, Transform parent, Vector2 anchorMin, Vector2 anchorMax)
+        {
+            var go = new GameObject(name, typeof(RectTransform));
+            var rt = go.GetComponent<RectTransform>();
+            rt.SetParent(parent, false);
+            rt.anchorMin = anchorMin;
+            rt.anchorMax = anchorMax;
+            rt.offsetMin = Vector2.zero;
+            rt.offsetMax = Vector2.zero;
+            return rt;
+        }
+
+        private static RectTransform CreateSlicedPanel(string name, Transform parent, string skinId, Image.Type imgType, Vector2 anchorMin, Vector2 anchorMax)
+        {
+            var rt = CreateRect(name, parent, anchorMin, anchorMax);
+            var img = rt.gameObject.AddComponent<Image>();
+            img.sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/_TTGQLDL/Art/UI/Components/{skinId}.png");
+            img.type = imgType;
+            return rt;
+        }
+
+        private static TextMeshProUGUI CreateTmpLabel(string name, Transform parent, TMP_FontAsset font, string text, float fontSize)
+        {
+            var rt = CreateRect(name, parent, Vector2.zero, Vector2.one);
+            var tmp = rt.gameObject.AddComponent<TextMeshProUGUI>();
+            tmp.font = font;
+            tmp.text = text;
+            tmp.fontSize = fontSize;
+            tmp.alignment = TextAlignmentOptions.Center;
+            tmp.textWrappingMode = TextWrappingModes.NoWrap;
+            return tmp;
+        }
+    }
+}

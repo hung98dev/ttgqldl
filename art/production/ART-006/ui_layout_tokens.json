@@ -1,0 +1,294 @@
+{
+  "package_id": "ART-006",
+  "reference_canvas_px": [
+    1080,
+    1920
+  ],
+  "mobile_audit_canvas_px": [
+    360,
+    640
+  ],
+  "unity_canvas_scaler": {
+    "render_mode": "ScreenSpaceOverlay",
+    "ui_scale_mode": "ScaleWithScreenSize",
+    "reference_resolution": [
+      1080,
+      1920
+    ],
+    "screen_match_mode": "MatchWidthOrHeight",
+    "match_width_or_height": 0.5
+  },
+  "safe_area_defaults": {
+    "right_reserve_x_norm": 0.82,
+    "right_reserve_x_px": 885.6,
+    "bottom_reserve_y_norm": 0.88,
+    "bottom_reserve_y_px": 1689.6,
+    "operator_tunable_right_range": [
+      0.78,
+      0.86
+    ],
+    "operator_tunable_bottom_range": [
+      0.84,
+      0.9
+    ]
+  },
+  "typography_scale": {
+    "cta_primary": {
+      "px_1080p": 48,
+      "px_360p": 16.0,
+      "min_360p_required": 16.0,
+      "weight": "SemiBold"
+    },
+    "hp_and_timer": {
+      "px_1080p": 43,
+      "px_360p": 14.33,
+      "min_360p_required": 14.0,
+      "weight": "SemiBold"
+    },
+    "threat_banner": {
+      "px_1080p": 37,
+      "px_360p": 12.33,
+      "min_360p_required": 12.0,
+      "weight": "SemiBold"
+    },
+    "secondary_hud": {
+      "px_1080p": 36,
+      "px_360p": 12.0,
+      "min_360p_required": 12.0,
+      "weight": "SemiBold"
+    },
+    "min_wcag_contrast_ratio": 4.5
+  },
+  "vertical_screen_budget_1080x1920": {
+    "top_status_and_threat_y_px": [
+      22,
+      316
+    ],
+    "unobstructed_battlefield_and_bastion_y_px": [
+      316,
+      1062
+    ],
+    "forecourt_breathing_space_y_px": [
+      1062,
+      1208
+    ],
+    "diagnostic_and_spotlight_ribbons_y_px": [
+      1208,
+      1320
+    ],
+    "join_toast_single_slot_y_px": [
+      1330,
+      1388
+    ],
+    "unified_lower_command_dock_y_px": [
+      1390,
+      1688
+    ],
+    "platform_bottom_chat_reserve_y_px": [
+      1690,
+      1920
+    ]
+  },
+  "hud_zones": {
+    "top_status_panel": {
+      "top_down_px": [
+        36,
+        22,
+        876,
+        242
+      ],
+      "size_px": [
+        840,
+        220
+      ],
+      "unity_anchor_min": [
+        0.03333,
+        0.87396
+      ],
+      "unity_anchor_max": [
+        0.81111,
+        0.98854
+      ]
+    },
+    "threat_banner": {
+      "top_down_px": [
+        36,
+        250,
+        876,
+        316
+      ],
+      "size_px": [
+        840,
+        66
+      ],
+      "unity_anchor_min": [
+        0.03333,
+        0.83542
+      ],
+      "unity_anchor_max": [
+        0.81111,
+        0.86979
+      ]
+    },
+    "secondary_diag_pill": {
+      "top_down_px": [
+        56,
+        1208,
+        856,
+        1260
+      ],
+      "size_px": [
+        800,
+        52
+      ],
+      "unity_anchor_min": [
+        0.05185,
+        0.34375
+      ],
+      "unity_anchor_max": [
+        0.79259,
+        0.37083
+      ]
+    },
+    "spotlight_ribbon": {
+      "top_down_px": [
+        56,
+        1268,
+        856,
+        1320
+      ],
+      "size_px": [
+        800,
+        52
+      ],
+      "unity_anchor_min": [
+        0.05185,
+        0.3125
+      ],
+      "unity_anchor_max": [
+        0.79259,
+        0.33958
+      ]
+    },
+    "join_toast_slot": {
+      "top_down_px": [
+        76,
+        1330,
+        836,
+        1388
+      ],
+      "size_px": [
+        760,
+        58
+      ],
+      "unity_anchor_min": [
+        0.07037,
+        0.27708
+      ],
+      "unity_anchor_max": [
+        0.77407,
+        0.30729
+      ]
+    },
+    "lower_dock_backdrop": {
+      "top_down_px": [
+        28,
+        1390,
+        882,
+        1688
+      ],
+      "size_px": [
+        854,
+        298
+      ],
+      "unity_anchor_min": [
+        0.02593,
+        0.12083
+      ],
+      "unity_anchor_max": [
+        0.81667,
+        0.27604
+      ]
+    },
+    "vote_or_objective_strip": {
+      "top_down_px": [
+        36,
+        1396,
+        876,
+        1454
+      ],
+      "size_px": [
+        840,
+        58
+      ],
+      "unity_anchor_min": [
+        0.03333,
+        0.24271
+      ],
+      "unity_anchor_max": [
+        0.81111,
+        0.27292
+      ]
+    },
+    "primary_cta_plaque": {
+      "top_down_px": [
+        36,
+        1462,
+        876,
+        1550
+      ],
+      "size_px": [
+        840,
+        88
+      ],
+      "unity_anchor_min": [
+        0.03333,
+        0.19271
+      ],
+      "unity_anchor_max": [
+        0.81111,
+        0.23854
+      ]
+    },
+    "role_counters_row": {
+      "top_down_px": [
+        36,
+        1556,
+        876,
+        1630
+      ],
+      "size_px": [
+        840,
+        74
+      ],
+      "unity_anchor_min": [
+        0.03333,
+        0.15104
+      ],
+      "unity_anchor_max": [
+        0.81111,
+        0.18958
+      ]
+    },
+    "source_watermark_footer": {
+      "top_down_px": [
+        36,
+        1638,
+        876,
+        1686
+      ],
+      "size_px": [
+        840,
+        48
+      ],
+      "unity_anchor_min": [
+        0.03333,
+        0.12187
+      ],
+      "unity_anchor_max": [
+        0.81111,
+        0.14687
+      ]
+    }
+  }
+}

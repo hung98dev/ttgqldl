@@ -1,0 +1,120 @@
+{
+  "package_id": "ART-006",
+  "total_adversarial_cases": 16,
+  "rejected_count": 16,
+  "status": "PASS",
+  "cases": [
+    {
+      "case_id": "01_missing_icon",
+      "expected": "REJECT",
+      "actual": "REJECTED",
+      "passed": true,
+      "rejection_reason": "Expected 20 UI icons, found files=19, manifest=20"
+    },
+    {
+      "case_id": "02_missing_component_skin",
+      "expected": "REJECT",
+      "actual": "REJECTED",
+      "passed": true,
+      "rejection_reason": "Expected 15 UI component skins, found files=14, manifest=15"
+    },
+    {
+      "case_id": "03_incorrect_9slice_border",
+      "expected": "REJECT",
+      "actual": "REJECTED",
+      "passed": true,
+      "rejection_reason": "Invalid 9-slice insets [140, 140, 20, 20] for ui_comp_resource_bar (256x64)"
+    },
+    {
+      "case_id": "04_corrupted_atlas_uv",
+      "expected": "REJECT",
+      "actual": "REJECTED",
+      "passed": true,
+      "rejection_reason": "Corrupted atlas UV on ui_icon_castle: got [0.91, 0.91, 0.125, 0.125], expected [0.46875, 0.851562, 0.125, 0.125]"
+    },
+    {
+      "case_id": "05_sprite_hash_mismatch",
+      "expected": "REJECT",
+      "actual": "REJECTED",
+      "passed": true,
+      "rejection_reason": "Manifest SHA-256 mismatch on art/production/ART-006/icons/ui_icon_wood.png: expected 0000000000000000000000000000000000000000000000000000000000000000, got b0dc1138cf314aee3bc567ffa21d9b3422ba95f514c4a0f993ed517481901178"
+    },
+    {
+      "case_id": "06_ui_panel_outside_safe_region",
+      "expected": "REJECT",
+      "actual": "REJECTED",
+      "passed": true,
+      "rejection_reason": "Rendered HUD panel primary_cta_plaque in state_01_attract outside safe region: [36, 1462, 940, 1550]"
+    },
+    {
+      "case_id": "07_cta_below_minimum_mobile_font_size",
+      "expected": "REJECT",
+      "actual": "REJECTED",
+      "passed": true,
+      "rejection_reason": "Primary CTA below 16px @ 360p: 14.5"
+    },
+    {
+      "case_id": "08_missing_vietnamese_glyph",
+      "expected": "REJECT",
+      "actual": "REJECTED",
+      "passed": true,
+      "rejection_reason": "Missing Vietnamese/HUD glyphs in font cmap: ['Ặ']"
+    },
+    {
+      "case_id": "09_text_overflow",
+      "expected": "REJECT",
+      "actual": "REJECTED",
+      "passed": true,
+      "rejection_reason": "Text overflow in state_03_prep slot wall_hp: 920 > 440"
+    },
+    {
+      "case_id": "10_wrong_boss_visibility_boundary",
+      "expected": "REJECT",
+      "actual": "REJECTED",
+      "passed": true,
+      "rejection_reason": "Premature Boss spawn before tick 2600 in combo_04_boss_incoming_pre2600_lanes_empty (tick=2480)"
+    },
+    {
+      "case_id": "11_prep_ending_prematurely_at_tick_999",
+      "expected": "REJECT",
+      "actual": "REJECTED",
+      "passed": true,
+      "rejection_reason": "Authoritative phase tick boundaries corrupted in ui_state_mapping.json: {'WAITING': [-1, -1], 'PREP': [0, 999], 'ASSAULT': [1600, 2599], 'FINALE': [2600, 2799], 'RESULTS': [2800, 2999], 'ROLLOVER_CONTROL_TRANSITION': 3000}"
+    },
+    {
+      "case_id": "12_fake_nonzero_participant_count_in_waiting",
+      "expected": "REJECT",
+      "actual": "REJECTED",
+      "passed": true,
+      "rejection_reason": "Fake nonzero participant count in WAITING fixture state_02_waiting_for_viewer"
+    },
+    {
+      "case_id": "13_queue_backpressure_displayed_as_confirmed_loss",
+      "expected": "REJECT",
+      "actual": "REJECTED",
+      "passed": true,
+      "rejection_reason": "W0306 violation: false event-drop warning shown when confirmed_valid_drops=0 in combo_07_backpressure_zero_valid_drops"
+    },
+    {
+      "case_id": "14_private_actorkey_inserted_into_public_toast",
+      "expected": "REJECT",
+      "actual": "REJECTED",
+      "passed": true,
+      "rejection_reason": "Private 64-hex ActorKey detected in fixture combo_01_prep_60_plus_vote_open"
+    },
+    {
+      "case_id": "15_vote_overlay_visible_on_odd_wave",
+      "expected": "REJECT",
+      "actual": "REJECTED",
+      "passed": true,
+      "rejection_reason": "Invalid vote.open=true on wave=3, tick=600, phase=prep in state_03_prep"
+    },
+    {
+      "case_id": "16_invalid_contradictory_lifecycle_overlay",
+      "expected": "REJECT",
+      "actual": "REJECTED",
+      "passed": true,
+      "rejection_reason": "Contradictory lifecycle=running while pause_reasons=['operator_paused', 'storage_unavailable'] in combo_07_backpressure_zero_valid_drops"
+    }
+  ]
+}

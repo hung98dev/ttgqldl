@@ -1,0 +1,22 @@
+{
+  "package_id": "ART-006",
+  "status": "PASS",
+  "automated_metrics": {
+    "icons_verified": 20,
+    "skins_verified": 15,
+    "canonical_states_verified": 16,
+    "overlay_combos_verified": 8,
+    "multi_res_exports_verified": 48,
+    "localization_keys_verified": 59,
+    "text_overflow_count": 0,
+    "safe_zone_violations": 0,
+    "castle_or_boss_occlusions": 0,
+    "min_wcag_contrast_ratio": 12.3,
+    "h264_psnr_1080p_db": 34.64,
+    "h264_psnr_360p_db": 31.71
+  },
+  "adversarial_negative_cases_passed": "16/16",
+  "unity_isolated_batchmode_status": "PASS",
+  "rights_status": "PENDING_REVIEW",
+  "m06_status": "NOT_STARTED"
+}
