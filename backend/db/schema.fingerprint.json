@@ -460,6 +460,16 @@
           "udt_name": "timestamptz",
           "nullable": false,
           "default": "now()"
+        },
+        {
+          "name": "accepted_wave",
+          "ordinal": 12,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": true,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
         }
       ]
     },
@@ -1039,6 +1049,16 @@
           "udt_name": "timestamptz",
           "nullable": false,
           "default": "now()"
+        },
+        {
+          "name": "input_seq_high",
+          "ordinal": 8,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": "0",
+          "numeric_precision": 64,
+          "numeric_scale": 0
         }
       ]
     },
@@ -2402,6 +2422,12 @@
     },
     {
       "table": "reducer_transitions",
+      "name": "reducer_transitions_input_seq_high_not_null",
+      "type": "n",
+      "definition": "NOT NULL input_seq_high"
+    },
+    {
+      "table": "reducer_transitions",
       "name": "reducer_transitions_operation_check",
       "type": "c",
       "definition": "CHECK ((operation = ANY (ARRAY['start'::text, 'advance'::text, 'rollover'::text])))"
@@ -2997,6 +3023,11 @@
       "table": "input_events",
       "name": "input_events_pkey",
       "definition": "CREATE UNIQUE INDEX input_events_pkey ON ttg.input_events USING btree (session_id, input_seq)"
+    },
+    {
+      "table": "input_events",
+      "name": "input_events_replay_boundary",
+      "definition": "CREATE INDEX input_events_replay_boundary ON ttg.input_events USING btree (session_id, accepted_wave, accepted_tick, input_seq)"
     },
     {
       "table": "input_receipts",

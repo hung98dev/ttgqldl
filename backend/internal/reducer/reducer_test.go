@@ -98,6 +98,11 @@ func newTestSession(t *testing.T, pool *storage.Pool, lifecycle string, leaseDur
 
 func insertInput(t *testing.T, pool *storage.Pool, sessionID string, seq int64, acceptedTick, scheduledTick int32, waveNo int64, actor, kind, payload string) {
 	t.Helper()
+	insertInputWithWave(t, pool, sessionID, seq, acceptedTick, scheduledTick, waveNo, waveNo, actor, kind, payload)
+}
+
+func insertInputWithWave(t *testing.T, pool *storage.Pool, sessionID string, seq int64, acceptedTick, scheduledTick int32, waveNo, acceptedWave int64, actor, kind, payload string) {
+	t.Helper()
 	ctx := context.Background()
 	tx, err := pool.Begin(ctx)
 	if err != nil {
@@ -105,9 +110,9 @@ func insertInput(t *testing.T, pool *storage.Pool, sessionID string, seq int64, 
 	}
 	defer func() { _ = tx.Rollback(ctx) }()
 	if _, err := tx.Exec(ctx, `INSERT INTO ttg.input_events
-		(session_id, input_seq, accepted_tick, scheduled_tick, wave_no, actor_key, kind, canonical_payload, rules_version)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8::jsonb, 'ttg-rules-v1')`,
-		sessionID, seq, acceptedTick, scheduledTick, waveNo, actor, kind, payload); err != nil {
+		(session_id, input_seq, accepted_tick, scheduled_tick, wave_no, accepted_wave, actor_key, kind, canonical_payload, rules_version)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9::jsonb, 'ttg-rules-v1')`,
+		sessionID, seq, acceptedTick, scheduledTick, waveNo, acceptedWave, actor, kind, payload); err != nil {
 		t.Fatal(err)
 	}
 	if _, err := tx.Exec(ctx, `UPDATE ttg.sessions SET input_sequence = GREATEST(input_sequence, $2) WHERE id = $1`, sessionID, seq); err != nil {
@@ -119,6 +124,10 @@ func insertInput(t *testing.T, pool *storage.Pool, sessionID string, seq int64, 
 }
 
 func insertRoleInput(t *testing.T, pool *storage.Pool, sessionID string, seq int64, acceptedTick, scheduledTick int32, waveNo int64, actor string, role domain.Role) {
+	insertRoleInputAtWave(t, pool, sessionID, seq, acceptedTick, scheduledTick, waveNo, waveNo, actor, role)
+}
+
+func insertRoleInputAtWave(t *testing.T, pool *storage.Pool, sessionID string, seq int64, acceptedTick, scheduledTick int32, waveNo, acceptedWave int64, actor string, role domain.Role) {
 	t.Helper()
 	payload, err := json.Marshal(struct {
 		Kind string `json:"kind"`
@@ -127,7 +136,7 @@ func insertRoleInput(t *testing.T, pool *storage.Pool, sessionID string, seq int
 	if err != nil {
 		t.Fatal(err)
 	}
-	insertInput(t, pool, sessionID, seq, acceptedTick, scheduledTick, waveNo, actor, "role", string(payload))
+	insertInputWithWave(t, pool, sessionID, seq, acceptedTick, scheduledTick, waveNo, acceptedWave, actor, "role", string(payload))
 }
 
 func insertVoteInput(t *testing.T, pool *storage.Pool, sessionID string, seq int64, acceptedTick, scheduledTick int32, waveNo int64, actor string, option domain.VoteOption) {
@@ -139,7 +148,7 @@ func insertVoteInput(t *testing.T, pool *storage.Pool, sessionID string, seq int
 	if err != nil {
 		t.Fatal(err)
 	}
-	insertInput(t, pool, sessionID, seq, acceptedTick, scheduledTick, waveNo, actor, "vote", string(payload))
+	insertInputWithWave(t, pool, sessionID, seq, acceptedTick, scheduledTick, waveNo, waveNo, actor, "vote", string(payload))
 }
 
 func seedRuntime(t *testing.T, pool *storage.Pool, sessionID string, state domain.SessionState, queue simulation.RoleQueue, queuedNext []int64, revision int64) {
@@ -466,7 +475,7 @@ func TestFutureWaveInput50WaitsWhileInput51Applies(t *testing.T) {
 	// Input 50 has the lower sequence but is accepted at the tick-2800 RESULTS
 	// boundary and targets the NEXT wave. Input 51 was accepted at 2799 and is
 	// effective at 2800, so it is applied first without a global applied watermark.
-	insertRoleInput(t, pool, session.SessionID, 50, 2800, 0, 2, actorB, domain.RoleGuard)
+	insertRoleInputAtWave(t, pool, session.SessionID, 50, 2800, 0, 2, 1, actorB, domain.RoleGuard)
 	insertRoleInput(t, pool, session.SessionID, 51, 2799, 2800, 1, actorA, domain.RoleGuard)
 	reducer, err := New(session.Manager, pool)
 	if err != nil {
@@ -795,8 +804,8 @@ func insertRoleBatch(t *testing.T, pool *storage.Pool, sessionID string, startSe
 	defer func() { _ = tx.Rollback(ctx) }()
 	for index := 0; index < count; index++ {
 		if _, err := tx.Exec(ctx, `INSERT INTO ttg.input_events
-			(session_id, input_seq, accepted_tick, scheduled_tick, wave_no, actor_key, kind, canonical_payload, rules_version)
-			VALUES ($1, $2, $3, $4, $5, $6, 'role', $7::jsonb, 'ttg-rules-v1')`,
+			(session_id, input_seq, accepted_tick, scheduled_tick, wave_no, accepted_wave, actor_key, kind, canonical_payload, rules_version)
+			VALUES ($1, $2, $3, $4, $5, $5, $6, 'role', $7::jsonb, 'ttg-rules-v1')`,
 			sessionID, startSeq+int64(index), acceptedTick, scheduledTick, waveNo, actor, string(payload)); err != nil {
 			t.Fatal(err)
 		}
@@ -1313,5 +1322,60 @@ func TestReplayAcrossBossAndSettlement(t *testing.T) {
 	}
 	if replay.CheckpointRevision != 1 || replay.Transitions != 400 {
 		t.Fatalf("boss replay = %+v", replay)
+	}
+}
+
+func TestReplaySelectionSeparatesRepeatedWaveTicks(t *testing.T) {
+	pool := testPool(t)
+	session := newTestSession(t, pool, "running", 2*time.Second)
+	insertInputWithWave(t, pool, session.SessionID, 1, 800, 801, 1, 1, actorKey("a"), "role", `{"kind":"role","role":"builder"}`)
+	insertInputWithWave(t, pool, session.SessionID, 2, 800, 801, 2, 2, actorKey("b"), "role", `{"kind":"role","role":"guard"}`)
+	ctx := context.Background()
+	tx, err := pool.Begin(ctx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer func() { _ = tx.Rollback(ctx) }()
+	inputs, err := loadEligibleInputs(ctx, rawFencedTx{tx: tx}, session.SessionID, 2, 800)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(inputs) != 1 || inputs[0].InputSeq != 2 || inputs[0].AcceptedWave == nil || *inputs[0].AcceptedWave != 2 {
+		t.Fatalf("wave2 tick800 selection = %+v", inputs)
+	}
+}
+
+func TestHistoricalTargetExcludesLaterInputAtSameTick(t *testing.T) {
+	pool := testPool(t)
+	session := newTestSession(t, pool, "waiting", 2*time.Second)
+	actor := actorKey("a")
+	insertRoleInput(t, pool, session.SessionID, 1, -1, 0, 1, actor, domain.RoleBuilder)
+	reducer, err := New(session.Manager, pool)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+		t.Fatal(err)
+	} // rev1 tick0 checkpoint
+	if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+		t.Fatal(err)
+	} // rev2 tick1
+	insertRoleInput(t, pool, session.SessionID, 2, 1, 2, 1, actor, domain.RoleGuard) // accepted after rev2 at tick1
+	if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+		t.Fatal(err)
+	} // rev3 tick2
+	before, err := reducer.VerifyReplay(context.Background(), session.SessionID, 2)
+	if err != nil {
+		t.Fatalf("replay target2: %v", err)
+	}
+	after, err := reducer.VerifyReplay(context.Background(), session.SessionID, 3)
+	if err != nil {
+		t.Fatalf("replay target3: %v", err)
+	}
+	if before.StateHash == after.StateHash {
+		t.Fatal("later same-tick input incorrectly influenced earlier replay")
+	}
+	if before.ToRevision != 2 || after.ToRevision != 3 {
+		t.Fatalf("replay revisions = %d/%d", before.ToRevision, after.ToRevision)
 	}
 }

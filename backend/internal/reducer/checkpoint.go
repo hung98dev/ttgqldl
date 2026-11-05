@@ -131,8 +131,8 @@ func verifyCheckpointEnvelope(raw []byte, sessionID, villageID, rules string, re
 }
 
 func (r *Reducer) recordRevision(ctx context.Context, tx writer.FencedTx, session sessionRow, revision int64, operation, stateHash, runtimeJSON string, state domain.SessionState, streamSeq int64) error {
-	if _, err := tx.Exec(ctx, `INSERT INTO ttg.reducer_transitions (session_id, revision, operation, wave_no, wave_tick, state_hash)
-		VALUES ($1, $2, $3, $4, $5, $6)`, session.ID, revision, operation, state.Wave.Number, state.Tick(), stateHash); err != nil {
+	if _, err := tx.Exec(ctx, `INSERT INTO ttg.reducer_transitions (session_id, revision, operation, wave_no, wave_tick, state_hash, input_seq_high)
+		VALUES ($1, $2, $3, $4, $5, $6, $7)`, session.ID, revision, operation, state.Wave.Number, state.Tick(), stateHash, session.InputSequence); err != nil {
 		return err
 	}
 	reason, ok := checkpointReason(state, operation)

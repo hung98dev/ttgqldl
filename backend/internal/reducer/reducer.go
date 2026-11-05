@@ -48,6 +48,7 @@ type villageRow struct {
 
 type inputRow struct {
 	InputSeq      int64
+	AcceptedWave  *int64
 	AcceptedTick  int32
 	ScheduledTick int32
 	WaveNo        int64
@@ -99,7 +100,7 @@ func (r *Reducer) Step(ctx context.Context, lease writer.Lease, sessionID string
 		}
 		var inputs []inputRow
 		if state.Tick() != domain.RolloverTick {
-			inputs, err = loadEligibleInputs(ctx, tx, session.ID, state.Tick())
+			inputs, err = loadEligibleInputs(ctx, tx, session.ID, state.Wave.Number, state.Tick())
 			if err != nil {
 				return err
 			}
@@ -300,13 +301,13 @@ func verifySessionState(session sessionRow, state domain.SessionState) error {
 	return nil
 }
 
-func loadEligibleInputs(ctx context.Context, tx writer.FencedTx, sessionID string, acceptedTick int) ([]inputRow, error) {
-	rows, err := tx.Query(ctx, `SELECT input_seq, accepted_tick, scheduled_tick, wave_no, actor_key,
+func loadEligibleInputs(ctx context.Context, tx writer.FencedTx, sessionID string, acceptedWave int64, acceptedTick int) ([]inputRow, error) {
+	rows, err := tx.Query(ctx, `SELECT input_seq, accepted_wave, accepted_tick, scheduled_tick, wave_no, actor_key,
 		kind, canonical_payload, rules_version
 		FROM ttg.input_events
-		WHERE session_id = $1 AND applied_at_tick IS NULL AND accepted_tick = $2
+		WHERE session_id = $1 AND applied_at_tick IS NULL AND accepted_wave = $2 AND accepted_tick = $3
 		ORDER BY input_seq
-		LIMIT $3`, sessionID, acceptedTick, maxEligibleInputs+1)
+		LIMIT $4`, sessionID, acceptedWave, acceptedTick, maxEligibleInputs+1)
 	if err != nil {
 		return nil, err
 	}
@@ -314,7 +315,7 @@ func loadEligibleInputs(ctx context.Context, tx writer.FencedTx, sessionID strin
 	inputs := make([]inputRow, 0, 16)
 	for rows.Next() {
 		var row inputRow
-		if err := rows.Scan(&row.InputSeq, &row.AcceptedTick, &row.ScheduledTick, &row.WaveNo, &row.ActorKey, &row.Kind, &row.Payload, &row.RulesVersion); err != nil {
+		if err := rows.Scan(&row.InputSeq, &row.AcceptedWave, &row.AcceptedTick, &row.ScheduledTick, &row.WaveNo, &row.ActorKey, &row.Kind, &row.Payload, &row.RulesVersion); err != nil {
 			return nil, err
 		}
 		inputs = append(inputs, row)
@@ -355,6 +356,9 @@ func decodeInputs(inputs []inputRow, state domain.SessionState) ([]simulation.Ro
 	for _, input := range inputs {
 		if input.RulesVersion != state.Revision.RulesVersion {
 			return nil, nil, nil, fmt.Errorf("%w: input rules version", ErrInvalidInput)
+		}
+		if input.AcceptedWave == nil || *input.AcceptedWave != state.Wave.Number {
+			return nil, nil, nil, fmt.Errorf("%w: accepted wave", ErrInvalidInput)
 		}
 		actor := domain.ActorKey(input.ActorKey)
 		if !actor.Valid() {

@@ -10,10 +10,10 @@ WHERE session_id = $1 AND provider_source = $2 AND provider_event_id = $3;
 
 -- name: InsertInputEvent :exec
 INSERT INTO ttg.input_events (
-    session_id, input_seq, accepted_tick, scheduled_tick, wave_no,
+    session_id, input_seq, accepted_tick, scheduled_tick, wave_no, accepted_wave,
     actor_key, kind, canonical_payload, rules_version
 ) VALUES (
-    $1, $2, $3, $4, $5, $6, $7, $8, $9
+    $1, $2, $3, $4, $5, $6, $7, $8, $9, $10
 );
 
 -- name: InsertInputReceipt :exec
@@ -26,3 +26,4 @@ UPDATE ttg.sessions SET input_sequence = $2 WHERE id = $1;
 
 -- name: GetInputEvent :one
 SELECT * FROM ttg.input_events WHERE session_id = $1 AND input_seq = $2;
+

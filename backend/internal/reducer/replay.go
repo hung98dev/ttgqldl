@@ -30,11 +30,12 @@ type ReplayResult struct {
 }
 
 type journalRow struct {
-	Revision  int64
-	Operation string
-	WaveNo    int64
-	WaveTick  int
-	StateHash string
+	Revision     int64
+	Operation    string
+	WaveNo       int64
+	WaveTick     int
+	StateHash    string
+	InputSeqHigh int64
 }
 
 type checkpointRow struct {
@@ -109,9 +110,17 @@ func (r *Reducer) verifyReplay(ctx context.Context, sessionID string, checkpoint
 	if err != nil {
 		return ReplayResult{}, err
 	}
-	byTick := make(map[int][]inputRow)
+	type inputKey struct {
+		Wave int64
+		Tick int
+	}
+	byTick := make(map[inputKey][]inputRow)
 	for _, input := range inputs {
-		byTick[int(input.AcceptedTick)] = append(byTick[int(input.AcceptedTick)], input)
+		if input.AcceptedWave == nil {
+			return ReplayResult{}, fmt.Errorf("%w: input %d has no accepted wave", ErrReplayHistory, input.InputSeq)
+		}
+		key := inputKey{Wave: *input.AcceptedWave, Tick: int(input.AcceptedTick)}
+		byTick[key] = append(byTick[key], input)
 	}
 	replayed := 0
 	revision := checkpoint.Revision
@@ -121,7 +130,11 @@ func (r *Reducer) verifyReplay(ctx context.Context, sessionID string, checkpoint
 		}
 		var selected []inputRow
 		if state.Tick() != 3000 {
-			selected = byTick[state.Tick()]
+			for _, input := range byTick[inputKey{Wave: state.Wave.Number, Tick: state.Tick()}] {
+				if input.InputSeq <= journal.InputSeqHigh {
+					selected = append(selected, input)
+				}
+			}
 		}
 		transition, err := computeTransition(state, queue, queuedNext, selected)
 		if err != nil {
@@ -130,6 +143,7 @@ func (r *Reducer) verifyReplay(ctx context.Context, sessionID string, checkpoint
 		if transition.Operation != journal.Operation || transition.State.Wave.Number != journal.WaveNo || transition.State.Tick() != journal.WaveTick {
 			return ReplayResult{}, fmt.Errorf("%w: revision %d operation/metadata", ErrReplayMismatch, journal.Revision)
 		}
+		transition.State.InputSequence = journal.InputSeqHigh
 		hash, err := canonical.Hash(transition.State)
 		if err != nil || hash != journal.StateHash {
 			return ReplayResult{}, fmt.Errorf("%w: revision %d hash", ErrReplayMismatch, journal.Revision)
@@ -192,7 +206,7 @@ func loadCheckpoint(ctx context.Context, tx pgx.Tx, sessionID string, checkpoint
 }
 
 func loadJournal(ctx context.Context, tx pgx.Tx, sessionID string, after, target int64) ([]journalRow, error) {
-	rows, err := tx.Query(ctx, `SELECT revision, operation, wave_no, wave_tick, state_hash
+	rows, err := tx.Query(ctx, `SELECT revision, operation, wave_no, wave_tick, state_hash, input_seq_high
 		FROM ttg.reducer_transitions
 		WHERE session_id = $1 AND revision > $2 AND revision <= $3
 		ORDER BY revision`, sessionID, after, target)
@@ -203,7 +217,7 @@ func loadJournal(ctx context.Context, tx pgx.Tx, sessionID string, after, target
 	out := make([]journalRow, 0, 16)
 	for rows.Next() {
 		var row journalRow
-		if err := rows.Scan(&row.Revision, &row.Operation, &row.WaveNo, &row.WaveTick, &row.StateHash); err != nil {
+		if err := rows.Scan(&row.Revision, &row.Operation, &row.WaveNo, &row.WaveTick, &row.StateHash, &row.InputSeqHigh); err != nil {
 			return nil, ErrReplayHistory
 		}
 		out = append(out, row)
@@ -215,7 +229,7 @@ func loadJournal(ctx context.Context, tx pgx.Tx, sessionID string, after, target
 }
 
 func loadReplayInputs(ctx context.Context, tx pgx.Tx, sessionID string) ([]inputRow, error) {
-	rows, err := tx.Query(ctx, `SELECT input_seq, accepted_tick, scheduled_tick, wave_no, actor_key,
+	rows, err := tx.Query(ctx, `SELECT input_seq, accepted_wave, accepted_tick, scheduled_tick, wave_no, actor_key,
 		kind, canonical_payload, rules_version
 		FROM ttg.input_events WHERE session_id = $1 ORDER BY input_seq`, sessionID)
 	if err != nil {
@@ -226,7 +240,7 @@ func loadReplayInputs(ctx context.Context, tx pgx.Tx, sessionID string) ([]input
 	seen := make(map[int64]struct{}, 16)
 	for rows.Next() {
 		var row inputRow
-		if err := rows.Scan(&row.InputSeq, &row.AcceptedTick, &row.ScheduledTick, &row.WaveNo, &row.ActorKey, &row.Kind, &row.Payload, &row.RulesVersion); err != nil {
+		if err := rows.Scan(&row.InputSeq, &row.AcceptedWave, &row.AcceptedTick, &row.ScheduledTick, &row.WaveNo, &row.ActorKey, &row.Kind, &row.Payload, &row.RulesVersion); err != nil {
 			return nil, ErrReplayHistory
 		}
 		if _, exists := seen[row.InputSeq]; exists {

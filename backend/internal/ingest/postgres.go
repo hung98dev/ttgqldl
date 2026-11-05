@@ -192,6 +192,7 @@ func (a *PostgresAppender) appendOnce(ctx context.Context, sessionUUID pgtype.UU
 				AcceptedTick:     session.WaveTick,
 				ScheduledTick:    scheduledTick,
 				WaveNo:           waveNo,
+				AcceptedWave:     pgtype.Int8{Int64: session.WaveNo, Valid: true},
 				ActorKey:         string(candidate.ActorKey),
 				Kind:             kind,
 				CanonicalPayload: payload,

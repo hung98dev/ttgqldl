@@ -12,7 +12,7 @@ import (
 )
 
 const getInputEvent = `-- name: GetInputEvent :one
-SELECT session_id, input_seq, accepted_tick, scheduled_tick, applied_at_tick, wave_no, actor_key, kind, canonical_payload, rules_version, inserted_at FROM ttg.input_events WHERE session_id = $1 AND input_seq = $2
+SELECT session_id, input_seq, accepted_tick, scheduled_tick, applied_at_tick, wave_no, actor_key, kind, canonical_payload, rules_version, inserted_at, accepted_wave FROM ttg.input_events WHERE session_id = $1 AND input_seq = $2
 `
 
 type GetInputEventParams struct {
@@ -35,6 +35,7 @@ func (q *Queries) GetInputEvent(ctx context.Context, arg GetInputEventParams) (T
 		&i.CanonicalPayload,
 		&i.RulesVersion,
 		&i.InsertedAt,
+		&i.AcceptedWave,
 	)
 	return i, err
 }
@@ -66,10 +67,10 @@ func (q *Queries) GetInputReceipt(ctx context.Context, arg GetInputReceiptParams
 
 const insertInputEvent = `-- name: InsertInputEvent :exec
 INSERT INTO ttg.input_events (
-    session_id, input_seq, accepted_tick, scheduled_tick, wave_no,
+    session_id, input_seq, accepted_tick, scheduled_tick, wave_no, accepted_wave,
     actor_key, kind, canonical_payload, rules_version
 ) VALUES (
-    $1, $2, $3, $4, $5, $6, $7, $8, $9
+    $1, $2, $3, $4, $5, $6, $7, $8, $9, $10
 )
 `
 
@@ -79,6 +80,7 @@ type InsertInputEventParams struct {
 	AcceptedTick     int32
 	ScheduledTick    int32
 	WaveNo           int64
+	AcceptedWave     pgtype.Int8
 	ActorKey         string
 	Kind             string
 	CanonicalPayload []byte
@@ -92,6 +94,7 @@ func (q *Queries) InsertInputEvent(ctx context.Context, arg InsertInputEventPara
 		arg.AcceptedTick,
 		arg.ScheduledTick,
 		arg.WaveNo,
+		arg.AcceptedWave,
 		arg.ActorKey,
 		arg.Kind,
 		arg.CanonicalPayload,

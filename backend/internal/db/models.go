@@ -76,6 +76,7 @@ type TtgInputEvent struct {
 	CanonicalPayload []byte
 	RulesVersion     string
 	InsertedAt       pgtype.Timestamptz
+	AcceptedWave     pgtype.Int8
 }
 
 type TtgInputReceipt struct {
@@ -160,13 +161,14 @@ type TtgPrivacyTombstone struct {
 }
 
 type TtgReducerTransition struct {
-	SessionID pgtype.UUID
-	Revision  int64
-	Operation string
-	WaveNo    int64
-	WaveTick  int32
-	StateHash string
-	CreatedAt pgtype.Timestamptz
+	SessionID    pgtype.UUID
+	Revision     int64
+	Operation    string
+	WaveNo       int64
+	WaveTick     int32
+	StateHash    string
+	CreatedAt    pgtype.Timestamptz
+	InputSeqHigh int64
 }
 
 type TtgSession struct {

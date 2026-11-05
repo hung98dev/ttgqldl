@@ -8,7 +8,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict 2Q0WTKVxtENzYsqjj5DpJ8HvbYT1L8tgFdUna4Is9ltBZn14kIY660rWra1euMW
+\restrict rGxCrevIKTkTy8k6qh7l0IeFchvfNqz1ojywGQwkwxD5GcBri0WrVZH2f2YsBMD
 
 -- Dumped from database version 18.6 (Debian 18.6-1.pgdg13+2)
 -- Dumped by pg_dump version 18.6 (Debian 18.6-1.pgdg13+2)
@@ -129,6 +129,7 @@ CREATE TABLE ttg.input_events (
     canonical_payload jsonb NOT NULL,
     rules_version text NOT NULL,
     inserted_at timestamp with time zone DEFAULT now() NOT NULL,
+    accepted_wave bigint,
     CONSTRAINT input_events_kind_check CHECK ((kind = ANY (ARRAY['role'::text, 'vote'::text]))),
     CONSTRAINT input_events_wave_no_check CHECK ((wave_no >= 1))
 );
@@ -305,6 +306,7 @@ CREATE TABLE ttg.reducer_transitions (
     wave_tick integer NOT NULL,
     state_hash character(64) NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
+    input_seq_high bigint DEFAULT 0 NOT NULL,
     CONSTRAINT reducer_transitions_operation_check CHECK ((operation = ANY (ARRAY['start'::text, 'advance'::text, 'rollover'::text]))),
     CONSTRAINT reducer_transitions_revision_check CHECK ((revision > 0))
 );
@@ -667,6 +669,13 @@ CREATE INDEX input_events_pending ON ttg.input_events USING btree (session_id, w
 
 
 --
+-- Name: input_events_replay_boundary; Type: INDEX; Schema: ttg; Owner: -
+--
+
+CREATE INDEX input_events_replay_boundary ON ttg.input_events USING btree (session_id, accepted_wave, accepted_tick, input_seq);
+
+
+--
 -- Name: input_receipts_inserted_at; Type: INDEX; Schema: ttg; Owner: -
 --
 
@@ -892,5 +901,5 @@ ALTER TABLE ONLY ttg.writer_leases
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 2Q0WTKVxtENzYsqjj5DpJ8HvbYT1L8tgFdUna4Is9ltBZn14kIY660rWra1euMW
+\unrestrict rGxCrevIKTkTy8k6qh7l0IeFchvfNqz1ojywGQwkwxD5GcBri0WrVZH2f2YsBMD
 
