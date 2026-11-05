@@ -19,6 +19,9 @@ func testPool(t *testing.T) *storage.Pool {
 	t.Helper()
 	dsn := os.Getenv("TTG_TEST_DATABASE_URL")
 	if strings.TrimSpace(dsn) == "" {
+		if os.Getenv("TTG_REQUIRE_DATABASE") == "1" {
+			t.Fatal("TTG_TEST_DATABASE_URL is required but not set")
+		}
 		t.Skip("TTG_TEST_DATABASE_URL is not set; durable ingestion tests require PostgreSQL")
 	}
 	pool, err := storage.Open(context.Background(), storage.Options{DSN: dsn, MaxConns: 8, ConnectTimeout: 5 * time.Second})
