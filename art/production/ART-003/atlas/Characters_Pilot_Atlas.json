@@ -1,0 +1,1590 @@
+{
+  "atlas_name": "Characters_Pilot_Atlas",
+  "style_version": "bastion-dawn-v1",
+  "dimensions": [
+    1024,
+    1024
+  ],
+  "max_allowed_dimensions": [
+    2048,
+    2048
+  ],
+  "format": "RGBA32 (Uncompressed PNG)",
+  "filter_mode": "Point",
+  "mipmaps": false,
+  "padding_px": 4,
+  "allow_rotation": false,
+  "tight_packing": false,
+  "pixels_per_unit": 192,
+  "unity_world_scale_for_48px_at_ortho5": {
+    "camera_orthographic_size": 5.0,
+    "reference_screen_px": [
+      1080,
+      1920
+    ],
+    "screen_px_per_world_unit": 192.0,
+    "source_standing_body_height_px": 86,
+    "displayed_height_at_scale_1_0_px": 86.0,
+    "recommended_visual_root_scale_for_48px": 0.55814,
+    "alternative_ppu_for_scale_1_0": 344,
+    "displayed_height_on_360x640_px": 16.0
+  },
+  "total_packed_sprites": 42,
+  "occupancy_ratio": 0.6562,
+  "slices": [
+    {
+      "atlas_index": 0,
+      "name": "chr_role_builder_idle_f00",
+      "entity": "builder",
+      "clip": "idle",
+      "frame_index": 0,
+      "source_file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f00.png",
+      "rect_top_down_px": [
+        4,
+        4,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        4,
+        892,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.003906,
+        0.871094,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        26,
+        32,
+        86,
+        117
+      ]
+    },
+    {
+      "atlas_index": 1,
+      "name": "chr_role_builder_idle_f01",
+      "entity": "builder",
+      "clip": "idle",
+      "frame_index": 1,
+      "source_file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f01.png",
+      "rect_top_down_px": [
+        140,
+        4,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        140,
+        892,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.136719,
+        0.871094,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        28,
+        34,
+        87,
+        117
+      ]
+    },
+    {
+      "atlas_index": 2,
+      "name": "chr_role_builder_idle_f02",
+      "entity": "builder",
+      "clip": "idle",
+      "frame_index": 2,
+      "source_file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f02.png",
+      "rect_top_down_px": [
+        276,
+        4,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        276,
+        892,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.269531,
+        0.871094,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        24,
+        30,
+        84,
+        117
+      ]
+    },
+    {
+      "atlas_index": 3,
+      "name": "chr_role_builder_idle_f03",
+      "entity": "builder",
+      "clip": "idle",
+      "frame_index": 3,
+      "source_file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f03.png",
+      "rect_top_down_px": [
+        412,
+        4,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        412,
+        892,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.402344,
+        0.871094,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        25,
+        32,
+        85,
+        117
+      ]
+    },
+    {
+      "atlas_index": 4,
+      "name": "chr_role_builder_walk_f00",
+      "entity": "builder",
+      "clip": "walk",
+      "frame_index": 0,
+      "source_file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f00.png",
+      "rect_top_down_px": [
+        548,
+        4,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        548,
+        892,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.535156,
+        0.871094,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        33,
+        33,
+        95,
+        118
+      ]
+    },
+    {
+      "atlas_index": 5,
+      "name": "chr_role_builder_walk_f01",
+      "entity": "builder",
+      "clip": "walk",
+      "frame_index": 1,
+      "source_file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f01.png",
+      "rect_top_down_px": [
+        684,
+        4,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        684,
+        892,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.667969,
+        0.871094,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        30,
+        35,
+        91,
+        117
+      ]
+    },
+    {
+      "atlas_index": 6,
+      "name": "chr_role_builder_walk_f02",
+      "entity": "builder",
+      "clip": "walk",
+      "frame_index": 2,
+      "source_file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f02.png",
+      "rect_top_down_px": [
+        820,
+        4,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        820,
+        892,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.800781,
+        0.871094,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        24,
+        30,
+        87,
+        117
+      ]
+    },
+    {
+      "atlas_index": 7,
+      "name": "chr_role_builder_walk_f03",
+      "entity": "builder",
+      "clip": "walk",
+      "frame_index": 3,
+      "source_file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f03.png",
+      "rect_top_down_px": [
+        4,
+        140,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        4,
+        756,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.003906,
+        0.738281,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        22,
+        33,
+        91,
+        117
+      ]
+    },
+    {
+      "atlas_index": 8,
+      "name": "chr_role_builder_walk_f04",
+      "entity": "builder",
+      "clip": "walk",
+      "frame_index": 4,
+      "source_file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f04.png",
+      "rect_top_down_px": [
+        140,
+        140,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        140,
+        756,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.136719,
+        0.738281,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        23,
+        35,
+        85,
+        117
+      ]
+    },
+    {
+      "atlas_index": 9,
+      "name": "chr_role_builder_walk_f05",
+      "entity": "builder",
+      "clip": "walk",
+      "frame_index": 5,
+      "source_file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f05.png",
+      "rect_top_down_px": [
+        276,
+        140,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        276,
+        756,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.269531,
+        0.738281,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        29,
+        30,
+        89,
+        118
+      ]
+    },
+    {
+      "atlas_index": 10,
+      "name": "chr_role_builder_repair_f00",
+      "entity": "builder",
+      "clip": "repair",
+      "frame_index": 0,
+      "source_file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f00.png",
+      "rect_top_down_px": [
+        412,
+        140,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        412,
+        756,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.402344,
+        0.738281,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        45,
+        33,
+        91,
+        117
+      ]
+    },
+    {
+      "atlas_index": 11,
+      "name": "chr_role_builder_repair_f01",
+      "entity": "builder",
+      "clip": "repair",
+      "frame_index": 1,
+      "source_file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f01.png",
+      "rect_top_down_px": [
+        548,
+        140,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        548,
+        756,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.535156,
+        0.738281,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        42,
+        36,
+        84,
+        117
+      ]
+    },
+    {
+      "atlas_index": 12,
+      "name": "chr_role_builder_repair_f02",
+      "entity": "builder",
+      "clip": "repair",
+      "frame_index": 2,
+      "source_file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f02.png",
+      "rect_top_down_px": [
+        684,
+        140,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        684,
+        756,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.667969,
+        0.738281,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        43,
+        13,
+        84,
+        117
+      ]
+    },
+    {
+      "atlas_index": 13,
+      "name": "chr_role_builder_repair_f03",
+      "entity": "builder",
+      "clip": "repair",
+      "frame_index": 3,
+      "source_file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f03.png",
+      "rect_top_down_px": [
+        820,
+        140,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        820,
+        756,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.800781,
+        0.738281,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        48,
+        21,
+        108,
+        117
+      ]
+    },
+    {
+      "atlas_index": 14,
+      "name": "chr_role_builder_repair_f04",
+      "entity": "builder",
+      "clip": "repair",
+      "frame_index": 4,
+      "source_file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f04.png",
+      "rect_top_down_px": [
+        4,
+        276,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        4,
+        620,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.003906,
+        0.605469,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        48,
+        40,
+        105,
+        120
+      ]
+    },
+    {
+      "atlas_index": 15,
+      "name": "chr_role_builder_repair_f05",
+      "entity": "builder",
+      "clip": "repair",
+      "frame_index": 5,
+      "source_file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f05.png",
+      "rect_top_down_px": [
+        140,
+        276,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        140,
+        620,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.136719,
+        0.605469,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        39,
+        33,
+        92,
+        117
+      ]
+    },
+    {
+      "atlas_index": 16,
+      "name": "chr_role_builder_hit_f00",
+      "entity": "builder",
+      "clip": "hit",
+      "frame_index": 0,
+      "source_file": "art/production/ART-003/characters/builder/frames/chr_role_builder_hit_f00.png",
+      "rect_top_down_px": [
+        276,
+        276,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        276,
+        620,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.269531,
+        0.605469,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        34,
+        37,
+        83,
+        117
+      ]
+    },
+    {
+      "atlas_index": 17,
+      "name": "chr_role_builder_hit_f01",
+      "entity": "builder",
+      "clip": "hit",
+      "frame_index": 1,
+      "source_file": "art/production/ART-003/characters/builder/frames/chr_role_builder_hit_f01.png",
+      "rect_top_down_px": [
+        412,
+        276,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        412,
+        620,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.402344,
+        0.605469,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        31,
+        35,
+        82,
+        117
+      ]
+    },
+    {
+      "atlas_index": 18,
+      "name": "chr_enemy_grunt_idle_f00",
+      "entity": "grunt",
+      "clip": "idle",
+      "frame_index": 0,
+      "source_file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f00.png",
+      "rect_top_down_px": [
+        548,
+        276,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        548,
+        620,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.535156,
+        0.605469,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        28,
+        34,
+        99,
+        117
+      ]
+    },
+    {
+      "atlas_index": 19,
+      "name": "chr_enemy_grunt_idle_f01",
+      "entity": "grunt",
+      "clip": "idle",
+      "frame_index": 1,
+      "source_file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f01.png",
+      "rect_top_down_px": [
+        684,
+        276,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        684,
+        620,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.667969,
+        0.605469,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        29,
+        37,
+        102,
+        117
+      ]
+    },
+    {
+      "atlas_index": 20,
+      "name": "chr_enemy_grunt_idle_f02",
+      "entity": "grunt",
+      "clip": "idle",
+      "frame_index": 2,
+      "source_file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f02.png",
+      "rect_top_down_px": [
+        820,
+        276,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        820,
+        620,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.800781,
+        0.605469,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        27,
+        32,
+        94,
+        117
+      ]
+    },
+    {
+      "atlas_index": 21,
+      "name": "chr_enemy_grunt_idle_f03",
+      "entity": "grunt",
+      "clip": "idle",
+      "frame_index": 3,
+      "source_file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f03.png",
+      "rect_top_down_px": [
+        4,
+        412,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        4,
+        484,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.003906,
+        0.472656,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        28,
+        34,
+        98,
+        117
+      ]
+    },
+    {
+      "atlas_index": 22,
+      "name": "chr_enemy_grunt_walk_f00",
+      "entity": "grunt",
+      "clip": "walk",
+      "frame_index": 0,
+      "source_file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f00.png",
+      "rect_top_down_px": [
+        140,
+        412,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        140,
+        484,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.136719,
+        0.472656,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        32,
+        35,
+        108,
+        119
+      ]
+    },
+    {
+      "atlas_index": 23,
+      "name": "chr_enemy_grunt_walk_f01",
+      "entity": "grunt",
+      "clip": "walk",
+      "frame_index": 1,
+      "source_file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f01.png",
+      "rect_top_down_px": [
+        276,
+        412,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        276,
+        484,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.269531,
+        0.472656,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        30,
+        38,
+        106,
+        118
+      ]
+    },
+    {
+      "atlas_index": 24,
+      "name": "chr_enemy_grunt_walk_f02",
+      "entity": "grunt",
+      "clip": "walk",
+      "frame_index": 2,
+      "source_file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f02.png",
+      "rect_top_down_px": [
+        412,
+        412,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        412,
+        484,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.402344,
+        0.472656,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        27,
+        32,
+        96,
+        117
+      ]
+    },
+    {
+      "atlas_index": 25,
+      "name": "chr_enemy_grunt_walk_f03",
+      "entity": "grunt",
+      "clip": "walk",
+      "frame_index": 3,
+      "source_file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f03.png",
+      "rect_top_down_px": [
+        548,
+        412,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        548,
+        484,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.535156,
+        0.472656,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        26,
+        35,
+        98,
+        117
+      ]
+    },
+    {
+      "atlas_index": 26,
+      "name": "chr_enemy_grunt_walk_f04",
+      "entity": "grunt",
+      "clip": "walk",
+      "frame_index": 4,
+      "source_file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f04.png",
+      "rect_top_down_px": [
+        684,
+        412,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        684,
+        484,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.667969,
+        0.472656,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        27,
+        38,
+        98,
+        117
+      ]
+    },
+    {
+      "atlas_index": 27,
+      "name": "chr_enemy_grunt_walk_f05",
+      "entity": "grunt",
+      "clip": "walk",
+      "frame_index": 5,
+      "source_file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f05.png",
+      "rect_top_down_px": [
+        820,
+        412,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        820,
+        484,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.800781,
+        0.472656,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        30,
+        32,
+        103,
+        118
+      ]
+    },
+    {
+      "atlas_index": 28,
+      "name": "chr_enemy_grunt_clubsmash_f00",
+      "entity": "grunt",
+      "clip": "clubsmash",
+      "frame_index": 0,
+      "source_file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f00.png",
+      "rect_top_down_px": [
+        4,
+        548,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        4,
+        348,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.003906,
+        0.339844,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        32,
+        20,
+        88,
+        117
+      ]
+    },
+    {
+      "atlas_index": 29,
+      "name": "chr_enemy_grunt_clubsmash_f01",
+      "entity": "grunt",
+      "clip": "clubsmash",
+      "frame_index": 1,
+      "source_file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f01.png",
+      "rect_top_down_px": [
+        140,
+        548,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        140,
+        348,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.136719,
+        0.339844,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        31,
+        6,
+        99,
+        117
+      ]
+    },
+    {
+      "atlas_index": 30,
+      "name": "chr_enemy_grunt_clubsmash_f02",
+      "entity": "grunt",
+      "clip": "clubsmash",
+      "frame_index": 2,
+      "source_file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f02.png",
+      "rect_top_down_px": [
+        276,
+        548,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        276,
+        348,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.269531,
+        0.339844,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        30,
+        12,
+        111,
+        117
+      ]
+    },
+    {
+      "atlas_index": 31,
+      "name": "chr_enemy_grunt_clubsmash_f03",
+      "entity": "grunt",
+      "clip": "clubsmash",
+      "frame_index": 3,
+      "source_file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f03.png",
+      "rect_top_down_px": [
+        412,
+        548,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        412,
+        348,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.402344,
+        0.339844,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        36,
+        22,
+        122,
+        117
+      ]
+    },
+    {
+      "atlas_index": 32,
+      "name": "chr_enemy_grunt_clubsmash_f04",
+      "entity": "grunt",
+      "clip": "clubsmash",
+      "frame_index": 4,
+      "source_file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f04.png",
+      "rect_top_down_px": [
+        548,
+        548,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        548,
+        348,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.535156,
+        0.339844,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        36,
+        40,
+        113,
+        123
+      ]
+    },
+    {
+      "atlas_index": 33,
+      "name": "chr_enemy_grunt_clubsmash_f05",
+      "entity": "grunt",
+      "clip": "clubsmash",
+      "frame_index": 5,
+      "source_file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f05.png",
+      "rect_top_down_px": [
+        684,
+        548,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        684,
+        348,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.667969,
+        0.339844,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        38,
+        36,
+        120,
+        117
+      ]
+    },
+    {
+      "atlas_index": 34,
+      "name": "chr_enemy_grunt_hit_f00",
+      "entity": "grunt",
+      "clip": "hit",
+      "frame_index": 0,
+      "source_file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_hit_f00.png",
+      "rect_top_down_px": [
+        820,
+        548,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        820,
+        348,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.800781,
+        0.339844,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        24,
+        39,
+        96,
+        117
+      ]
+    },
+    {
+      "atlas_index": 35,
+      "name": "chr_enemy_grunt_hit_f01",
+      "entity": "grunt",
+      "clip": "hit",
+      "frame_index": 1,
+      "source_file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_hit_f01.png",
+      "rect_top_down_px": [
+        4,
+        684,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        4,
+        212,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.003906,
+        0.207031,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        26,
+        37,
+        98,
+        117
+      ]
+    },
+    {
+      "atlas_index": 36,
+      "name": "vfx_builder_repair_spark_f00",
+      "entity": "vfx_builder_repair_spark",
+      "clip": "repair_spark",
+      "frame_index": 0,
+      "source_file": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f00.png",
+      "rect_top_down_px": [
+        140,
+        684,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        140,
+        212,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.136719,
+        0.207031,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        49,
+        51,
+        79,
+        82
+      ]
+    },
+    {
+      "atlas_index": 37,
+      "name": "vfx_builder_repair_spark_f01",
+      "entity": "vfx_builder_repair_spark",
+      "clip": "repair_spark",
+      "frame_index": 1,
+      "source_file": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f01.png",
+      "rect_top_down_px": [
+        276,
+        684,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        276,
+        212,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.269531,
+        0.207031,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        37,
+        40,
+        90,
+        93
+      ]
+    },
+    {
+      "atlas_index": 38,
+      "name": "vfx_builder_repair_spark_f02",
+      "entity": "vfx_builder_repair_spark",
+      "clip": "repair_spark",
+      "frame_index": 2,
+      "source_file": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f02.png",
+      "rect_top_down_px": [
+        412,
+        684,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        412,
+        212,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.402344,
+        0.207031,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        36,
+        33,
+        98,
+        93
+      ]
+    },
+    {
+      "atlas_index": 39,
+      "name": "vfx_builder_repair_spark_f03",
+      "entity": "vfx_builder_repair_spark",
+      "clip": "repair_spark",
+      "frame_index": 3,
+      "source_file": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f03.png",
+      "rect_top_down_px": [
+        548,
+        684,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        548,
+        212,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.535156,
+        0.207031,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        38,
+        38,
+        101,
+        105
+      ]
+    },
+    {
+      "atlas_index": 40,
+      "name": "vfx_builder_repair_spark_f04",
+      "entity": "vfx_builder_repair_spark",
+      "clip": "repair_spark",
+      "frame_index": 4,
+      "source_file": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f04.png",
+      "rect_top_down_px": [
+        684,
+        684,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        684,
+        212,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.667969,
+        0.207031,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        36,
+        63,
+        100,
+        109
+      ]
+    },
+    {
+      "atlas_index": 41,
+      "name": "vfx_builder_repair_spark_f05",
+      "entity": "vfx_builder_repair_spark",
+      "clip": "repair_spark",
+      "frame_index": 5,
+      "source_file": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f05.png",
+      "rect_top_down_px": [
+        820,
+        684,
+        128,
+        128
+      ],
+      "rect_unity_bottom_up_px": [
+        820,
+        212,
+        128,
+        128
+      ],
+      "uv_rect_unity": [
+        0.800781,
+        0.207031,
+        0.125,
+        0.125
+      ],
+      "pivot_normalized": [
+        0.5,
+        0.08
+      ],
+      "pixels_per_unit": 192,
+      "tight_bbox_in_cell_px": [
+        34,
+        72,
+        97,
+        117
+      ]
+    }
+  ]
+}

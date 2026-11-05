@@ -1,0 +1,1693 @@
+{
+  "package_id": "ART-003",
+  "style_version": "bastion-dawn-v1",
+  "fps": 12,
+  "frame_duration_ms": 83.333,
+  "cell_size": [
+    128,
+    128
+  ],
+  "normalized_pivot": [
+    0.5,
+    0.08
+  ],
+  "pivot_pixel_top_down": [
+    64.0,
+    117.76
+  ],
+  "target_ppu": 192,
+  "entities": {
+    "builder": {
+      "sheet": "art/production/ART-003/characters/builder/chr_role_builder_sheet.png",
+      "sheet_dimensions": [
+        768,
+        384
+      ],
+      "grid_cols_rows": [
+        6,
+        3
+      ],
+      "palette_hex": [
+        "#11151C",
+        "#FEF08A",
+        "#F4C430",
+        "#D49417",
+        "#F3EAD6",
+        "#D5C4A3",
+        "#F4C29F",
+        "#DA9B74",
+        "#AD6E4D",
+        "#A66E44",
+        "#7E502F",
+        "#533420",
+        "#9BA7B6",
+        "#6E7885",
+        "#47515E",
+        "#FFFBEB"
+      ],
+      "clips": {
+        "idle": [
+          0,
+          3
+        ],
+        "walk": [
+          4,
+          9
+        ],
+        "repair": [
+          10,
+          15
+        ],
+        "hit": [
+          16,
+          17
+        ]
+      },
+      "frames": [
+        {
+          "sheet_index": 0,
+          "grid_row_col": [
+            0,
+            0
+          ],
+          "sheet_rect_px": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "clip": "idle",
+          "frame_index": 0,
+          "loop": true,
+          "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f00.png",
+          "bbox": [
+            26,
+            32,
+            86,
+            117
+          ],
+          "width": 61,
+          "height": 86,
+          "opaque_pixels": 2786,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            47,
+            81
+          ],
+          "centroid": [
+            60.86,
+            77.89
+          ]
+        },
+        {
+          "sheet_index": 1,
+          "grid_row_col": [
+            0,
+            1
+          ],
+          "sheet_rect_px": [
+            128,
+            0,
+            128,
+            128
+          ],
+          "clip": "idle",
+          "frame_index": 1,
+          "loop": true,
+          "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f01.png",
+          "bbox": [
+            28,
+            34,
+            87,
+            117
+          ],
+          "width": 60,
+          "height": 84,
+          "opaque_pixels": 2741,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            47,
+            81
+          ],
+          "centroid": [
+            61.6,
+            79.01
+          ]
+        },
+        {
+          "sheet_index": 2,
+          "grid_row_col": [
+            0,
+            2
+          ],
+          "sheet_rect_px": [
+            256,
+            0,
+            128,
+            128
+          ],
+          "clip": "idle",
+          "frame_index": 2,
+          "loop": true,
+          "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f02.png",
+          "bbox": [
+            24,
+            30,
+            84,
+            117
+          ],
+          "width": 61,
+          "height": 88,
+          "opaque_pixels": 2840,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            47,
+            81
+          ],
+          "centroid": [
+            59.73,
+            76.92
+          ]
+        },
+        {
+          "sheet_index": 3,
+          "grid_row_col": [
+            0,
+            3
+          ],
+          "sheet_rect_px": [
+            384,
+            0,
+            128,
+            128
+          ],
+          "clip": "idle",
+          "frame_index": 3,
+          "loop": true,
+          "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f03.png",
+          "bbox": [
+            25,
+            32,
+            85,
+            117
+          ],
+          "width": 61,
+          "height": 86,
+          "opaque_pixels": 2784,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            47,
+            81
+          ],
+          "centroid": [
+            60.74,
+            77.97
+          ]
+        },
+        {
+          "sheet_index": 4,
+          "grid_row_col": [
+            0,
+            4
+          ],
+          "sheet_rect_px": [
+            512,
+            0,
+            128,
+            128
+          ],
+          "clip": "walk",
+          "frame_index": 0,
+          "loop": true,
+          "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f00.png",
+          "bbox": [
+            33,
+            33,
+            95,
+            118
+          ],
+          "width": 63,
+          "height": 86,
+          "opaque_pixels": 2484,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 118,
+          "foot_contact_x_span": [
+            56,
+            71
+          ],
+          "centroid": [
+            63.77,
+            75.95
+          ]
+        },
+        {
+          "sheet_index": 5,
+          "grid_row_col": [
+            0,
+            5
+          ],
+          "sheet_rect_px": [
+            640,
+            0,
+            128,
+            128
+          ],
+          "clip": "walk",
+          "frame_index": 1,
+          "loop": true,
+          "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f01.png",
+          "bbox": [
+            30,
+            35,
+            91,
+            117
+          ],
+          "width": 62,
+          "height": 83,
+          "opaque_pixels": 2609,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            51,
+            77
+          ],
+          "centroid": [
+            63.16,
+            78.84
+          ]
+        },
+        {
+          "sheet_index": 6,
+          "grid_row_col": [
+            1,
+            0
+          ],
+          "sheet_rect_px": [
+            0,
+            128,
+            128,
+            128
+          ],
+          "clip": "walk",
+          "frame_index": 2,
+          "loop": true,
+          "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f02.png",
+          "bbox": [
+            24,
+            30,
+            87,
+            117
+          ],
+          "width": 64,
+          "height": 88,
+          "opaque_pixels": 2794,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            44,
+            83
+          ],
+          "centroid": [
+            60.27,
+            76.02
+          ]
+        },
+        {
+          "sheet_index": 7,
+          "grid_row_col": [
+            1,
+            1
+          ],
+          "sheet_rect_px": [
+            128,
+            128,
+            128,
+            128
+          ],
+          "clip": "walk",
+          "frame_index": 3,
+          "loop": true,
+          "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f03.png",
+          "bbox": [
+            22,
+            33,
+            91,
+            117
+          ],
+          "width": 70,
+          "height": 85,
+          "opaque_pixels": 2806,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            37,
+            91
+          ],
+          "centroid": [
+            59.01,
+            78.2
+          ]
+        },
+        {
+          "sheet_index": 8,
+          "grid_row_col": [
+            1,
+            2
+          ],
+          "sheet_rect_px": [
+            256,
+            128,
+            128,
+            128
+          ],
+          "clip": "walk",
+          "frame_index": 4,
+          "loop": true,
+          "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f04.png",
+          "bbox": [
+            23,
+            35,
+            85,
+            117
+          ],
+          "width": 63,
+          "height": 83,
+          "opaque_pixels": 2706,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            41,
+            85
+          ],
+          "centroid": [
+            60.01,
+            79.24
+          ]
+        },
+        {
+          "sheet_index": 9,
+          "grid_row_col": [
+            1,
+            3
+          ],
+          "sheet_rect_px": [
+            384,
+            128,
+            128,
+            128
+          ],
+          "clip": "walk",
+          "frame_index": 5,
+          "loop": true,
+          "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f05.png",
+          "bbox": [
+            29,
+            30,
+            89,
+            118
+          ],
+          "width": 61,
+          "height": 89,
+          "opaque_pixels": 2716,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 118,
+          "foot_contact_x_span": [
+            54,
+            78
+          ],
+          "centroid": [
+            62.34,
+            75.63
+          ]
+        },
+        {
+          "sheet_index": 10,
+          "grid_row_col": [
+            1,
+            4
+          ],
+          "sheet_rect_px": [
+            512,
+            128,
+            128,
+            128
+          ],
+          "clip": "repair",
+          "frame_index": 0,
+          "loop": false,
+          "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f00.png",
+          "bbox": [
+            45,
+            33,
+            91,
+            117
+          ],
+          "width": 47,
+          "height": 85,
+          "opaque_pixels": 2488,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            46,
+            84
+          ],
+          "centroid": [
+            65.4,
+            78.24
+          ]
+        },
+        {
+          "sheet_index": 11,
+          "grid_row_col": [
+            1,
+            5
+          ],
+          "sheet_rect_px": [
+            640,
+            128,
+            128,
+            128
+          ],
+          "clip": "repair",
+          "frame_index": 1,
+          "loop": false,
+          "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f01.png",
+          "bbox": [
+            42,
+            36,
+            84,
+            117
+          ],
+          "width": 43,
+          "height": 82,
+          "opaque_pixels": 2486,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            43,
+            83
+          ],
+          "centroid": [
+            61.09,
+            76.21
+          ]
+        },
+        {
+          "sheet_index": 12,
+          "grid_row_col": [
+            2,
+            0
+          ],
+          "sheet_rect_px": [
+            0,
+            256,
+            128,
+            128
+          ],
+          "clip": "repair",
+          "frame_index": 2,
+          "loop": false,
+          "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f02.png",
+          "bbox": [
+            43,
+            13,
+            84,
+            117
+          ],
+          "width": 42,
+          "height": 105,
+          "opaque_pixels": 2805,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            44,
+            84
+          ],
+          "centroid": [
+            61.47,
+            67.48
+          ]
+        },
+        {
+          "sheet_index": 13,
+          "grid_row_col": [
+            2,
+            1
+          ],
+          "sheet_rect_px": [
+            128,
+            256,
+            128,
+            128
+          ],
+          "clip": "repair",
+          "frame_index": 3,
+          "loop": false,
+          "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f03.png",
+          "bbox": [
+            48,
+            21,
+            108,
+            117
+          ],
+          "width": 61,
+          "height": 97,
+          "opaque_pixels": 3159,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            48,
+            89
+          ],
+          "centroid": [
+            77.95,
+            76.32
+          ]
+        },
+        {
+          "sheet_index": 14,
+          "grid_row_col": [
+            2,
+            2
+          ],
+          "sheet_rect_px": [
+            256,
+            256,
+            128,
+            128
+          ],
+          "clip": "repair",
+          "frame_index": 4,
+          "loop": false,
+          "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f04.png",
+          "bbox": [
+            48,
+            40,
+            105,
+            120
+          ],
+          "width": 58,
+          "height": 81,
+          "opaque_pixels": 2436,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 120,
+          "foot_contact_x_span": [
+            48,
+            89
+          ],
+          "centroid": [
+            74.93,
+            84.9
+          ]
+        },
+        {
+          "sheet_index": 15,
+          "grid_row_col": [
+            2,
+            3
+          ],
+          "sheet_rect_px": [
+            384,
+            256,
+            128,
+            128
+          ],
+          "clip": "repair",
+          "frame_index": 5,
+          "loop": false,
+          "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f05.png",
+          "bbox": [
+            39,
+            33,
+            92,
+            117
+          ],
+          "width": 54,
+          "height": 85,
+          "opaque_pixels": 2528,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            47,
+            84
+          ],
+          "centroid": [
+            66.3,
+            79.38
+          ]
+        },
+        {
+          "sheet_index": 16,
+          "grid_row_col": [
+            2,
+            4
+          ],
+          "sheet_rect_px": [
+            512,
+            256,
+            128,
+            128
+          ],
+          "clip": "hit",
+          "frame_index": 0,
+          "loop": false,
+          "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_hit_f00.png",
+          "bbox": [
+            34,
+            37,
+            83,
+            117
+          ],
+          "width": 50,
+          "height": 81,
+          "opaque_pixels": 2325,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            42,
+            83
+          ],
+          "centroid": [
+            55.6,
+            79.78
+          ]
+        },
+        {
+          "sheet_index": 17,
+          "grid_row_col": [
+            2,
+            5
+          ],
+          "sheet_rect_px": [
+            640,
+            256,
+            128,
+            128
+          ],
+          "clip": "hit",
+          "frame_index": 1,
+          "loop": false,
+          "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_hit_f01.png",
+          "bbox": [
+            31,
+            35,
+            82,
+            117
+          ],
+          "width": 52,
+          "height": 83,
+          "opaque_pixels": 2519,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            45,
+            82
+          ],
+          "centroid": [
+            57.85,
+            79.95
+          ]
+        }
+      ]
+    },
+    "grunt": {
+      "sheet": "art/production/ART-003/characters/grunt/chr_enemy_grunt_sheet.png",
+      "sheet_dimensions": [
+        768,
+        384
+      ],
+      "grid_cols_rows": [
+        6,
+        3
+      ],
+      "palette_hex": [
+        "#11151C",
+        "#8EC66C",
+        "#4CC964",
+        "#5E9155",
+        "#3E693A",
+        "#284726",
+        "#F5EAB5",
+        "#FEF08A",
+        "#96663F",
+        "#6F482B",
+        "#492E1B",
+        "#B0784C",
+        "#835331",
+        "#59361E",
+        "#DCE4EE",
+        "#8A96A6"
+      ],
+      "clips": {
+        "idle": [
+          0,
+          3
+        ],
+        "walk": [
+          4,
+          9
+        ],
+        "clubsmash": [
+          10,
+          15
+        ],
+        "hit": [
+          16,
+          17
+        ]
+      },
+      "frames": [
+        {
+          "sheet_index": 0,
+          "grid_row_col": [
+            0,
+            0
+          ],
+          "sheet_rect_px": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "clip": "idle",
+          "frame_index": 0,
+          "loop": true,
+          "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f00.png",
+          "bbox": [
+            28,
+            34,
+            99,
+            117
+          ],
+          "width": 72,
+          "height": 84,
+          "opaque_pixels": 3762,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            40,
+            87
+          ],
+          "centroid": [
+            61.87,
+            76.82
+          ]
+        },
+        {
+          "sheet_index": 1,
+          "grid_row_col": [
+            0,
+            1
+          ],
+          "sheet_rect_px": [
+            128,
+            0,
+            128,
+            128
+          ],
+          "clip": "idle",
+          "frame_index": 1,
+          "loop": true,
+          "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f01.png",
+          "bbox": [
+            29,
+            37,
+            102,
+            117
+          ],
+          "width": 74,
+          "height": 81,
+          "opaque_pixels": 3723,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            40,
+            87
+          ],
+          "centroid": [
+            62.82,
+            78.54
+          ]
+        },
+        {
+          "sheet_index": 2,
+          "grid_row_col": [
+            0,
+            2
+          ],
+          "sheet_rect_px": [
+            256,
+            0,
+            128,
+            128
+          ],
+          "clip": "idle",
+          "frame_index": 2,
+          "loop": true,
+          "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f02.png",
+          "bbox": [
+            27,
+            32,
+            94,
+            117
+          ],
+          "width": 68,
+          "height": 86,
+          "opaque_pixels": 3785,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            40,
+            87
+          ],
+          "centroid": [
+            60.84,
+            75.4
+          ]
+        },
+        {
+          "sheet_index": 3,
+          "grid_row_col": [
+            0,
+            3
+          ],
+          "sheet_rect_px": [
+            384,
+            0,
+            128,
+            128
+          ],
+          "clip": "idle",
+          "frame_index": 3,
+          "loop": true,
+          "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f03.png",
+          "bbox": [
+            28,
+            34,
+            98,
+            117
+          ],
+          "width": 71,
+          "height": 84,
+          "opaque_pixels": 3753,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            40,
+            87
+          ],
+          "centroid": [
+            61.77,
+            76.87
+          ]
+        },
+        {
+          "sheet_index": 4,
+          "grid_row_col": [
+            0,
+            4
+          ],
+          "sheet_rect_px": [
+            512,
+            0,
+            128,
+            128
+          ],
+          "clip": "walk",
+          "frame_index": 0,
+          "loop": true,
+          "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f00.png",
+          "bbox": [
+            32,
+            35,
+            108,
+            119
+          ],
+          "width": 77,
+          "height": 85,
+          "opaque_pixels": 3530,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 119,
+          "foot_contact_x_span": [
+            53,
+            74
+          ],
+          "centroid": [
+            65.53,
+            75.77
+          ]
+        },
+        {
+          "sheet_index": 5,
+          "grid_row_col": [
+            0,
+            5
+          ],
+          "sheet_rect_px": [
+            640,
+            0,
+            128,
+            128
+          ],
+          "clip": "walk",
+          "frame_index": 1,
+          "loop": true,
+          "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f01.png",
+          "bbox": [
+            30,
+            38,
+            106,
+            118
+          ],
+          "width": 77,
+          "height": 81,
+          "opaque_pixels": 3598,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 118,
+          "foot_contact_x_span": [
+            45,
+            81
+          ],
+          "centroid": [
+            64.26,
+            78.89
+          ]
+        },
+        {
+          "sheet_index": 6,
+          "grid_row_col": [
+            1,
+            0
+          ],
+          "sheet_rect_px": [
+            0,
+            128,
+            128,
+            128
+          ],
+          "clip": "walk",
+          "frame_index": 2,
+          "loop": true,
+          "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f02.png",
+          "bbox": [
+            27,
+            32,
+            96,
+            117
+          ],
+          "width": 70,
+          "height": 86,
+          "opaque_pixels": 3719,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            36,
+            85
+          ],
+          "centroid": [
+            61.07,
+            74.25
+          ]
+        },
+        {
+          "sheet_index": 7,
+          "grid_row_col": [
+            1,
+            1
+          ],
+          "sheet_rect_px": [
+            128,
+            128,
+            128,
+            128
+          ],
+          "clip": "walk",
+          "frame_index": 3,
+          "loop": true,
+          "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f03.png",
+          "bbox": [
+            26,
+            35,
+            98,
+            117
+          ],
+          "width": 73,
+          "height": 83,
+          "opaque_pixels": 3676,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            30,
+            97
+          ],
+          "centroid": [
+            60.56,
+            76.81
+          ]
+        },
+        {
+          "sheet_index": 8,
+          "grid_row_col": [
+            1,
+            2
+          ],
+          "sheet_rect_px": [
+            256,
+            128,
+            128,
+            128
+          ],
+          "clip": "walk",
+          "frame_index": 4,
+          "loop": true,
+          "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f04.png",
+          "bbox": [
+            27,
+            38,
+            98,
+            117
+          ],
+          "width": 72,
+          "height": 80,
+          "opaque_pixels": 3551,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            37,
+            92
+          ],
+          "centroid": [
+            61.42,
+            78.37
+          ]
+        },
+        {
+          "sheet_index": 9,
+          "grid_row_col": [
+            1,
+            3
+          ],
+          "sheet_rect_px": [
+            384,
+            128,
+            128,
+            128
+          ],
+          "clip": "walk",
+          "frame_index": 5,
+          "loop": true,
+          "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f05.png",
+          "bbox": [
+            30,
+            32,
+            103,
+            118
+          ],
+          "width": 74,
+          "height": 87,
+          "opaque_pixels": 3747,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 118,
+          "foot_contact_x_span": [
+            48,
+            83
+          ],
+          "centroid": [
+            63.79,
+            74.61
+          ]
+        },
+        {
+          "sheet_index": 10,
+          "grid_row_col": [
+            1,
+            4
+          ],
+          "sheet_rect_px": [
+            512,
+            128,
+            128,
+            128
+          ],
+          "clip": "clubsmash",
+          "frame_index": 0,
+          "loop": false,
+          "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f00.png",
+          "bbox": [
+            32,
+            20,
+            88,
+            117
+          ],
+          "width": 57,
+          "height": 98,
+          "opaque_pixels": 3341,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            37,
+            88
+          ],
+          "centroid": [
+            60.27,
+            74.24
+          ]
+        },
+        {
+          "sheet_index": 11,
+          "grid_row_col": [
+            1,
+            5
+          ],
+          "sheet_rect_px": [
+            640,
+            128,
+            128,
+            128
+          ],
+          "clip": "clubsmash",
+          "frame_index": 1,
+          "loop": false,
+          "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f01.png",
+          "bbox": [
+            31,
+            6,
+            99,
+            117
+          ],
+          "width": 69,
+          "height": 112,
+          "opaque_pixels": 3485,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            37,
+            88
+          ],
+          "centroid": [
+            63.17,
+            69.33
+          ]
+        },
+        {
+          "sheet_index": 12,
+          "grid_row_col": [
+            2,
+            0
+          ],
+          "sheet_rect_px": [
+            0,
+            256,
+            128,
+            128
+          ],
+          "clip": "clubsmash",
+          "frame_index": 2,
+          "loop": false,
+          "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f02.png",
+          "bbox": [
+            30,
+            12,
+            111,
+            117
+          ],
+          "width": 82,
+          "height": 106,
+          "opaque_pixels": 3510,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            37,
+            89
+          ],
+          "centroid": [
+            64.61,
+            69.92
+          ]
+        },
+        {
+          "sheet_index": 13,
+          "grid_row_col": [
+            2,
+            1
+          ],
+          "sheet_rect_px": [
+            128,
+            256,
+            128,
+            128
+          ],
+          "clip": "clubsmash",
+          "frame_index": 3,
+          "loop": false,
+          "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f03.png",
+          "bbox": [
+            36,
+            22,
+            122,
+            117
+          ],
+          "width": 87,
+          "height": 96,
+          "opaque_pixels": 4266,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            36,
+            89
+          ],
+          "centroid": [
+            70.73,
+            76.61
+          ]
+        },
+        {
+          "sheet_index": 14,
+          "grid_row_col": [
+            2,
+            2
+          ],
+          "sheet_rect_px": [
+            256,
+            256,
+            128,
+            128
+          ],
+          "clip": "clubsmash",
+          "frame_index": 4,
+          "loop": false,
+          "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f04.png",
+          "bbox": [
+            36,
+            40,
+            113,
+            123
+          ],
+          "width": 78,
+          "height": 84,
+          "opaque_pixels": 3734,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 123,
+          "foot_contact_x_span": [
+            97,
+            113
+          ],
+          "centroid": [
+            68.44,
+            83.9
+          ]
+        },
+        {
+          "sheet_index": 15,
+          "grid_row_col": [
+            2,
+            3
+          ],
+          "sheet_rect_px": [
+            384,
+            256,
+            128,
+            128
+          ],
+          "clip": "clubsmash",
+          "frame_index": 5,
+          "loop": false,
+          "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f05.png",
+          "bbox": [
+            38,
+            36,
+            120,
+            117
+          ],
+          "width": 83,
+          "height": 82,
+          "opaque_pixels": 3663,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            40,
+            90
+          ],
+          "centroid": [
+            69.45,
+            79.0
+          ]
+        },
+        {
+          "sheet_index": 16,
+          "grid_row_col": [
+            2,
+            4
+          ],
+          "sheet_rect_px": [
+            512,
+            256,
+            128,
+            128
+          ],
+          "clip": "hit",
+          "frame_index": 0,
+          "loop": false,
+          "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_hit_f00.png",
+          "bbox": [
+            24,
+            39,
+            96,
+            117
+          ],
+          "width": 73,
+          "height": 79,
+          "opaque_pixels": 3436,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            35,
+            89
+          ],
+          "centroid": [
+            55.95,
+            78.39
+          ]
+        },
+        {
+          "sheet_index": 17,
+          "grid_row_col": [
+            2,
+            5
+          ],
+          "sheet_rect_px": [
+            640,
+            256,
+            128,
+            128
+          ],
+          "clip": "hit",
+          "frame_index": 1,
+          "loop": false,
+          "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_hit_f01.png",
+          "bbox": [
+            26,
+            37,
+            98,
+            117
+          ],
+          "width": 73,
+          "height": 81,
+          "opaque_pixels": 3563,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            38,
+            88
+          ],
+          "centroid": [
+            58.86,
+            78.49
+          ]
+        }
+      ]
+    },
+    "vfx_builder_repair_spark": {
+      "sheet": "art/production/ART-003/vfx/builder_repair_spark/vfx_builder_repair_spark_sheet.png",
+      "sheet_dimensions": [
+        768,
+        128
+      ],
+      "grid_cols_rows": [
+        6,
+        1
+      ],
+      "sync_builder_repair_contact_frame": 3,
+      "frames": [
+        {
+          "sheet_index": 0,
+          "grid_row_col": [
+            0,
+            0
+          ],
+          "sheet_rect_px": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "clip": "repair_spark",
+          "frame_index": 0,
+          "loop": false,
+          "sync_note": "Trigger f00 on Builder repair f03->f04 downward hammer contact (cosmetic only)",
+          "file": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f00.png",
+          "bbox": [
+            49,
+            51,
+            79,
+            82
+          ],
+          "width": 31,
+          "height": 32,
+          "opaque_pixels": 244,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 82,
+          "foot_contact_x_span": [
+            63,
+            64
+          ],
+          "centroid": [
+            63.67,
+            66.54
+          ]
+        },
+        {
+          "sheet_index": 1,
+          "grid_row_col": [
+            0,
+            1
+          ],
+          "sheet_rect_px": [
+            128,
+            0,
+            128,
+            128
+          ],
+          "clip": "repair_spark",
+          "frame_index": 1,
+          "loop": false,
+          "sync_note": "Trigger f00 on Builder repair f03->f04 downward hammer contact (cosmetic only)",
+          "file": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f01.png",
+          "bbox": [
+            37,
+            40,
+            90,
+            93
+          ],
+          "width": 54,
+          "height": 54,
+          "opaque_pixels": 862,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 93,
+          "foot_contact_x_span": [
+            60,
+            61
+          ],
+          "centroid": [
+            64.2,
+            62.32
+          ]
+        },
+        {
+          "sheet_index": 2,
+          "grid_row_col": [
+            0,
+            2
+          ],
+          "sheet_rect_px": [
+            256,
+            0,
+            128,
+            128
+          ],
+          "clip": "repair_spark",
+          "frame_index": 2,
+          "loop": false,
+          "sync_note": "Trigger f00 on Builder repair f03->f04 downward hammer contact (cosmetic only)",
+          "file": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f02.png",
+          "bbox": [
+            36,
+            33,
+            98,
+            93
+          ],
+          "width": 63,
+          "height": 61,
+          "opaque_pixels": 636,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 93,
+          "foot_contact_x_span": [
+            36,
+            91
+          ],
+          "centroid": [
+            69.31,
+            64.58
+          ]
+        },
+        {
+          "sheet_index": 3,
+          "grid_row_col": [
+            0,
+            3
+          ],
+          "sheet_rect_px": [
+            384,
+            0,
+            128,
+            128
+          ],
+          "clip": "repair_spark",
+          "frame_index": 3,
+          "loop": false,
+          "sync_note": "Trigger f00 on Builder repair f03->f04 downward hammer contact (cosmetic only)",
+          "file": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f03.png",
+          "bbox": [
+            38,
+            38,
+            101,
+            105
+          ],
+          "width": 64,
+          "height": 68,
+          "opaque_pixels": 368,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 105,
+          "foot_contact_x_span": [
+            78,
+            88
+          ],
+          "centroid": [
+            76.83,
+            70.72
+          ]
+        },
+        {
+          "sheet_index": 4,
+          "grid_row_col": [
+            0,
+            4
+          ],
+          "sheet_rect_px": [
+            512,
+            0,
+            128,
+            128
+          ],
+          "clip": "repair_spark",
+          "frame_index": 4,
+          "loop": false,
+          "sync_note": "Trigger f00 on Builder repair f03->f04 downward hammer contact (cosmetic only)",
+          "file": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f04.png",
+          "bbox": [
+            36,
+            63,
+            100,
+            109
+          ],
+          "width": 65,
+          "height": 47,
+          "opaque_pixels": 151,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 109,
+          "foot_contact_x_span": [
+            36,
+            95
+          ],
+          "centroid": [
+            84.26,
+            88.22
+          ]
+        },
+        {
+          "sheet_index": 5,
+          "grid_row_col": [
+            0,
+            5
+          ],
+          "sheet_rect_px": [
+            640,
+            0,
+            128,
+            128
+          ],
+          "clip": "repair_spark",
+          "frame_index": 5,
+          "loop": false,
+          "sync_note": "Trigger f00 on Builder repair f03->f04 downward hammer contact (cosmetic only)",
+          "file": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f05.png",
+          "bbox": [
+            34,
+            72,
+            97,
+            117
+          ],
+          "width": 64,
+          "height": 46,
+          "opaque_pixels": 55,
+          "semi_transparent_pixels": 0,
+          "border_clipped": false,
+          "foot_contact_y": 117,
+          "foot_contact_x_span": [
+            34,
+            97
+          ],
+          "centroid": [
+            76.05,
+            98.0
+          ]
+        }
+      ]
+    }
+  }
+}

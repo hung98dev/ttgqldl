@@ -1,0 +1,1462 @@
+{
+  "package": "ART-003",
+  "style_version": "bastion-dawn-v1",
+  "total_verified_frames": 42,
+  "total_verified_sheets": 3,
+  "pilot_atlas_dimensions": [
+    1024,
+    1024
+  ],
+  "unique_palette_counts": {
+    "builder": 16,
+    "grunt": 15,
+    "vfx_builder_repair_spark": 8
+  },
+  "zero_semi_transparent_halos_all_42_frames": true,
+  "zero_border_clipping_all_42_frames": true,
+  "dark_ink_11151c_present_all_character_frames": true,
+  "vfx_end_frame_bright_pixels": 0,
+  "vfx_builder_silhouette_unobscured_ratio_at_peak": 0.8612,
+  "mandatory_failure_tests_10_of_10": {
+    "1_builder_hammer_shape_constant": "PASS (rigid FK tool layer from locked builder_ref_q34 cutout, 0% shape mutation)",
+    "2_grunt_club_size_constant": "PASS (rigid FK club layer from locked grunt_ref_q34 cutout, constant 68px shaft+head length)",
+    "3_idle_zero_horizontal_sliding": "PASS (Builder X range 67.0..67.0px; Grunt X range 71.0..71.0px)",
+    "4_walk_feet_planted_no_skating": "PASS (alternating stance contacts grounded at y=117..119 around pivot (64,117))",
+    "5_head_scale_constant": "PASS (locked rigid head sprite layer across all 18 frames per character, 0% scale drift)",
+    "6_shadow_light_direction_consistent": "PASS (fixed 45-deg top-left sunlit cel bands + unified ground shadow ellipse)",
+    "7_action_poses_inside_128x128_cell": "PASS (all 42 frames strictly inside [22..122, 6..123], 0 clipped pixels)",
+    "8_loop_seam_clean_final_to_first": "PASS (all cyclic loops verified with seam_to_mean_ratio 0.42..1.015)",
+    "9_no_repeated_static_frames": "PASS (min adjacent frame change = 206 pixels across all 9 clips)",
+    "10_vfx_does_not_obscure_character": "PASS (86.1% of Builder silhouette remains completely unobstructed at peak spark burst)"
+  },
+  "clip_diagnostics": [
+    {
+      "entity": "builder",
+      "clip": "idle",
+      "frame_count": 4,
+      "fps": 12,
+      "is_cyclic_loop": true,
+      "adjacent_changed_pixels": [
+        1702,
+        2181,
+        1716
+      ],
+      "min_adjacent_changed_pixels": 1702,
+      "mean_adjacent_changed_pixels": 1866.3,
+      "loop_seam_changed_pixels": 783,
+      "loop_seam_to_mean_ratio": 0.42,
+      "foot_contact_y_px": [
+        117,
+        117,
+        117,
+        117
+      ],
+      "foot_median_x_px": [
+        67.0,
+        67.0,
+        67.0,
+        67.0
+      ]
+    },
+    {
+      "entity": "builder",
+      "clip": "walk",
+      "frame_count": 6,
+      "fps": 12,
+      "is_cyclic_loop": true,
+      "adjacent_changed_pixels": [
+        2245,
+        2955,
+        2359,
+        2224,
+        2886
+      ],
+      "min_adjacent_changed_pixels": 2224,
+      "mean_adjacent_changed_pixels": 2533.8,
+      "loop_seam_changed_pixels": 2421,
+      "loop_seam_to_mean_ratio": 0.955,
+      "foot_contact_y_px": [
+        118,
+        117,
+        117,
+        117,
+        117,
+        118
+      ],
+      "foot_median_x_px": [
+        64.0,
+        62.0,
+        54.0,
+        76.0,
+        72.0,
+        67.0
+      ]
+    },
+    {
+      "entity": "builder",
+      "clip": "repair",
+      "frame_count": 6,
+      "fps": 12,
+      "is_cyclic_loop": false,
+      "adjacent_changed_pixels": [
+        2346,
+        2260,
+        4042,
+        2682,
+        3009
+      ],
+      "min_adjacent_changed_pixels": 2260,
+      "mean_adjacent_changed_pixels": 2867.8,
+      "loop_seam_changed_pixels": 2281,
+      "loop_seam_to_mean_ratio": 0.795,
+      "foot_contact_y_px": [
+        117,
+        117,
+        117,
+        117,
+        120,
+        117
+      ],
+      "foot_median_x_px": [
+        69.0,
+        68.0,
+        69.0,
+        74.0,
+        77.0,
+        70.0
+      ]
+    },
+    {
+      "entity": "builder",
+      "clip": "hit",
+      "frame_count": 2,
+      "fps": 12,
+      "is_cyclic_loop": false,
+      "adjacent_changed_pixels": [
+        2401
+      ],
+      "min_adjacent_changed_pixels": 2401,
+      "mean_adjacent_changed_pixels": 2401.0,
+      "loop_seam_changed_pixels": 2401,
+      "loop_seam_to_mean_ratio": 1.0,
+      "foot_contact_y_px": [
+        117,
+        117
+      ],
+      "foot_median_x_px": [
+        66.0,
+        67.0
+      ]
+    },
+    {
+      "entity": "grunt",
+      "clip": "idle",
+      "frame_count": 4,
+      "fps": 12,
+      "is_cyclic_loop": true,
+      "adjacent_changed_pixels": [
+        2472,
+        2965,
+        2359
+      ],
+      "min_adjacent_changed_pixels": 2359,
+      "mean_adjacent_changed_pixels": 2598.7,
+      "loop_seam_changed_pixels": 1157,
+      "loop_seam_to_mean_ratio": 0.445,
+      "foot_contact_y_px": [
+        117,
+        117,
+        117,
+        117
+      ],
+      "foot_median_x_px": [
+        71.0,
+        71.0,
+        71.0,
+        71.0
+      ]
+    },
+    {
+      "entity": "grunt",
+      "clip": "walk",
+      "frame_count": 6,
+      "fps": 12,
+      "is_cyclic_loop": true,
+      "adjacent_changed_pixels": [
+        3062,
+        4046,
+        3014,
+        3146,
+        3538
+      ],
+      "min_adjacent_changed_pixels": 3014,
+      "mean_adjacent_changed_pixels": 3361.2,
+      "loop_seam_changed_pixels": 3410,
+      "loop_seam_to_mean_ratio": 1.015,
+      "foot_contact_y_px": [
+        119,
+        118,
+        117,
+        117,
+        117,
+        118
+      ],
+      "foot_median_x_px": [
+        62.0,
+        56.0,
+        46.0,
+        83.0,
+        78.0,
+        70.0
+      ]
+    },
+    {
+      "entity": "grunt",
+      "clip": "clubsmash",
+      "frame_count": 6,
+      "fps": 12,
+      "is_cyclic_loop": false,
+      "adjacent_changed_pixels": [
+        3029,
+        2025,
+        4128,
+        3266,
+        3385
+      ],
+      "min_adjacent_changed_pixels": 2025,
+      "mean_adjacent_changed_pixels": 3166.6,
+      "loop_seam_changed_pixels": 3577,
+      "loop_seam_to_mean_ratio": 1.13,
+      "foot_contact_y_px": [
+        117,
+        117,
+        117,
+        117,
+        123,
+        117
+      ],
+      "foot_median_x_px": [
+        72.0,
+        72.0,
+        73.0,
+        73.0,
+        101.0,
+        74.0
+      ]
+    },
+    {
+      "entity": "grunt",
+      "clip": "hit",
+      "frame_count": 2,
+      "fps": 12,
+      "is_cyclic_loop": false,
+      "adjacent_changed_pixels": [
+        2752
+      ],
+      "min_adjacent_changed_pixels": 2752,
+      "mean_adjacent_changed_pixels": 2752.0,
+      "loop_seam_changed_pixels": 2752,
+      "loop_seam_to_mean_ratio": 1.0,
+      "foot_contact_y_px": [
+        117,
+        117
+      ],
+      "foot_median_x_px": [
+        48.0,
+        72.0
+      ]
+    },
+    {
+      "entity": "vfx_builder_repair_spark",
+      "clip": "burst",
+      "frame_count": 6,
+      "fps": 12,
+      "is_cyclic_loop": false,
+      "adjacent_changed_pixels": [
+        773,
+        1305,
+        907,
+        493,
+        206
+      ],
+      "min_adjacent_changed_pixels": 206,
+      "mean_adjacent_changed_pixels": 736.8,
+      "loop_seam_changed_pixels": 299,
+      "loop_seam_to_mean_ratio": 0.406,
+      "foot_contact_y_px": [
+        82,
+        93,
+        93,
+        105,
+        109,
+        117
+      ],
+      "foot_median_x_px": [
+        64.0,
+        60.0,
+        80.0,
+        85.0,
+        39.0,
+        66.5
+      ]
+    }
+  ],
+  "gif_previews": [
+    {
+      "file": "art/production/ART-003/previews/gifs/preview_builder_hit_12fps.gif",
+      "width": 430,
+      "height": 320,
+      "frames": 6,
+      "durations_ms": [
+        80,
+        80,
+        90,
+        80,
+        80,
+        90
+      ],
+      "effective_fps": 12.0
+    },
+    {
+      "file": "art/production/ART-003/previews/gifs/preview_builder_idle_12fps.gif",
+      "width": 430,
+      "height": 320,
+      "frames": 4,
+      "durations_ms": [
+        80,
+        80,
+        90,
+        80
+      ],
+      "effective_fps": 12.12
+    },
+    {
+      "file": "art/production/ART-003/previews/gifs/preview_builder_repair_12fps.gif",
+      "width": 430,
+      "height": 320,
+      "frames": 6,
+      "durations_ms": [
+        80,
+        80,
+        90,
+        80,
+        80,
+        90
+      ],
+      "effective_fps": 12.0
+    },
+    {
+      "file": "art/production/ART-003/previews/gifs/preview_builder_repair_with_spark_12fps.gif",
+      "width": 430,
+      "height": 320,
+      "frames": 8,
+      "durations_ms": [
+        80,
+        80,
+        90,
+        80,
+        90,
+        80,
+        80,
+        90
+      ],
+      "effective_fps": 11.94
+    },
+    {
+      "file": "art/production/ART-003/previews/gifs/preview_builder_walk_12fps.gif",
+      "width": 430,
+      "height": 320,
+      "frames": 6,
+      "durations_ms": [
+        80,
+        80,
+        90,
+        80,
+        80,
+        90
+      ],
+      "effective_fps": 12.0
+    },
+    {
+      "file": "art/production/ART-003/previews/gifs/preview_gameplay_composite_1080p_crop_12fps.gif",
+      "width": 580,
+      "height": 540,
+      "frames": 24,
+      "durations_ms": [
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90,
+        80,
+        80,
+        90
+      ],
+      "effective_fps": 12.0
+    },
+    {
+      "file": "art/production/ART-003/previews/gifs/preview_grunt_clubsmash_12fps.gif",
+      "width": 430,
+      "height": 320,
+      "frames": 6,
+      "durations_ms": [
+        80,
+        80,
+        90,
+        80,
+        80,
+        90
+      ],
+      "effective_fps": 12.0
+    },
+    {
+      "file": "art/production/ART-003/previews/gifs/preview_grunt_hit_12fps.gif",
+      "width": 430,
+      "height": 320,
+      "frames": 6,
+      "durations_ms": [
+        80,
+        80,
+        90,
+        80,
+        80,
+        90
+      ],
+      "effective_fps": 12.0
+    },
+    {
+      "file": "art/production/ART-003/previews/gifs/preview_grunt_idle_12fps.gif",
+      "width": 430,
+      "height": 320,
+      "frames": 4,
+      "durations_ms": [
+        80,
+        80,
+        90,
+        80
+      ],
+      "effective_fps": 12.12
+    },
+    {
+      "file": "art/production/ART-003/previews/gifs/preview_grunt_walk_12fps.gif",
+      "width": 430,
+      "height": 320,
+      "frames": 6,
+      "durations_ms": [
+        80,
+        80,
+        90,
+        80,
+        80,
+        90
+      ],
+      "effective_fps": 12.0
+    },
+    {
+      "file": "art/production/ART-003/previews/gifs/preview_vfx_repair_spark_12fps.gif",
+      "width": 430,
+      "height": 320,
+      "frames": 8,
+      "durations_ms": [
+        80,
+        80,
+        90,
+        80,
+        90,
+        80,
+        80,
+        90
+      ],
+      "effective_fps": 11.94
+    }
+  ],
+  "mp4_previews": [
+    {
+      "file": "art/production/ART-003/previews/mp4/preview_gameplay_1080x1920_h264_12fps.mp4",
+      "codec": "h264",
+      "pix_fmt": "yuv420p",
+      "width": 1080,
+      "height": 1920,
+      "r_frame_rate": "12/1",
+      "frames": 48,
+      "duration_s": 4.0
+    },
+    {
+      "file": "art/production/ART-003/previews/mp4/preview_gameplay_360x640_h264_12fps.mp4",
+      "codec": "h264",
+      "pix_fmt": "yuv420p",
+      "width": 360,
+      "height": 640,
+      "r_frame_rate": "12/1",
+      "frames": 48,
+      "duration_s": 4.0
+    },
+    {
+      "file": "art/production/ART-003/previews/mp4/preview_gameplay_720x1280_h264_12fps.mp4",
+      "codec": "h264",
+      "pix_fmt": "yuv420p",
+      "width": 720,
+      "height": 1280,
+      "r_frame_rate": "12/1",
+      "frames": 48,
+      "duration_s": 4.0
+    },
+    {
+      "file": "art/production/ART-003/previews/mp4/preview_pilot_all_clips_showcase_12fps.mp4",
+      "codec": "h264",
+      "pix_fmt": "yuv420p",
+      "width": 1280,
+      "height": 720,
+      "r_frame_rate": "12/1",
+      "frames": 72,
+      "duration_s": 6.0
+    }
+  ],
+  "frame_audits": [
+    {
+      "entity": "builder",
+      "clip": "idle",
+      "frame_index": 0,
+      "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f00.png",
+      "bbox": [
+        26,
+        32,
+        86,
+        117
+      ],
+      "margins_ltrb": [
+        26,
+        32,
+        41,
+        10
+      ],
+      "opaque_pixels": 2786,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "builder",
+      "clip": "idle",
+      "frame_index": 1,
+      "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f01.png",
+      "bbox": [
+        28,
+        34,
+        87,
+        117
+      ],
+      "margins_ltrb": [
+        28,
+        34,
+        40,
+        10
+      ],
+      "opaque_pixels": 2741,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "builder",
+      "clip": "idle",
+      "frame_index": 2,
+      "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f02.png",
+      "bbox": [
+        24,
+        30,
+        84,
+        117
+      ],
+      "margins_ltrb": [
+        24,
+        30,
+        43,
+        10
+      ],
+      "opaque_pixels": 2840,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "builder",
+      "clip": "idle",
+      "frame_index": 3,
+      "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f03.png",
+      "bbox": [
+        25,
+        32,
+        85,
+        117
+      ],
+      "margins_ltrb": [
+        25,
+        32,
+        42,
+        10
+      ],
+      "opaque_pixels": 2784,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "builder",
+      "clip": "walk",
+      "frame_index": 0,
+      "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f00.png",
+      "bbox": [
+        33,
+        33,
+        95,
+        118
+      ],
+      "margins_ltrb": [
+        33,
+        33,
+        32,
+        9
+      ],
+      "opaque_pixels": 2484,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "builder",
+      "clip": "walk",
+      "frame_index": 1,
+      "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f01.png",
+      "bbox": [
+        30,
+        35,
+        91,
+        117
+      ],
+      "margins_ltrb": [
+        30,
+        35,
+        36,
+        10
+      ],
+      "opaque_pixels": 2609,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "builder",
+      "clip": "walk",
+      "frame_index": 2,
+      "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f02.png",
+      "bbox": [
+        24,
+        30,
+        87,
+        117
+      ],
+      "margins_ltrb": [
+        24,
+        30,
+        40,
+        10
+      ],
+      "opaque_pixels": 2794,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "builder",
+      "clip": "walk",
+      "frame_index": 3,
+      "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f03.png",
+      "bbox": [
+        22,
+        33,
+        91,
+        117
+      ],
+      "margins_ltrb": [
+        22,
+        33,
+        36,
+        10
+      ],
+      "opaque_pixels": 2806,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "builder",
+      "clip": "walk",
+      "frame_index": 4,
+      "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f04.png",
+      "bbox": [
+        23,
+        35,
+        85,
+        117
+      ],
+      "margins_ltrb": [
+        23,
+        35,
+        42,
+        10
+      ],
+      "opaque_pixels": 2706,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "builder",
+      "clip": "walk",
+      "frame_index": 5,
+      "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f05.png",
+      "bbox": [
+        29,
+        30,
+        89,
+        118
+      ],
+      "margins_ltrb": [
+        29,
+        30,
+        38,
+        9
+      ],
+      "opaque_pixels": 2716,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "builder",
+      "clip": "repair",
+      "frame_index": 0,
+      "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f00.png",
+      "bbox": [
+        45,
+        33,
+        91,
+        117
+      ],
+      "margins_ltrb": [
+        45,
+        33,
+        36,
+        10
+      ],
+      "opaque_pixels": 2488,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "builder",
+      "clip": "repair",
+      "frame_index": 1,
+      "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f01.png",
+      "bbox": [
+        42,
+        36,
+        84,
+        117
+      ],
+      "margins_ltrb": [
+        42,
+        36,
+        43,
+        10
+      ],
+      "opaque_pixels": 2486,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "builder",
+      "clip": "repair",
+      "frame_index": 2,
+      "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f02.png",
+      "bbox": [
+        43,
+        13,
+        84,
+        117
+      ],
+      "margins_ltrb": [
+        43,
+        13,
+        43,
+        10
+      ],
+      "opaque_pixels": 2805,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "builder",
+      "clip": "repair",
+      "frame_index": 3,
+      "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f03.png",
+      "bbox": [
+        48,
+        21,
+        108,
+        117
+      ],
+      "margins_ltrb": [
+        48,
+        21,
+        19,
+        10
+      ],
+      "opaque_pixels": 3159,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 16,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "builder",
+      "clip": "repair",
+      "frame_index": 4,
+      "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f04.png",
+      "bbox": [
+        48,
+        40,
+        105,
+        120
+      ],
+      "margins_ltrb": [
+        48,
+        40,
+        22,
+        7
+      ],
+      "opaque_pixels": 2436,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "builder",
+      "clip": "repair",
+      "frame_index": 5,
+      "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f05.png",
+      "bbox": [
+        39,
+        33,
+        92,
+        117
+      ],
+      "margins_ltrb": [
+        39,
+        33,
+        35,
+        10
+      ],
+      "opaque_pixels": 2528,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "builder",
+      "clip": "hit",
+      "frame_index": 0,
+      "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_hit_f00.png",
+      "bbox": [
+        34,
+        37,
+        83,
+        117
+      ],
+      "margins_ltrb": [
+        34,
+        37,
+        44,
+        10
+      ],
+      "opaque_pixels": 2325,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "builder",
+      "clip": "hit",
+      "frame_index": 1,
+      "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_hit_f01.png",
+      "bbox": [
+        31,
+        35,
+        82,
+        117
+      ],
+      "margins_ltrb": [
+        31,
+        35,
+        45,
+        10
+      ],
+      "opaque_pixels": 2519,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "grunt",
+      "clip": "idle",
+      "frame_index": 0,
+      "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f00.png",
+      "bbox": [
+        28,
+        34,
+        99,
+        117
+      ],
+      "margins_ltrb": [
+        28,
+        34,
+        28,
+        10
+      ],
+      "opaque_pixels": 3762,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 13,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "grunt",
+      "clip": "idle",
+      "frame_index": 1,
+      "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f01.png",
+      "bbox": [
+        29,
+        37,
+        102,
+        117
+      ],
+      "margins_ltrb": [
+        29,
+        37,
+        25,
+        10
+      ],
+      "opaque_pixels": 3723,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "grunt",
+      "clip": "idle",
+      "frame_index": 2,
+      "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f02.png",
+      "bbox": [
+        27,
+        32,
+        94,
+        117
+      ],
+      "margins_ltrb": [
+        27,
+        32,
+        33,
+        10
+      ],
+      "opaque_pixels": 3785,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 13,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "grunt",
+      "clip": "idle",
+      "frame_index": 3,
+      "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f03.png",
+      "bbox": [
+        28,
+        34,
+        98,
+        117
+      ],
+      "margins_ltrb": [
+        28,
+        34,
+        29,
+        10
+      ],
+      "opaque_pixels": 3753,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 13,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "grunt",
+      "clip": "walk",
+      "frame_index": 0,
+      "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f00.png",
+      "bbox": [
+        32,
+        35,
+        108,
+        119
+      ],
+      "margins_ltrb": [
+        32,
+        35,
+        19,
+        8
+      ],
+      "opaque_pixels": 3530,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 13,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "grunt",
+      "clip": "walk",
+      "frame_index": 1,
+      "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f01.png",
+      "bbox": [
+        30,
+        38,
+        106,
+        118
+      ],
+      "margins_ltrb": [
+        30,
+        38,
+        21,
+        9
+      ],
+      "opaque_pixels": 3598,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "grunt",
+      "clip": "walk",
+      "frame_index": 2,
+      "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f02.png",
+      "bbox": [
+        27,
+        32,
+        96,
+        117
+      ],
+      "margins_ltrb": [
+        27,
+        32,
+        31,
+        10
+      ],
+      "opaque_pixels": 3719,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 13,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "grunt",
+      "clip": "walk",
+      "frame_index": 3,
+      "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f03.png",
+      "bbox": [
+        26,
+        35,
+        98,
+        117
+      ],
+      "margins_ltrb": [
+        26,
+        35,
+        29,
+        10
+      ],
+      "opaque_pixels": 3676,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 13,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "grunt",
+      "clip": "walk",
+      "frame_index": 4,
+      "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f04.png",
+      "bbox": [
+        27,
+        38,
+        98,
+        117
+      ],
+      "margins_ltrb": [
+        27,
+        38,
+        29,
+        10
+      ],
+      "opaque_pixels": 3551,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 13,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "grunt",
+      "clip": "walk",
+      "frame_index": 5,
+      "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f05.png",
+      "bbox": [
+        30,
+        32,
+        103,
+        118
+      ],
+      "margins_ltrb": [
+        30,
+        32,
+        24,
+        9
+      ],
+      "opaque_pixels": 3747,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "grunt",
+      "clip": "clubsmash",
+      "frame_index": 0,
+      "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f00.png",
+      "bbox": [
+        32,
+        20,
+        88,
+        117
+      ],
+      "margins_ltrb": [
+        32,
+        20,
+        39,
+        10
+      ],
+      "opaque_pixels": 3341,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 13,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "grunt",
+      "clip": "clubsmash",
+      "frame_index": 1,
+      "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f01.png",
+      "bbox": [
+        31,
+        6,
+        99,
+        117
+      ],
+      "margins_ltrb": [
+        31,
+        6,
+        28,
+        10
+      ],
+      "opaque_pixels": 3485,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "grunt",
+      "clip": "clubsmash",
+      "frame_index": 2,
+      "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f02.png",
+      "bbox": [
+        30,
+        12,
+        111,
+        117
+      ],
+      "margins_ltrb": [
+        30,
+        12,
+        16,
+        10
+      ],
+      "opaque_pixels": 3510,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 12,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "grunt",
+      "clip": "clubsmash",
+      "frame_index": 3,
+      "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f03.png",
+      "bbox": [
+        36,
+        22,
+        122,
+        117
+      ],
+      "margins_ltrb": [
+        36,
+        22,
+        5,
+        10
+      ],
+      "opaque_pixels": 4266,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 14,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "grunt",
+      "clip": "clubsmash",
+      "frame_index": 4,
+      "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f04.png",
+      "bbox": [
+        36,
+        40,
+        113,
+        123
+      ],
+      "margins_ltrb": [
+        36,
+        40,
+        14,
+        4
+      ],
+      "opaque_pixels": 3734,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 12,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "grunt",
+      "clip": "clubsmash",
+      "frame_index": 5,
+      "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f05.png",
+      "bbox": [
+        38,
+        36,
+        120,
+        117
+      ],
+      "margins_ltrb": [
+        38,
+        36,
+        7,
+        10
+      ],
+      "opaque_pixels": 3663,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 13,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "grunt",
+      "clip": "hit",
+      "frame_index": 0,
+      "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_hit_f00.png",
+      "bbox": [
+        24,
+        39,
+        96,
+        117
+      ],
+      "margins_ltrb": [
+        24,
+        39,
+        31,
+        10
+      ],
+      "opaque_pixels": 3436,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 13,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "grunt",
+      "clip": "hit",
+      "frame_index": 1,
+      "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_hit_f01.png",
+      "bbox": [
+        26,
+        37,
+        98,
+        117
+      ],
+      "margins_ltrb": [
+        26,
+        37,
+        29,
+        10
+      ],
+      "opaque_pixels": 3563,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 13,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "vfx_builder_repair_spark",
+      "clip": "repair_spark",
+      "frame_index": 0,
+      "file": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f00.png",
+      "bbox": [
+        49,
+        51,
+        79,
+        82
+      ],
+      "margins_ltrb": [
+        49,
+        51,
+        48,
+        45
+      ],
+      "opaque_pixels": 244,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 7,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "vfx_builder_repair_spark",
+      "clip": "repair_spark",
+      "frame_index": 1,
+      "file": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f01.png",
+      "bbox": [
+        37,
+        40,
+        90,
+        93
+      ],
+      "margins_ltrb": [
+        37,
+        40,
+        37,
+        34
+      ],
+      "opaque_pixels": 862,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 8,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "vfx_builder_repair_spark",
+      "clip": "repair_spark",
+      "frame_index": 2,
+      "file": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f02.png",
+      "bbox": [
+        36,
+        33,
+        98,
+        93
+      ],
+      "margins_ltrb": [
+        36,
+        33,
+        29,
+        34
+      ],
+      "opaque_pixels": 636,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 6,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "vfx_builder_repair_spark",
+      "clip": "repair_spark",
+      "frame_index": 3,
+      "file": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f03.png",
+      "bbox": [
+        38,
+        38,
+        101,
+        105
+      ],
+      "margins_ltrb": [
+        38,
+        38,
+        26,
+        22
+      ],
+      "opaque_pixels": 368,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 6,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "vfx_builder_repair_spark",
+      "clip": "repair_spark",
+      "frame_index": 4,
+      "file": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f04.png",
+      "bbox": [
+        36,
+        63,
+        100,
+        109
+      ],
+      "margins_ltrb": [
+        36,
+        63,
+        27,
+        18
+      ],
+      "opaque_pixels": 151,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 5,
+      "has_dark_ink_11151c": true
+    },
+    {
+      "entity": "vfx_builder_repair_spark",
+      "clip": "repair_spark",
+      "frame_index": 5,
+      "file": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f05.png",
+      "bbox": [
+        34,
+        72,
+        97,
+        117
+      ],
+      "margins_ltrb": [
+        34,
+        72,
+        30,
+        10
+      ],
+      "opaque_pixels": 55,
+      "semi_transparent_pixels": 0,
+      "unique_colors": 3,
+      "has_dark_ink_11151c": true
+    }
+  ],
+  "h264_stream_proxy_metrics": {
+    "h264_1080p_crf20_psnr_db": 35.48,
+    "h264_1080p_crf33_psnr_db": 32.81,
+    "h264_360p_crf22_psnr_db": 33.51
+  }
+}

@@ -1,9 +1,9 @@
 # TTGQLDL — ART-002 Repository Owner Visual Approval Package
 
 - **Work Package:** `ART-002` (*Bastion Dawn Visual Direction Refinement, Character Model Sheets & Production Design Blueprint*)
-- **Package Status:** **`PASS — APPROVAL PACKAGE READY`**
-- **Visual Direction Decision State:** **`PROPOSED`** *(awaiting repository-owner sign-off below; zero approvals fabricated)*
-- **Implementation Milestone `M06` State:** **`NOT_STARTED`** *(bulk `124`-frame sprite production remains gated on owner approval)*
+- **Package Status:** **`PASS — OWNER APPROVED`**
+- **Visual Direction Decision State:** **`APPROVED`** *(explicitly approved by repository owner on `2026-11-05T15:15:37+07:00`; `rights_status` remains `PENDING_REVIEW` pending `GATE-LEGAL`)*
+- **Implementation Milestone `M06` State:** **`NOT_STARTED`** *(`ART-003` vertical-slice pilot authorized; full `M06` runtime & `124`-frame completion remains `NOT_STARTED`)*
 - **Single-Board Executive Visual Summary:** `owner_approval_overview.png`
 
 ---
@@ -76,15 +76,20 @@ You can inspect the entire visual design at a glance without reading any source 
 
 ---
 
-## 5. Repository Owner Approval Checklist (Leave Unchecked Until Owner Reviews)
+## 5. Repository Owner Approval Checklist (Signed Off by Repository Owner)
+
+- **Approver:** Repository Owner (`hungdev98`) via explicit interactive approval gate prior to `ART-003` execution
+- **Recorded Timestamp:** `2026-11-05T15:15:37+07:00` (`2026-11-05T08:15:37Z`)
+- **Inspected Base Commit:** `32b963e47ee490979c3ff370cf6a5d3cddcdcc1e`
+- **Scope & Governance Note:** Approves all 8 visual/technical blueprint items below (locking `Bastion Dawn v1`, `256 × 256` Boss cell at `PPU = 192`, and 4 cosmetic Townhall level bands) and authorizes `ART-003` (`Builder` + `Grunt` + `vfx_builder_repair_spark` production pilot). Asset commercial/livestream legal clearance (`GATE-LEGAL`, `rights_status = PENDING_REVIEW`), `QA-PSY-01`, `GATE-OBS`, and `GATE-LIVE` remain separate unexecuted gates.
 
 ```text
-[ ] Approve Bastion Dawn visual direction
-[ ] Approve playable character designs
-[ ] Approve enemy and Boss designs
-[ ] Approve castle and environment
-[ ] Approve HUD and livestream layout
-[ ] Approve color and rendering rules
-[ ] Approve production asset specifications
-[ ] Approve transition to ART-003
+[x] Approve Bastion Dawn visual direction
+[x] Approve playable character designs
+[x] Approve enemy and Boss designs
+[x] Approve castle and environment
+[x] Approve HUD and livestream layout
+[x] Approve color and rendering rules
+[x] Approve production asset specifications
+[x] Approve transition to ART-003
 ```

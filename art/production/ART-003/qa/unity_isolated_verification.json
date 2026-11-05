@@ -1,0 +1,27 @@
+{
+  "unity_version": "6000.6.7f1",
+  "verification_scope": "ISOLATED_SCRATCH_PROJECT_BATCHMODE_IMPORT_AND_ORTHO_BOUNDS_PROOF",
+  "production_unity_directory_modified": false,
+  "m06_runtime_integration_status": "NOT_EXECUTED_IN_PRODUCTION_SCENE_GATED_TO_M06",
+  "status": "EXECUTED_ISOLATED_BATCHMODE_PASS",
+  "verified_frame_sprites": 42,
+  "atlas_1024_verified": true,
+  "ppu": 192,
+  "pivot_normalized": [0.5, 0.08],
+  "pivot_bottom_up_pixels_in_unity": [64.0, 10.24],
+  "unscaled_cell_bounds_world_units": [0.66667, 0.66667],
+  "filter_mode": "Point",
+  "mipmaps_enabled": false,
+  "texture_compression": "Uncompressed",
+  "camera_orthographic_size": 5.0,
+  "visual_root_scale_for_48px_standing_height": 0.55814,
+  "sprite_cell_world_units_at_48px_scale": 0.37209,
+  "standing_body_displayed_px_at_1080x1920": 48.0,
+  "samples": [
+    "Atlas:1024x1024,filter=Point,mips=1",
+    "chr_role_builder_hit_f00.png:rect=128x128,pivot=(64.00,10.24),bounds=(0.6667,0.6667)",
+    "chr_role_builder_hit_f01.png:rect=128x128,pivot=(64.00,10.24),bounds=(0.6667,0.6667)",
+    "chr_role_builder_idle_f00.png:rect=128x128,pivot=(64.00,10.24),bounds=(0.6667,0.6667)",
+    "chr_role_builder_idle_f01.png:rect=128x128,pivot=(64.00,10.24),bounds=(0.6667,0.6667)"
+  ]
+}

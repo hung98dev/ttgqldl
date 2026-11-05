@@ -1,0 +1,1404 @@
+{
+  "package_id": "ART-003",
+  "title": "Bastion Dawn v1 \u2014 Production-Ready Sprite Animation Vertical Slice (Builder + Grunt + Repair Spark VFX + Pilot Atlas)",
+  "style_version": "bastion-dawn-v1",
+  "inspected_base_commit": "32b963e47ee490979c3ff370cf6a5d3cddcdcc1e",
+  "owner_approval_reference": "art/concepts/ART-002/OWNER_APPROVAL.md",
+  "rights_status": "PENDING_REVIEW",
+  "rights_note": "Original Bastion Dawn v1 character/VFX pilot assets derived from ART-002 references; commercial/IP clearance remains gated under GATE-LEGAL (09_QA_ACCEPTANCE.md).",
+  "counts": {
+    "builder_frames": 18,
+    "grunt_frames": 18,
+    "vfx_frames": 6,
+    "total_animation_frames": 42,
+    "packed_sprite_sheets": 3,
+    "pilot_atlases": 1,
+    "gif_previews_12fps": 11,
+    "mp4_previews_12fps": 4,
+    "total_tracked_files_excluding_manifest": 86
+  },
+  "files": [
+    {
+      "path": "art/production/ART-003/ANIMATION_PIPELINE_AND_CLEANUP_RULES.md",
+      "category": "documentation_or_metadata",
+      "format": "MD",
+      "bytes": 6468,
+      "dimensions": null,
+      "sha256": "e827a544cc6a04af25dc0a9d4d086052013512f8f0393dc7de9221fffb40c990",
+      "provenance": "First-party ART-003 technical documentation / machine-readable metadata",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/APPROVAL_RECORD.md",
+      "category": "documentation_or_metadata",
+      "format": "MD",
+      "bytes": 3471,
+      "dimensions": null,
+      "sha256": "97a92b192749f5325f875290b1b0a531039e2b752a8d47447aa4918b22625936",
+      "provenance": "First-party ART-003 technical documentation / machine-readable metadata",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/atlas/Characters_Pilot_Atlas.json",
+      "category": "unity_pilot_atlas",
+      "format": "JSON",
+      "bytes": 32911,
+      "dimensions": null,
+      "sha256": "151cced93b2e51b1b94a86b2b5b76304e45afcdb9bf3638f4f920fb5b797f580",
+      "provenance": "Deterministic 1024x1024 RGBA32 atlas packer & Unity 6000.6.7f1 preset config (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/atlas/Characters_Pilot_Atlas.png",
+      "category": "unity_pilot_atlas",
+      "format": "PNG",
+      "bytes": 105674,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "sha256": "077d9ec7fbfd4bacc0c3794fc289486f38be2ac41db988d3ff727dfac898e58d",
+      "provenance": "Deterministic 1024x1024 RGBA32 atlas packer & Unity 6000.6.7f1 preset config (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/atlas/unity_presets/Characters_Pilot.spriteatlasv2.yaml",
+      "category": "unity_pilot_atlas",
+      "format": "YAML",
+      "bytes": 630,
+      "dimensions": null,
+      "sha256": "406eeac0c9d9ff69ebef11c26cffdeb7f9e714ee5fe519a049042c8aff9262e1",
+      "provenance": "Deterministic 1024x1024 RGBA32 atlas packer & Unity 6000.6.7f1 preset config (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/atlas/unity_presets/PilotSpriteImportVerifier.cs.txt",
+      "category": "unity_pilot_atlas",
+      "format": "TXT",
+      "bytes": 1561,
+      "dimensions": null,
+      "sha256": "56a4c4569b35213b387ac6f6d0ad0a96618d250fc5c09a3a1a4eb0d250c55d62",
+      "provenance": "Deterministic 1024x1024 RGBA32 atlas packer & Unity 6000.6.7f1 preset config (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/atlas/unity_presets/TTG_CharacterSprite_Point192.preset.yaml",
+      "category": "unity_pilot_atlas",
+      "format": "YAML",
+      "bytes": 1584,
+      "dimensions": null,
+      "sha256": "73951231095993a49cae979fdb825ed57fc3c153a2f6ce3e307c7a0005944362",
+      "provenance": "Deterministic 1024x1024 RGBA32 atlas packer & Unity 6000.6.7f1 preset config (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/chr_role_builder_sheet.png",
+      "category": "sprite_sheet_png",
+      "format": "PNG",
+      "bytes": 45468,
+      "dimensions": [
+        768,
+        384
+      ],
+      "sha256": "baed6970341a0d490f39b08d0bdf846fb9fc8c39d50daa732d921ad38fcf2c15",
+      "provenance": "Deterministic fixed-grid RGBA32 sheet packer (build_art003_rigs_and_frames.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_hit_f00.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 2994,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "967d5586976d24b29a414c6d775a42038b1649d00cf69cfa896f424d959cd22e",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_hit_f01.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3267,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "7357fecc635374fadd9642063c54a973753254a722630db2798e33397347ecd0",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f00.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3344,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "1112092fc1b4136005fefdd9465e36bf4b7b268b01da6a1067f17dc5e4f52f3a",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f01.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3256,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "4e32afd449f1716c00a74ce5a458d5c091a0895b676b69e2a76c82a8dfd78d97",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f02.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3424,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "f3515a7dade49fb4c5a22a1411299ae27783c3ea078f45186665c3544e072ed0",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f03.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3280,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "b0b431ffa5d0093584fbea30249b1d38f75d0016ec229fbd32eb5ec7eb70e714",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f00.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3140,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "2582b466d90219ce5f569ae2ef07b7720b1e057d8e64fc506f153ccdc76e3bf9",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f01.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 2722,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "292262b9414245242f85a42a520816f5fe5d364aa20e993e3fec4ac639f06d38",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f02.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 2916,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "c92e985885fe33a966b3db7cf0741515b2535105d47dcdb98b637e8ab6216d22",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f03.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3593,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "19517b1705a5dddd7bc8ed728d97263cb2ff2c03b9df208b21e33b0ad76dbd18",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f04.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3238,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "2358c045b0a34ffeb769cafc65a566dccbb342e9b01ed1f3081605accb50dd6a",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f05.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3053,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "8c94504400dac59e1aa37084cdbc266b083fd92e931ee1cf54ee666304773ced",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f00.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3238,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "ee89bcdf52d487c7544e9f42d5878e4ae557583d1743cc26401c166b0ef8efb2",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f01.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3235,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "1c3ad5a4488da3fb1493757ab9a17b7ad76d58a25a5a460020b14343f918753c",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f02.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3371,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "46010a7de7cd555d526ba9cb8c20130067737aee1e8bd3fb15ec833bed12903a",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f03.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3350,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "91b03d2d822121550c182cf7db9925430b02af2a6528b1555e620315c73f3cb6",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f04.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3268,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "b050ff0446fbff2bb296681f292c4fa723cf7738dd33a90a11225f1fe3ac29c9",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f05.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3325,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "8c380aeb3ca408f7d64b55e214f1073a3547684d2a950528d81ca3ddcb7ff419",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/builder/rig_debug_sheet.png",
+      "category": "sprite_sheet_png",
+      "format": "PNG",
+      "bytes": 94877,
+      "dimensions": [
+        1240,
+        850
+      ],
+      "sha256": "ad414e962f8617215e228738ff97a8cb2d1c18edb554d60af1319c1eeaad1247",
+      "provenance": "Deterministic fixed-grid RGBA32 sheet packer (build_art003_rigs_and_frames.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/chr_enemy_grunt_sheet.png",
+      "category": "sprite_sheet_png",
+      "format": "PNG",
+      "bytes": 50329,
+      "dimensions": [
+        768,
+        384
+      ],
+      "sha256": "af3d82c02b03d5a12f1ee55ecbfaa19f0de6cce94085c630e0dbae64cedc46cc",
+      "provenance": "Deterministic fixed-grid RGBA32 sheet packer (build_art003_rigs_and_frames.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f00.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3542,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "313b03fc23f55fe6bcb3485af0d830bf65ef5101854c22aa63e8d511cc6fe53f",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f01.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3665,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "2fedc200a5bc3a08758e7f7673def5d3f684ac91cf1ea8505f3780e01f88a88e",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f02.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3651,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "43e1ebdc1fa9f9b2138c18e76bb4703908048dbe1f8328bdf26283cb152dc86d",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f03.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3934,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "748adac1aec5801650a7d118677070d90d654a3bcc01608576ba89e3636f9482",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f04.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3494,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "3bacd6a1bd5dc48f3fb7be3f8504afcf818d554dca5c725d4129d1d8495d1376",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f05.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3313,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "9e32886275a27195e8cb31284cf57dacb3b5e6d9befa1c2f86dca6383293ed5f",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_hit_f00.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3312,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "a44f271a35d2f7c301549af4a557e05c4352809505dfd60cc9465079b1bcc363",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_hit_f01.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3484,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "107b7daa85cca59f0b9b1476fec7e9f879fa7df7f12dca1a925e2ccda624a810",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f00.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3612,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "f217b5a1e0bb8e53ca01ff9917c2976b077bdc8155c42bab838368bdbe62193e",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f01.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3562,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "19f2ac1b3fb5c7cab356f9a579dd0d2f588498aab6e72a64dc8174366f431e11",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f02.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3642,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "fb6b327046f72db61aa18eb870a4ce06c36ad20743b53a02ecec38a5a7996f06",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f03.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3648,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "2c66fdb6a1bbb6274bdbf06d59482ce28ee6069f1047a6cd466dae555a6fa7cc",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f00.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3558,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "201750b2eb5c384b57887e0e29dff2ba884b95236abe7b65a7aa3191a445f7ba",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f01.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3519,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "b72d2212825c0cb51ea7655d9681390497217f5b34ced8ebe9bdbce6b5461ba6",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f02.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3621,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "d071158f1ae37d62921da83b550ad305259daf7c6e3e1b43213e2fc0880ab172",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f03.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3610,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "99d924b8fea7939790bedc69962571d8a136024c48acd4d8404e48b9e8a51774",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f04.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3476,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "5ed112fb3d530628030f479c2d02365974b34b5242d51c01b261ad38c57bc5ad",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f05.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 3672,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "63610441952e2dff0485e7cec441031be8df2de745a1a96bdae22fa4c00d80ab",
+      "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/characters/grunt/rig_debug_sheet.png",
+      "category": "sprite_sheet_png",
+      "format": "PNG",
+      "bytes": 103460,
+      "dimensions": [
+        1240,
+        850
+      ],
+      "sha256": "ec04ec4a9a291801f36b024fe36cf779a42e3f5017aa6c483d089f7c5cf7bbe2",
+      "provenance": "Deterministic fixed-grid RGBA32 sheet packer (build_art003_rigs_and_frames.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/clip_frame_metadata.json",
+      "category": "documentation_or_metadata",
+      "format": "JSON",
+      "bytes": 40122,
+      "dimensions": null,
+      "sha256": "8e01785337d308110aaf8cce8038f94b7e0b44f2bb3a5836f2ebc5aa7c434e04",
+      "provenance": "First-party ART-003 technical documentation / machine-readable metadata",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/previews/contact_sheets/contact_builder_all_18f.png",
+      "category": "animation_preview",
+      "format": "PNG",
+      "bytes": 148094,
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "sha256": "418bd022c1612ccd53c63199ae2292c66c94f69a005a60475461ac76d258854c",
+      "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/previews/contact_sheets/contact_grunt_all_18f.png",
+      "category": "animation_preview",
+      "format": "PNG",
+      "bytes": 161201,
+      "dimensions": [
+        1600,
+        1000
+      ],
+      "sha256": "520876c8460a65b89e639c4df07b852d296698ae37222d76e4ede4057640335f",
+      "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/previews/contact_sheets/contact_vfx_and_sync_board.png",
+      "category": "animation_preview",
+      "format": "PNG",
+      "bytes": 74657,
+      "dimensions": [
+        1580,
+        680
+      ],
+      "sha256": "5dadfe32364fa74d92d76c70a0f8026d326310623cc136fd0e8963f1f84be8fa",
+      "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/previews/gifs/preview_builder_hit_12fps.gif",
+      "category": "animation_preview",
+      "format": "GIF",
+      "bytes": 73882,
+      "dimensions": [
+        430,
+        320
+      ],
+      "sha256": "26c6c4a13ef27fdd0b36a24421602c8625294672742fd12a4fdcaccdea99249f",
+      "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/previews/gifs/preview_builder_idle_12fps.gif",
+      "category": "animation_preview",
+      "format": "GIF",
+      "bytes": 50317,
+      "dimensions": [
+        430,
+        320
+      ],
+      "sha256": "ed32117ef3c9224d9c8dab99128fe1b40c8a6a5a4bcd163923c9a1877dc21aa3",
+      "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/previews/gifs/preview_builder_repair_12fps.gif",
+      "category": "animation_preview",
+      "format": "GIF",
+      "bytes": 74364,
+      "dimensions": [
+        430,
+        320
+      ],
+      "sha256": "e64b9729314e3087b6c4f0da6e2962fb60267822bf9f4ddefd8a475c26f59adf",
+      "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/previews/gifs/preview_builder_repair_with_spark_12fps.gif",
+      "category": "animation_preview",
+      "format": "GIF",
+      "bytes": 95607,
+      "dimensions": [
+        430,
+        320
+      ],
+      "sha256": "a44c96ab7feeb91c0280bd8ac479d4505cb52d146189360ce6dd8e2befa540d7",
+      "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/previews/gifs/preview_builder_walk_12fps.gif",
+      "category": "animation_preview",
+      "format": "GIF",
+      "bytes": 75172,
+      "dimensions": [
+        430,
+        320
+      ],
+      "sha256": "34c69bf8792a9e1e3d6ea8fd64b7013103972a398bdd68c2be91020e153cf17b",
+      "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/builder_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/builder_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/previews/gifs/preview_gameplay_composite_1080p_crop_12fps.gif",
+      "category": "animation_preview",
+      "format": "GIF",
+      "bytes": 192560,
+      "dimensions": [
+        580,
+        540
+      ],
+      "sha256": "880b67b905a27197fe26307b55fc533931e3f004afc43fe24506c08987b7d785",
+      "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/previews/gifs/preview_grunt_clubsmash_12fps.gif",
+      "category": "animation_preview",
+      "format": "GIF",
+      "bytes": 80833,
+      "dimensions": [
+        430,
+        320
+      ],
+      "sha256": "705520f3d7c48ae80e0352535342abc93f530d2193cf9961fcf612de9ea0e78c",
+      "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/previews/gifs/preview_grunt_hit_12fps.gif",
+      "category": "animation_preview",
+      "format": "GIF",
+      "bytes": 77956,
+      "dimensions": [
+        430,
+        320
+      ],
+      "sha256": "1b1d9bdc7cdb911760847020e671b45b5d6648418731dfb8f3f1186056ae8b2f",
+      "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/previews/gifs/preview_grunt_idle_12fps.gif",
+      "category": "animation_preview",
+      "format": "GIF",
+      "bytes": 52854,
+      "dimensions": [
+        430,
+        320
+      ],
+      "sha256": "c1ae3a4d82de48d9422a56a70a0f48631b852eeb9d5d3ad38bbd7f8d04aa648e",
+      "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/previews/gifs/preview_grunt_walk_12fps.gif",
+      "category": "animation_preview",
+      "format": "GIF",
+      "bytes": 79071,
+      "dimensions": [
+        430,
+        320
+      ],
+      "sha256": "5caeba79656e92fd398cbe248c046e5e90504e06c542e2f7128a545ef149b686",
+      "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/characters/grunt_model_sheet.png",
+        "art/concepts/ART-002/characters/sprites/grunt_ref_q34.png"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/previews/gifs/preview_vfx_repair_spark_12fps.gif",
+      "category": "animation_preview",
+      "format": "GIF",
+      "bytes": 64056,
+      "dimensions": [
+        430,
+        320
+      ],
+      "sha256": "e7a1b835731d3fdffb40d35ccb65d96e3b5f308b81e4134f5fd431f2cef8b2b6",
+      "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/previews/mp4/preview_gameplay_1080x1920_h264_12fps.mp4",
+      "category": "animation_preview",
+      "format": "MP4",
+      "bytes": 361862,
+      "dimensions": [
+        1080,
+        1920
+      ],
+      "sha256": "d0523b17765b7af4afe1cfc626b7a2febb4761284ec51ba8a6aee87cd8745b97",
+      "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/previews/mp4/preview_gameplay_360x640_h264_12fps.mp4",
+      "category": "animation_preview",
+      "format": "MP4",
+      "bytes": 46057,
+      "dimensions": [
+        360,
+        640
+      ],
+      "sha256": "2182b30934f318e80abf39532186142b00a39f4e59affb5361497f26b6dad165",
+      "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/previews/mp4/preview_gameplay_720x1280_h264_12fps.mp4",
+      "category": "animation_preview",
+      "format": "MP4",
+      "bytes": 145138,
+      "dimensions": [
+        720,
+        1280
+      ],
+      "sha256": "e68260dbfa70d7761553f1ded52d60c0598e3d2e1bd0fed606ff4c52c1698426",
+      "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/previews/mp4/preview_pilot_all_clips_showcase_12fps.mp4",
+      "category": "animation_preview",
+      "format": "MP4",
+      "bytes": 708717,
+      "dimensions": [
+        1280,
+        720
+      ],
+      "sha256": "4f2eb05b8fe2a0a300f9e15763b31eb81543c2a43cb155d1bfa676be88235fd7",
+      "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/qa/qa_360x640_and_grayscale_proof.png",
+      "category": "qa_evidence",
+      "format": "PNG",
+      "bytes": 169969,
+      "dimensions": [
+        1680,
+        920
+      ],
+      "sha256": "a321fa40c01d7bd37858a8a26524bf74c9f7c9a8e1437d0cc486cc2aa616f009",
+      "provenance": "Automated pixel/temporal/H.264/Unity QA harness (validate_art003_qa_and_manifest.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/qa/qa_at_scale_gameplay_board.png",
+      "category": "qa_evidence",
+      "format": "PNG",
+      "bytes": 279084,
+      "dimensions": [
+        1820,
+        1080
+      ],
+      "sha256": "238b16f479b4cf6e91591303cb617d61dd69fac114783221d3b36a38fe89752d",
+      "provenance": "Automated pixel/temporal/H.264/Unity QA harness (validate_art003_qa_and_manifest.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/qa/qa_foot_pivot_and_alpha_audit.png",
+      "category": "qa_evidence",
+      "format": "PNG",
+      "bytes": 106709,
+      "dimensions": [
+        1720,
+        920
+      ],
+      "sha256": "bae431e9cc2143a0707ba8e8614394a8ef94c7b2c5129eb11130641152d5f477",
+      "provenance": "Automated pixel/temporal/H.264/Unity QA harness (validate_art003_qa_and_manifest.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/qa/qa_h264_compression_proof.png",
+      "category": "qa_evidence",
+      "format": "PNG",
+      "bytes": 278315,
+      "dimensions": [
+        1740,
+        920
+      ],
+      "sha256": "4aaf0c916d43e2b384b85a2e32fbad19edcb2a6cf538d18a7d2b273a02191558",
+      "provenance": "Automated pixel/temporal/H.264/Unity QA harness (validate_art003_qa_and_manifest.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/qa/qa_metrics.json",
+      "category": "qa_evidence",
+      "format": "JSON",
+      "bytes": 32911,
+      "dimensions": null,
+      "sha256": "1d35e060c9fcc6141571896b2668bcf9d8491ae4d904a7a0e25eb713787432b2",
+      "provenance": "Automated pixel/temporal/H.264/Unity QA harness (validate_art003_qa_and_manifest.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/qa/qa_report.md",
+      "category": "qa_evidence",
+      "format": "MD",
+      "bytes": 8084,
+      "dimensions": null,
+      "sha256": "eaa4b2d317d964113c5005677b9b601f0c5913efad84023b630713062ca7c129",
+      "provenance": "Automated pixel/temporal/H.264/Unity QA harness (validate_art003_qa_and_manifest.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/qa/qa_temporal_flicker_and_onion_skin.png",
+      "category": "qa_evidence",
+      "format": "PNG",
+      "bytes": 115008,
+      "dimensions": [
+        1720,
+        940
+      ],
+      "sha256": "c52ef39bd8e06ebcd747bef7d3e6a845ab5ac9c80a0d28091524cae140e2a4e9",
+      "provenance": "Automated pixel/temporal/H.264/Unity QA harness (validate_art003_qa_and_manifest.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/qa/unity_isolated_verification.json",
+      "category": "qa_evidence",
+      "format": "JSON",
+      "bytes": 1253,
+      "dimensions": null,
+      "sha256": "5cf824b2a4019398542591dc7f90e6c09623a7df4ebc865c55ad17c12ab0ad85",
+      "provenance": "Automated pixel/temporal/H.264/Unity QA harness (validate_art003_qa_and_manifest.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/README.md",
+      "category": "documentation_or_metadata",
+      "format": "MD",
+      "bytes": 5934,
+      "dimensions": null,
+      "sha256": "3700b4d6947eec039e6c732eccd65b7f4cba6f90954e9547ca9aef2f0296844b",
+      "provenance": "First-party ART-003 technical documentation / machine-readable metadata",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/tools/build_art003_atlas_and_previews.py",
+      "category": "reproducible_pipeline_script",
+      "format": "PY",
+      "bytes": 41069,
+      "dimensions": null,
+      "sha256": "57aaf0f0e15765932ed22f75e4c26f22d89718ff7b8c66637a268cce3cd89a7f",
+      "provenance": "First-party Python 3 production & QA pipeline script authored in ART-003",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/tools/build_art003_rigs_and_frames.py",
+      "category": "reproducible_pipeline_script",
+      "format": "PY",
+      "bytes": 62773,
+      "dimensions": null,
+      "sha256": "fe13daf120512bac652f3950661087babf459d8405c9e7f4f3119b08719c0d5d",
+      "provenance": "First-party Python 3 production & QA pipeline script authored in ART-003",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/tools/validate_art003_qa_and_manifest.py",
+      "category": "reproducible_pipeline_script",
+      "format": "PY",
+      "bytes": 42296,
+      "dimensions": null,
+      "sha256": "21e3ba145caa8e793a04b2e0b0a7724813bfb21bcd1af045f27b8312ff51424c",
+      "provenance": "First-party Python 3 production & QA pipeline script authored in ART-003",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/UNITY_INTEGRATION_GUIDE.md",
+      "category": "documentation_or_metadata",
+      "format": "MD",
+      "bytes": 6644,
+      "dimensions": null,
+      "sha256": "d7c83c6a3a9d8bf6dd4f6a06faab3adee1a9502c0faf69a6b247579ac3db65ff",
+      "provenance": "First-party ART-003 technical documentation / machine-readable metadata",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f00.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 663,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "38a2c3e2b19924ce59a88f08d770f1232943308822f3fa4f864a1a7ab7ab43d8",
+      "provenance": "Deterministic procedural 2D cel VFX synthesis (Bastion Dawn v1 golden #FEF08A 4-point impact sparks + oak fragments)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f01.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 1382,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "b56a28e7c716840f67ade0ffe24545e4f91ae38f4dfa125a04db365b036e4ddc",
+      "provenance": "Deterministic procedural 2D cel VFX synthesis (Bastion Dawn v1 golden #FEF08A 4-point impact sparks + oak fragments)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f02.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 1212,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "a95c73b3166c3a734e119b5a9ca83f580861a9a1d89ba30895badc97c1d99516",
+      "provenance": "Deterministic procedural 2D cel VFX synthesis (Bastion Dawn v1 golden #FEF08A 4-point impact sparks + oak fragments)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f03.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 931,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "c0d7e13f41687b6118bfc0c4557732e34eb7f02a3a18b5845038077619fbabfa",
+      "provenance": "Deterministic procedural 2D cel VFX synthesis (Bastion Dawn v1 golden #FEF08A 4-point impact sparks + oak fragments)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f04.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 497,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "d2a59177f9f765d8e2fd8829d32142cbd6dbfbd8b77c6706427f4e07e676bc45",
+      "provenance": "Deterministic procedural 2D cel VFX synthesis (Bastion Dawn v1 golden #FEF08A 4-point impact sparks + oak fragments)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f05.png",
+      "category": "animation_frame_png",
+      "format": "PNG",
+      "bytes": 300,
+      "dimensions": [
+        128,
+        128
+      ],
+      "sha256": "b9203b381bdabe8948bfeb7fe7ae6b7ca8bd1673860e78784d3745763f398d7b",
+      "provenance": "Deterministic procedural 2D cel VFX synthesis (Bastion Dawn v1 golden #FEF08A 4-point impact sparks + oak fragments)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-003/vfx/builder_repair_spark/vfx_builder_repair_spark_sheet.png",
+      "category": "sprite_sheet_png",
+      "format": "PNG",
+      "bytes": 4033,
+      "dimensions": [
+        768,
+        128
+      ],
+      "sha256": "e700df0172a241ffbbff0e2d315d8ca7515d032c8714f412219ff77293400744",
+      "provenance": "Deterministic fixed-grid RGBA32 sheet packer (build_art003_rigs_and_frames.py)",
+      "canonical_sources": [
+        "art/concepts/ART-002/asset_manifest.json"
+      ],
+      "rights_status": "PENDING_REVIEW"
+    }
+  ]
+}
