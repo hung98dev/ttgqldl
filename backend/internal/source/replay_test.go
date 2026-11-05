@@ -375,8 +375,8 @@ func TestReplayReaderFailuresAndCancellation(t *testing.T) {
 	if err := midFailure.Start(context.Background(), replaySession(), collectSink(&partial)); !errors.Is(err, ErrInvalidFixture) {
 		t.Fatalf("mid-read failure error = %v", err)
 	}
-	if len(partial) != 1 {
-		t.Fatalf("delivered %d events before read failure", len(partial))
+	if len(partial) != 0 {
+		t.Fatalf("delivered %d events before snapshot verification completed", len(partial))
 	}
 
 	cancelled := newTestReplay(t, "replay_disconnect.ndjson")

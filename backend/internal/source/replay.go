@@ -135,8 +135,8 @@ func NewReplay(config ReplayConfig) (*Replay, error) {
 }
 
 // resolveFixturePath joins a plain fixture name to the configured directory and
-// verifies the result stays inside that directory. It rejects traversal and absolute
-// names before any file operation.
+// verifies that the real (symlink-resolved) file stays inside the real directory. It
+// rejects traversal, absolute names and symlink escapes before any open.
 func resolveFixturePath(directory, name string) (string, error) {
 	if name == "" || filepath.Base(name) != name || strings.Contains(name, "..") {
 		return "", fmt.Errorf("%w: fixture name must be a plain file name", ErrInvalidFixture)
@@ -145,12 +145,20 @@ func resolveFixturePath(directory, name string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("%w: fixture directory", ErrInvalidFixture)
 	}
+	baseReal, err := filepath.EvalSymlinks(base)
+	if err != nil {
+		return "", fmt.Errorf("%w: fixture directory cannot be resolved", ErrInvalidFixture)
+	}
 	candidate := filepath.Join(base, name)
-	relative, err := filepath.Rel(base, candidate)
+	candidateReal, err := filepath.EvalSymlinks(candidate)
+	if err != nil {
+		return "", fmt.Errorf("%w: fixture file cannot be resolved", ErrInvalidFixture)
+	}
+	relative, err := filepath.Rel(baseReal, candidateReal)
 	if err != nil || relative == ".." || strings.HasPrefix(relative, ".."+string(os.PathSeparator)) || filepath.IsAbs(relative) {
 		return "", fmt.Errorf("%w: fixture path escapes the fixture directory", ErrInvalidFixture)
 	}
-	return candidate, nil
+	return candidateReal, nil
 }
 
 // SourceID returns the digest-bound adapter identity used by cursors.
@@ -277,6 +285,88 @@ func recordError(line, record int, err error) error {
 	return &RecordError{Line: line, Record: record, Err: err}
 }
 
+// replaySnapshot is a private, verified copy of the fixture bytes. Delivery streams
+// only from this snapshot, so replacing the path or mutating the original file after
+// verification cannot change the data emitted under the accepted source identity.
+type replaySnapshot struct {
+	file *os.File
+}
+
+func (s *replaySnapshot) Close() {
+	if s == nil || s.file == nil {
+		return
+	}
+	name := s.file.Name()
+	_ = s.file.Close()
+	_ = os.Remove(name)
+}
+
+// snapshot copies the fixture through a hash and a record counter, verifies the
+// result against the manifest-bound identity, then rewinds the private copy. It is
+// bounded by a 32 KiB copy buffer and a private temporary file, never by the fixture
+// size in RAM.
+func (r *Replay) snapshot() (*replaySnapshot, error) {
+	source, err := r.open()
+	if err != nil {
+		return nil, fmt.Errorf("%w: fixture cannot be opened", ErrInvalidFixture)
+	}
+	defer source.Close()
+	temporary, err := os.CreateTemp("", "ttg-replay-snapshot-")
+	if err != nil {
+		return nil, fmt.Errorf("%w: verified snapshot cannot be created", ErrInvalidFixture)
+	}
+	cleanup := func() {
+		name := temporary.Name()
+		_ = temporary.Close()
+		_ = os.Remove(name)
+	}
+	hash := sha256.New()
+	counter := &recordCounter{}
+	if _, err := io.CopyBuffer(io.MultiWriter(hash, counter, temporary), source, make([]byte, 32*1024)); err != nil {
+		cleanup()
+		return nil, fmt.Errorf("%w: fixture read failure", ErrInvalidFixture)
+	}
+	if hex.EncodeToString(hash.Sum(nil)) != r.sourceID {
+		cleanup()
+		return nil, fmt.Errorf("%w: fixture bytes changed after manifest verification", ErrFixtureDigest)
+	}
+	if counter.count() != r.records {
+		cleanup()
+		return nil, fmt.Errorf("%w: fixture record count changed after verification", ErrInvalidFixture)
+	}
+	if _, err := temporary.Seek(0, io.SeekStart); err != nil {
+		cleanup()
+		return nil, fmt.Errorf("%w: verified snapshot cannot be rewound", ErrInvalidFixture)
+	}
+	return &replaySnapshot{file: temporary}, nil
+}
+
+// recordCounter counts complete lines (the fixture record convention) without
+// buffering them.
+type recordCounter struct {
+	newlines int
+	total    int
+	last     byte
+}
+
+func (c *recordCounter) Write(p []byte) (int, error) {
+	for _, b := range p {
+		if b == '\n' {
+			c.newlines++
+		}
+		c.last = b
+	}
+	c.total += len(p)
+	return len(p), nil
+}
+
+func (c *recordCounter) count() int {
+	if c.total > 0 && c.last != '\n' {
+		return c.newlines + 1
+	}
+	return c.newlines
+}
+
 // decodeReplayRecord decodes exactly one record and applies the source trust
 // boundary. Unknown fields, unknown schema versions, duplicate/out-of-order
 // sequences, session mismatches and invalid metadata fail with typed errors.
@@ -398,15 +488,15 @@ func (r *Replay) run(ctx context.Context, session Session, cursor Cursor, sink S
 		return err
 	}
 	status, runErr := StatusEOF, error(nil)
-	reader, err := r.open()
+	snapshot, err := r.snapshot()
 	if err != nil {
-		status, runErr = StatusFailed, fmt.Errorf("%w: fixture cannot be opened", ErrInvalidFixture)
+		status, runErr = StatusFailed, err
 		r.lc.finish(status, runErr)
 		return runErr
 	}
-	defer reader.Close()
+	defer snapshot.Close()
 
-	scanner := bufio.NewScanner(reader)
+	scanner := bufio.NewScanner(snapshot.file)
 	scanner.Buffer(make([]byte, 4*1024), maxRecordBytes)
 	recordIndex := 0
 	lineNumber := 0

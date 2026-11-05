@@ -3,9 +3,11 @@ package source
 import (
 	"context"
 	"crypto/sha256"
+	"encoding/binary"
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"hash"
 	"time"
 )
 
@@ -79,27 +81,84 @@ func newMockWithEvents(session Session, events []Event) (*Mock, error) {
 	if len(events) > MaxMockEvents {
 		return nil, fmt.Errorf("%w: %d events exceed the mock bound", ErrInvalidEvent, len(events))
 	}
-	for index := range events {
-		if err := ValidateEvent(events[index], session, ModeMock); err != nil {
+	// The adapter owns an immutable deep copy: caller mutation after construction must
+	// never change what is delivered under the accepted source identity.
+	stored := copyEvents(events)
+	for index := range stored {
+		if err := ValidateEvent(stored[index], session, ModeMock); err != nil {
 			return nil, fmt.Errorf("mock event %d: %w", index, err)
 		}
 	}
 	return &Mock{
 		session:  session,
-		events:   events,
-		sourceID: mockSourceID(session, events),
+		events:   stored,
+		sourceID: mockSourceID(session, stored),
 	}, nil
 }
 
-// mockSourceID binds cursors to the exact deterministic script.
+// mockScriptIdentityVersion is the source-script identity encoding version. Version
+// 1 was separator-based and ambiguous; version 2 is domain-separated and
+// length-prefixed. Old cursors carry a v1 digest and therefore fail closed with
+// ErrCursorMismatch instead of being silently reinterpreted.
+const mockScriptIdentityVersion = 2
+
+// mockSourceID binds cursors to the exact immutable script using an unambiguous,
+// versioned encoding: domain prefix, encoding version, session, event count, then for
+// every event in order every field (including timestamp presence and value) as a
+// length-prefixed or fixed-width value. No field separator exists, so identifiers
+// containing punctuation cannot construct an alias script.
 func mockSourceID(session Session, events []Event) string {
 	hash := sha256.New()
-	fmt.Fprintf(hash, "ttg-mock-v1\nsession=%s\ncount=%d\n", session.ID, len(events))
+	writeIdentityString(hash, "ttg-source-script")
+	writeIdentityUint64(hash, mockScriptIdentityVersion)
+	writeIdentityString(hash, session.ID)
+	writeIdentityUint64(hash, uint64(len(events)))
 	for _, event := range events {
-		fmt.Fprintf(hash, "event=%s|%s|%s|%s|%d\n",
-			event.ProviderEventID, event.ProviderViewerID, event.Alias, event.Message, event.Kind)
+		writeIdentityString(hash, event.Provider)
+		writeIdentityString(hash, event.SourceSession)
+		writeIdentityString(hash, event.ProviderEventID)
+		writeIdentityString(hash, event.ProviderViewerID)
+		writeIdentityString(hash, event.Alias)
+		writeIdentityString(hash, event.Message)
+		writeIdentityUint64(hash, uint64(event.Kind))
+		writeIdentityString(hash, event.ReceivedAt.UTC().Format(time.RFC3339Nano))
+		if event.UpstreamAt == nil {
+			writeIdentityUint64(hash, 0)
+			continue
+		}
+		writeIdentityUint64(hash, 1)
+		writeIdentityString(hash, event.UpstreamAt.UTC().Format(time.RFC3339Nano))
 	}
 	return hex.EncodeToString(hash.Sum(nil))
+}
+
+func writeIdentityUint64(hash hash.Hash, value uint64) {
+	var encoded [8]byte
+	binary.BigEndian.PutUint64(encoded[:], value)
+	_, _ = hash.Write(encoded[:])
+}
+
+func writeIdentityString(hash hash.Hash, value string) {
+	writeIdentityUint64(hash, uint64(len(value)))
+	_, _ = hash.Write([]byte(value))
+}
+
+// copyEvent deep-copies the only mutable part of an Event: the upstream timestamp
+// pointer. Strings are immutable in Go; the slice itself is copied separately.
+func copyEvent(event Event) Event {
+	if event.UpstreamAt != nil {
+		stamp := *event.UpstreamAt
+		event.UpstreamAt = &stamp
+	}
+	return event
+}
+
+func copyEvents(events []Event) []Event {
+	copied := make([]Event, len(events))
+	for index := range events {
+		copied[index] = copyEvent(events[index])
+	}
+	return copied
 }
 
 // ScenarioEvents generates the reviewed deterministic mock scripts. Identical
@@ -253,7 +312,7 @@ func (m *Mock) run(ctx context.Context, session Session, cursor Cursor, sink Sin
 			status, runErr = StatusDisconnected, err
 			break
 		}
-		event := m.events[index]
+		event := copyEvent(m.events[index])
 		if err := ValidateEvent(event, session, ModeMock); err != nil {
 			status, runErr = StatusFailed, err
 			break

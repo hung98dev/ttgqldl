@@ -35,6 +35,19 @@
 //     malformed records are never silently skipped. The file is streamed line by line
 //     with a 64 KiB record bound and bounded hashing memory; it is never loaded
 //     whole.
+//   - Script provenance is immutable. A mock owns a deep copy of its event slice and
+//     delivers timestamp clones; caller or sink mutation cannot change delivered data
+//     under an accepted source id. The mock source-script id is version 2, a
+//     domain-separated length-prefixed encoding over every delivery-relevant field
+//     (including timestamp presence); version-1 cursors fail closed with a mismatch.
+//   - Replay verifies fixture bytes into a private snapshot and streams only that
+//     snapshot, so replacing or mutating the original file after construction cannot
+//     alter emitted records under the old digest. A reconnect re-verifies and fails
+//     closed if the bytes changed. Symlink-resolved paths must remain inside the
+//     configured fixture directory.
+//   - Identity is NOT derived here. Source emits validated raw provider metadata for
+//     the identity layer (backend/internal/identity), which is the only approved
+//     ActorKey path.
 //
 // Health is separate from the game lifecycle, and the simulation's pause-reason
 // contract remains authoritative: a disconnected source does not automatically
