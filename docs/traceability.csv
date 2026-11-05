@@ -27,7 +27,7 @@ REQ-03-HASH,03_SIMULATION.md#canonical-hashing,03,M02-W0208,QA-DET-01;QA-DET-02;
 REQ-03-EVENTS,03_SIMULATION.md#mandatory-deterministic-implementation-clarifications,03,M05-W0502,QA-API-02,P1,STATIC,FIXED,NOT_STARTED,docs/evidence/M00-W0002.md
 REQ-03-PAUSE,03_SIMULATION.md#temporal-boundary-cases,03,M04-W0401,QA-SIM-04;QA-OPS-04,P0,AUTOMATED,VERIFIED,NOT_STARTED,docs/evidence/M00-W0002.md
 REQ-03-SOURCING,03_SIMULATION.md#event-sourcing-and-idempotency-invariants,03,M03-W0304,QA-CMD-02;QA-DB-06,P0,AUTOMATED,VERIFIED,IN_PROGRESS,docs/evidence/M03-W0308.md
-REQ-04-OWNERSHIP,04_DATABASE.md#ownership-isolation-and-transactional-boundaries,04,M04-W0401,QA-DB-05;QA-DB-07,P0,AUTOMATED,VERIFIED,NOT_STARTED,docs/evidence/M00-W0004.md
+REQ-04-OWNERSHIP,04_DATABASE.md#ownership-isolation-and-transactional-boundaries,04,M04-W0401,QA-DB-05;QA-DB-07,P0,AUTOMATED,VERIFIED,IN_PROGRESS,docs/evidence/M04-W0401.md
 REQ-04-DDL,04_DATABASE.md#schema-contract--m01-bootstrap-migrations,04,M01-W0103,QA-DB-01,P0,AUTOMATED,VERIFIED,PASS,docs/evidence/M01-W0103.md
 REQ-04-SCHEMA,04_DATABASE.md#schema-contract--m01-bootstrap-migrations,04,M01-W0103,QA-DB-01;QA-DB-09;QA-DB-10,P0,AUTOMATED,FIXED,IN_PROGRESS,docs/evidence/M01-W0103.md
 REQ-04-INGEST,04_DATABASE.md#transaction-protocols,04,M03-W0305,QA-DB-06;QA-DB-07,P0,AUTOMATED,FIXED,IN_PROGRESS,docs/evidence/M03-W0308.md
@@ -38,7 +38,7 @@ REQ-04-SNAPSHOT,04_DATABASE.md#two-distinct-snapshot-types,04,M05-W0504,QA-API-0
 REQ-04-HASH-FIELDS,04_DATABASE.md#executable-storage-and-concurrency-clarifications,04,M02-W0208,QA-DET-01;QA-DET-03,P0,AUTOMATED,FIXED,PASS,docs/evidence/M02-W0208.md
 REQ-04-LEDGER,04_DATABASE.md#privacy-restore-ledger-and-hmac-rotation--critical-explicit-dependency,04,M04-W0406,QA-SEC-03;QA-SEC-08,P0,MANUAL,VERIFIED,BLOCKED,docs/evidence/M00-W0004.md
 REQ-04-RETENTION,04_DATABASE.md#transaction-protocols,04,M04-W0407,QA-DB-01,P1,STATIC,VERIFIED,NOT_STARTED,docs/evidence/M00-W0004.md
-REQ-04-LEASE,04_DATABASE.md#ownership-isolation-and-transactional-boundaries,04,M04-W0401,QA-DB-07;QA-OPS-03,P0,AUTOMATED,VERIFIED,NOT_STARTED,docs/evidence/M00-W0004.md
+REQ-04-LEASE,04_DATABASE.md#ownership-isolation-and-transactional-boundaries,04,M04-W0401,QA-DB-07;QA-OPS-03,P0,AUTOMATED,VERIFIED,IN_PROGRESS,docs/evidence/M04-W0401.md
 REQ-04-DEVENV,04_DATABASE.md#ownership-isolation-and-transactional-boundaries,04,M01-W0102,QA-DB-01,P0,AUTOMATED,VERIFIED,IN_PROGRESS,docs/evidence/M01-W0102.md
 REQ-04-ALIASES,04_DATABASE.md#privacy-restore-ledger-and-hmac-rotation--critical-explicit-dependency,04,M01-W0103,QA-DB-11,P0,AUTOMATED,VERIFIED,PASS,docs/evidence/M01-W0103.md
 REQ-04-LEDGER-OUTBOX,04_DATABASE.md#privacy-restore-ledger-and-hmac-rotation--critical-explicit-dependency,04,M04-W0406,QA-DB-11,P0,AUTOMATED,VERIFIED,IN_PROGRESS,docs/evidence/M01-W0103.md
