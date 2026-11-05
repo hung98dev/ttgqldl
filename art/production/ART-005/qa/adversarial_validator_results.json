@@ -1,0 +1,67 @@
+{
+  "package_id": "ART-005",
+  "total_negative_tests": 12,
+  "all_rejected": true,
+  "cases": [
+    {
+      "test_id": "01_missing_castle_sprite",
+      "rejected_as_expected": true,
+      "rejection_reason": "Missing sprite file: art/production/ART-005/castle/frames/env_castle_band3_lv25_39.png"
+    },
+    {
+      "test_id": "02_incorrect_wall_damage_mapping",
+      "rejected_as_expected": true,
+      "rejection_reason": "Unmapped wall state: hp=250.0, max=1000.0, recovery=False"
+    },
+    {
+      "test_id": "03_townhall_level_band_mismatch",
+      "rejected_as_expected": true,
+      "rejection_reason": "Townhall bands must partition levels 1..50 without gap/overlap, got count=48"
+    },
+    {
+      "test_id": "04_corrupted_terrain_tile_seam",
+      "rejected_as_expected": true,
+      "rejection_reason": "Horizontal tile seam jump in env_tile_01_meadow_main: max_wrap_x=121.0"
+    },
+    {
+      "test_id": "05_non_transparent_building_background",
+      "rejected_as_expected": true,
+      "rejection_reason": "Cutout sprite env_house_01_artisan_gable invalid fill ratio 1.000 (non-transparent background or empty)"
+    },
+    {
+      "test_id": "06_wrong_pivot",
+      "rejected_as_expected": true,
+      "rejection_reason": "Invalid pivot on env_castle_band4_lv40_50: [0.5, 0.5] != [0.5, 0.1]"
+    },
+    {
+      "test_id": "07_atlas_uv_corruption",
+      "rejected_as_expected": true,
+      "rejection_reason": "Atlas UV/texel mismatch on env_castle_band1_lv01_09"
+    },
+    {
+      "test_id": "08_sprite_clipped_at_border",
+      "rejected_as_expected": true,
+      "rejection_reason": "Sprite env_bldg_watchtower clipped at canvas border: bbox=(75,0,180,230) in 256x256"
+    },
+    {
+      "test_id": "09_incorrect_sha256_hash",
+      "rejected_as_expected": true,
+      "rejection_reason": "SHA-256 mismatch for art/production/ART-005/APPROVAL_RECORD.md: 77e264d650319b6d34d49637db1e9139ec46f1d123fe7ced3926a78b5db5d034 != 07e264d650319b6d34d49637db1e9139ec46f1d123fe7ced3926a78b5db5d034"
+    },
+    {
+      "test_id": "10_sorting_layer_hides_boss",
+      "rejected_as_expected": true,
+      "rejection_reason": "Boss sorting layer Ground hides Boss behind environment/lanes!"
+    },
+    {
+      "test_id": "11_safe_zone_violation_x_gt_82pct",
+      "rejected_as_expected": true,
+      "rejection_reason": "Courtyard placement env_house_02_granary_round violates safe zone at (925.0, 804.0)"
+    },
+    {
+      "test_id": "12_broken_road_to_meadow_transition",
+      "rejected_as_expected": true,
+      "rejection_reason": "Terrain tile env_tile_04_ochre_road_border exceeded calm saturation ceiling: 0.558"
+    }
+  ]
+}

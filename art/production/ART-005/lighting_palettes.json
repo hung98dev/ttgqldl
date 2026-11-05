@@ -1,0 +1,77 @@
+{
+  "package_id": "ART-005",
+  "scope": "ENVIRONMENT_LAYERS_ONLY (Ground, LanesAndDecals, BastionBack, BastionFront). Never applied to HUD Canvas; optional mild 25% tie-in on Units.",
+  "gameplay_clock_independence": "Visual mood only; never alters simulation ticks, wave timers, or combat HP.",
+  "formula": "out_rgb = clamp01(((in_rgb - luma) * saturation_scale + luma) * rgb_multiply + rgb_lift)",
+  "palettes": [
+    {
+      "id": "dawn",
+      "name": "Sunlit Dawn",
+      "recommended_waves": "Waves 1-3 (Default)",
+      "rgb_multiply": [
+        1.02,
+        1.0,
+        0.96
+      ],
+      "rgb_lift": [
+        0.014,
+        0.008,
+        0.0
+      ],
+      "saturation_scale": 1.0,
+      "ambient_hex": "#FFF6E0"
+    },
+    {
+      "id": "midday",
+      "name": "Golden Midday",
+      "recommended_waves": "Waves 4, 6-8",
+      "rgb_multiply": [
+        1.0,
+        1.02,
+        1.03
+      ],
+      "rgb_lift": [
+        0.0,
+        0.006,
+        0.012
+      ],
+      "saturation_scale": 0.98,
+      "ambient_hex": "#F8FAFC"
+    },
+    {
+      "id": "dusk",
+      "name": "Amber Dusk Siege",
+      "recommended_waves": "Waves 9, 11-14",
+      "rgb_multiply": [
+        1.06,
+        0.92,
+        0.82
+      ],
+      "rgb_lift": [
+        0.022,
+        0.004,
+        0.01
+      ],
+      "saturation_scale": 0.94,
+      "ambient_hex": "#FDBA74"
+    },
+    {
+      "id": "boss_eclipse",
+      "name": "Violet Boss Eclipse",
+      "recommended_waves": "Boss Waves (wave_no % 5 == 0, Finale/Boss)",
+      "rgb_multiply": [
+        0.84,
+        0.8,
+        0.98
+      ],
+      "rgb_lift": [
+        0.032,
+        0.01,
+        0.058
+      ],
+      "saturation_scale": 0.88,
+      "boss_accent_hex": "#D946EF",
+      "ambient_hex": "#C084FC"
+    }
+  ]
+}

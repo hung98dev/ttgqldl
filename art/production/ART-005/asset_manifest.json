@@ -1,0 +1,801 @@
+{
+  "package_id": "ART-005",
+  "title": "Bastion Dawn v1 \u2014 Production Environment, Castle, Wall & Three-Lane Battlefield",
+  "style_lock": "Bastion Dawn v1",
+  "engine_target": "Unity 6000.6.7f1 (Built-in 2D, Orthographic Size 5.0, PPU 192)",
+  "normative_disambiguation": "Work package ART-005 (environment production); distinct from requirement ID ART005 (combat VFX) in docs/plan/07_UNITY_ART_UX.md.",
+  "m06_integration_status": "NOT_STARTED",
+  "rights_status": "PENDING_REVIEW",
+  "canonical_sprite_count": 26,
+  "companion_sprite_count": 14,
+  "atlas_count": 2,
+  "gameplay_composite_count": 8,
+  "total_tracked_files": 90,
+  "files": [
+    {
+      "path": "art/production/ART-005/APPROVAL_RECORD.md",
+      "bytes": 2537,
+      "sha256": "77e264d650319b6d34d49637db1e9139ec46f1d123fe7ced3926a78b5db5d034"
+    },
+    {
+      "path": "art/production/ART-005/atlas/atlas_inspection_board.png",
+      "bytes": 110645,
+      "sha256": "e2e242dc63e759f2d79ac805bad12f52cd87baa7612d3757e3475ef083b826a1",
+      "dimensions": [
+        2140,
+        1140
+      ],
+      "mode": "RGB"
+    },
+    {
+      "path": "art/production/ART-005/atlas/environment_atlas_01_fortress.json",
+      "bytes": 16087,
+      "sha256": "0f0e5a3597d06bfcf17f953bbe5d27a435a2fea43fb9a5fa7a95bee16267277a"
+    },
+    {
+      "path": "art/production/ART-005/atlas/environment_atlas_01_fortress.png",
+      "bytes": 105114,
+      "sha256": "1b43efc38ef46418126d64cef21ce5a7632e62318ce971e11220451885349cee",
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/atlas/environment_atlas_02_layers_and_terrain.json",
+      "bytes": 16317,
+      "sha256": "3c193cf5ceaf65602bbc9949384de1a896cf09d3f298b60e91bfca321a0e7efd"
+    },
+    {
+      "path": "art/production/ART-005/atlas/environment_atlas_02_layers_and_terrain.png",
+      "bytes": 85553,
+      "sha256": "c1029d9236aaa78bf99bfff09c7506653cf8e908f84bc1f657b45e77e19a0549",
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/atlas/unity_presets/ART005_Environment.spriteatlasv2.yaml",
+      "bytes": 632,
+      "sha256": "36d2112da4e02a49af14236c9e5effe6fdecaa65393e9cfa36ea51d9089875b8"
+    },
+    {
+      "path": "art/production/ART-005/atlas/unity_presets/ART005EnvironmentVerifier.cs.txt",
+      "bytes": 586,
+      "sha256": "bdb00525bcb13ff0a9307e39ed08aa5af8bf240f0f275d64ad88ecb4646abd69"
+    },
+    {
+      "path": "art/production/ART-005/atlas/unity_presets/TTG_ART005_Environment_Point192.preset.yaml",
+      "bytes": 1406,
+      "sha256": "af0c7d62146fba6e01c9915ae3d3ee9138abac528369da90f5ed336cc36e6a80"
+    },
+    {
+      "path": "art/production/ART-005/atlas/unity_presets/TTG_ART005_SeamlessTile_Repeat192.preset.yaml",
+      "bytes": 1189,
+      "sha256": "49901f0c07fff132392498c7e92e09562c6fdf49d4ded3dff915deb7e92ec3fa"
+    },
+    {
+      "path": "art/production/ART-005/buildings/buildings_and_props_sheet.png",
+      "bytes": 65934,
+      "sha256": "6a3075ecc54c3927573db549e132647ce2c4046faa2f6c635536b3088a2e5a1c",
+      "dimensions": [
+        1960,
+        760
+      ],
+      "mode": "RGB"
+    },
+    {
+      "path": "art/production/ART-005/buildings/houses/env_house_01_artisan_gable.png",
+      "bytes": 3184,
+      "sha256": "d0567527f3defd5d72d6817229b264096d87196f54b8e8099caf85ce157984d5",
+      "dimensions": [
+        256,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/buildings/houses/env_house_02_granary_round.png",
+      "bytes": 1957,
+      "sha256": "79e7ba150dffae6b0b69dbcd33abe01e69e84f3ee90310e37d6fac3b61e799ce",
+      "dimensions": [
+        256,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/buildings/houses/env_house_03_mason_lodge.png",
+      "bytes": 2770,
+      "sha256": "7f12c1211900388f000d0313f46ca593f6454fd454517a13653324f594811d25",
+      "dimensions": [
+        256,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/buildings/houses/env_house_04_bakery_chimney.png",
+      "bytes": 3235,
+      "sha256": "93a55cc1136fab36204865299fcc44d7cf8496e4573d5fbc78e320fdb564c2d3",
+      "dimensions": [
+        256,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/buildings/houses/env_house_05_smithy_shed.png",
+      "bytes": 2694,
+      "sha256": "3ac321860e0860fbe82056bda45f9c36a2210ee40f1bcfb8e8d05844aed62943",
+      "dimensions": [
+        256,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/buildings/houses/env_house_06_guard_quarters.png",
+      "bytes": 3402,
+      "sha256": "ff3f91f366109f8ed74582c3fb6271c6a99d02983935d88b546cb5ec1abd9d88",
+      "dimensions": [
+        256,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/buildings/props/env_prop_stone_crates.png",
+      "bytes": 1317,
+      "sha256": "fef89afe93d7c4d08a2a7cf06886d1c26c5688dcf9221e9c2f7b6749289f86b9",
+      "dimensions": [
+        128,
+        128
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/buildings/props/env_prop_sun_banner.png",
+      "bytes": 1063,
+      "sha256": "b4e2c978d6892e26eec5b7cbbcf11d063b267ebef9fa9e1729c3533d52820177",
+      "dimensions": [
+        128,
+        128
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/buildings/props/env_prop_supply_cart.png",
+      "bytes": 1182,
+      "sha256": "2048a1c52e5baacc02bb0c49eceee47cf9695656412a4285edb04d615e5e4840",
+      "dimensions": [
+        128,
+        128
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/buildings/watchtower/env_bldg_watchtower.png",
+      "bytes": 3206,
+      "sha256": "db5428ab160e4d337bd1a7f90d06c10a9b48bc9f9f8bdc46a819ee832ae3808c",
+      "dimensions": [
+        256,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/castle/castle_progression_sheet.png",
+      "bytes": 60381,
+      "sha256": "7a0e8875e7a1ceb7fcb8e0191659bb2886c6f500ce40ddf8de9f1f4170b8aa4e",
+      "dimensions": [
+        2160,
+        680
+      ],
+      "mode": "RGB"
+    },
+    {
+      "path": "art/production/ART-005/castle/frames/env_castle_band1_lv01_09.png",
+      "bytes": 6973,
+      "sha256": "faa449b556df1a570a3efc5598436818a57a2724898c6fb1283bab0e78eecd59",
+      "dimensions": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/castle/frames/env_castle_band2_lv10_24.png",
+      "bytes": 8637,
+      "sha256": "fc9eaff0e59c3c721f5dce2614eedcdec5228fa684c60691e4caa86e4c357f35",
+      "dimensions": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/castle/frames/env_castle_band3_lv25_39.png",
+      "bytes": 9807,
+      "sha256": "a255388dbf31a2f682ae5aba797b930e49c1bd307c0ea5659cacfdc4a9dd40c5",
+      "dimensions": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/castle/frames/env_castle_band4_lv40_50.png",
+      "bytes": 11121,
+      "sha256": "e3de72a62853a389601968a46ce9c49a2827207dead94fff5cc197642b876d42",
+      "dimensions": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/environment_layout.json",
+      "bytes": 31835,
+      "sha256": "2a179a298d9b14408f9f0b3505d67ed0108f5bba523b90c8a93c4e04be542bb1"
+    },
+    {
+      "path": "art/production/ART-005/ENVIRONMENT_PIPELINE.md",
+      "bytes": 3515,
+      "sha256": "20cf5d917768a7a156c6c63588cba35c75734ca19d12d18f0c6e2b962d8b4d8a"
+    },
+    {
+      "path": "art/production/ART-005/environment_state_mapping.json",
+      "bytes": 3287,
+      "sha256": "cae6a4d31879b12bbf7e62b30e2e4b6b52be05bfb70e40f689eedde71a4f263a"
+    },
+    {
+      "path": "art/production/ART-005/lighting_palettes.json",
+      "bytes": 1847,
+      "sha256": "e26c33ff561325e96731fc31a485dcf841cbf44dcb22430e6dc689e6fbafd620"
+    },
+    {
+      "path": "art/production/ART-005/previews/comparison/art002_vs_art005_blueprint_comparison.png",
+      "bytes": 764896,
+      "sha256": "d1e5badfee932eef4b31500203bc10fadd42fa70c280b45ac4522b8b3c4028d5",
+      "dimensions": [
+        2160,
+        1220
+      ],
+      "mode": "RGB"
+    },
+    {
+      "path": "art/production/ART-005/previews/gameplay_composites/01_empty_village_healthy.png",
+      "bytes": 152819,
+      "sha256": "2ef6c6df6d260149665cda504605c18fb2fb2ead98984fc8464923bcbc00255a",
+      "dimensions": [
+        1080,
+        1920
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/previews/gameplay_composites/02_prep_builders_repairing.png",
+      "bytes": 167855,
+      "sha256": "0ba027cbcbd298d82fd0acbb54bb6152dbb6f1c639b37ba5362f3ecffd3aa575",
+      "dimensions": [
+        1080,
+        1920
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/previews/gameplay_composites/03_assault_three_lanes.png",
+      "bytes": 183624,
+      "sha256": "b250fc5c42903640fb918a32d471a3bfcadf37a0f76eb692ae76ff4b8258560a",
+      "dimensions": [
+        1080,
+        1920
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/previews/gameplay_composites/04_wall_critical_damage.png",
+      "bytes": 172486,
+      "sha256": "f2da1c8789d05322790874d5dc92543cb8de509c76e442afdb04ed3b6826127e",
+      "dimensions": [
+        1080,
+        1920
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/previews/gameplay_composites/05_wall_breached_townhall_exposed.png",
+      "bytes": 168353,
+      "sha256": "b0ef1480af5e2362f63037fbb20ecf194aa026cefabf87a4fe7eb66dff5472f4",
+      "dimensions": [
+        1080,
+        1920
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/previews/gameplay_composites/06_post_loss_recovery.png",
+      "bytes": 167568,
+      "sha256": "bb0a53644d5c8694e5ef1838090fb004e3aef5786f2b82063d874a1a343e8435",
+      "dimensions": [
+        1080,
+        1920
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/previews/gameplay_composites/07_boss_approach_center_lane.png",
+      "bytes": 177325,
+      "sha256": "0427d53574fa8bf55e6a09f9151d3bc5c4f8c9fce5d3825a9f1d2a584035fbfd",
+      "dimensions": [
+        1080,
+        1920
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/previews/gameplay_composites/08_level50_townhall_showcase.png",
+      "bytes": 173036,
+      "sha256": "39fd3366b4f86254456366c88389a8df81384e05367de528a159e8527eeb44ef",
+      "dimensions": [
+        1080,
+        1920
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/previews/gameplay_composites/composite_scene_telemetry.json",
+      "bytes": 60139,
+      "sha256": "ab5ef0ff1c433f6e21058657a69c1b17072e04353ee99eb1397db4507bf0cd38"
+    },
+    {
+      "path": "art/production/ART-005/previews/mobile/h264_mobile_stream_proof.png",
+      "bytes": 630983,
+      "sha256": "57e5a20ed79320e8ba3d340b2c98a49127771019bbe662ccda92f4bad6d82f15",
+      "dimensions": [
+        1840,
+        1080
+      ],
+      "mode": "RGB"
+    },
+    {
+      "path": "art/production/ART-005/previews/mobile/mobile_360p_assault_three_lanes.png",
+      "bytes": 108553,
+      "sha256": "684faf32e05ac312887f58bb3b205f84501a8d4308165c3ed20b75568590a729",
+      "dimensions": [
+        360,
+        640
+      ],
+      "mode": "RGB"
+    },
+    {
+      "path": "art/production/ART-005/previews/mobile/mobile_360p_boss_approach.png",
+      "bytes": 102255,
+      "sha256": "32146708eb9567fcc34dca17323ff809685c74acb1b7cbaeef2fb8dd4f2a3af4",
+      "dimensions": [
+        360,
+        640
+      ],
+      "mode": "RGB"
+    },
+    {
+      "path": "art/production/ART-005/previews/mobile/mobile_360p_grayscale_readability.png",
+      "bytes": 216290,
+      "sha256": "4b44c196c37a74811e771014b13979b97d2eb6f832212861841e10a2338ae9c5",
+      "dimensions": [
+        1160,
+        740
+      ],
+      "mode": "RGB"
+    },
+    {
+      "path": "art/production/ART-005/previews/mobile/mobile_720p_assault_three_lanes.png",
+      "bytes": 270574,
+      "sha256": "98c3ef0df2cd0e0d787a552aaed3a14df3c92f325c7bb0aa533217331e7c31b2",
+      "dimensions": [
+        720,
+        1280
+      ],
+      "mode": "RGB"
+    },
+    {
+      "path": "art/production/ART-005/previews/mobile/mobile_720p_boss_approach.png",
+      "bytes": 251926,
+      "sha256": "d12446dc1e6365323e6c5368bac170ce0dab4b965d80582e0cc7bd729eed3e89",
+      "dimensions": [
+        720,
+        1280
+      ],
+      "mode": "RGB"
+    },
+    {
+      "path": "art/production/ART-005/previews/mobile/reduced_motion_boss_eclipse_proof.png",
+      "bytes": 219161,
+      "sha256": "422070b6ad041ecdc43828c87de0f3e3f2b19bb914de21263c34a3066a0f3c87",
+      "dimensions": [
+        1160,
+        1060
+      ],
+      "mode": "RGB"
+    },
+    {
+      "path": "art/production/ART-005/previews/mobile/stream_turntable_h264.mp4",
+      "bytes": 450064,
+      "sha256": "120f3b46e035df6c0f8925b876e77785a6392a0d9f33819a2550ce34bb036fd3"
+    },
+    {
+      "path": "art/production/ART-005/previews/static/lighting_4_palettes_showcase.png",
+      "bytes": 945937,
+      "sha256": "33cf53d4a40b92eeccd23aefe92160b5b215361734d3116dd21651f07704839b",
+      "dimensions": [
+        2240,
+        1460
+      ],
+      "mode": "RGB"
+    },
+    {
+      "path": "art/production/ART-005/previews/static/safe_zone_and_zero_occlusion_proof.png",
+      "bytes": 200883,
+      "sha256": "759120a118b3715b13d092613d61f372e2d5307aba3db83b41981849f56f268b",
+      "dimensions": [
+        1080,
+        1920
+      ],
+      "mode": "RGB"
+    },
+    {
+      "path": "art/production/ART-005/previews/static/terrain_3x3_seam_and_transition_proof.png",
+      "bytes": 124455,
+      "sha256": "0bd90a10f822a323e7a3783cdc8e3f239bea72e8061175d12824611c35e5cbae",
+      "dimensions": [
+        2120,
+        1080
+      ],
+      "mode": "RGB"
+    },
+    {
+      "path": "art/production/ART-005/previews/static/wall_and_castle_swap_stability_board.png",
+      "bytes": 214000,
+      "sha256": "6bd4463997188c9a8fc1eaa285d928104b29f74a0cfa74ac0a7c3f8fadee964e",
+      "dimensions": [
+        2040,
+        960
+      ],
+      "mode": "RGB"
+    },
+    {
+      "path": "art/production/ART-005/qa/adversarial_validator_results.json",
+      "bytes": 2707,
+      "sha256": "a28ee81fc63449753aaf19d87a7106a812ad63b0220917450be926c5f1b44974"
+    },
+    {
+      "path": "art/production/ART-005/qa/qa_metrics.json",
+      "bytes": 1826,
+      "sha256": "6fbf5dc62d55df86b5d11be397b2399ea3de439ca706e4f0c12f64040d0d2d65"
+    },
+    {
+      "path": "art/production/ART-005/qa/qa_report.md",
+      "bytes": 4623,
+      "sha256": "43d8fde7f411f16218e8464cdc7d8c16fc2c8bd8a0ecf65d674884e97f3a5b98"
+    },
+    {
+      "path": "art/production/ART-005/qa/unity_isolated_verification.json",
+      "bytes": 1421,
+      "sha256": "65336b28c2059c5c8c6015c4bd241cb89d23a42d410961a0146b03833dbf9181"
+    },
+    {
+      "path": "art/production/ART-005/README.md",
+      "bytes": 4761,
+      "sha256": "f67151dc81f030b20c2e61a5c2e928ba80dcad323d00614fafd32e1c700bdea9"
+    },
+    {
+      "path": "art/production/ART-005/terrain/terrain_tilesheet.png",
+      "bytes": 63302,
+      "sha256": "f531a41c0cb60f0d209eff86e0e70a3b92abd0e206acbccbefc4849c6614c072",
+      "dimensions": [
+        2060,
+        820
+      ],
+      "mode": "RGB"
+    },
+    {
+      "path": "art/production/ART-005/terrain/tiles/env_tile_01_meadow_main.png",
+      "bytes": 3831,
+      "sha256": "3f647ef08a3788ee94e85e0fbdda94547fd2c2457f5f78d794b5660cb02953c3",
+      "dimensions": [
+        256,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/terrain/tiles/env_tile_02_meadow_variation.png",
+      "bytes": 9685,
+      "sha256": "b01d596be92c074951460dd6dccb2fe7bcb2b27194dde4beb80715a8f3f57bb5",
+      "dimensions": [
+        256,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/terrain/tiles/env_tile_03_ochre_road_body.png",
+      "bytes": 3680,
+      "sha256": "d9de404e942e70ed73f24ce5d772804d72e4bca579e668166443f2da2303b573",
+      "dimensions": [
+        256,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/terrain/tiles/env_tile_04_ochre_road_border.png",
+      "bytes": 4022,
+      "sha256": "0eff7a7bb34cde77c1d1093660021852c8c946984c4752379091de25c75cf38a",
+      "dimensions": [
+        256,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/terrain/tiles/env_tile_05_limestone_causeway.png",
+      "bytes": 1070,
+      "sha256": "d845f9daf4203e4e0ad580543b0f9141b6b9ed02802fcc9440b700d9fe21b2da",
+      "dimensions": [
+        256,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/terrain/tiles/env_tile_06_courtyard_plaza.png",
+      "bytes": 3811,
+      "sha256": "27c162099001b74da855bc994cddffcd8c969bcccce1c4384da0be772b18a59d",
+      "dimensions": [
+        256,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/terrain/transitions/trans_causeway_stone_curb.png",
+      "bytes": 562,
+      "sha256": "d1c672f73b891df25187da89ece2c1fde697e59ba9c55e8dd8d03d5ae65ecfc9",
+      "dimensions": [
+        64,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/terrain/transitions/trans_lane_bastion_apron.png",
+      "bytes": 1299,
+      "sha256": "44cffbf19f885348a7cf59aad947723fc54c14a3dfec649d56856cce39cdf33c",
+      "dimensions": [
+        256,
+        128
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/terrain/transitions/trans_meadow_patch_mask.png",
+      "bytes": 1567,
+      "sha256": "c8e877ae57274637e7c2259578d63fc8130ff8cf6ab6393121e8a86aae69d242",
+      "dimensions": [
+        256,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/terrain/transitions/trans_ochre_verge_strip.png",
+      "bytes": 558,
+      "sha256": "2118e3b9143128f115a32ec7e000ea7fba964587779218e8824582dde4704c25",
+      "dimensions": [
+        256,
+        64
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/tools/art005_env_lib.py",
+      "bytes": 68280,
+      "sha256": "49721f43bcf310137b001a141c56e15ea609193d27a11e6405fa87e5fe322bcd"
+    },
+    {
+      "path": "art/production/ART-005/tools/build_atlas_and_previews.py",
+      "bytes": 70737,
+      "sha256": "4c9f12c6b8e90940f299eece13522a185541ff6a4d096cab691992db4a2d94ec"
+    },
+    {
+      "path": "art/production/ART-005/tools/build_environment.py",
+      "bytes": 34423,
+      "sha256": "215927229096457b98e995f02165f0b55a0dcd59b21f5dfce62dae17627bd293"
+    },
+    {
+      "path": "art/production/ART-005/tools/validate_art005.py",
+      "bytes": 32081,
+      "sha256": "a065b53498ea0d7a31b45ae6d5896296e8a175a57eaf943a7487b3f9fe765f4b"
+    },
+    {
+      "path": "art/production/ART-005/UNITY_INTEGRATION_GUIDE.md",
+      "bytes": 4168,
+      "sha256": "95b2ef7fe269574491562f3cdc60dd791026a409439813a8e3eed493dfd917fb"
+    },
+    {
+      "path": "art/production/ART-005/wall/layers/env_wall_state1_healthy_back.png",
+      "bytes": 5319,
+      "sha256": "fed061511c90344f46359df44d32ac0e41f689aa93e619e7400e9d2a125ff931",
+      "dimensions": [
+        512,
+        320
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/wall/layers/env_wall_state1_healthy_front.png",
+      "bytes": 3894,
+      "sha256": "7ace5ef334fb39b16f5fceb479bb234974672b8bcb6ed3364a5fccf75093b2e2",
+      "dimensions": [
+        512,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/wall/layers/env_wall_state2_damaged_back.png",
+      "bytes": 5340,
+      "sha256": "abe43bdf50e246798a87c0288b2c22629b95bae3534c8207460aebf3e5713668",
+      "dimensions": [
+        512,
+        320
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/wall/layers/env_wall_state2_damaged_front.png",
+      "bytes": 4145,
+      "sha256": "5395b4a8309e6bc050bbfe9fdfc8d805ff26479a75cb3615eaa73ca27a66719e",
+      "dimensions": [
+        512,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/wall/layers/env_wall_state3_critical_back.png",
+      "bytes": 5569,
+      "sha256": "05d7af423ff12d916cb0b6d592714e7b0541d29528ce16336e224328b8551662",
+      "dimensions": [
+        512,
+        320
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/wall/layers/env_wall_state3_critical_front.png",
+      "bytes": 4262,
+      "sha256": "7e3dc0161250b996fe34c3caec25f22ab44129dc913e2cb9f8bb930e61a6559a",
+      "dimensions": [
+        512,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/wall/layers/env_wall_state4_breached_back.png",
+      "bytes": 5658,
+      "sha256": "409c2898d3ccd5d88ac9c6c7455caf8ad78e08879a9809478eed717a888e347e",
+      "dimensions": [
+        512,
+        320
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/wall/layers/env_wall_state4_breached_front.png",
+      "bytes": 3967,
+      "sha256": "c3d420c06625a0dcbfd64b18688d737de9924b2d783d1a2a35275223e0cd4e45",
+      "dimensions": [
+        512,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/wall/layers/env_wall_state5_recovery_back.png",
+      "bytes": 5418,
+      "sha256": "e9701d62dd3688f1baef5445480ffc8e12e810761b08234355dbe261ceeda624",
+      "dimensions": [
+        512,
+        320
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/wall/layers/env_wall_state5_recovery_front.png",
+      "bytes": 4705,
+      "sha256": "bdda4206cb42151309b0d275f845170a809aa8d1f141e847513e04136dcd93c1",
+      "dimensions": [
+        512,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/wall/scaffold/env_wall_repair_scaffold.png",
+      "bytes": 1909,
+      "sha256": "58a2ee26a4388aa8cbc76a83003be95be88278505ca0f69f27e7157560e5d098",
+      "dimensions": [
+        192,
+        192
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/wall/states/env_wall_state1_healthy.png",
+      "bytes": 8648,
+      "sha256": "3964909d951782dbef930ed23fbd722ae21418b5cb846af91171666d561d60a5",
+      "dimensions": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/wall/states/env_wall_state2_damaged.png",
+      "bytes": 8921,
+      "sha256": "8185e41db7d2df310226ea210cd0e287514dc98315fad8468764da8b5f0a679e",
+      "dimensions": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/wall/states/env_wall_state3_critical.png",
+      "bytes": 9261,
+      "sha256": "2fd97063fe3bec023ea3fd28c10e8a12bcbb1447e4882cd706a6d0f976a23a2d",
+      "dimensions": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/wall/states/env_wall_state4_breached.png",
+      "bytes": 9059,
+      "sha256": "7c05fbd1a83c7570e9cbe90d14b36587aebb738721cd57ddc94307aa52352977",
+      "dimensions": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/wall/states/env_wall_state5_recovery.png",
+      "bytes": 9550,
+      "sha256": "b56430ca8632da69b8c8195a15ea7917bd62d825a37975a856a16e90d38bf591",
+      "dimensions": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "art/production/ART-005/wall/wall_states_sheet.png",
+      "bytes": 93780,
+      "sha256": "7c6ee13f36923ecb299b74993f52b52ec28b0c8e1f78afbf7a5e5baebf5cd674",
+      "dimensions": [
+        2280,
+        1010
+      ],
+      "mode": "RGB"
+    }
+  ]
+}

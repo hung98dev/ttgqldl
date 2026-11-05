@@ -1,0 +1,14 @@
+// Reference M06 Editor verification snippet for ART-005 (not compiled in production repo until M06)
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.Profiling;
+
+public static class ART005EnvironmentVerifier
+{
+    public static void VerifyEnvironmentTexture(Texture2D tex)
+    {
+        Debug.Assert(tex.width <= 2048 && tex.height <= 2048, "ART-005 max atlas size <= 2048x2048");
+        Debug.Assert(tex.filterMode == FilterMode.Point, "ART-005 requires FilterMode.Point");
+        Debug.Assert(tex.mipmapCount == 1, "ART-005 requires mipmaps disabled");
+    }
+}

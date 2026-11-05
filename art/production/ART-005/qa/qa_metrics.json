@@ -1,0 +1,64 @@
+{
+  "status": "PASS",
+  "canonical_sprites_verified": 26,
+  "companion_sprites_verified": 14,
+  "cutout_halo_pixels_total": 0,
+  "castle_foundation_bottom_y_px": 461,
+  "castle_swap_drift_px": 0,
+  "wall_outer_width_px": 477,
+  "wall_width_pct_of_1080p": 44.17,
+  "meadow_to_border_max_diff": 2.0,
+  "border_to_road_max_diff": 3.0,
+  "meadow_cross_tile_max_diff": 2.0,
+  "tile_seam_metrics": {
+    "env_tile_01_meadow_main": {
+      "wrap_x_mae": 0.026,
+      "wrap_y_mae": 0.072,
+      "max_wrap_x_diff": 2.0,
+      "max_wrap_y_diff": 2.0,
+      "interior_dx_mae": 0.058,
+      "interior_dy_mae": 0.051
+    },
+    "env_tile_02_meadow_variation": {
+      "wrap_x_mae": 0.026,
+      "wrap_y_mae": 0.072,
+      "max_wrap_x_diff": 2.0,
+      "max_wrap_y_diff": 2.0,
+      "interior_dx_mae": 0.09,
+      "interior_dy_mae": 0.084
+    },
+    "env_tile_03_ochre_road_body": {
+      "wrap_x_mae": 0.023,
+      "wrap_y_mae": 0.086,
+      "max_wrap_x_diff": 3.0,
+      "max_wrap_y_diff": 3.0,
+      "interior_dx_mae": 0.062,
+      "interior_dy_mae": 0.059
+    },
+    "env_tile_04_ochre_road_border": {
+      "wrap_y_mae": 0.079,
+      "max_wrap_y_diff": 3.0
+    },
+    "env_tile_05_limestone_causeway": {
+      "wrap_x_mae": 0.0,
+      "wrap_y_mae": 0.0,
+      "max_wrap_x_diff": 0.0,
+      "max_wrap_y_diff": 0.0,
+      "interior_dx_mae": 0.533,
+      "interior_dy_mae": 1.562
+    },
+    "env_tile_06_courtyard_plaza": {
+      "wrap_x_mae": 0.046,
+      "wrap_y_mae": 0.059,
+      "max_wrap_x_diff": 2.0,
+      "max_wrap_y_diff": 2.0,
+      "interior_dx_mae": 0.124,
+      "interior_dy_mae": 0.172
+    }
+  },
+  "atlas_01_slices": 20,
+  "atlas_02_slices": 20,
+  "atlas_gutter_bleed_pixels": 0,
+  "gameplay_composites_verified": 8,
+  "unity_version_verified": "6000.6.7f1"
+}

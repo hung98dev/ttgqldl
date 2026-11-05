@@ -1,0 +1,2800 @@
+{
+  "01_empty_village_healthy": {
+    "castle_band": 2,
+    "wall_state": 1,
+    "palette_id": "dawn",
+    "active_scaffolds": [],
+    "telegraph_bbox": null,
+    "buildings": [
+      {
+        "id": "env_bldg_watchtower",
+        "bbox": [
+          323,
+          641,
+          380,
+          756
+        ],
+        "pivot_px": [
+          352.0,
+          756.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_castle_band2_lv10_24",
+        "bbox": [
+          385,
+          601,
+          515,
+          796
+        ],
+        "pivot_px": [
+          454.0,
+          796.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_01_artisan_gable",
+        "bbox": [
+          288,
+          738,
+          336,
+          803
+        ],
+        "pivot_px": [
+          314.0,
+          804.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_02_granary_round",
+        "bbox": [
+          571,
+          747,
+          615,
+          801
+        ],
+        "pivot_px": [
+          594.0,
+          804.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_sun_banner",
+        "bbox": [
+          445,
+          805,
+          463,
+          843
+        ],
+        "pivot_px": [
+          454.0,
+          844.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_supply_cart",
+        "bbox": [
+          391,
+          829,
+          419,
+          851
+        ],
+        "pivot_px": [
+          406.0,
+          852.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_stone_crates",
+        "bbox": [
+          485,
+          824,
+          516,
+          851
+        ],
+        "pivot_px": [
+          502.0,
+          852.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_03_mason_lodge",
+        "bbox": [
+          280,
+          799,
+          329,
+          859
+        ],
+        "pivot_px": [
+          306.0,
+          860.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_04_bakery_chimney",
+        "bbox": [
+          576,
+          792,
+          623,
+          859
+        ],
+        "pivot_px": [
+          602.0,
+          860.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_05_smithy_shed",
+        "bbox": [
+          340,
+          839,
+          384,
+          897
+        ],
+        "pivot_px": [
+          364.0,
+          898.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_06_guard_quarters",
+        "bbox": [
+          518,
+          837,
+          566,
+          897
+        ],
+        "pivot_px": [
+          544.0,
+          898.0
+        ],
+        "sorting_layer": "BastionBack"
+      }
+    ],
+    "units": [],
+    "vfx": [],
+    "title": "01 \u2014 Empty Village (Band 2 Keep, Healthy Wall, Dawn)",
+    "path": "art/production/ART-005/previews/gameplay_composites/01_empty_village_healthy.png"
+  },
+  "02_prep_builders_repairing": {
+    "castle_band": 2,
+    "wall_state": 2,
+    "palette_id": "dawn",
+    "active_scaffolds": [
+      "SW",
+      "SE",
+      "NW",
+      "NE"
+    ],
+    "telegraph_bbox": null,
+    "buildings": [
+      {
+        "id": "env_bldg_watchtower",
+        "bbox": [
+          323,
+          641,
+          380,
+          756
+        ],
+        "pivot_px": [
+          352.0,
+          756.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_castle_band2_lv10_24",
+        "bbox": [
+          385,
+          601,
+          515,
+          796
+        ],
+        "pivot_px": [
+          454.0,
+          796.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_01_artisan_gable",
+        "bbox": [
+          288,
+          738,
+          336,
+          803
+        ],
+        "pivot_px": [
+          314.0,
+          804.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_02_granary_round",
+        "bbox": [
+          571,
+          747,
+          615,
+          801
+        ],
+        "pivot_px": [
+          594.0,
+          804.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_sun_banner",
+        "bbox": [
+          445,
+          805,
+          463,
+          843
+        ],
+        "pivot_px": [
+          454.0,
+          844.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_supply_cart",
+        "bbox": [
+          391,
+          829,
+          419,
+          851
+        ],
+        "pivot_px": [
+          406.0,
+          852.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_stone_crates",
+        "bbox": [
+          485,
+          824,
+          516,
+          851
+        ],
+        "pivot_px": [
+          502.0,
+          852.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_03_mason_lodge",
+        "bbox": [
+          280,
+          799,
+          329,
+          859
+        ],
+        "pivot_px": [
+          306.0,
+          860.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_04_bakery_chimney",
+        "bbox": [
+          576,
+          792,
+          623,
+          859
+        ],
+        "pivot_px": [
+          602.0,
+          860.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_05_smithy_shed",
+        "bbox": [
+          340,
+          839,
+          384,
+          897
+        ],
+        "pivot_px": [
+          364.0,
+          898.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_06_guard_quarters",
+        "bbox": [
+          518,
+          837,
+          566,
+          897
+        ],
+        "pivot_px": [
+          544.0,
+          898.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "scaffold_NW",
+        "bbox": [
+          240,
+          722,
+          284,
+          781
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "scaffold_NE",
+        "bbox": [
+          623,
+          722,
+          667,
+          781
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "scaffold_SW",
+        "bbox": [
+          267,
+          936,
+          312,
+          996
+        ],
+        "sorting_layer": "BastionFront"
+      },
+      {
+        "id": "scaffold_SE",
+        "bbox": [
+          595,
+          936,
+          640,
+          996
+        ],
+        "sorting_layer": "BastionFront"
+      }
+    ],
+    "units": [
+      {
+        "class": "builder",
+        "frame": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f02.png",
+        "pivot_px": [
+          250.0,
+          790.0
+        ],
+        "bbox": [
+          238,
+          735,
+          260,
+          792
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -89
+      },
+      {
+        "class": "builder",
+        "frame": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f03.png",
+        "pivot_px": [
+          658.0,
+          790.0
+        ],
+        "bbox": [
+          633,
+          740,
+          665,
+          792
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -89
+      },
+      {
+        "class": "fighter",
+        "frame": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_idle_f00.png",
+        "pivot_px": [
+          430.0,
+          926.0
+        ],
+        "bbox": [
+          412,
+          875,
+          438,
+          928
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -18
+      },
+      {
+        "class": "fighter",
+        "frame": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_idle_f02.png",
+        "pivot_px": [
+          478.0,
+          926.0
+        ],
+        "bbox": [
+          463,
+          876,
+          492,
+          928
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -18
+      },
+      {
+        "class": "builder",
+        "frame": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f03.png",
+        "pivot_px": [
+          276.0,
+          1004.0
+        ],
+        "bbox": [
+          267,
+          954,
+          299,
+          1006
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 23
+      },
+      {
+        "class": "builder",
+        "frame": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f04.png",
+        "pivot_px": [
+          632.0,
+          1004.0
+        ],
+        "bbox": [
+          608,
+          964,
+          639,
+          1008
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 23
+      },
+      {
+        "class": "guard",
+        "frame": "art/production/ART-004/characters/guard/frames/chr_role_guard_idle_f01.png",
+        "pivot_px": [
+          426.0,
+          1034.0
+        ],
+        "bbox": [
+          411,
+          990,
+          439,
+          1036
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 39
+      },
+      {
+        "class": "guard",
+        "frame": "art/production/ART-004/characters/guard/frames/chr_role_guard_idle_f02.png",
+        "pivot_px": [
+          482.0,
+          1034.0
+        ],
+        "bbox": [
+          468,
+          990,
+          494,
+          1036
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 39
+      }
+    ],
+    "vfx": [
+      {
+        "frame": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f02.png",
+        "bbox": [
+          276,
+          965,
+          310,
+          997
+        ],
+        "sorting_layer": "VFX"
+      },
+      {
+        "frame": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f03.png",
+        "bbox": [
+          602,
+          967,
+          636,
+          1004
+        ],
+        "sorting_layer": "VFX"
+      },
+      {
+        "frame": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f01.png",
+        "bbox": [
+          251,
+          755,
+          277,
+          782
+        ],
+        "sorting_layer": "VFX"
+      }
+    ],
+    "title": "02 \u2014 PREP Phase: Builders Repairing Wall & Scaffolds",
+    "path": "art/production/ART-005/previews/gameplay_composites/02_prep_builders_repairing.png"
+  },
+  "03_assault_three_lanes": {
+    "castle_band": 3,
+    "wall_state": 1,
+    "palette_id": "midday",
+    "active_scaffolds": [
+      "SW",
+      "SE"
+    ],
+    "telegraph_bbox": null,
+    "buildings": [
+      {
+        "id": "env_bldg_watchtower",
+        "bbox": [
+          323,
+          641,
+          380,
+          756
+        ],
+        "pivot_px": [
+          352.0,
+          756.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_castle_band3_lv25_39",
+        "bbox": [
+          375,
+          582,
+          524,
+          796
+        ],
+        "pivot_px": [
+          454.0,
+          796.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_01_artisan_gable",
+        "bbox": [
+          288,
+          738,
+          336,
+          803
+        ],
+        "pivot_px": [
+          314.0,
+          804.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_02_granary_round",
+        "bbox": [
+          571,
+          747,
+          615,
+          801
+        ],
+        "pivot_px": [
+          594.0,
+          804.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_sun_banner",
+        "bbox": [
+          445,
+          805,
+          463,
+          843
+        ],
+        "pivot_px": [
+          454.0,
+          844.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_supply_cart",
+        "bbox": [
+          391,
+          829,
+          419,
+          851
+        ],
+        "pivot_px": [
+          406.0,
+          852.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_stone_crates",
+        "bbox": [
+          485,
+          824,
+          516,
+          851
+        ],
+        "pivot_px": [
+          502.0,
+          852.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_03_mason_lodge",
+        "bbox": [
+          280,
+          799,
+          329,
+          859
+        ],
+        "pivot_px": [
+          306.0,
+          860.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_04_bakery_chimney",
+        "bbox": [
+          576,
+          792,
+          623,
+          859
+        ],
+        "pivot_px": [
+          602.0,
+          860.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_05_smithy_shed",
+        "bbox": [
+          340,
+          839,
+          384,
+          897
+        ],
+        "pivot_px": [
+          364.0,
+          898.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_06_guard_quarters",
+        "bbox": [
+          518,
+          837,
+          566,
+          897
+        ],
+        "pivot_px": [
+          544.0,
+          898.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "scaffold_SW",
+        "bbox": [
+          267,
+          936,
+          312,
+          996
+        ],
+        "sorting_layer": "BastionFront"
+      },
+      {
+        "id": "scaffold_SE",
+        "bbox": [
+          595,
+          936,
+          640,
+          996
+        ],
+        "sorting_layer": "BastionFront"
+      }
+    ],
+    "units": [
+      {
+        "class": "grunt",
+        "frame": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f01.png",
+        "pivot_px": [
+          438.0,
+          368.0
+        ],
+        "bbox": [
+          419,
+          327,
+          460,
+          371
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -308
+      },
+      {
+        "class": "runner",
+        "frame": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f02.png",
+        "pivot_px": [
+          214.0,
+          378.0
+        ],
+        "bbox": [
+          199,
+          337,
+          226,
+          381
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -303
+      },
+      {
+        "class": "runner",
+        "frame": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f04.png",
+        "pivot_px": [
+          758.0,
+          392.0
+        ],
+        "bbox": [
+          747,
+          354,
+          772,
+          395
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -296
+      },
+      {
+        "class": "runner",
+        "frame": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f02.png",
+        "pivot_px": [
+          474.0,
+          468.0
+        ],
+        "bbox": [
+          454,
+          431,
+          482,
+          471
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -256
+      },
+      {
+        "class": "grunt",
+        "frame": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f03.png",
+        "pivot_px": [
+          264.0,
+          504.0
+        ],
+        "bbox": [
+          242,
+          461,
+          282,
+          506
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -238
+      },
+      {
+        "class": "grunt",
+        "frame": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f02.png",
+        "pivot_px": [
+          652.0,
+          558.0
+        ],
+        "bbox": [
+          625,
+          503,
+          669,
+          560
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -209
+      },
+      {
+        "class": "brute",
+        "frame": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f03.png",
+        "pivot_px": [
+          454.0,
+          562.0
+        ],
+        "bbox": [
+          441,
+          507,
+          493,
+          565
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -207
+      },
+      {
+        "class": "brute",
+        "frame": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f02.png",
+        "pivot_px": [
+          306.0,
+          594.0
+        ],
+        "bbox": [
+          280,
+          533,
+          324,
+          597
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -191
+      },
+      {
+        "class": "guard",
+        "frame": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f02.png",
+        "pivot_px": [
+          430.0,
+          594.0
+        ],
+        "bbox": [
+          410,
+          554,
+          450,
+          596
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -191
+      },
+      {
+        "class": "guard",
+        "frame": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f03.png",
+        "pivot_px": [
+          478.0,
+          594.0
+        ],
+        "bbox": [
+          460,
+          555,
+          500,
+          596
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -191
+      },
+      {
+        "class": "fighter",
+        "frame": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f02.png",
+        "pivot_px": [
+          324.0,
+          646.0
+        ],
+        "bbox": [
+          316,
+          594,
+          339,
+          648
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -164
+      },
+      {
+        "class": "fighter",
+        "frame": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f03.png",
+        "pivot_px": [
+          590.0,
+          646.0
+        ],
+        "bbox": [
+          578,
+          597,
+          611,
+          648
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -164
+      },
+      {
+        "class": "builder",
+        "frame": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f03.png",
+        "pivot_px": [
+          276.0,
+          1004.0
+        ],
+        "bbox": [
+          267,
+          954,
+          299,
+          1006
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 23
+      },
+      {
+        "class": "builder",
+        "frame": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f01.png",
+        "pivot_px": [
+          632.0,
+          1004.0
+        ],
+        "bbox": [
+          620,
+          962,
+          643,
+          1006
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 23
+      },
+      {
+        "class": "guard",
+        "frame": "art/production/ART-004/characters/guard/frames/chr_role_guard_idle_f00.png",
+        "pivot_px": [
+          428.0,
+          1034.0
+        ],
+        "bbox": [
+          413,
+          989,
+          440,
+          1036
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 39
+      },
+      {
+        "class": "guard",
+        "frame": "art/production/ART-004/characters/guard/frames/chr_role_guard_idle_f02.png",
+        "pivot_px": [
+          480.0,
+          1034.0
+        ],
+        "bbox": [
+          466,
+          990,
+          492,
+          1036
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 39
+      }
+    ],
+    "vfx": [
+      {
+        "frame": "art/production/ART-004/vfx/fighter_slash_arc/frames/vfx_fighter_slash_arc_f01.png",
+        "bbox": [
+          286,
+          598,
+          317,
+          649
+        ],
+        "sorting_layer": "VFX"
+      },
+      {
+        "frame": "art/production/ART-004/vfx/guard_shield_block/frames/vfx_guard_shield_block_f01.png",
+        "bbox": [
+          440,
+          556,
+          470,
+          599
+        ],
+        "sorting_layer": "VFX"
+      },
+      {
+        "frame": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f02.png",
+        "bbox": [
+          601,
+          591,
+          643,
+          624
+        ],
+        "sorting_layer": "VFX"
+      },
+      {
+        "frame": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f02.png",
+        "bbox": [
+          277,
+          966,
+          310,
+          998
+        ],
+        "sorting_layer": "VFX"
+      }
+    ],
+    "title": "03 \u2014 Three-Lane Simultaneous Assault (West / Center / East)",
+    "path": "art/production/ART-005/previews/gameplay_composites/03_assault_three_lanes.png"
+  },
+  "04_wall_critical_damage": {
+    "castle_band": 3,
+    "wall_state": 3,
+    "palette_id": "dusk",
+    "active_scaffolds": [
+      "SW",
+      "SE"
+    ],
+    "telegraph_bbox": null,
+    "buildings": [
+      {
+        "id": "env_bldg_watchtower",
+        "bbox": [
+          323,
+          641,
+          380,
+          756
+        ],
+        "pivot_px": [
+          352.0,
+          756.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_castle_band3_lv25_39",
+        "bbox": [
+          375,
+          582,
+          524,
+          796
+        ],
+        "pivot_px": [
+          454.0,
+          796.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_01_artisan_gable",
+        "bbox": [
+          288,
+          738,
+          336,
+          803
+        ],
+        "pivot_px": [
+          314.0,
+          804.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_02_granary_round",
+        "bbox": [
+          571,
+          747,
+          615,
+          801
+        ],
+        "pivot_px": [
+          594.0,
+          804.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_sun_banner",
+        "bbox": [
+          445,
+          805,
+          463,
+          843
+        ],
+        "pivot_px": [
+          454.0,
+          844.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_supply_cart",
+        "bbox": [
+          391,
+          829,
+          419,
+          851
+        ],
+        "pivot_px": [
+          406.0,
+          852.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_stone_crates",
+        "bbox": [
+          485,
+          824,
+          516,
+          851
+        ],
+        "pivot_px": [
+          502.0,
+          852.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_03_mason_lodge",
+        "bbox": [
+          280,
+          799,
+          329,
+          859
+        ],
+        "pivot_px": [
+          306.0,
+          860.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_04_bakery_chimney",
+        "bbox": [
+          576,
+          792,
+          623,
+          859
+        ],
+        "pivot_px": [
+          602.0,
+          860.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_05_smithy_shed",
+        "bbox": [
+          340,
+          839,
+          384,
+          897
+        ],
+        "pivot_px": [
+          364.0,
+          898.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_06_guard_quarters",
+        "bbox": [
+          518,
+          837,
+          566,
+          897
+        ],
+        "pivot_px": [
+          544.0,
+          898.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "scaffold_SW",
+        "bbox": [
+          267,
+          936,
+          312,
+          996
+        ],
+        "sorting_layer": "BastionFront"
+      },
+      {
+        "id": "scaffold_SE",
+        "bbox": [
+          595,
+          936,
+          640,
+          996
+        ],
+        "sorting_layer": "BastionFront"
+      }
+    ],
+    "units": [
+      {
+        "class": "brute",
+        "frame": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f04.png",
+        "pivot_px": [
+          454.0,
+          588.0
+        ],
+        "bbox": [
+          441,
+          535,
+          491,
+          591
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -194
+      },
+      {
+        "class": "runner",
+        "frame": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f03.png",
+        "pivot_px": [
+          418.0,
+          594.0
+        ],
+        "bbox": [
+          410,
+          557,
+          433,
+          597
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -191
+      },
+      {
+        "class": "brute",
+        "frame": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f03.png",
+        "pivot_px": [
+          318.0,
+          636.0
+        ],
+        "bbox": [
+          305,
+          581,
+          357,
+          639
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -169
+      },
+      {
+        "class": "grunt",
+        "frame": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f03.png",
+        "pivot_px": [
+          590.0,
+          636.0
+        ],
+        "bbox": [
+          557,
+          586,
+          604,
+          638
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -169
+      },
+      {
+        "class": "fighter",
+        "frame": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f02.png",
+        "pivot_px": [
+          454.0,
+          916.0
+        ],
+        "bbox": [
+          437,
+          864,
+          460,
+          918
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -23
+      },
+      {
+        "class": "builder",
+        "frame": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f03.png",
+        "pivot_px": [
+          276.0,
+          1004.0
+        ],
+        "bbox": [
+          267,
+          954,
+          299,
+          1006
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 23
+      },
+      {
+        "class": "builder",
+        "frame": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f04.png",
+        "pivot_px": [
+          632.0,
+          1004.0
+        ],
+        "bbox": [
+          608,
+          964,
+          639,
+          1008
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 23
+      },
+      {
+        "class": "guard",
+        "frame": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f03.png",
+        "pivot_px": [
+          428.0,
+          1034.0
+        ],
+        "bbox": [
+          404,
+          995,
+          444,
+          1036
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 39
+      },
+      {
+        "class": "guard",
+        "frame": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f02.png",
+        "pivot_px": [
+          480.0,
+          1034.0
+        ],
+        "bbox": [
+          458,
+          994,
+          498,
+          1036
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 39
+      }
+    ],
+    "vfx": [
+      {
+        "frame": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f01.png",
+        "bbox": [
+          436,
+          590,
+          471,
+          620
+        ],
+        "sorting_layer": "VFX"
+      },
+      {
+        "frame": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f02.png",
+        "bbox": [
+          307,
+          637,
+          349,
+          670
+        ],
+        "sorting_layer": "VFX"
+      },
+      {
+        "frame": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f02.png",
+        "bbox": [
+          276,
+          965,
+          310,
+          997
+        ],
+        "sorting_layer": "VFX"
+      },
+      {
+        "frame": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f03.png",
+        "bbox": [
+          602,
+          967,
+          636,
+          1004
+        ],
+        "sorting_layer": "VFX"
+      }
+    ],
+    "title": "04 \u2014 Critical Wall Damage (<25% HP, Dusk Siege)",
+    "path": "art/production/ART-005/previews/gameplay_composites/04_wall_critical_damage.png"
+  },
+  "05_wall_breached_townhall_exposed": {
+    "castle_band": 3,
+    "wall_state": 4,
+    "palette_id": "dusk",
+    "active_scaffolds": [],
+    "telegraph_bbox": null,
+    "buildings": [
+      {
+        "id": "env_bldg_watchtower",
+        "bbox": [
+          323,
+          641,
+          380,
+          756
+        ],
+        "pivot_px": [
+          352.0,
+          756.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_castle_band3_lv25_39",
+        "bbox": [
+          375,
+          582,
+          524,
+          796
+        ],
+        "pivot_px": [
+          454.0,
+          796.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_01_artisan_gable",
+        "bbox": [
+          288,
+          738,
+          336,
+          803
+        ],
+        "pivot_px": [
+          314.0,
+          804.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_02_granary_round",
+        "bbox": [
+          571,
+          747,
+          615,
+          801
+        ],
+        "pivot_px": [
+          594.0,
+          804.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_sun_banner",
+        "bbox": [
+          445,
+          805,
+          463,
+          843
+        ],
+        "pivot_px": [
+          454.0,
+          844.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_supply_cart",
+        "bbox": [
+          391,
+          829,
+          419,
+          851
+        ],
+        "pivot_px": [
+          406.0,
+          852.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_stone_crates",
+        "bbox": [
+          485,
+          824,
+          516,
+          851
+        ],
+        "pivot_px": [
+          502.0,
+          852.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_03_mason_lodge",
+        "bbox": [
+          280,
+          799,
+          329,
+          859
+        ],
+        "pivot_px": [
+          306.0,
+          860.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_04_bakery_chimney",
+        "bbox": [
+          576,
+          792,
+          623,
+          859
+        ],
+        "pivot_px": [
+          602.0,
+          860.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_05_smithy_shed",
+        "bbox": [
+          340,
+          839,
+          384,
+          897
+        ],
+        "pivot_px": [
+          364.0,
+          898.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_06_guard_quarters",
+        "bbox": [
+          518,
+          837,
+          566,
+          897
+        ],
+        "pivot_px": [
+          544.0,
+          898.0
+        ],
+        "sorting_layer": "BastionBack"
+      }
+    ],
+    "units": [
+      {
+        "class": "brute",
+        "frame": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f03.png",
+        "pivot_px": [
+          454.0,
+          586.0
+        ],
+        "bbox": [
+          424,
+          527,
+          472,
+          590
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -195
+      },
+      {
+        "class": "guard",
+        "frame": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f02.png",
+        "pivot_px": [
+          432.0,
+          828.0
+        ],
+        "bbox": [
+          412,
+          788,
+          452,
+          830
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -69
+      },
+      {
+        "class": "fighter",
+        "frame": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f02.png",
+        "pivot_px": [
+          476.0,
+          830.0
+        ],
+        "bbox": [
+          459,
+          778,
+          482,
+          832
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -68
+      },
+      {
+        "class": "grunt",
+        "frame": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f03.png",
+        "pivot_px": [
+          416.0,
+          892.0
+        ],
+        "bbox": [
+          400,
+          842,
+          447,
+          894
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -35
+      },
+      {
+        "class": "runner",
+        "frame": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f03.png",
+        "pivot_px": [
+          494.0,
+          896.0
+        ],
+        "bbox": [
+          478,
+          857,
+          510,
+          898
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -33
+      },
+      {
+        "class": "builder",
+        "frame": "art/production/ART-003/characters/builder/frames/chr_role_builder_hit_f00.png",
+        "pivot_px": [
+          388.0,
+          928.0
+        ],
+        "bbox": [
+          371,
+          887,
+          398,
+          930
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -17
+      },
+      {
+        "class": "fighter",
+        "frame": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f03.png",
+        "pivot_px": [
+          454.0,
+          962.0
+        ],
+        "bbox": [
+          442,
+          913,
+          475,
+          964
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 1
+      },
+      {
+        "class": "runner",
+        "frame": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f03.png",
+        "pivot_px": [
+          454.0,
+          1018.0
+        ],
+        "bbox": [
+          446,
+          981,
+          469,
+          1021
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 30
+      }
+    ],
+    "vfx": [
+      {
+        "frame": "art/production/ART-004/vfx/fighter_slash_arc/frames/vfx_fighter_slash_arc_f02.png",
+        "bbox": [
+          497,
+          808,
+          512,
+          849
+        ],
+        "sorting_layer": "VFX"
+      },
+      {
+        "frame": "art/production/ART-004/vfx/guard_shield_block/frames/vfx_guard_shield_block_f02.png",
+        "bbox": [
+          405,
+          794,
+          444,
+          846
+        ],
+        "sorting_layer": "VFX"
+      },
+      {
+        "frame": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f02.png",
+        "bbox": [
+          432,
+          970,
+          477,
+          1006
+        ],
+        "sorting_layer": "VFX"
+      }
+    ],
+    "title": "05 \u2014 Breached Wall (0 HP) & Exposed Townhall Defense",
+    "path": "art/production/ART-005/previews/gameplay_composites/05_wall_breached_townhall_exposed.png"
+  },
+  "06_post_loss_recovery": {
+    "castle_band": 2,
+    "wall_state": 5,
+    "palette_id": "dawn",
+    "active_scaffolds": [
+      "SW",
+      "SE",
+      "NW",
+      "NE"
+    ],
+    "telegraph_bbox": null,
+    "buildings": [
+      {
+        "id": "env_bldg_watchtower",
+        "bbox": [
+          323,
+          641,
+          380,
+          756
+        ],
+        "pivot_px": [
+          352.0,
+          756.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_castle_band2_lv10_24",
+        "bbox": [
+          385,
+          601,
+          515,
+          796
+        ],
+        "pivot_px": [
+          454.0,
+          796.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_01_artisan_gable",
+        "bbox": [
+          288,
+          738,
+          336,
+          803
+        ],
+        "pivot_px": [
+          314.0,
+          804.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_02_granary_round",
+        "bbox": [
+          571,
+          747,
+          615,
+          801
+        ],
+        "pivot_px": [
+          594.0,
+          804.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_sun_banner",
+        "bbox": [
+          445,
+          805,
+          463,
+          843
+        ],
+        "pivot_px": [
+          454.0,
+          844.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_supply_cart",
+        "bbox": [
+          391,
+          829,
+          419,
+          851
+        ],
+        "pivot_px": [
+          406.0,
+          852.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_stone_crates",
+        "bbox": [
+          485,
+          824,
+          516,
+          851
+        ],
+        "pivot_px": [
+          502.0,
+          852.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_03_mason_lodge",
+        "bbox": [
+          280,
+          799,
+          329,
+          859
+        ],
+        "pivot_px": [
+          306.0,
+          860.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_04_bakery_chimney",
+        "bbox": [
+          576,
+          792,
+          623,
+          859
+        ],
+        "pivot_px": [
+          602.0,
+          860.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_05_smithy_shed",
+        "bbox": [
+          340,
+          839,
+          384,
+          897
+        ],
+        "pivot_px": [
+          364.0,
+          898.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_06_guard_quarters",
+        "bbox": [
+          518,
+          837,
+          566,
+          897
+        ],
+        "pivot_px": [
+          544.0,
+          898.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "scaffold_NW",
+        "bbox": [
+          240,
+          722,
+          284,
+          781
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "scaffold_NE",
+        "bbox": [
+          623,
+          722,
+          667,
+          781
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "scaffold_SW",
+        "bbox": [
+          267,
+          936,
+          312,
+          996
+        ],
+        "sorting_layer": "BastionFront"
+      },
+      {
+        "id": "scaffold_SE",
+        "bbox": [
+          595,
+          936,
+          640,
+          996
+        ],
+        "sorting_layer": "BastionFront"
+      }
+    ],
+    "units": [
+      {
+        "class": "builder",
+        "frame": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f02.png",
+        "pivot_px": [
+          250.0,
+          790.0
+        ],
+        "bbox": [
+          238,
+          735,
+          260,
+          792
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -89
+      },
+      {
+        "class": "builder",
+        "frame": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f04.png",
+        "pivot_px": [
+          658.0,
+          790.0
+        ],
+        "bbox": [
+          634,
+          750,
+          665,
+          794
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -89
+      },
+      {
+        "class": "fighter",
+        "frame": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_walk_f02.png",
+        "pivot_px": [
+          454.0,
+          922.0
+        ],
+        "bbox": [
+          436,
+          870,
+          462,
+          924
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -20
+      },
+      {
+        "class": "builder",
+        "frame": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f03.png",
+        "pivot_px": [
+          276.0,
+          1004.0
+        ],
+        "bbox": [
+          267,
+          954,
+          299,
+          1006
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 23
+      },
+      {
+        "class": "builder",
+        "frame": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f04.png",
+        "pivot_px": [
+          632.0,
+          1004.0
+        ],
+        "bbox": [
+          608,
+          964,
+          639,
+          1008
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 23
+      },
+      {
+        "class": "builder",
+        "frame": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f03.png",
+        "pivot_px": [
+          432.0,
+          1028.0
+        ],
+        "bbox": [
+          423,
+          978,
+          455,
+          1030
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 35
+      },
+      {
+        "class": "guard",
+        "frame": "art/production/ART-004/characters/guard/frames/chr_role_guard_idle_f00.png",
+        "pivot_px": [
+          484.0,
+          1034.0
+        ],
+        "bbox": [
+          470,
+          989,
+          497,
+          1036
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 39
+      }
+    ],
+    "vfx": [
+      {
+        "frame": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f02.png",
+        "bbox": [
+          276,
+          965,
+          310,
+          997
+        ],
+        "sorting_layer": "VFX"
+      },
+      {
+        "frame": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f03.png",
+        "bbox": [
+          602,
+          967,
+          636,
+          1004
+        ],
+        "sorting_layer": "VFX"
+      },
+      {
+        "frame": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f02.png",
+        "bbox": [
+          436,
+          991,
+          470,
+          1023
+        ],
+        "sorting_layer": "VFX"
+      }
+    ],
+    "title": "06 \u2014 Post-Loss Recovery (250 HP Floor, Timber Braces & Scaffolds)",
+    "path": "art/production/ART-005/previews/gameplay_composites/06_post_loss_recovery.png"
+  },
+  "07_boss_approach_center_lane": {
+    "castle_band": 3,
+    "wall_state": 2,
+    "palette_id": "boss_eclipse",
+    "active_scaffolds": [
+      "SW",
+      "SE"
+    ],
+    "telegraph_bbox": [
+      394,
+      489,
+      513,
+      560
+    ],
+    "buildings": [
+      {
+        "id": "env_bldg_watchtower",
+        "bbox": [
+          323,
+          641,
+          380,
+          756
+        ],
+        "pivot_px": [
+          352.0,
+          756.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_castle_band3_lv25_39",
+        "bbox": [
+          375,
+          582,
+          524,
+          796
+        ],
+        "pivot_px": [
+          454.0,
+          796.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_01_artisan_gable",
+        "bbox": [
+          288,
+          738,
+          336,
+          803
+        ],
+        "pivot_px": [
+          314.0,
+          804.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_02_granary_round",
+        "bbox": [
+          571,
+          747,
+          615,
+          801
+        ],
+        "pivot_px": [
+          594.0,
+          804.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_sun_banner",
+        "bbox": [
+          445,
+          805,
+          463,
+          843
+        ],
+        "pivot_px": [
+          454.0,
+          844.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_supply_cart",
+        "bbox": [
+          391,
+          829,
+          419,
+          851
+        ],
+        "pivot_px": [
+          406.0,
+          852.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_stone_crates",
+        "bbox": [
+          485,
+          824,
+          516,
+          851
+        ],
+        "pivot_px": [
+          502.0,
+          852.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_03_mason_lodge",
+        "bbox": [
+          280,
+          799,
+          329,
+          859
+        ],
+        "pivot_px": [
+          306.0,
+          860.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_04_bakery_chimney",
+        "bbox": [
+          576,
+          792,
+          623,
+          859
+        ],
+        "pivot_px": [
+          602.0,
+          860.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_05_smithy_shed",
+        "bbox": [
+          340,
+          839,
+          384,
+          897
+        ],
+        "pivot_px": [
+          364.0,
+          898.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_06_guard_quarters",
+        "bbox": [
+          518,
+          837,
+          566,
+          897
+        ],
+        "pivot_px": [
+          544.0,
+          898.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "scaffold_SW",
+        "bbox": [
+          267,
+          936,
+          312,
+          996
+        ],
+        "sorting_layer": "BastionFront"
+      },
+      {
+        "id": "scaffold_SE",
+        "bbox": [
+          595,
+          936,
+          640,
+          996
+        ],
+        "sorting_layer": "BastionFront"
+      }
+    ],
+    "units": [
+      {
+        "class": "boss",
+        "frame": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f04.png",
+        "pivot_px": [
+          454.0,
+          516.0
+        ],
+        "bbox": [
+          431,
+          416,
+          506,
+          522
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -231
+      },
+      {
+        "class": "grunt",
+        "frame": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f02.png",
+        "pivot_px": [
+          286.0,
+          556.0
+        ],
+        "bbox": [
+          265,
+          512,
+          303,
+          558
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -210
+      },
+      {
+        "class": "guard",
+        "frame": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f03.png",
+        "pivot_px": [
+          428.0,
+          592.0
+        ],
+        "bbox": [
+          404,
+          553,
+          444,
+          594
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -192
+      },
+      {
+        "class": "guard",
+        "frame": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f03.png",
+        "pivot_px": [
+          480.0,
+          592.0
+        ],
+        "bbox": [
+          462,
+          553,
+          502,
+          594
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -192
+      },
+      {
+        "class": "brute",
+        "frame": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f02.png",
+        "pivot_px": [
+          624.0,
+          604.0
+        ],
+        "bbox": [
+          606,
+          543,
+          650,
+          607
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -185
+      },
+      {
+        "class": "runner",
+        "frame": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f03.png",
+        "pivot_px": [
+          314.0,
+          628.0
+        ],
+        "bbox": [
+          297,
+          589,
+          329,
+          630
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -173
+      },
+      {
+        "class": "fighter",
+        "frame": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f02.png",
+        "pivot_px": [
+          336.0,
+          654.0
+        ],
+        "bbox": [
+          328,
+          602,
+          351,
+          656
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -159
+      },
+      {
+        "class": "fighter",
+        "frame": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f03.png",
+        "pivot_px": [
+          584.0,
+          654.0
+        ],
+        "bbox": [
+          572,
+          605,
+          605,
+          656
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -159
+      },
+      {
+        "class": "builder",
+        "frame": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f03.png",
+        "pivot_px": [
+          276.0,
+          1004.0
+        ],
+        "bbox": [
+          267,
+          954,
+          299,
+          1006
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 23
+      },
+      {
+        "class": "guard",
+        "frame": "art/production/ART-004/characters/guard/frames/chr_role_guard_idle_f01.png",
+        "pivot_px": [
+          454.0,
+          1034.0
+        ],
+        "bbox": [
+          439,
+          990,
+          467,
+          1036
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 39
+      }
+    ],
+    "vfx": [
+      {
+        "frame": "art/production/ART-004/vfx/guard_shield_block/frames/vfx_guard_shield_block_f02.png",
+        "bbox": [
+          434,
+          546,
+          475,
+          601
+        ],
+        "sorting_layer": "VFX"
+      },
+      {
+        "frame": "art/production/ART-004/vfx/fighter_slash_arc/frames/vfx_fighter_slash_arc_f01.png",
+        "bbox": [
+          298,
+          609,
+          327,
+          658
+        ],
+        "sorting_layer": "VFX"
+      }
+    ],
+    "title": "07 \u2014 Boss Wave (Center Causeway + Dynamic Slam Telegraph + Violet Eclipse)",
+    "path": "art/production/ART-005/previews/gameplay_composites/07_boss_approach_center_lane.png"
+  },
+  "08_level50_townhall_showcase": {
+    "castle_band": 4,
+    "wall_state": 1,
+    "palette_id": "midday",
+    "active_scaffolds": [
+      "SW"
+    ],
+    "telegraph_bbox": null,
+    "buildings": [
+      {
+        "id": "env_bldg_watchtower",
+        "bbox": [
+          323,
+          641,
+          380,
+          756
+        ],
+        "pivot_px": [
+          352.0,
+          756.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_castle_band4_lv40_50",
+        "bbox": [
+          375,
+          574,
+          525,
+          796
+        ],
+        "pivot_px": [
+          454.0,
+          796.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_01_artisan_gable",
+        "bbox": [
+          288,
+          738,
+          336,
+          803
+        ],
+        "pivot_px": [
+          314.0,
+          804.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_02_granary_round",
+        "bbox": [
+          571,
+          747,
+          615,
+          801
+        ],
+        "pivot_px": [
+          594.0,
+          804.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_sun_banner",
+        "bbox": [
+          445,
+          805,
+          463,
+          843
+        ],
+        "pivot_px": [
+          454.0,
+          844.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_supply_cart",
+        "bbox": [
+          391,
+          829,
+          419,
+          851
+        ],
+        "pivot_px": [
+          406.0,
+          852.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_prop_stone_crates",
+        "bbox": [
+          485,
+          824,
+          516,
+          851
+        ],
+        "pivot_px": [
+          502.0,
+          852.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_03_mason_lodge",
+        "bbox": [
+          280,
+          799,
+          329,
+          859
+        ],
+        "pivot_px": [
+          306.0,
+          860.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_04_bakery_chimney",
+        "bbox": [
+          576,
+          792,
+          623,
+          859
+        ],
+        "pivot_px": [
+          602.0,
+          860.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_05_smithy_shed",
+        "bbox": [
+          340,
+          839,
+          384,
+          897
+        ],
+        "pivot_px": [
+          364.0,
+          898.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "env_house_06_guard_quarters",
+        "bbox": [
+          518,
+          837,
+          566,
+          897
+        ],
+        "pivot_px": [
+          544.0,
+          898.0
+        ],
+        "sorting_layer": "BastionBack"
+      },
+      {
+        "id": "scaffold_SW",
+        "bbox": [
+          267,
+          936,
+          312,
+          996
+        ],
+        "sorting_layer": "BastionFront"
+      }
+    ],
+    "units": [
+      {
+        "class": "boss",
+        "frame": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f02.png",
+        "pivot_px": [
+          454.0,
+          438.0
+        ],
+        "bbox": [
+          415,
+          341,
+          472,
+          443
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -272
+      },
+      {
+        "class": "brute",
+        "frame": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f01.png",
+        "pivot_px": [
+          272.0,
+          526.0
+        ],
+        "bbox": [
+          250,
+          470,
+          299,
+          529
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -226
+      },
+      {
+        "class": "grunt",
+        "frame": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f02.png",
+        "pivot_px": [
+          654.0,
+          548.0
+        ],
+        "bbox": [
+          635,
+          504,
+          673,
+          550
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -215
+      },
+      {
+        "class": "runner",
+        "frame": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f01.png",
+        "pivot_px": [
+          316.0,
+          624.0
+        ],
+        "bbox": [
+          305,
+          586,
+          326,
+          627
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -175
+      },
+      {
+        "class": "fighter",
+        "frame": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_idle_f01.png",
+        "pivot_px": [
+          428.0,
+          922.0
+        ],
+        "bbox": [
+          411,
+          872,
+          438,
+          924
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -20
+      },
+      {
+        "class": "fighter",
+        "frame": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_idle_f02.png",
+        "pivot_px": [
+          480.0,
+          922.0
+        ],
+        "bbox": [
+          465,
+          872,
+          494,
+          924
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": -20
+      },
+      {
+        "class": "builder",
+        "frame": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f03.png",
+        "pivot_px": [
+          276.0,
+          1004.0
+        ],
+        "bbox": [
+          267,
+          954,
+          299,
+          1006
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 23
+      },
+      {
+        "class": "guard",
+        "frame": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f01.png",
+        "pivot_px": [
+          428.0,
+          1034.0
+        ],
+        "bbox": [
+          409,
+          993,
+          446,
+          1036
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 39
+      },
+      {
+        "class": "guard",
+        "frame": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f01.png",
+        "pivot_px": [
+          480.0,
+          1034.0
+        ],
+        "bbox": [
+          460,
+          993,
+          497,
+          1036
+        ],
+        "sorting_layer": "Units",
+        "order_in_layer": 39
+      }
+    ],
+    "vfx": [
+      {
+        "frame": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f02.png",
+        "bbox": [
+          277,
+          966,
+          310,
+          998
+        ],
+        "sorting_layer": "VFX"
+      }
+    ],
+    "title": "08 \u2014 Level 50 Sovereign Dawn Keep Showcase (All 7 Classes)",
+    "path": "art/production/ART-005/previews/gameplay_composites/08_level50_townhall_showcase.png"
+  }
+}

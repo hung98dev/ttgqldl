@@ -1,0 +1,40 @@
+{
+  "unity_version": "6000.6.7f1",
+  "verification_scope": "ISOLATED_SCRATCH_PROJECT_OUTSIDE_PRODUCTION_UNITY",
+  "production_unity_directory_modified": false,
+  "m06_runtime_integration_status": "NOT_STARTED",
+  "status": "PASS",
+  "verified_canonical_sprites": 26,
+  "verified_companion_sprites": 14,
+  "verified_character_and_vfx_refs": 9,
+  "verified_atlas_count": 2,
+  "verified_total_atlas_slices": 40,
+  "atlas_01_gutter_bleed_pixels": 0,
+  "atlas_02_gutter_bleed_pixels": 0,
+  "total_atlas_runtime_memory_bytes": 33556328,
+  "total_atlas_runtime_memory_mib": 32.0,
+  "ppu": 192,
+  "filter_mode": "Point",
+  "mipmaps_enabled": false,
+  "camera_orthographic_size": 5.0,
+  "castle_band_swap_drift_world_units": 0.0,
+  "wall_state_swap_drift_world_units": 0.0,
+  "sorting_layers_6_verified": true,
+  "boss_above_telegraph_and_unoccluded": true,
+  "builder_scaffold_and_spark_aligned": true,
+  "safe_zone_bounds_verified": true,
+  "verified_sorting_layers": [
+    "Default(value=0)",
+    "Ground(value=1)",
+    "LanesAndDecals(value=2)",
+    "BastionBack(value=3)",
+    "Units(value=4)",
+    "BastionFront(value=5)",
+    "VFX(value=6)"
+  ],
+  "sample_checks": [
+    "WallBack+WallFront bounds span X=[-1.7813, 0.8854]u (512.0px @ 1080p)",
+    "Boss world bounds=0.7727x0.7727u above Telegraph sortingLayer=LanesAndDecals",
+    "Atlases total memory=32.00 MiB, bleed=0+0 px"
+  ]
+}

@@ -1,0 +1,1436 @@
+{
+  "package_id": "ART-005",
+  "reference_canvas_px": [
+    1080,
+    1920
+  ],
+  "unity_camera": {
+    "projection": "orthographic",
+    "orthographic_size": 5.0,
+    "world_position": [
+      0.0,
+      0.0,
+      -10.0
+    ],
+    "pixels_per_unit": 192,
+    "screen_px_per_world_unit_at_1080p": 192.0,
+    "world_bounds": {
+      "x_min": -2.8125,
+      "x_max": 2.8125,
+      "y_min": -5.0,
+      "y_max": 5.0
+    },
+    "conversion_formula": "world_x = (screen_x - 540.0) / 192.0; world_y = (960.0 - screen_y) / 192.0"
+  },
+  "livestream_safe_zones": {
+    "right_rail_x_norm_limit": 0.82,
+    "right_rail_x_px_limit": 885.6,
+    "right_rail_world_x_limit": 1.8,
+    "bottom_overlay_y_norm_limit": 0.88,
+    "bottom_overlay_y_px_limit": 1689.6,
+    "bottom_overlay_world_y_limit": -3.8
+  },
+  "sorting_layers": [
+    {
+      "index": 0,
+      "name": "Ground",
+      "order_rule": "0..10 (meadow base & variation patches)"
+    },
+    {
+      "index": 1,
+      "name": "LanesAndDecals",
+      "order_rule": "0..30 (West/Center/East lanes, curbs, aprons, dynamic Boss telegraph)"
+    },
+    {
+      "index": 2,
+      "name": "BastionBack",
+      "order_rule": "-round(worldY * 100) (courtyard plaza, North wall slice, Watchtower, Townhall, 6 Cottages, 3 Props)"
+    },
+    {
+      "index": 3,
+      "name": "Units",
+      "order_rule": "-round(pivotWorldY * 100) (all 7 character classes <= 150 pooled)"
+    },
+    {
+      "index": 4,
+      "name": "BastionFront",
+      "order_rule": "fixed 0..20 (low South wall parapet & Gate arch slice, flank scaffolds)"
+    },
+    {
+      "index": 5,
+      "name": "VFX",
+      "order_rule": "0..50 (slash arcs, shield blocks, hit puffs, repair sparks <= 20 bursts)"
+    }
+  ],
+  "bastion_and_landmarks": {
+    "bastion_center_screen_px": [
+      454.0,
+      860.0
+    ],
+    "bastion_center_world": [
+      -0.44792,
+      0.52083
+    ],
+    "wall_pivot_screen_px": [
+      454.0,
+      998.0
+    ],
+    "wall_pivot_world": [
+      -0.44792,
+      -0.19792
+    ],
+    "bastion_outer_width_px": 477,
+    "bastion_width_ratio_of_1080": 0.4417,
+    "bastion_x_span_px": [
+      215.5,
+      692.5
+    ],
+    "south_gate_x_span_px": [
+      414.0,
+      494.0
+    ],
+    "south_gate_y_span_px": [
+      955.0,
+      1042.0
+    ],
+    "townhall_pivot_screen_px": [
+      454.0,
+      796.0
+    ],
+    "townhall_pivot_world": [
+      -0.44792,
+      0.85417
+    ],
+    "watchtower_pivot_screen_px": [
+      352.0,
+      756.0
+    ],
+    "watchtower_pivot_world": [
+      -0.97917,
+      1.0625
+    ]
+  },
+  "lanes": [
+    {
+      "lane_index": 0,
+      "lane_id": "west",
+      "name": "West Lane",
+      "material": "ochre_earth",
+      "ordinary_hp_share_doc": "floor(base_hp * 34 / 100)",
+      "width_px": 74,
+      "centerline_screen_px": [
+        [
+          58.0,
+          0.0
+        ],
+        [
+          198.0,
+          340.0
+        ],
+        [
+          335.0,
+          690.0
+        ]
+      ],
+      "centerline_world": [
+        [
+          -2.51042,
+          5.0
+        ],
+        [
+          -1.78125,
+          3.22917
+        ],
+        [
+          -1.06771,
+          1.40625
+        ]
+      ],
+      "apron_screen_px": [
+        335.0,
+        694.0
+      ]
+    },
+    {
+      "lane_index": 1,
+      "lane_id": "center",
+      "name": "Center Boss Causeway",
+      "material": "pale_limestone",
+      "ordinary_hp_share_doc": "floor(base_hp * 32 / 100) + exclusive Boss pool ceil(base_hp / 5)",
+      "width_px": 86,
+      "x_span_px": [
+        411.0,
+        497.0
+      ],
+      "centerline_screen_px": [
+        [
+          454.0,
+          0.0
+        ],
+        [
+          454.0,
+          350.0
+        ],
+        [
+          454.0,
+          672.0
+        ]
+      ],
+      "centerline_world": [
+        [
+          -0.44792,
+          5.0
+        ],
+        [
+          -0.44792,
+          3.17708
+        ],
+        [
+          -0.44792,
+          1.5
+        ]
+      ],
+      "boss_spawn_and_telegraph_screen_px": [
+        454.0,
+        520.0
+      ],
+      "boss_spawn_and_telegraph_world": [
+        -0.44792,
+        2.29167
+      ],
+      "telegraph_baked_into_road": false
+    },
+    {
+      "lane_index": 2,
+      "lane_id": "east",
+      "name": "East Lane",
+      "material": "ochre_earth",
+      "ordinary_hp_share_doc": "base_hp - west - center (~34%)",
+      "width_px": 74,
+      "centerline_screen_px": [
+        [
+          836.0,
+          268.0
+        ],
+        [
+          705.0,
+          478.0
+        ],
+        [
+          575.0,
+          690.0
+        ]
+      ],
+      "centerline_world": [
+        [
+          1.54167,
+          3.60417
+        ],
+        [
+          0.85938,
+          2.51042
+        ],
+        [
+          0.18229,
+          1.40625
+        ]
+      ],
+      "max_right_edge_px": 873.0,
+      "strictly_left_of_82pct_rail": true,
+      "apron_screen_px": [
+        575.0,
+        694.0
+      ]
+    }
+  ],
+  "courtyard_placements": [
+    {
+      "id": "env_house_01_artisan_gable",
+      "screen_px": [
+        314.0,
+        804.0
+      ],
+      "world": [
+        -1.17708,
+        0.8125
+      ],
+      "scale": 0.34
+    },
+    {
+      "id": "env_house_02_granary_round",
+      "screen_px": [
+        594.0,
+        804.0
+      ],
+      "world": [
+        0.28125,
+        0.8125
+      ],
+      "scale": 0.34
+    },
+    {
+      "id": "env_house_03_mason_lodge",
+      "screen_px": [
+        306.0,
+        860.0
+      ],
+      "world": [
+        -1.21875,
+        0.52083
+      ],
+      "scale": 0.34
+    },
+    {
+      "id": "env_house_04_bakery_chimney",
+      "screen_px": [
+        602.0,
+        860.0
+      ],
+      "world": [
+        0.32292,
+        0.52083
+      ],
+      "scale": 0.34
+    },
+    {
+      "id": "env_house_05_smithy_shed",
+      "screen_px": [
+        364.0,
+        898.0
+      ],
+      "world": [
+        -0.91667,
+        0.32292
+      ],
+      "scale": 0.33
+    },
+    {
+      "id": "env_house_06_guard_quarters",
+      "screen_px": [
+        544.0,
+        898.0
+      ],
+      "world": [
+        0.02083,
+        0.32292
+      ],
+      "scale": 0.33
+    },
+    {
+      "id": "env_prop_supply_cart",
+      "screen_px": [
+        406.0,
+        852.0
+      ],
+      "world": [
+        -0.69792,
+        0.5625
+      ],
+      "scale": 0.36
+    },
+    {
+      "id": "env_prop_sun_banner",
+      "screen_px": [
+        454.0,
+        844.0
+      ],
+      "world": [
+        -0.44792,
+        0.60417
+      ],
+      "scale": 0.38
+    },
+    {
+      "id": "env_prop_stone_crates",
+      "screen_px": [
+        502.0,
+        852.0
+      ],
+      "world": [
+        -0.19792,
+        0.5625
+      ],
+      "scale": 0.36
+    }
+  ],
+  "scaffold_anchors": [
+    {
+      "slot": "SW",
+      "screen_px": [
+        294.0,
+        996.0
+      ],
+      "world": [
+        -1.28125,
+        -0.1875
+      ],
+      "flip_x": false,
+      "builder_offset_px": [
+        -18.0,
+        8.0
+      ]
+    },
+    {
+      "slot": "SE",
+      "screen_px": [
+        614.0,
+        996.0
+      ],
+      "world": [
+        0.38542,
+        -0.1875
+      ],
+      "flip_x": true,
+      "builder_offset_px": [
+        18.0,
+        8.0
+      ]
+    },
+    {
+      "slot": "NW",
+      "screen_px": [
+        266.0,
+        782.0
+      ],
+      "world": [
+        -1.42708,
+        0.92708
+      ],
+      "flip_x": false,
+      "builder_offset_px": [
+        -16.0,
+        10.0
+      ]
+    },
+    {
+      "slot": "NE",
+      "screen_px": [
+        642.0,
+        782.0
+      ],
+      "world": [
+        0.53125,
+        0.92708
+      ],
+      "flip_x": true,
+      "builder_offset_px": [
+        16.0,
+        10.0
+      ]
+    }
+  ],
+  "canonical_sprites": [
+    {
+      "id": "env_castle_band1_lv01_09",
+      "category": "castle_townhall",
+      "band": 1,
+      "level_range": [
+        1,
+        9
+      ],
+      "title": "Timber Village Hall",
+      "path": "art/production/ART-005/castle/frames/env_castle_band1_lv01_09.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.1
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "unity_visual_scale": 0.5,
+      "bbox_px": [
+        119,
+        127,
+        380,
+        461
+      ],
+      "authoritative_townhall_hp_invariant": 500
+    },
+    {
+      "id": "env_castle_band2_lv10_24",
+      "category": "castle_townhall",
+      "band": 2,
+      "level_range": [
+        10,
+        24
+      ],
+      "title": "Reinforced Stone Keep",
+      "path": "art/production/ART-005/castle/frames/env_castle_band2_lv10_24.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.1
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "unity_visual_scale": 0.5,
+      "bbox_px": [
+        118,
+        71,
+        381,
+        461
+      ],
+      "authoritative_townhall_hp_invariant": 500
+    },
+    {
+      "id": "env_castle_band3_lv25_39",
+      "category": "castle_townhall",
+      "band": 3,
+      "level_range": [
+        25,
+        39
+      ],
+      "title": "Bastion Citadel",
+      "path": "art/production/ART-005/castle/frames/env_castle_band3_lv25_39.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.1
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "unity_visual_scale": 0.5,
+      "bbox_px": [
+        99,
+        32,
+        397,
+        461
+      ],
+      "authoritative_townhall_hp_invariant": 500
+    },
+    {
+      "id": "env_castle_band4_lv40_50",
+      "category": "castle_townhall",
+      "band": 4,
+      "level_range": [
+        40,
+        50
+      ],
+      "title": "Sovereign Dawn Keep",
+      "path": "art/production/ART-005/castle/frames/env_castle_band4_lv40_50.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.1
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "unity_visual_scale": 0.5,
+      "bbox_px": [
+        97,
+        17,
+        400,
+        461
+      ],
+      "authoritative_townhall_hp_invariant": 500
+    },
+    {
+      "id": "env_wall_state1_healthy",
+      "category": "defensive_wall_state",
+      "state_index": 1,
+      "title": "State 1 \u2014 Healthy (60-100% HP)",
+      "hp_ratio_min": 0.6,
+      "hp_ratio_max": 1.0,
+      "is_post_loss_recovery_state": false,
+      "path": "art/production/ART-005/wall/states/env_wall_state1_healthy.png",
+      "back_layer_slice": "art/production/ART-005/wall/layers/env_wall_state1_healthy_back.png",
+      "front_layer_slice": "art/production/ART-005/wall/layers/env_wall_state1_healthy_front.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.14
+      ],
+      "unity_sorting_layers": [
+        "BastionBack",
+        "BastionFront"
+      ],
+      "unity_visual_scale": 1.0,
+      "bbox_px": [
+        18,
+        39,
+        494,
+        425
+      ]
+    },
+    {
+      "id": "env_wall_state2_damaged",
+      "category": "defensive_wall_state",
+      "state_index": 2,
+      "title": "State 2 \u2014 Damaged (25-59% HP)",
+      "hp_ratio_min": 0.25,
+      "hp_ratio_max": 0.599999,
+      "is_post_loss_recovery_state": false,
+      "path": "art/production/ART-005/wall/states/env_wall_state2_damaged.png",
+      "back_layer_slice": "art/production/ART-005/wall/layers/env_wall_state2_damaged_back.png",
+      "front_layer_slice": "art/production/ART-005/wall/layers/env_wall_state2_damaged_front.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.14
+      ],
+      "unity_sorting_layers": [
+        "BastionBack",
+        "BastionFront"
+      ],
+      "unity_visual_scale": 1.0,
+      "bbox_px": [
+        18,
+        39,
+        494,
+        425
+      ]
+    },
+    {
+      "id": "env_wall_state3_critical",
+      "category": "defensive_wall_state",
+      "state_index": 3,
+      "title": "State 3 \u2014 Critical (>0% to <25% HP)",
+      "hp_ratio_min": 1e-06,
+      "hp_ratio_max": 0.249999,
+      "is_post_loss_recovery_state": false,
+      "path": "art/production/ART-005/wall/states/env_wall_state3_critical.png",
+      "back_layer_slice": "art/production/ART-005/wall/layers/env_wall_state3_critical_back.png",
+      "front_layer_slice": "art/production/ART-005/wall/layers/env_wall_state3_critical_front.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.14
+      ],
+      "unity_sorting_layers": [
+        "BastionBack",
+        "BastionFront"
+      ],
+      "unity_visual_scale": 1.0,
+      "bbox_px": [
+        18,
+        39,
+        494,
+        425
+      ]
+    },
+    {
+      "id": "env_wall_state4_breached",
+      "category": "defensive_wall_state",
+      "state_index": 4,
+      "title": "State 4 \u2014 Breached (0 HP)",
+      "hp_ratio_min": 0.0,
+      "hp_ratio_max": 0.0,
+      "is_post_loss_recovery_state": false,
+      "path": "art/production/ART-005/wall/states/env_wall_state4_breached.png",
+      "back_layer_slice": "art/production/ART-005/wall/layers/env_wall_state4_breached_back.png",
+      "front_layer_slice": "art/production/ART-005/wall/layers/env_wall_state4_breached_front.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.14
+      ],
+      "unity_sorting_layers": [
+        "BastionBack",
+        "BastionFront"
+      ],
+      "unity_visual_scale": 1.0,
+      "bbox_px": [
+        18,
+        41,
+        494,
+        424
+      ]
+    },
+    {
+      "id": "env_wall_state5_recovery",
+      "category": "defensive_wall_state",
+      "state_index": 5,
+      "title": "State 5 \u2014 Post-Loss Recovery (250 HP Floor)",
+      "hp_ratio_min": null,
+      "hp_ratio_max": null,
+      "is_post_loss_recovery_state": true,
+      "path": "art/production/ART-005/wall/states/env_wall_state5_recovery.png",
+      "back_layer_slice": "art/production/ART-005/wall/layers/env_wall_state5_recovery_back.png",
+      "front_layer_slice": "art/production/ART-005/wall/layers/env_wall_state5_recovery_front.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.14
+      ],
+      "unity_sorting_layers": [
+        "BastionBack",
+        "BastionFront"
+      ],
+      "unity_visual_scale": 1.0,
+      "bbox_px": [
+        18,
+        39,
+        494,
+        425
+      ]
+    },
+    {
+      "id": "env_wall_repair_scaffold",
+      "category": "wall_repair_scaffold",
+      "title": "Modular Builder Timber Scaffold",
+      "path": "art/production/ART-005/wall/scaffold/env_wall_repair_scaffold.png",
+      "dimensions": [
+        192,
+        192
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.1
+      ],
+      "unity_sorting_layer": "BastionFront",
+      "unity_visual_scale": 0.45,
+      "bbox_px": [
+        36,
+        37,
+        138,
+        173
+      ]
+    },
+    {
+      "id": "env_bldg_watchtower",
+      "category": "village_watchtower",
+      "title": "Defensive Stone & Timber Watchtower (Cosmetic Landmark Only)",
+      "path": "art/production/ART-005/buildings/watchtower/env_bldg_watchtower.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.1
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "unity_visual_scale": 0.625,
+      "bbox_px": [
+        75,
+        17,
+        180,
+        230
+      ]
+    },
+    {
+      "id": "env_house_01_artisan_gable",
+      "category": "village_cottage",
+      "variant_index": 1,
+      "title": "House 1 \u2014 Artisan Gable & Awning",
+      "path": "art/production/ART-005/buildings/houses/env_house_01_artisan_gable.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.12
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "unity_visual_scale": 0.34,
+      "bbox_px": [
+        53,
+        31,
+        198,
+        225
+      ]
+    },
+    {
+      "id": "env_house_02_granary_round",
+      "category": "village_cottage",
+      "variant_index": 2,
+      "title": "House 2 \u2014 Stone Granary Roundhouse",
+      "path": "art/production/ART-005/buildings/houses/env_house_02_granary_round.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.12
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "unity_visual_scale": 0.34,
+      "bbox_px": [
+        62,
+        59,
+        193,
+        219
+      ]
+    },
+    {
+      "id": "env_house_03_mason_lodge",
+      "category": "village_cottage",
+      "variant_index": 3,
+      "title": "House 3 \u2014 Limestone Mason Lodge",
+      "path": "art/production/ART-005/buildings/houses/env_house_03_mason_lodge.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.12
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "unity_visual_scale": 0.34,
+      "bbox_px": [
+        52,
+        47,
+        198,
+        225
+      ]
+    },
+    {
+      "id": "env_house_04_bakery_chimney",
+      "category": "village_cottage",
+      "variant_index": 4,
+      "title": "House 4 \u2014 Bakery Chimney Cottage",
+      "path": "art/production/ART-005/buildings/houses/env_house_04_bakery_chimney.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.12
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "unity_visual_scale": 0.34,
+      "bbox_px": [
+        54,
+        26,
+        194,
+        225
+      ]
+    },
+    {
+      "id": "env_house_05_smithy_shed",
+      "category": "village_cottage",
+      "variant_index": 5,
+      "title": "House 5 \u2014 Open-Front Smithy Shed",
+      "path": "art/production/ART-005/buildings/houses/env_house_05_smithy_shed.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.12
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "unity_visual_scale": 0.34,
+      "bbox_px": [
+        55,
+        47,
+        192,
+        225
+      ]
+    },
+    {
+      "id": "env_house_06_guard_quarters",
+      "category": "village_cottage",
+      "variant_index": 6,
+      "title": "House 6 \u2014 Cross-Gable Guard Quarters",
+      "path": "art/production/ART-005/buildings/houses/env_house_06_guard_quarters.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.12
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "unity_visual_scale": 0.34,
+      "bbox_px": [
+        49,
+        39,
+        196,
+        225
+      ]
+    },
+    {
+      "id": "env_prop_supply_cart",
+      "category": "courtyard_prop",
+      "title": "Prop 1 \u2014 Oak Supply Cart",
+      "path": "art/production/ART-005/buildings/props/env_prop_supply_cart.png",
+      "dimensions": [
+        128,
+        128
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.12
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "unity_visual_scale": 0.34,
+      "bbox_px": [
+        21,
+        46,
+        101,
+        110
+      ]
+    },
+    {
+      "id": "env_prop_stone_crates",
+      "category": "courtyard_prop",
+      "title": "Prop 2 \u2014 Cut-Stone Crate Stack",
+      "path": "art/production/ART-005/buildings/props/env_prop_stone_crates.png",
+      "dimensions": [
+        128,
+        128
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.12
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "unity_visual_scale": 0.34,
+      "bbox_px": [
+        18,
+        33,
+        106,
+        111
+      ]
+    },
+    {
+      "id": "env_prop_sun_banner",
+      "category": "courtyard_prop",
+      "title": "Prop 3 \u2014 Golden Sun Standard",
+      "path": "art/production/ART-005/buildings/props/env_prop_sun_banner.png",
+      "dimensions": [
+        128,
+        128
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.12
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "unity_visual_scale": 0.34,
+      "bbox_px": [
+        39,
+        10,
+        88,
+        111
+      ]
+    },
+    {
+      "id": "env_tile_01_meadow_main",
+      "category": "terrain_tile",
+      "title": "Tile 1 \u2014 Sunlit Meadow Main (Toroidal X/Y)",
+      "path": "art/production/ART-005/terrain/tiles/env_tile_01_meadow_main.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.5
+      ],
+      "seamless_axes": [
+        "X",
+        "Y"
+      ],
+      "unity_sorting_layer": "Ground",
+      "unity_visual_scale": 1.0,
+      "bbox_px": [
+        0,
+        0,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "env_tile_02_meadow_variation",
+      "category": "terrain_tile",
+      "title": "Tile 2 \u2014 Lush Meadow Turf Variation (Toroidal X/Y)",
+      "path": "art/production/ART-005/terrain/tiles/env_tile_02_meadow_variation.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.5
+      ],
+      "seamless_axes": [
+        "X",
+        "Y"
+      ],
+      "unity_sorting_layer": "Ground",
+      "unity_visual_scale": 1.0,
+      "bbox_px": [
+        0,
+        0,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "env_tile_03_ochre_road_body",
+      "category": "terrain_tile",
+      "title": "Tile 3 \u2014 Ochre Road Body (Toroidal X/Y)",
+      "path": "art/production/ART-005/terrain/tiles/env_tile_03_ochre_road_body.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.5
+      ],
+      "seamless_axes": [
+        "X",
+        "Y"
+      ],
+      "unity_sorting_layer": "LanesAndDecals",
+      "unity_visual_scale": 1.0,
+      "bbox_px": [
+        0,
+        0,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "env_tile_04_ochre_road_border",
+      "category": "terrain_tile",
+      "title": "Tile 4 \u2014 Meadow-to-Ochre Verge Transition (Seamless Y)",
+      "path": "art/production/ART-005/terrain/tiles/env_tile_04_ochre_road_border.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.5
+      ],
+      "seamless_axes": [
+        "Y"
+      ],
+      "unity_sorting_layer": "LanesAndDecals",
+      "unity_visual_scale": 1.0,
+      "bbox_px": [
+        0,
+        0,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "env_tile_05_limestone_causeway",
+      "category": "terrain_tile",
+      "title": "Tile 5 \u2014 Pale Limestone Boss Causeway (Toroidal X/Y)",
+      "path": "art/production/ART-005/terrain/tiles/env_tile_05_limestone_causeway.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.5
+      ],
+      "seamless_axes": [
+        "X",
+        "Y"
+      ],
+      "unity_sorting_layer": "LanesAndDecals",
+      "unity_visual_scale": 1.0,
+      "bbox_px": [
+        0,
+        0,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "env_tile_06_courtyard_plaza",
+      "category": "terrain_tile",
+      "title": "Tile 6 \u2014 Courtyard Packed-Earth Plaza (Toroidal X/Y)",
+      "path": "art/production/ART-005/terrain/tiles/env_tile_06_courtyard_plaza.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.5
+      ],
+      "seamless_axes": [
+        "X",
+        "Y"
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "unity_visual_scale": 1.0,
+      "bbox_px": [
+        0,
+        0,
+        255,
+        255
+      ]
+    }
+  ],
+  "companion_assets": [
+    {
+      "id": "env_wall_state1_healthy_back",
+      "category": "wall_depth_slice_back",
+      "path": "art/production/ART-005/wall/layers/env_wall_state1_healthy_back.png",
+      "dimensions": [
+        512,
+        320
+      ],
+      "crop_in_512": [
+        0,
+        0,
+        512,
+        320
+      ],
+      "normalized_pivot": [
+        0.5,
+        -0.376
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "bbox_px": [
+        18,
+        39,
+        494,
+        267
+      ]
+    },
+    {
+      "id": "env_wall_state1_healthy_front",
+      "category": "wall_depth_slice_front",
+      "path": "art/production/ART-005/wall/layers/env_wall_state1_healthy_front.png",
+      "dimensions": [
+        512,
+        256
+      ],
+      "crop_in_512": [
+        0,
+        208,
+        512,
+        464
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.0925
+      ],
+      "unity_sorting_layer": "BastionFront",
+      "bbox_px": [
+        18,
+        4,
+        494,
+        217
+      ]
+    },
+    {
+      "id": "env_wall_state2_damaged_back",
+      "category": "wall_depth_slice_back",
+      "path": "art/production/ART-005/wall/layers/env_wall_state2_damaged_back.png",
+      "dimensions": [
+        512,
+        320
+      ],
+      "crop_in_512": [
+        0,
+        0,
+        512,
+        320
+      ],
+      "normalized_pivot": [
+        0.5,
+        -0.376
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "bbox_px": [
+        18,
+        39,
+        494,
+        267
+      ]
+    },
+    {
+      "id": "env_wall_state2_damaged_front",
+      "category": "wall_depth_slice_front",
+      "path": "art/production/ART-005/wall/layers/env_wall_state2_damaged_front.png",
+      "dimensions": [
+        512,
+        256
+      ],
+      "crop_in_512": [
+        0,
+        208,
+        512,
+        464
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.0925
+      ],
+      "unity_sorting_layer": "BastionFront",
+      "bbox_px": [
+        18,
+        4,
+        494,
+        217
+      ]
+    },
+    {
+      "id": "env_wall_state3_critical_back",
+      "category": "wall_depth_slice_back",
+      "path": "art/production/ART-005/wall/layers/env_wall_state3_critical_back.png",
+      "dimensions": [
+        512,
+        320
+      ],
+      "crop_in_512": [
+        0,
+        0,
+        512,
+        320
+      ],
+      "normalized_pivot": [
+        0.5,
+        -0.376
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "bbox_px": [
+        18,
+        39,
+        494,
+        267
+      ]
+    },
+    {
+      "id": "env_wall_state3_critical_front",
+      "category": "wall_depth_slice_front",
+      "path": "art/production/ART-005/wall/layers/env_wall_state3_critical_front.png",
+      "dimensions": [
+        512,
+        256
+      ],
+      "crop_in_512": [
+        0,
+        208,
+        512,
+        464
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.0925
+      ],
+      "unity_sorting_layer": "BastionFront",
+      "bbox_px": [
+        18,
+        4,
+        494,
+        217
+      ]
+    },
+    {
+      "id": "env_wall_state4_breached_back",
+      "category": "wall_depth_slice_back",
+      "path": "art/production/ART-005/wall/layers/env_wall_state4_breached_back.png",
+      "dimensions": [
+        512,
+        320
+      ],
+      "crop_in_512": [
+        0,
+        0,
+        512,
+        320
+      ],
+      "normalized_pivot": [
+        0.5,
+        -0.376
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "bbox_px": [
+        18,
+        41,
+        494,
+        267
+      ]
+    },
+    {
+      "id": "env_wall_state4_breached_front",
+      "category": "wall_depth_slice_front",
+      "path": "art/production/ART-005/wall/layers/env_wall_state4_breached_front.png",
+      "dimensions": [
+        512,
+        256
+      ],
+      "crop_in_512": [
+        0,
+        208,
+        512,
+        464
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.0925
+      ],
+      "unity_sorting_layer": "BastionFront",
+      "bbox_px": [
+        18,
+        4,
+        494,
+        216
+      ]
+    },
+    {
+      "id": "env_wall_state5_recovery_back",
+      "category": "wall_depth_slice_back",
+      "path": "art/production/ART-005/wall/layers/env_wall_state5_recovery_back.png",
+      "dimensions": [
+        512,
+        320
+      ],
+      "crop_in_512": [
+        0,
+        0,
+        512,
+        320
+      ],
+      "normalized_pivot": [
+        0.5,
+        -0.376
+      ],
+      "unity_sorting_layer": "BastionBack",
+      "bbox_px": [
+        18,
+        39,
+        494,
+        267
+      ]
+    },
+    {
+      "id": "env_wall_state5_recovery_front",
+      "category": "wall_depth_slice_front",
+      "path": "art/production/ART-005/wall/layers/env_wall_state5_recovery_front.png",
+      "dimensions": [
+        512,
+        256
+      ],
+      "crop_in_512": [
+        0,
+        208,
+        512,
+        464
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.0925
+      ],
+      "unity_sorting_layer": "BastionFront",
+      "bbox_px": [
+        18,
+        4,
+        494,
+        217
+      ]
+    },
+    {
+      "id": "trans_ochre_verge_strip",
+      "category": "terrain_transition",
+      "path": "art/production/ART-005/terrain/transitions/trans_ochre_verge_strip.png",
+      "dimensions": [
+        256,
+        64
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.5
+      ],
+      "unity_sorting_layer": "LanesAndDecals",
+      "bbox_px": [
+        0,
+        11,
+        255,
+        63
+      ]
+    },
+    {
+      "id": "trans_causeway_stone_curb",
+      "category": "terrain_transition",
+      "path": "art/production/ART-005/terrain/transitions/trans_causeway_stone_curb.png",
+      "dimensions": [
+        64,
+        256
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.5
+      ],
+      "unity_sorting_layer": "LanesAndDecals",
+      "bbox_px": [
+        12,
+        0,
+        51,
+        255
+      ]
+    },
+    {
+      "id": "trans_lane_bastion_apron",
+      "category": "terrain_transition",
+      "path": "art/production/ART-005/terrain/transitions/trans_lane_bastion_apron.png",
+      "dimensions": [
+        256,
+        128
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.5
+      ],
+      "unity_sorting_layer": "LanesAndDecals",
+      "bbox_px": [
+        12,
+        12,
+        244,
+        117
+      ]
+    },
+    {
+      "id": "trans_meadow_patch_mask",
+      "category": "terrain_transition",
+      "path": "art/production/ART-005/terrain/transitions/trans_meadow_patch_mask.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.5
+      ],
+      "unity_sorting_layer": "LanesAndDecals",
+      "bbox_px": [
+        49,
+        54,
+        217,
+        193
+      ]
+    }
+  ]
+}
