@@ -1,0 +1,326 @@
+{
+  "package_id": "ART-008",
+  "contract_version": "bastion-dawn-v1-sync-12fps",
+  "animation_fps": 12,
+  "frame_duration_ms": 83.3333,
+  "authoritative_tick_hz": 10,
+  "authoritative_tick_ms": 100.0,
+  "clock_independence_rule": "Presentation playback runs on a local render clock (12 FPS sprite cadence, 48 kHz audio DSP clock) triggered ONLY after committed public events/snapshots arrive. Late render frames drop/advance local visual elapsed time without EVER mutating authoritative wave_tick or performing combat math.",
+  "synchronization_tolerances": {
+    "max_frame_to_vfx_onset_frames": 0,
+    "max_audio_mux_onset_delta_ms": 20.0,
+    "max_one_frame_visual_quantization_ms": 83.34
+  },
+  "character_action_sync_table": [
+    {
+      "class_id": "builder",
+      "package_id": "ART-003",
+      "action_clip": "chr_role_builder_repair",
+      "total_frames": 6,
+      "impact_frame_index": 3,
+      "impact_offset_ms": 250.0,
+      "vfx_id": "vfx_builder_repair_spark",
+      "vfx_frames": 6,
+      "vfx_sorting_layer": "VFX",
+      "vfx_attachment_offset_px_1080p": [
+        16,
+        -22
+      ],
+      "audio_cue_id": "SFX02",
+      "audio_clip": "sfx_builder_repair.wav",
+      "recovery_transition": "repair_f05 -> idle_f00 (auto return, non-looping)"
+    },
+    {
+      "class_id": "guard",
+      "package_id": "ART-004",
+      "action_clip": "chr_role_guard_shieldbrace",
+      "total_frames": 6,
+      "impact_frame_index": 2,
+      "impact_offset_ms": 166.67,
+      "vfx_id": "vfx_guard_shield_block",
+      "vfx_frames": 4,
+      "vfx_sorting_layer": "VFX",
+      "vfx_attachment_offset_px_1080p": [
+        0,
+        -16
+      ],
+      "audio_cue_id": "SFX03",
+      "audio_clip": "sfx_guard_block.wav",
+      "recovery_transition": "shieldbrace_f05 -> idle_f00 (auto return, non-looping)"
+    },
+    {
+      "class_id": "fighter",
+      "package_id": "ART-004",
+      "action_clip": "chr_role_fighter_swordslash",
+      "total_frames": 6,
+      "impact_frame_index": 3,
+      "impact_offset_ms": 250.0,
+      "vfx_id": "vfx_fighter_slash_arc",
+      "vfx_frames": 4,
+      "vfx_sorting_layer": "VFX",
+      "vfx_attachment_offset_px_1080p": [
+        18,
+        -20
+      ],
+      "audio_cue_id": "SFX04",
+      "audio_clip": "sfx_fighter_slash.wav",
+      "recovery_transition": "swordslash_f05 -> idle_f00 (auto return, non-looping)"
+    },
+    {
+      "class_id": "grunt",
+      "package_id": "ART-003",
+      "action_clip": "chr_enemy_grunt_clubsmash",
+      "total_frames": 6,
+      "impact_frame_index": 3,
+      "impact_offset_ms": 250.0,
+      "vfx_id": "vfx_unit_hit_puff",
+      "vfx_frames": 6,
+      "vfx_sorting_layer": "VFX",
+      "vfx_attachment_offset_px_1080p": [
+        14,
+        -18
+      ],
+      "audio_cue_id": "SFX05",
+      "audio_clip": "sfx_enemy_attack.wav",
+      "recovery_transition": "clubsmash_f05 -> idle_f00 (auto return, non-looping)"
+    },
+    {
+      "class_id": "runner",
+      "package_id": "ART-004",
+      "action_clip": "chr_enemy_runner_daggerlunge",
+      "total_frames": 6,
+      "impact_frame_index": 2,
+      "impact_offset_ms": 166.67,
+      "vfx_id": "vfx_unit_hit_puff",
+      "vfx_frames": 6,
+      "vfx_sorting_layer": "VFX",
+      "vfx_attachment_offset_px_1080p": [
+        12,
+        -16
+      ],
+      "audio_cue_id": "SFX05",
+      "audio_clip": "sfx_enemy_attack.wav",
+      "recovery_transition": "daggerlunge_f05 -> idle_f00 (auto return, non-looping)"
+    },
+    {
+      "class_id": "brute",
+      "package_id": "ART-004",
+      "action_clip": "chr_enemy_brute_gauntletcrush",
+      "total_frames": 6,
+      "impact_frame_index": 3,
+      "impact_offset_ms": 250.0,
+      "vfx_id": "vfx_unit_hit_puff",
+      "vfx_frames": 6,
+      "vfx_sorting_layer": "VFX",
+      "vfx_attachment_offset_px_1080p": [
+        16,
+        -22
+      ],
+      "audio_cue_id": "SFX05",
+      "audio_clip": "sfx_enemy_attack.wav",
+      "recovery_transition": "gauntletcrush_f05 -> idle_f00 (auto return, non-looping)"
+    },
+    {
+      "class_id": "boss",
+      "package_id": "ART-004",
+      "action_clip": "chr_boss_warlord_cleaveslam",
+      "total_frames": 8,
+      "impact_frame_index": 5,
+      "impact_offset_ms": 416.67,
+      "vfx_id": "vfx_boss_slam_telegraph",
+      "vfx_frames": 10,
+      "vfx_sorting_layer": "LanesAndDecals",
+      "vfx_attachment_offset_px_1080p": [
+        0,
+        4
+      ],
+      "audio_cue_id": "SFX09",
+      "audio_clip": "sfx_boss_slam.wav",
+      "recovery_transition": "cleaveslam_f07 -> idlemarch_f00 (auto return, non-looping)"
+    }
+  ],
+  "canonical_choreography_matrix": [
+    {
+      "gameplay_event": "First valid join",
+      "committed_trigger": "role_accepted (counts.unique_joined 0->1)",
+      "visual_presentation": "Builder/Guard/Fighter registration toast + counter increment + unit spawn",
+      "animation": "chr_role_*_idle",
+      "vfx": "none",
+      "audio_cue_id": "SFX01",
+      "audio_label": "Role Join"
+    },
+    {
+      "gameplay_event": "Builder repair contact",
+      "committed_trigger": "role_resolution + positive wall_hp repair diff",
+      "visual_presentation": "Builder hammer contact on scaffold + repair spark",
+      "animation": "chr_role_builder_repair (impact f03)",
+      "vfx": "vfx_builder_repair_spark",
+      "audio_cue_id": "SFX02",
+      "audio_label": "Builder Repair"
+    },
+    {
+      "gameplay_event": "Guard blocks",
+      "committed_trigger": "damage_applied / attack_resolved with guard mitigation > 0",
+      "visual_presentation": "Guard ShieldBrace + azure shield block flash",
+      "animation": "chr_role_guard_shieldbrace (impact f02)",
+      "vfx": "vfx_guard_shield_block",
+      "audio_cue_id": "SFX03",
+      "audio_label": "Guard Block"
+    },
+    {
+      "gameplay_event": "Fighter strikes",
+      "committed_trigger": "attack_resolved (counts.fighter > 0)",
+      "visual_presentation": "Fighter SwordSlash + crimson/gold slash arc",
+      "animation": "chr_role_fighter_swordslash (impact f03)",
+      "vfx": "vfx_fighter_slash_arc",
+      "audio_cue_id": "SFX04",
+      "audio_label": "Fighter Slash"
+    },
+    {
+      "gameplay_event": "Enemy attacks",
+      "committed_trigger": "damage_applied while lane ordinary_hp > 0",
+      "visual_presentation": "Grunt/Runner/Brute attack + impact puff",
+      "animation": "clubsmash/daggerlunge/gauntletcrush",
+      "vfx": "vfx_unit_hit_puff",
+      "audio_cue_id": "SFX05",
+      "audio_label": "Enemy Attack"
+    },
+    {
+      "gameplay_event": "Wall damaged",
+      "committed_trigger": "damage_applied with wall_hp decrease and wall_hp > 0",
+      "visual_presentation": "Wall HP bar lerp + wall state 1->2->3 transition",
+      "animation": "env_wall_state2_damaged / state3_critical",
+      "vfx": "vfx_unit_hit_puff",
+      "audio_cue_id": "SFX06",
+      "audio_label": "Wall Damage"
+    },
+    {
+      "gameplay_event": "Wall breached",
+      "committed_trigger": "damage_applied crossing wall_hp > 0 -> wall_hp == 0",
+      "visual_presentation": "env_wall_state4_breached + breach warning emphasis",
+      "animation": "env_wall_state4_breached",
+      "vfx": "vfx_unit_hit_puff",
+      "audio_cue_id": "SFX07",
+      "audio_label": "Wall Breach"
+    },
+    {
+      "gameplay_event": "Boss incoming",
+      "committed_trigger": "boss_incoming == true at tick 2450 on Boss wave",
+      "visual_presentation": "BOSS_INCOMING HUD banner + ground rune telegraph (NO Boss sprite yet!)",
+      "animation": "none (Boss sprite strictly forbidden < tick 2600)",
+      "vfx": "vfx_boss_slam_telegraph (f00..f03 pre-warn)",
+      "audio_cue_id": "SFX08",
+      "audio_label": "Boss Warning"
+    },
+    {
+      "gameplay_event": "Boss slam",
+      "committed_trigger": "boss_spawned / boss_combat_slam at tick >= 2600",
+      "visual_presentation": "Boss Warlord CleaveSlam + ground impact rune",
+      "animation": "chr_boss_warlord_cleaveslam (impact f05)",
+      "vfx": "vfx_boss_slam_telegraph (f05..f09)",
+      "audio_cue_id": "SFX09",
+      "audio_label": "Boss Slam"
+    },
+    {
+      "gameplay_event": "Vote closes",
+      "committed_trigger": "vote_closed at tick 1200 on even wave",
+      "visual_presentation": "Subordinate vote strip locks selected option A/B/C",
+      "animation": "ui_comp_vote_card_locked",
+      "vfx": "none",
+      "audio_cue_id": "SFX10",
+      "audio_label": "Vote Closed"
+    },
+    {
+      "gameplay_event": "Victory",
+      "committed_trigger": "settlement.wave_result == 'win' at tick >= 2800",
+      "visual_presentation": "RESULTS_WIN emerald banner + Townhall preserved",
+      "animation": "defender idle celebration posture",
+      "vfx": "none",
+      "audio_cue_id": "SFX11",
+      "audio_label": "Victory"
+    },
+    {
+      "gameplay_event": "Defeat",
+      "committed_trigger": "settlement.wave_result == 'loss' at tick >= 2800 (or townhall_hp == 0)",
+      "visual_presentation": "RESULTS_LOSS crimson banner + recovery prep state",
+      "animation": "env_wall_state4_breached / state5_recovery",
+      "vfx": "none",
+      "audio_cue_id": "SFX12",
+      "audio_label": "Defeat"
+    }
+  ],
+  "observed_audiovisual_sync_measurements": [
+    {
+      "cue_id": "SFX01",
+      "scheduled_visual_impact_ms": 250.0,
+      "placed_pcm_sample_index": 12000,
+      "placed_pcm_time_ms": 250.0,
+      "clip_internal_attack_onset_ms": 4.04,
+      "mux_schedule_delta_ms": 0.0
+    },
+    {
+      "cue_id": "SFX02",
+      "scheduled_visual_impact_ms": 1000.0,
+      "placed_pcm_sample_index": 48000,
+      "placed_pcm_time_ms": 1000.0,
+      "clip_internal_attack_onset_ms": 3.0,
+      "mux_schedule_delta_ms": 0.0
+    },
+    {
+      "cue_id": "SFX03",
+      "scheduled_visual_impact_ms": 2333.333,
+      "placed_pcm_sample_index": 112000,
+      "placed_pcm_time_ms": 2333.333,
+      "clip_internal_attack_onset_ms": 3.0,
+      "mux_schedule_delta_ms": 0.0
+    },
+    {
+      "cue_id": "SFX04",
+      "scheduled_visual_impact_ms": 3750.0,
+      "placed_pcm_sample_index": 180000,
+      "placed_pcm_time_ms": 3750.0,
+      "clip_internal_attack_onset_ms": 1.81,
+      "mux_schedule_delta_ms": 0.0
+    },
+    {
+      "cue_id": "SFX05",
+      "scheduled_visual_impact_ms": 5250.0,
+      "placed_pcm_sample_index": 252000,
+      "placed_pcm_time_ms": 5250.0,
+      "clip_internal_attack_onset_ms": 3.0,
+      "mux_schedule_delta_ms": 0.0
+    },
+    {
+      "cue_id": "SFX06",
+      "scheduled_visual_impact_ms": 5500.0,
+      "placed_pcm_sample_index": 264000,
+      "placed_pcm_time_ms": 5500.0,
+      "clip_internal_attack_onset_ms": 4.02,
+      "mux_schedule_delta_ms": 0.0
+    },
+    {
+      "cue_id": "SFX08",
+      "scheduled_visual_impact_ms": 7000.0,
+      "placed_pcm_sample_index": 336000,
+      "placed_pcm_time_ms": 7000.0,
+      "clip_internal_attack_onset_ms": 12.23,
+      "mux_schedule_delta_ms": 0.0
+    },
+    {
+      "cue_id": "SFX09",
+      "scheduled_visual_impact_ms": 8750.0,
+      "placed_pcm_sample_index": 420000,
+      "placed_pcm_time_ms": 8750.0,
+      "clip_internal_attack_onset_ms": 8.04,
+      "mux_schedule_delta_ms": 0.0
+    },
+    {
+      "cue_id": "SFX11",
+      "scheduled_visual_impact_ms": 10500.0,
+      "placed_pcm_sample_index": 504000,
+      "placed_pcm_time_ms": 10500.0,
+      "clip_internal_attack_onset_ms": 10.1,
+      "mux_schedule_delta_ms": 0.0
+    }
+  ]
+}

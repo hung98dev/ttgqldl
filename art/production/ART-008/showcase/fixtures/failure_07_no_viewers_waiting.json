@@ -1,0 +1,89 @@
+{
+  "sequence_id": "failure_07_no_viewers_waiting",
+  "filename": "failure_07_no_viewers_waiting.json",
+  "synthetic_fixture": true,
+  "title": "7. Zero Viewers (P=0 Waiting Gate)",
+  "invariants_verified": [
+    "unique_joined == 0 keeps phase in WAITING_FOR_VIEWER",
+    "Zero fake world defenders/enemies spawned; zero premature registration toast"
+  ],
+  "fixture": {
+    "synthetic_fixture": true,
+    "fixture_id": "synth-fail-07_seq_2090",
+    "canonical_state_id": "WAITING",
+    "attract_mode": false,
+    "schema_version": "ws-public-v1-synthetic",
+    "session_id": "synth-fail-07",
+    "mock_stream_seq": 2090,
+    "public_snapshot": {
+      "lifecycle": "waiting",
+      "source_status": "mock",
+      "pause_reasons": [],
+      "wave_no": 1,
+      "wave_tick": 0,
+      "remaining_seconds": 300,
+      "phase": "waiting",
+      "village_level": 14,
+      "wall_tier": 6,
+      "wall_hp": 1000,
+      "wall_max": 1000,
+      "townhall_hp": 2000,
+      "townhall_max": 2000,
+      "wood": 320,
+      "stone": 240,
+      "food": 410,
+      "counts": {
+        "unique_joined": 0,
+        "builder": 0,
+        "guard": 0,
+        "fighter": 0
+      },
+      "lanes": [
+        {
+          "id": "west",
+          "ordinary_hp": 0
+        },
+        {
+          "id": "center",
+          "ordinary_hp": 0
+        },
+        {
+          "id": "east",
+          "ordinary_hp": 0
+        }
+      ],
+      "vote": {
+        "open": false,
+        "selected": null,
+        "counts": {
+          "A": 0,
+          "B": 0,
+          "C": 0
+        }
+      },
+      "boss": {
+        "boss_incoming": false,
+        "boss_exists": false,
+        "boss_hp": 0,
+        "boss_max_hp": 1800
+      },
+      "settlement": {
+        "wave_result": null,
+        "consecutive_losses": 0,
+        "is_post_loss_recovery": false,
+        "pending_next_wave_count": 0
+      },
+      "system_assist": {
+        "militia_active": false,
+        "militia_attack_bonus": 0
+      },
+      "diagnostics": {
+        "connection_state": "live",
+        "metrics_available": true,
+        "queue_fill_pct": 12,
+        "retryable_rejected_count": 0,
+        "confirmed_valid_drops": 0
+      }
+    }
+  }
+}

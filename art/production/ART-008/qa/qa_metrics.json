@@ -1,0 +1,114 @@
+{
+  "package_id": "ART-008",
+  "overall_status": "PASS",
+  "positive_checks_passed": 20,
+  "positive_checks_total": 20,
+  "negative_tests_passed": 20,
+  "negative_tests_total": 20,
+  "external_human_ux_review_status": "NOT_EXECUTED",
+  "gate_legal_status": "OPEN_PENDING_REVIEW",
+  "gate_obs_status": "OPEN_NOT_EXECUTED",
+  "m06_production_milestone_status": "NOT_STARTED",
+  "positive_checks": [
+    {
+      "check_id": "P01_every_referenced_asset_exists",
+      "status": "PASS",
+      "detail": "244 canonical SHA-256 assets + 21 showcase outputs verified; errs=0"
+    },
+    {
+      "check_id": "P02_every_atlas_entry_valid",
+      "status": "PASS",
+      "detail": "6 atlases + 229 sprite rects valid; errs=0"
+    },
+    {
+      "check_id": "P03_all_seven_character_classes_animate",
+      "status": "PASS",
+      "detail": "All 7 classes verified at 12 FPS with exact 1080p heights {'builder': 48.0, 'guard': 48.0, 'fighter': 48.0, 'grunt': 48.0, 'runner': 44.0, 'brute': 64.0, 'boss': 102.0}"
+    },
+    {
+      "check_id": "P04_all_combat_vfx_at_correct_impact_points",
+      "status": "PASS",
+      "detail": "All 7 class impact frames & 5 VFX sorting/attachments aligned (mux delta <= 0.01 ms)"
+    },
+    {
+      "check_id": "P05_all_15_audio_assets_decode",
+      "status": "PASS",
+      "detail": "15/15 48 kHz 24-bit WAV masters + Unity AudioClips + AAC streams decoded; errs=0"
+    },
+    {
+      "check_id": "P06_audio_cue_ids_map_correctly",
+      "status": "PASS",
+      "detail": "All 15 canonical cue IDs (SFX01..12, AMB01, MUS01..02) & 12 choreography mappings aligned"
+    },
+    {
+      "check_id": "P07_audio_triggered_from_mock_authoritative_events",
+      "status": "PASS",
+      "detail": "All 20 Wave 10 beats use synthetic_fixture=true & committed mock_stream_seq triggers"
+    },
+    {
+      "check_id": "P08_music_muted_by_default",
+      "status": "PASS",
+      "detail": "Music locked at -80.0 dB (mute=true) across manifest, policy, showcase mixes, and Unity dispatcher"
+    },
+    {
+      "check_id": "P09_reconnect_redelivery_no_duplicate_stings",
+      "status": "PASS",
+      "detail": "Duplicate stream_seq and reconnect wave_result redelivery play 1 time total"
+    },
+    {
+      "check_id": "P10_different_same_type_combat_events_playable",
+      "status": "PASS",
+      "detail": "Independent wall damage (3/3), Fighter slash (2/2), Builder repair (2/2), Boss slam (2/2) all play"
+    },
+    {
+      "check_id": "P11_ui_state_priority_correct",
+      "status": "PASS",
+      "detail": "16 priority transitions + storage_unavailable > source_disconnected > operator_paused verified (0 scene reloads)"
+    },
+    {
+      "check_id": "P12_all_phase_boundaries_match_canonical_rules",
+      "status": "PASS",
+      "detail": "All canonical ticks [0, 600, 800, 1000, 1200, 1450, 1600, 1800, 2450, 2600, 2800, 2900] + rollover 3000->Wave 11 verified; max visual gap=20.0s <= 30s"
+    },
+    {
+      "check_id": "P13_boss_warning_and_spawn_timing_correct",
+      "status": "PASS",
+      "detail": "Boss warning at tick 2450 (telegraph only); Boss sprite spawns strictly at tick >= 2600"
+    },
+    {
+      "check_id": "P14_victory_and_defeat_never_premature",
+      "status": "PASS",
+      "detail": "Zero results/victory states before authoritative settlement tick 2800"
+    },
+    {
+      "check_id": "P15_animations_have_clean_transitions",
+      "status": "PASS",
+      "detail": "All 7 classes complete Idle->Move->Action->Recovery->Idle and Idle->Hit->Idle cleanly"
+    },
+    {
+      "check_id": "P16_vfx_do_not_clip_or_persist",
+      "status": "PASS",
+      "detail": "0 lingering VFX after completion; active bursts bounded <= 20 across all load tiers"
+    },
+    {
+      "check_id": "P17_hud_safe_zones_respected",
+      "status": "PASS",
+      "detail": "Right 18% (x<=885.6) & bottom 12% (y<=1689.6) respected; 1080p/720p/360p frames verified"
+    },
+    {
+      "check_id": "P18_vietnamese_localization_readable",
+      "status": "PASS",
+      "detail": "CTA=16.0px, HP/Timer=14.33px, Secondary=12.0px @360p; WCAG >=11.4:1; single CTA preserved"
+    },
+    {
+      "check_id": "P19_zero_private_actorkey_or_viewer_id_leaks",
+      "status": "PASS",
+      "detail": "0 private identity keys or host user paths across ART-008 files; hits=[]"
+    },
+    {
+      "check_id": "P20_showcase_rebuild_reproducibility",
+      "status": "PASS",
+      "detail": "Deterministic Wave 10 fixture & 48 kHz mix bit-identical (0.0 sample diff)"
+    }
+  ]
+}

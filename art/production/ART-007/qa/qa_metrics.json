@@ -75,7 +75,7 @@
       },
       "17_deterministic_rebuild_reproducibility": {
         "passed": true,
-        "detail": "Exact bit-identical SHA-256 rebuild verified across all 12 SFX"
+        "detail": "Exact bit-identical SHA-256 rebuild verified across all 15 WAV masters (12 SFX + AMB01 + MUS01 + MUS02; 0 byte diffs)"
       },
       "18_no_unlicensed_sources_bundled": {
         "passed": true,
@@ -85,8 +85,8 @@
   },
   "adversarial_summary": {
     "status": "PASS",
-    "rejected_count": 12,
-    "total_cases": 12
+    "rejected_count": 14,
+    "total_cases": 14
   },
   "asset_acoustic_summary": [
     {

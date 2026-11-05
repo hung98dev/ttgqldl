@@ -442,5 +442,18 @@ jobs:
           done
           exit "${fail}"
 
+  art008:
+    name: art008 (unified manifest, synthetic timeline & safety contracts)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        # v7.0.1 - verified tag SHA; pinning the immutable commit avoids tag-move supply-chain risk
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Validate ART-008 unified manifest, timeline & negative safety guards
+        run: python3 -B art/production/ART-008/tools/validate_art008.py --ci-fast
+
+
 
 

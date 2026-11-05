@@ -686,8 +686,8 @@
   "supporting_deliverables": [
     {
       "path": "art/production/ART-007/audio_cue_mapping.json",
-      "sha256": "3f6cf04f61bb4a368916b5e33ba19837256da7c25d5b948ff00f3e296b570cd7",
-      "bytes": 14268
+      "sha256": "faa16b763b367639a301cbd5a295b72c845222f8d21c037e75f753c248acbf9f",
+      "bytes": 18247
     },
     {
       "path": "art/production/ART-007/audio_mixer_config.json",
@@ -711,8 +711,8 @@
     },
     {
       "path": "art/production/ART-007/unity_presets/ART007AudioPipelineVerifier.cs.txt",
-      "sha256": "787a0bc0aac62bb98664f708d3965bbaa45940feea8e3a55f6f09a7a56043cea",
-      "bytes": 12178
+      "sha256": "68c020692695da3f9d2515f7200494f9649f4e38a48bde84c7000c1f08f360e8",
+      "bytes": 21927
     },
     {
       "path": "art/production/ART-007/previews/individual/sfx_12_catalog_montage.wav",
@@ -796,8 +796,8 @@
     },
     {
       "path": "art/production/ART-007/qa/unity_isolated_verification.json",
-      "sha256": "9fabe3399690226339821bc1a3536ee58b54f3d3afa6c34cce1e571a88204377",
-      "bytes": 6390
+      "sha256": "f9cdedebbb451273dcc1278b0f4312985539f67ccc16a7d97ac5ea3fb2e1dde5",
+      "bytes": 8939
     }
   ]
 }

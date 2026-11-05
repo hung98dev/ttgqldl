@@ -1,0 +1,11 @@
+{
+    "scenePath": "Assets/_TTGQLDL_Showcase/Scenes/BastionDawn_ART008_VerticalSlice.unity",
+    "audioPrefabPath": "Assets/_TTGQLDL_Showcase/Prefabs/BroadcastAudioDispatcher.prefab",
+    "unityVersion": "6000.6.7f1",
+    "cameraOrthographicSize": 5.0,
+    "referenceResolution": "1080x1920",
+    "pixelsPerUnit": 192,
+    "pooledEntityCapacity": 150,
+    "pooledVfxCapacity": 20,
+    "preallocatedAudioVoices": 12
+}

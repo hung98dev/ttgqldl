@@ -1,0 +1,1940 @@
+{
+  "package_id": "ART-008",
+  "fixture_id": "full_wave_300s_wave10_showcase",
+  "synthetic_fixture": true,
+  "authoritative_rules_ref": "docs/plan/02_GAME_RULES.md + docs/plan/03_SIMULATION.md (ttg-rules-v1)",
+  "wave_no": 10,
+  "rollover_wave_no": 11,
+  "logical_duration_seconds": 300,
+  "logical_ticks_per_second": 10,
+  "total_logical_ticks": 3000,
+  "max_logical_gap_between_visual_changes_seconds": 20.0,
+  "accelerated_showcase_video_duration_seconds": 31.5,
+  "music_muted_by_default": true,
+  "beats": [
+    {
+      "beat_id": "B00_WAITING",
+      "wave_no": 10,
+      "wave_tick": -1,
+      "logical_time_s": -0.1,
+      "showcase_video_time_s": 0.0,
+      "visual_state": "WAITING_FOR_VIEWER",
+      "meaningful_visual_change": "Lobby waiting state (P=0): empty lanes, intact wall, primary CTA 'Bình luận XÂY / THỦ / ĐÁNH'",
+      "audio_events": [
+        {
+          "cue_id": "AMB01",
+          "event_type": "ambient_loop_start",
+          "mock_stream_seq": 1000
+        }
+      ],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1000",
+        "canonical_state_id": "WAITING",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1000,
+        "public_snapshot": {
+          "lifecycle": "waiting",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 0,
+          "remaining_seconds": 300,
+          "phase": "waiting",
+          "village_level": 14,
+          "wall_tier": 6,
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 2000,
+          "townhall_max": 2000,
+          "wood": 320,
+          "stone": 240,
+          "food": 410,
+          "counts": {
+            "unique_joined": 0,
+            "builder": 0,
+            "guard": 0,
+            "fighter": 0
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 0
+            }
+          ],
+          "vote": {
+            "open": false,
+            "selected": null,
+            "counts": {
+              "A": 0,
+              "B": 0,
+              "C": 0
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": null,
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 0
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          }
+        }
+      }
+    },
+    {
+      "beat_id": "B01_FIRST_JOIN_WAVE_START",
+      "wave_no": 10,
+      "wave_tick": 0,
+      "logical_time_s": 0.0,
+      "showcase_video_time_s": 1.5,
+      "visual_state": "PREP",
+      "meaningful_visual_change": "First valid participant joins Builder -> wave_tick=0 starts, Militia assist active (P=1<=10), Join Toast slides in",
+      "audio_events": [
+        {
+          "cue_id": "SFX01",
+          "event_type": "role_accepted",
+          "mock_stream_seq": 1001
+        }
+      ],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1001",
+        "canonical_state_id": "PREP",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1001,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 0,
+          "remaining_seconds": 300,
+          "phase": "prep",
+          "village_level": 14,
+          "wall_tier": 6,
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 2000,
+          "townhall_max": 2000,
+          "wood": 320,
+          "stone": 240,
+          "food": 410,
+          "counts": {
+            "unique_joined": 1,
+            "builder": 1,
+            "guard": 0,
+            "fighter": 0
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 0
+            }
+          ],
+          "vote": {
+            "open": false,
+            "selected": null,
+            "counts": {
+              "A": 0,
+              "B": 0,
+              "C": 0
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": null,
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 0
+          },
+          "system_assist": {
+            "militia_active": true,
+            "militia_attack_bonus": 35
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          },
+          "join_toast": {
+            "mode": "single",
+            "display_alias": "MinhBao",
+            "role": "builder",
+            "ttl_seconds": 2.0
+          }
+        }
+      }
+    },
+    {
+      "beat_id": "B02_PREP_CONSTRUCTION_20S",
+      "wave_no": 10,
+      "wave_tick": 200,
+      "logical_time_s": 20.0,
+      "showcase_video_time_s": 3.0,
+      "visual_state": "PREP",
+      "meaningful_visual_change": "20s elapsed: 4 scaffolds active, Builders hammer wall masonry (+repair sparks), Guards & Fighters muster",
+      "audio_events": [
+        {
+          "cue_id": "SFX02",
+          "event_type": "role_resolution",
+          "mock_stream_seq": 1008
+        }
+      ],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1008",
+        "canonical_state_id": "PREP",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1008,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 200,
+          "remaining_seconds": 280,
+          "phase": "prep",
+          "village_level": 14,
+          "wall_tier": 6,
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 2000,
+          "townhall_max": 2000,
+          "wood": 380,
+          "stone": 290,
+          "food": 450,
+          "counts": {
+            "unique_joined": 44,
+            "builder": 12,
+            "guard": 14,
+            "fighter": 18
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 0
+            }
+          ],
+          "vote": {
+            "open": false,
+            "selected": null,
+            "counts": {
+              "A": 0,
+              "B": 0,
+              "C": 0
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": null,
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 0
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          }
+        }
+      }
+    },
+    {
+      "beat_id": "B03_PREP_MUSTER_40S",
+      "wave_no": 10,
+      "wave_tick": 400,
+      "logical_time_s": 40.0,
+      "showcase_video_time_s": 4.5,
+      "visual_state": "PREP",
+      "meaningful_visual_change": "40s elapsed: role counters climb to 76 participants, resources harvested, timer 04:20",
+      "audio_events": [
+        {
+          "cue_id": "SFX01",
+          "event_type": "role_accepted",
+          "mock_stream_seq": 1015
+        }
+      ],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1015",
+        "canonical_state_id": "PREP",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1015,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 400,
+          "remaining_seconds": 260,
+          "phase": "prep",
+          "village_level": 14,
+          "wall_tier": 6,
+          "wall_hp": 1000,
+          "wall_max": 1000,
+          "townhall_hp": 2000,
+          "townhall_max": 2000,
+          "wood": 430,
+          "stone": 335,
+          "food": 495,
+          "counts": {
+            "unique_joined": 76,
+            "builder": 22,
+            "guard": 24,
+            "fighter": 30
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 0
+            }
+          ],
+          "vote": {
+            "open": false,
+            "selected": null,
+            "counts": {
+              "A": 0,
+              "B": 0,
+              "C": 0
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": null,
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 0
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          },
+          "join_toast": {
+            "mode": "single",
+            "display_alias": "ThanhLong",
+            "role": "fighter",
+            "ttl_seconds": 2.0
+          }
+        }
+      }
+    },
+    {
+      "beat_id": "B04_PREP_60S_ELAPSED",
+      "wave_no": 10,
+      "wave_tick": 600,
+      "logical_time_s": 60.0,
+      "showcase_video_time_s": 6.0,
+      "visual_state": "PREP",
+      "meaningful_visual_change": "Tick 600 (60s elapsed): wall reinforced to tier 7 (1100/1100 HP), Builders repair contact",
+      "audio_events": [
+        {
+          "cue_id": "SFX02",
+          "event_type": "role_resolution",
+          "mock_stream_seq": 1024
+        }
+      ],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1024",
+        "canonical_state_id": "PREP",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1024,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 600,
+          "remaining_seconds": 240,
+          "phase": "prep",
+          "village_level": 14,
+          "wall_tier": 7,
+          "wall_hp": 1100,
+          "wall_max": 1100,
+          "townhall_hp": 2000,
+          "townhall_max": 2000,
+          "wood": 470,
+          "stone": 360,
+          "food": 520,
+          "counts": {
+            "unique_joined": 102,
+            "builder": 28,
+            "guard": 32,
+            "fighter": 42
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 0
+            }
+          ],
+          "vote": {
+            "open": false,
+            "selected": null,
+            "counts": {
+              "A": 0,
+              "B": 0,
+              "C": 0
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": null,
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 0
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          }
+        }
+      }
+    },
+    {
+      "beat_id": "B05_EVEN_WAVE_VOTE_OPEN",
+      "wave_no": 10,
+      "wave_tick": 800,
+      "logical_time_s": 80.0,
+      "showcase_video_time_s": 7.5,
+      "visual_state": "VOTE_OPEN",
+      "meaningful_visual_change": "Tick 800: Even-wave tactical vote opens in subordinate dock strip (A/B/C live tallies)",
+      "audio_events": [],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1032",
+        "canonical_state_id": "PREP",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1032,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 800,
+          "remaining_seconds": 220,
+          "phase": "prep",
+          "village_level": 14,
+          "wall_tier": 7,
+          "wall_hp": 1100,
+          "wall_max": 1100,
+          "townhall_hp": 2000,
+          "townhall_max": 2000,
+          "wood": 320,
+          "stone": 240,
+          "food": 410,
+          "counts": {
+            "unique_joined": 122,
+            "builder": 34,
+            "guard": 38,
+            "fighter": 50
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 0
+            }
+          ],
+          "vote": {
+            "open": true,
+            "selected": null,
+            "counts": {
+              "A": 18,
+              "B": 31,
+              "C": 14
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": null,
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 0
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          }
+        }
+      }
+    },
+    {
+      "beat_id": "B06_PREP_60_WARN",
+      "wave_no": 10,
+      "wave_tick": 1000,
+      "logical_time_s": 100.0,
+      "showcase_video_time_s": 9.0,
+      "visual_state": "PREP_60_WARN",
+      "meaningful_visual_change": "Tick 1000: PREP 60-second remaining amber warning banner + active vote tallies update",
+      "audio_events": [
+        {
+          "cue_id": "SFX01",
+          "event_type": "role_accepted",
+          "mock_stream_seq": 1041
+        }
+      ],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1041",
+        "canonical_state_id": "PREP",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1041,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 1000,
+          "remaining_seconds": 200,
+          "phase": "prep",
+          "village_level": 14,
+          "wall_tier": 7,
+          "wall_hp": 1100,
+          "wall_max": 1100,
+          "townhall_hp": 2000,
+          "townhall_max": 2000,
+          "wood": 320,
+          "stone": 240,
+          "food": 410,
+          "counts": {
+            "unique_joined": 148,
+            "builder": 40,
+            "guard": 46,
+            "fighter": 62
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 0
+            }
+          ],
+          "vote": {
+            "open": true,
+            "selected": null,
+            "counts": {
+              "A": 29,
+              "B": 54,
+              "C": 22
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": null,
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 0
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          }
+        }
+      }
+    },
+    {
+      "beat_id": "B07_VOTE_CLOSED",
+      "wave_no": 10,
+      "wave_tick": 1200,
+      "logical_time_s": 120.0,
+      "showcase_video_time_s": 10.5,
+      "visual_state": "PREP_60_WARN",
+      "meaningful_visual_change": "Tick 1200: Vote closes -> Option B locked in subordinate dock strip + gavel chime SFX10",
+      "audio_events": [
+        {
+          "cue_id": "SFX10",
+          "event_type": "vote_closed",
+          "mock_stream_seq": 1050
+        }
+      ],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1050",
+        "canonical_state_id": "PREP",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1050,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 1200,
+          "remaining_seconds": 180,
+          "phase": "prep",
+          "village_level": 14,
+          "wall_tier": 7,
+          "wall_hp": 1100,
+          "wall_max": 1100,
+          "townhall_hp": 2000,
+          "townhall_max": 2000,
+          "wood": 320,
+          "stone": 240,
+          "food": 410,
+          "counts": {
+            "unique_joined": 166,
+            "builder": 44,
+            "guard": 52,
+            "fighter": 70
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 0
+            }
+          ],
+          "vote": {
+            "open": false,
+            "selected": "B",
+            "counts": {
+              "A": 34,
+              "B": 68,
+              "C": 25
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": null,
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 0
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          }
+        }
+      }
+    },
+    {
+      "beat_id": "B08_PREP_140S_FORTIFY",
+      "wave_no": 10,
+      "wave_tick": 1400,
+      "logical_time_s": 140.0,
+      "showcase_video_time_s": 12.0,
+      "visual_state": "PREP_60_WARN",
+      "meaningful_visual_change": "Tick 1400: Option B wall reinforcement applied (1200/1200 HP), final pre-assault repair sparks",
+      "audio_events": [
+        {
+          "cue_id": "SFX02",
+          "event_type": "role_resolution",
+          "mock_stream_seq": 1058
+        }
+      ],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1058",
+        "canonical_state_id": "PREP",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1058,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 1400,
+          "remaining_seconds": 160,
+          "phase": "prep",
+          "village_level": 14,
+          "wall_tier": 8,
+          "wall_hp": 1200,
+          "wall_max": 1200,
+          "townhall_hp": 2000,
+          "townhall_max": 2000,
+          "wood": 320,
+          "stone": 240,
+          "food": 410,
+          "counts": {
+            "unique_joined": 182,
+            "builder": 46,
+            "guard": 58,
+            "fighter": 78
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 0
+            }
+          ],
+          "vote": {
+            "open": false,
+            "selected": "B",
+            "counts": {
+              "A": 34,
+              "B": 68,
+              "C": 25
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": null,
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 0
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          }
+        }
+      }
+    },
+    {
+      "beat_id": "B09_PREP_15_WARN",
+      "wave_no": 10,
+      "wave_tick": 1450,
+      "logical_time_s": 145.0,
+      "showcase_video_time_s": 13.5,
+      "visual_state": "PREP_15_WARN",
+      "meaningful_visual_change": "Tick 1450: PREP 15-second crimson warning banner + dusk atmospheric grade",
+      "audio_events": [],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1062",
+        "canonical_state_id": "PREP",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1062,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 1450,
+          "remaining_seconds": 155,
+          "phase": "prep",
+          "village_level": 14,
+          "wall_tier": 8,
+          "wall_hp": 1200,
+          "wall_max": 1200,
+          "townhall_hp": 2000,
+          "townhall_max": 2000,
+          "wood": 320,
+          "stone": 240,
+          "food": 410,
+          "counts": {
+            "unique_joined": 190,
+            "builder": 48,
+            "guard": 60,
+            "fighter": 82
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 0
+            }
+          ],
+          "vote": {
+            "open": false,
+            "selected": "B",
+            "counts": {
+              "A": 34,
+              "B": 68,
+              "C": 25
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": null,
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 0
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          }
+        }
+      }
+    },
+    {
+      "beat_id": "B10_ASSAULT_START",
+      "wave_no": 10,
+      "wave_tick": 1600,
+      "logical_time_s": 160.0,
+      "showcase_video_time_s": 15.0,
+      "visual_state": "ASSAULT",
+      "meaningful_visual_change": "Tick 1600: ASSAULT starts -> Grunt, Runner, and Brute columns enter West, Center, and East lanes",
+      "audio_events": [
+        {
+          "cue_id": "SFX05",
+          "event_type": "damage_applied",
+          "mock_stream_seq": 1070
+        }
+      ],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1070",
+        "canonical_state_id": "ASSAULT",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1070,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 1600,
+          "remaining_seconds": 140,
+          "phase": "assault",
+          "village_level": 14,
+          "wall_tier": 8,
+          "wall_hp": 1200,
+          "wall_max": 1200,
+          "townhall_hp": 2000,
+          "townhall_max": 2000,
+          "wood": 320,
+          "stone": 240,
+          "food": 410,
+          "counts": {
+            "unique_joined": 204,
+            "builder": 48,
+            "guard": 64,
+            "fighter": 92
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 420
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 560
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 440
+            }
+          ],
+          "vote": {
+            "open": false,
+            "selected": "B",
+            "counts": {
+              "A": 34,
+              "B": 68,
+              "C": 25
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": null,
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 0
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          }
+        }
+      }
+    },
+    {
+      "beat_id": "B11_FIRST_COMBAT_BOUNDARY",
+      "wave_no": 10,
+      "wave_tick": 1800,
+      "logical_time_s": 180.0,
+      "showcase_video_time_s": 16.5,
+      "visual_state": "ASSAULT",
+      "meaningful_visual_change": "Tick 1800: First combat boundary -> Fighter SwordSlash + Guard ShieldBrace + Wall takes 180 damage",
+      "audio_events": [
+        {
+          "cue_id": "SFX04",
+          "event_type": "attack_resolved",
+          "mock_stream_seq": 1081
+        },
+        {
+          "cue_id": "SFX03",
+          "event_type": "damage_applied",
+          "mock_stream_seq": 1082
+        },
+        {
+          "cue_id": "SFX06",
+          "event_type": "damage_applied",
+          "mock_stream_seq": 1083
+        }
+      ],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1083",
+        "canonical_state_id": "ASSAULT",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1083,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 1800,
+          "remaining_seconds": 120,
+          "phase": "assault",
+          "village_level": 14,
+          "wall_tier": 8,
+          "wall_hp": 1020,
+          "wall_max": 1200,
+          "townhall_hp": 2000,
+          "townhall_max": 2000,
+          "wood": 320,
+          "stone": 240,
+          "food": 410,
+          "counts": {
+            "unique_joined": 212,
+            "builder": 50,
+            "guard": 66,
+            "fighter": 96
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 330
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 450
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 350
+            }
+          ],
+          "vote": {
+            "open": false,
+            "selected": "B",
+            "counts": {
+              "A": 34,
+              "B": 68,
+              "C": 25
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": null,
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 0
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          }
+        }
+      }
+    },
+    {
+      "beat_id": "B12_COMBAT_WALL_DAMAGED_200S",
+      "wave_no": 10,
+      "wave_tick": 2000,
+      "logical_time_s": 200.0,
+      "showcase_video_time_s": 18.0,
+      "visual_state": "ASSAULT",
+      "meaningful_visual_change": "Tick 2000: Wall drops below 60% (680/1200 -> env_wall_state2_damaged) while Builders actively repair",
+      "audio_events": [
+        {
+          "cue_id": "SFX06",
+          "event_type": "damage_applied",
+          "mock_stream_seq": 1094
+        },
+        {
+          "cue_id": "SFX02",
+          "event_type": "role_resolution",
+          "mock_stream_seq": 1095
+        }
+      ],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1095",
+        "canonical_state_id": "ASSAULT",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1095,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 2000,
+          "remaining_seconds": 100,
+          "phase": "assault",
+          "village_level": 14,
+          "wall_tier": 8,
+          "wall_hp": 680,
+          "wall_max": 1200,
+          "townhall_hp": 2000,
+          "townhall_max": 2000,
+          "wood": 320,
+          "stone": 240,
+          "food": 410,
+          "counts": {
+            "unique_joined": 222,
+            "builder": 52,
+            "guard": 68,
+            "fighter": 102
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 240
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 340
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 260
+            }
+          ],
+          "vote": {
+            "open": false,
+            "selected": "B",
+            "counts": {
+              "A": 34,
+              "B": 68,
+              "C": 25
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": null,
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 0
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          }
+        }
+      }
+    },
+    {
+      "beat_id": "B13_COMBAT_FLANK_CLASH_220S",
+      "wave_no": 10,
+      "wave_tick": 2200,
+      "logical_time_s": 220.0,
+      "showcase_video_time_s": 19.5,
+      "visual_state": "ASSAULT",
+      "meaningful_visual_change": "Tick 2200: West & East flank HP reduced by Fighters; independent Fighter & Enemy strikes",
+      "audio_events": [
+        {
+          "cue_id": "SFX04",
+          "event_type": "attack_resolved",
+          "mock_stream_seq": 1106
+        },
+        {
+          "cue_id": "SFX05",
+          "event_type": "damage_applied",
+          "mock_stream_seq": 1107
+        }
+      ],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1107",
+        "canonical_state_id": "ASSAULT",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1107,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 2200,
+          "remaining_seconds": 80,
+          "phase": "assault",
+          "village_level": 14,
+          "wall_tier": 8,
+          "wall_hp": 590,
+          "wall_max": 1200,
+          "townhall_hp": 2000,
+          "townhall_max": 2000,
+          "wood": 320,
+          "stone": 240,
+          "food": 410,
+          "counts": {
+            "unique_joined": 232,
+            "builder": 54,
+            "guard": 70,
+            "fighter": 108
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 120
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 230
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 140
+            }
+          ],
+          "vote": {
+            "open": false,
+            "selected": "B",
+            "counts": {
+              "A": 34,
+              "B": 68,
+              "C": 25
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": null,
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 0
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          }
+        }
+      }
+    },
+    {
+      "beat_id": "B14_COMBAT_PRE_BOSS_240S",
+      "wave_no": 10,
+      "wave_tick": 2400,
+      "logical_time_s": 240.0,
+      "showcase_video_time_s": 21.0,
+      "visual_state": "ASSAULT",
+      "meaningful_visual_change": "Tick 2400: Center vanguard thinned to 90 HP; Builders restore wall to 640/1200 before finale",
+      "audio_events": [
+        {
+          "cue_id": "SFX02",
+          "event_type": "role_resolution",
+          "mock_stream_seq": 1115
+        }
+      ],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1115",
+        "canonical_state_id": "ASSAULT",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1115,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 2400,
+          "remaining_seconds": 60,
+          "phase": "assault",
+          "village_level": 14,
+          "wall_tier": 8,
+          "wall_hp": 640,
+          "wall_max": 1200,
+          "townhall_hp": 2000,
+          "townhall_max": 2000,
+          "wood": 320,
+          "stone": 240,
+          "food": 410,
+          "counts": {
+            "unique_joined": 239,
+            "builder": 55,
+            "guard": 72,
+            "fighter": 112
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 50
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 90
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 60
+            }
+          ],
+          "vote": {
+            "open": false,
+            "selected": "B",
+            "counts": {
+              "A": 34,
+              "B": 68,
+              "C": 25
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": null,
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 0
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          }
+        }
+      }
+    },
+    {
+      "beat_id": "B15_BOSS_INCOMING_2450",
+      "wave_no": 10,
+      "wave_tick": 2450,
+      "logical_time_s": 245.0,
+      "showcase_video_time_s": 22.5,
+      "visual_state": "BOSS_INCOMING",
+      "meaningful_visual_change": "Tick 2450: Boss Warning banner + eclipse palette + ground rune telegraph ONLY (Boss sprite NOT spawned before 2600!)",
+      "audio_events": [
+        {
+          "cue_id": "SFX08",
+          "event_type": "boss_incoming",
+          "mock_stream_seq": 1120
+        }
+      ],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1120",
+        "canonical_state_id": "ASSAULT",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1120,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 2450,
+          "remaining_seconds": 55,
+          "phase": "assault",
+          "village_level": 14,
+          "wall_tier": 8,
+          "wall_hp": 640,
+          "wall_max": 1200,
+          "townhall_hp": 2000,
+          "townhall_max": 2000,
+          "wood": 320,
+          "stone": 240,
+          "food": 410,
+          "counts": {
+            "unique_joined": 245,
+            "builder": 56,
+            "guard": 74,
+            "fighter": 115
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 20
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 40
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 25
+            }
+          ],
+          "vote": {
+            "open": false,
+            "selected": "B",
+            "counts": {
+              "A": 34,
+              "B": 68,
+              "C": 25
+            }
+          },
+          "boss": {
+            "boss_incoming": true,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": null,
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 0
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          }
+        }
+      }
+    },
+    {
+      "beat_id": "B16_FINALE_BOSS_SPAWN_2600",
+      "wave_no": 10,
+      "wave_tick": 2600,
+      "logical_time_s": 260.0,
+      "showcase_video_time_s": 24.5,
+      "visual_state": "BOSS_ACTIVE",
+      "meaningful_visual_change": "Tick 2600: FINALE starts -> Boss Warlord spawns on Center Causeway, executes CleaveSlam + wall drops to critical state 3 (260/1200)",
+      "audio_events": [
+        {
+          "cue_id": "SFX09",
+          "event_type": "boss_spawned",
+          "mock_stream_seq": 1130
+        },
+        {
+          "cue_id": "SFX06",
+          "event_type": "damage_applied",
+          "mock_stream_seq": 1131
+        }
+      ],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1131",
+        "canonical_state_id": "FINALE",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1131,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 2600,
+          "remaining_seconds": 40,
+          "phase": "finale",
+          "village_level": 14,
+          "wall_tier": 8,
+          "wall_hp": 260,
+          "wall_max": 1200,
+          "townhall_hp": 1920,
+          "townhall_max": 2000,
+          "wood": 320,
+          "stone": 240,
+          "food": 410,
+          "counts": {
+            "unique_joined": 260,
+            "builder": 58,
+            "guard": 78,
+            "fighter": 124
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 40
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 120
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 40
+            }
+          ],
+          "vote": {
+            "open": false,
+            "selected": "B",
+            "counts": {
+              "A": 34,
+              "B": 68,
+              "C": 25
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": true,
+            "boss_hp": 1120,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": null,
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 0
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          }
+        }
+      }
+    },
+    {
+      "beat_id": "B17_SETTLEMENT_VICTORY_2800",
+      "wave_no": 10,
+      "wave_tick": 2800,
+      "logical_time_s": 280.0,
+      "showcase_video_time_s": 26.5,
+      "visual_state": "RESULTS_WIN",
+      "meaningful_visual_change": "Tick 2800: Final combat resolves Boss HP -> 0, authoritative settlement RESULTS_WIN + Victory fanfare SFX11",
+      "audio_events": [
+        {
+          "cue_id": "SFX04",
+          "event_type": "attack_resolved",
+          "mock_stream_seq": 1142
+        },
+        {
+          "cue_id": "SFX11",
+          "event_type": "wave_result",
+          "mock_stream_seq": 1143
+        }
+      ],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1143",
+        "canonical_state_id": "RESULTS",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1143,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 2800,
+          "remaining_seconds": 20,
+          "phase": "results",
+          "village_level": 15,
+          "wall_tier": 8,
+          "wall_hp": 340,
+          "wall_max": 1200,
+          "townhall_hp": 1920,
+          "townhall_max": 2000,
+          "wood": 320,
+          "stone": 240,
+          "food": 410,
+          "counts": {
+            "unique_joined": 260,
+            "builder": 58,
+            "guard": 78,
+            "fighter": 124
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 0
+            }
+          ],
+          "vote": {
+            "open": false,
+            "selected": "B",
+            "counts": {
+              "A": 34,
+              "B": 68,
+              "C": 25
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": "win",
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 19
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          }
+        }
+      }
+    },
+    {
+      "beat_id": "B18_RESULTS_NEXT_QUEUE_2900",
+      "wave_no": 10,
+      "wave_tick": 2900,
+      "logical_time_s": 290.0,
+      "showcase_video_time_s": 28.5,
+      "visual_state": "RESULTS_WIN",
+      "meaningful_visual_change": "Tick 2900: Results summary holds with 34 queued next-wave registrations shown in subordinate strip",
+      "audio_events": [],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1148",
+        "canonical_state_id": "RESULTS",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1148,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 2900,
+          "remaining_seconds": 10,
+          "phase": "results",
+          "village_level": 15,
+          "wall_tier": 8,
+          "wall_hp": 420,
+          "wall_max": 1200,
+          "townhall_hp": 1920,
+          "townhall_max": 2000,
+          "wood": 320,
+          "stone": 240,
+          "food": 410,
+          "counts": {
+            "unique_joined": 260,
+            "builder": 58,
+            "guard": 78,
+            "fighter": 124
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 0
+            }
+          ],
+          "vote": {
+            "open": false,
+            "selected": "B",
+            "counts": {
+              "A": 34,
+              "B": 68,
+              "C": 25
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": "win",
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 34
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          }
+        }
+      }
+    },
+    {
+      "beat_id": "B19_ROLLOVER_WAVE11_3000",
+      "wave_no": 11,
+      "wave_tick": 0,
+      "logical_time_s": 300.0,
+      "showcase_video_time_s": 30.0,
+      "visual_state": "PREP",
+      "meaningful_visual_change": "Tick 3000 -> Wave 11 Tick 0 rollover in-place (zero scene reload): Dawn lighting restored, 34 queued players active",
+      "audio_events": [
+        {
+          "cue_id": "SFX01",
+          "event_type": "role_accepted",
+          "mock_stream_seq": 1155
+        }
+      ],
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-001_seq_1155",
+        "canonical_state_id": "PREP",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-001",
+        "mock_stream_seq": 1155,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 11,
+          "wave_tick": 0,
+          "remaining_seconds": 300,
+          "phase": "prep",
+          "village_level": 15,
+          "wall_tier": 8,
+          "wall_hp": 720,
+          "wall_max": 1200,
+          "townhall_hp": 1950,
+          "townhall_max": 2000,
+          "wood": 320,
+          "stone": 240,
+          "food": 410,
+          "counts": {
+            "unique_joined": 34,
+            "builder": 11,
+            "guard": 11,
+            "fighter": 12
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 0
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 0
+            }
+          ],
+          "vote": {
+            "open": false,
+            "selected": null,
+            "counts": {
+              "A": 0,
+              "B": 0,
+              "C": 0
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 1800
+          },
+          "settlement": {
+            "wave_result": null,
+            "consecutive_losses": 0,
+            "is_post_loss_recovery": false,
+            "pending_next_wave_count": 0
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          }
+        }
+      }
+    }
+  ]
+}

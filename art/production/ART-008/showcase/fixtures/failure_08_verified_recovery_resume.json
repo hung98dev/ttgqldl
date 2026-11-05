@@ -1,0 +1,102 @@
+{
+  "sequence_id": "failure_08_verified_recovery_resume",
+  "filename": "failure_08_verified_recovery_resume.json",
+  "synthetic_fixture": true,
+  "title": "8. Gameplay Resumed After Verified Recovery & Deduplicated Replay",
+  "invariants_verified": [
+    "Replayed duplicate wave_result (SFX11) on reconnect is suppressed (plays 1 time total, never twice)",
+    "Two independent Fighter attack_resolved events (stream_seq 2104 & 2105) both remain playable",
+    "Post-loss recovery wall state 5 + relief pill rendered accurately"
+  ],
+  "replay_audio_verification": {
+    "replayed_victory_seqs": [
+      2099,
+      2099
+    ],
+    "victory_sting_plays": 1,
+    "independent_fighter_attack_seqs": [
+      2104,
+      2105
+    ],
+    "fighter_attack_plays": 2
+  },
+  "fixture": {
+    "synthetic_fixture": true,
+    "fixture_id": "synth-fail-08_seq_2105",
+    "canonical_state_id": "ASSAULT",
+    "attract_mode": false,
+    "schema_version": "ws-public-v1-synthetic",
+    "session_id": "synth-fail-08",
+    "mock_stream_seq": 2105,
+    "public_snapshot": {
+      "lifecycle": "running",
+      "source_status": "mock",
+      "pause_reasons": [],
+      "wave_no": 6,
+      "wave_tick": 1680,
+      "remaining_seconds": 132,
+      "phase": "assault",
+      "village_level": 14,
+      "wall_tier": 6,
+      "wall_hp": 780,
+      "wall_max": 1000,
+      "townhall_hp": 2000,
+      "townhall_max": 2000,
+      "wood": 320,
+      "stone": 240,
+      "food": 410,
+      "counts": {
+        "unique_joined": 106,
+        "builder": 26,
+        "guard": 34,
+        "fighter": 46
+      },
+      "lanes": [
+        {
+          "id": "west",
+          "ordinary_hp": 150
+        },
+        {
+          "id": "center",
+          "ordinary_hp": 210
+        },
+        {
+          "id": "east",
+          "ordinary_hp": 145
+        }
+      ],
+      "vote": {
+        "open": false,
+        "selected": null,
+        "counts": {
+          "A": 0,
+          "B": 0,
+          "C": 0
+        }
+      },
+      "boss": {
+        "boss_incoming": false,
+        "boss_exists": false,
+        "boss_hp": 0,
+        "boss_max_hp": 1800
+      },
+      "settlement": {
+        "wave_result": null,
+        "consecutive_losses": 1,
+        "is_post_loss_recovery": true,
+        "pending_next_wave_count": 0
+      },
+      "system_assist": {
+        "militia_active": false,
+        "militia_attack_bonus": 0
+      },
+      "diagnostics": {
+        "connection_state": "live",
+        "metrics_available": true,
+        "queue_fill_pct": 12,
+        "retryable_rejected_count": 0,
+        "confirmed_valid_drops": 0
+      }
+    }
+  }
+}

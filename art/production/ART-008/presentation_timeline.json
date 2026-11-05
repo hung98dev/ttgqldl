@@ -1,0 +1,258 @@
+{
+  "package_id": "ART-008",
+  "timeline_version": "bastion-dawn-v1-presentation-timeline",
+  "authority_separation": "Presentation-only mapping: Committed Game State -> Visual State -> Animation -> VFX -> Audio Cue. Never mutates gameplay ticks or computes combat.",
+  "full_wave_fixture_ref": "art/production/ART-008/showcase/fixtures/full_wave_300s_wave10_showcase.json",
+  "failure_sequence_refs": [
+    "art/production/ART-008/showcase/fixtures/failure_01_source_disconnect.json",
+    "art/production/ART-008/showcase/fixtures/failure_02_source_reconnect.json",
+    "art/production/ART-008/showcase/fixtures/failure_03_operator_pause.json",
+    "art/production/ART-008/showcase/fixtures/failure_04_storage_unavailable.json",
+    "art/production/ART-008/showcase/fixtures/failure_05_backpressure_no_loss.json",
+    "art/production/ART-008/showcase/fixtures/failure_06_confirmed_valid_loss.json",
+    "art/production/ART-008/showcase/fixtures/failure_07_no_viewers_waiting.json",
+    "art/production/ART-008/showcase/fixtures/failure_08_verified_recovery_resume.json"
+  ],
+  "wave10_beats_summary": [
+    {
+      "beat_id": "B00_WAITING",
+      "wave_no": 10,
+      "wave_tick": -1,
+      "logical_time_s": -0.1,
+      "visual_state": "WAITING_FOR_VIEWER",
+      "meaningful_visual_change": "Lobby waiting state (P=0): empty lanes, intact wall, primary CTA 'Bình luận XÂY / THỦ / ĐÁNH'",
+      "audio_cues": [
+        "AMB01"
+      ],
+      "mock_stream_seq": 1000
+    },
+    {
+      "beat_id": "B01_FIRST_JOIN_WAVE_START",
+      "wave_no": 10,
+      "wave_tick": 0,
+      "logical_time_s": 0.0,
+      "visual_state": "PREP",
+      "meaningful_visual_change": "First valid participant joins Builder -> wave_tick=0 starts, Militia assist active (P=1<=10), Join Toast slides in",
+      "audio_cues": [
+        "SFX01"
+      ],
+      "mock_stream_seq": 1001
+    },
+    {
+      "beat_id": "B02_PREP_CONSTRUCTION_20S",
+      "wave_no": 10,
+      "wave_tick": 200,
+      "logical_time_s": 20.0,
+      "visual_state": "PREP",
+      "meaningful_visual_change": "20s elapsed: 4 scaffolds active, Builders hammer wall masonry (+repair sparks), Guards & Fighters muster",
+      "audio_cues": [
+        "SFX02"
+      ],
+      "mock_stream_seq": 1008
+    },
+    {
+      "beat_id": "B03_PREP_MUSTER_40S",
+      "wave_no": 10,
+      "wave_tick": 400,
+      "logical_time_s": 40.0,
+      "visual_state": "PREP",
+      "meaningful_visual_change": "40s elapsed: role counters climb to 76 participants, resources harvested, timer 04:20",
+      "audio_cues": [
+        "SFX01"
+      ],
+      "mock_stream_seq": 1015
+    },
+    {
+      "beat_id": "B04_PREP_60S_ELAPSED",
+      "wave_no": 10,
+      "wave_tick": 600,
+      "logical_time_s": 60.0,
+      "visual_state": "PREP",
+      "meaningful_visual_change": "Tick 600 (60s elapsed): wall reinforced to tier 7 (1100/1100 HP), Builders repair contact",
+      "audio_cues": [
+        "SFX02"
+      ],
+      "mock_stream_seq": 1024
+    },
+    {
+      "beat_id": "B05_EVEN_WAVE_VOTE_OPEN",
+      "wave_no": 10,
+      "wave_tick": 800,
+      "logical_time_s": 80.0,
+      "visual_state": "VOTE_OPEN",
+      "meaningful_visual_change": "Tick 800: Even-wave tactical vote opens in subordinate dock strip (A/B/C live tallies)",
+      "audio_cues": [],
+      "mock_stream_seq": 1032
+    },
+    {
+      "beat_id": "B06_PREP_60_WARN",
+      "wave_no": 10,
+      "wave_tick": 1000,
+      "logical_time_s": 100.0,
+      "visual_state": "PREP_60_WARN",
+      "meaningful_visual_change": "Tick 1000: PREP 60-second remaining amber warning banner + active vote tallies update",
+      "audio_cues": [
+        "SFX01"
+      ],
+      "mock_stream_seq": 1041
+    },
+    {
+      "beat_id": "B07_VOTE_CLOSED",
+      "wave_no": 10,
+      "wave_tick": 1200,
+      "logical_time_s": 120.0,
+      "visual_state": "PREP_60_WARN",
+      "meaningful_visual_change": "Tick 1200: Vote closes -> Option B locked in subordinate dock strip + gavel chime SFX10",
+      "audio_cues": [
+        "SFX10"
+      ],
+      "mock_stream_seq": 1050
+    },
+    {
+      "beat_id": "B08_PREP_140S_FORTIFY",
+      "wave_no": 10,
+      "wave_tick": 1400,
+      "logical_time_s": 140.0,
+      "visual_state": "PREP_60_WARN",
+      "meaningful_visual_change": "Tick 1400: Option B wall reinforcement applied (1200/1200 HP), final pre-assault repair sparks",
+      "audio_cues": [
+        "SFX02"
+      ],
+      "mock_stream_seq": 1058
+    },
+    {
+      "beat_id": "B09_PREP_15_WARN",
+      "wave_no": 10,
+      "wave_tick": 1450,
+      "logical_time_s": 145.0,
+      "visual_state": "PREP_15_WARN",
+      "meaningful_visual_change": "Tick 1450: PREP 15-second crimson warning banner + dusk atmospheric grade",
+      "audio_cues": [],
+      "mock_stream_seq": 1062
+    },
+    {
+      "beat_id": "B10_ASSAULT_START",
+      "wave_no": 10,
+      "wave_tick": 1600,
+      "logical_time_s": 160.0,
+      "visual_state": "ASSAULT",
+      "meaningful_visual_change": "Tick 1600: ASSAULT starts -> Grunt, Runner, and Brute columns enter West, Center, and East lanes",
+      "audio_cues": [
+        "SFX05"
+      ],
+      "mock_stream_seq": 1070
+    },
+    {
+      "beat_id": "B11_FIRST_COMBAT_BOUNDARY",
+      "wave_no": 10,
+      "wave_tick": 1800,
+      "logical_time_s": 180.0,
+      "visual_state": "ASSAULT",
+      "meaningful_visual_change": "Tick 1800: First combat boundary -> Fighter SwordSlash + Guard ShieldBrace + Wall takes 180 damage",
+      "audio_cues": [
+        "SFX04",
+        "SFX03",
+        "SFX06"
+      ],
+      "mock_stream_seq": 1083
+    },
+    {
+      "beat_id": "B12_COMBAT_WALL_DAMAGED_200S",
+      "wave_no": 10,
+      "wave_tick": 2000,
+      "logical_time_s": 200.0,
+      "visual_state": "ASSAULT",
+      "meaningful_visual_change": "Tick 2000: Wall drops below 60% (680/1200 -> env_wall_state2_damaged) while Builders actively repair",
+      "audio_cues": [
+        "SFX06",
+        "SFX02"
+      ],
+      "mock_stream_seq": 1095
+    },
+    {
+      "beat_id": "B13_COMBAT_FLANK_CLASH_220S",
+      "wave_no": 10,
+      "wave_tick": 2200,
+      "logical_time_s": 220.0,
+      "visual_state": "ASSAULT",
+      "meaningful_visual_change": "Tick 2200: West & East flank HP reduced by Fighters; independent Fighter & Enemy strikes",
+      "audio_cues": [
+        "SFX04",
+        "SFX05"
+      ],
+      "mock_stream_seq": 1107
+    },
+    {
+      "beat_id": "B14_COMBAT_PRE_BOSS_240S",
+      "wave_no": 10,
+      "wave_tick": 2400,
+      "logical_time_s": 240.0,
+      "visual_state": "ASSAULT",
+      "meaningful_visual_change": "Tick 2400: Center vanguard thinned to 90 HP; Builders restore wall to 640/1200 before finale",
+      "audio_cues": [
+        "SFX02"
+      ],
+      "mock_stream_seq": 1115
+    },
+    {
+      "beat_id": "B15_BOSS_INCOMING_2450",
+      "wave_no": 10,
+      "wave_tick": 2450,
+      "logical_time_s": 245.0,
+      "visual_state": "BOSS_INCOMING",
+      "meaningful_visual_change": "Tick 2450: Boss Warning banner + eclipse palette + ground rune telegraph ONLY (Boss sprite NOT spawned before 2600!)",
+      "audio_cues": [
+        "SFX08"
+      ],
+      "mock_stream_seq": 1120
+    },
+    {
+      "beat_id": "B16_FINALE_BOSS_SPAWN_2600",
+      "wave_no": 10,
+      "wave_tick": 2600,
+      "logical_time_s": 260.0,
+      "visual_state": "BOSS_ACTIVE",
+      "meaningful_visual_change": "Tick 2600: FINALE starts -> Boss Warlord spawns on Center Causeway, executes CleaveSlam + wall drops to critical state 3 (260/1200)",
+      "audio_cues": [
+        "SFX09",
+        "SFX06"
+      ],
+      "mock_stream_seq": 1131
+    },
+    {
+      "beat_id": "B17_SETTLEMENT_VICTORY_2800",
+      "wave_no": 10,
+      "wave_tick": 2800,
+      "logical_time_s": 280.0,
+      "visual_state": "RESULTS_WIN",
+      "meaningful_visual_change": "Tick 2800: Final combat resolves Boss HP -> 0, authoritative settlement RESULTS_WIN + Victory fanfare SFX11",
+      "audio_cues": [
+        "SFX04",
+        "SFX11"
+      ],
+      "mock_stream_seq": 1143
+    },
+    {
+      "beat_id": "B18_RESULTS_NEXT_QUEUE_2900",
+      "wave_no": 10,
+      "wave_tick": 2900,
+      "logical_time_s": 290.0,
+      "visual_state": "RESULTS_WIN",
+      "meaningful_visual_change": "Tick 2900: Results summary holds with 34 queued next-wave registrations shown in subordinate strip",
+      "audio_cues": [],
+      "mock_stream_seq": 1148
+    },
+    {
+      "beat_id": "B19_ROLLOVER_WAVE11_3000",
+      "wave_no": 11,
+      "wave_tick": 0,
+      "logical_time_s": 300.0,
+      "visual_state": "PREP",
+      "meaningful_visual_change": "Tick 3000 -> Wave 11 Tick 0 rollover in-place (zero scene reload): Dawn lighting restored, 34 queued players active",
+      "audio_cues": [
+        "SFX01"
+      ],
+      "mock_stream_seq": 1155
+    }
+  ]
+}

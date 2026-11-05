@@ -1,0 +1,1985 @@
+{
+  "package_id": "ART-008",
+  "audit_status": "PASS",
+  "global_rights_status": "PENDING_REVIEW",
+  "gate_legal_status": "OPEN — formal human legal review required prior to commercial livestream launch",
+  "music_muted_by_default": true,
+  "music_default_volume_db": -80.0,
+  "unlicensed_third_party_assets_count": 0,
+  "voice_recordings_without_consent_count": 0,
+  "unauthorized_tiktok_live_connections": 0,
+  "strobe_effects_above_3hz_count": 0,
+  "mandatory_camera_shake_count": 0,
+  "total_audited_assets": 244,
+  "all_entries_pending_review": true,
+  "all_entries_zero_third_party": true,
+  "entries": [
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f00.png",
+      "sha256": "086759065134d4e76064883beb5f4f704fe8742065d3b17e602627bc47968605",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f01.png",
+      "sha256": "285b630b7f3639af98b7aa71000dacac9a47ddb59477c466cb99c8e2587f0841",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f02.png",
+      "sha256": "1eecc5ca71bec2b479df6ff4407cf49a23e73e409d05783d1b71f29a763b7277",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f03.png",
+      "sha256": "9bc3b9753f7f330a1295527adb2d6564d6eb6332e4f75bcdd371bda26eef2eb2",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f00.png",
+      "sha256": "ee89bcdf52d487c7544e9f42d5878e4ae557583d1743cc26401c166b0ef8efb2",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f01.png",
+      "sha256": "1c3ad5a4488da3fb1493757ab9a17b7ad76d58a25a5a460020b14343f918753c",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f02.png",
+      "sha256": "46010a7de7cd555d526ba9cb8c20130067737aee1e8bd3fb15ec833bed12903a",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f03.png",
+      "sha256": "91b03d2d822121550c182cf7db9925430b02af2a6528b1555e620315c73f3cb6",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f04.png",
+      "sha256": "b050ff0446fbff2bb296681f292c4fa723cf7738dd33a90a11225f1fe3ac29c9",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f05.png",
+      "sha256": "8c380aeb3ca408f7d64b55e214f1073a3547684d2a950528d81ca3ddcb7ff419",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f00.png",
+      "sha256": "2582b466d90219ce5f569ae2ef07b7720b1e057d8e64fc506f153ccdc76e3bf9",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f01.png",
+      "sha256": "292262b9414245242f85a42a520816f5fe5d364aa20e993e3fec4ac639f06d38",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f02.png",
+      "sha256": "c92e985885fe33a966b3db7cf0741515b2535105d47dcdb98b637e8ab6216d22",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f03.png",
+      "sha256": "19517b1705a5dddd7bc8ed728d97263cb2ff2c03b9df208b21e33b0ad76dbd18",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f04.png",
+      "sha256": "2358c045b0a34ffeb769cafc65a566dccbb342e9b01ed1f3081605accb50dd6a",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f05.png",
+      "sha256": "8c94504400dac59e1aa37084cdbc266b083fd92e931ee1cf54ee666304773ced",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/builder/frames/chr_role_builder_hit_f00.png",
+      "sha256": "967d5586976d24b29a414c6d775a42038b1649d00cf69cfa896f424d959cd22e",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/builder/frames/chr_role_builder_hit_f01.png",
+      "sha256": "7357fecc635374fadd9642063c54a973753254a722630db2798e33397347ecd0",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f00.png",
+      "sha256": "1b2cac50b9127947aa68de14e40304e8e8686d4a8ba25f64d620fa9618997b1f",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f01.png",
+      "sha256": "40c6c63a7de1e37d5ffc290750573143a4668bdded26f51873c2a59de64b5998",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f02.png",
+      "sha256": "5a28cac89a9bd6613d43cf358a0845398fa061544e0e7ede6aaa2897d50ca9b9",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f03.png",
+      "sha256": "2118e4d772cc0eb120f15ded142f76fd136e2e913beb2efe1f2b5e8322580a9f",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f00.png",
+      "sha256": "201750b2eb5c384b57887e0e29dff2ba884b95236abe7b65a7aa3191a445f7ba",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f01.png",
+      "sha256": "b72d2212825c0cb51ea7655d9681390497217f5b34ced8ebe9bdbce6b5461ba6",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f02.png",
+      "sha256": "d071158f1ae37d62921da83b550ad305259daf7c6e3e1b43213e2fc0880ab172",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f03.png",
+      "sha256": "99d924b8fea7939790bedc69962571d8a136024c48acd4d8404e48b9e8a51774",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f04.png",
+      "sha256": "5ed112fb3d530628030f479c2d02365974b34b5242d51c01b261ad38c57bc5ad",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f05.png",
+      "sha256": "63610441952e2dff0485e7cec441031be8df2de745a1a96bdae22fa4c00d80ab",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f00.png",
+      "sha256": "313b03fc23f55fe6bcb3485af0d830bf65ef5101854c22aa63e8d511cc6fe53f",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f01.png",
+      "sha256": "2fedc200a5bc3a08758e7f7673def5d3f684ac91cf1ea8505f3780e01f88a88e",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f02.png",
+      "sha256": "43e1ebdc1fa9f9b2138c18e76bb4703908048dbe1f8328bdf26283cb152dc86d",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f03.png",
+      "sha256": "748adac1aec5801650a7d118677070d90d654a3bcc01608576ba89e3636f9482",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f04.png",
+      "sha256": "3bacd6a1bd5dc48f3fb7be3f8504afcf818d554dca5c725d4129d1d8495d1376",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f05.png",
+      "sha256": "9e32886275a27195e8cb31284cf57dacb3b5e6d9befa1c2f86dca6383293ed5f",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_hit_f00.png",
+      "sha256": "a44f271a35d2f7c301549af4a557e05c4352809505dfd60cc9465079b1bcc363",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_hit_f01.png",
+      "sha256": "107b7daa85cca59f0b9b1476fec7e9f879fa7df7f12dca1a925e2ccda624a810",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/guard/frames/chr_role_guard_idle_f00.png",
+      "sha256": "034bdd97d87f63f9642f6b038f888324f78eeeabde1e464676007cdb16be9eb2",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/guard/frames/chr_role_guard_idle_f01.png",
+      "sha256": "db145a3bd6d0907f8ba8bee85c69db2e3b779a9b4c8130c6c0bb03a8c624fbde",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/guard/frames/chr_role_guard_idle_f02.png",
+      "sha256": "a62e08f15ef5f0f803333c399abc58c32a732bcf04b8bb85a5cb220ed6510ed9",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/guard/frames/chr_role_guard_idle_f03.png",
+      "sha256": "dbf548a94cf3fbc013f817c6054381f5dec1eada852c64c2daba3f29b21b48e7",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/guard/frames/chr_role_guard_walk_f00.png",
+      "sha256": "02e31f9913bb2a0c4f52ca159d4932064626759c4187f59f35cea81b8f680e15",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/guard/frames/chr_role_guard_walk_f01.png",
+      "sha256": "af7682b7970416318143074faa3e4f418fe6e6d5f2bb305e52237b651a64e6e3",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/guard/frames/chr_role_guard_walk_f02.png",
+      "sha256": "d70ca732a538421f7062f46e0b4b8713f6d82caa2df2c8d2edeecf31446fb27b",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/guard/frames/chr_role_guard_walk_f03.png",
+      "sha256": "515ef4579b21e3908ff4a0ed98dd7e13e5d03e9fd8cdf026aef4f1e96521375e",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/guard/frames/chr_role_guard_walk_f04.png",
+      "sha256": "1f7fc61ca3dea07bb8d9cca01f5fb1267484b4e3080d8cc44e6ccee633d3be52",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/guard/frames/chr_role_guard_walk_f05.png",
+      "sha256": "ab7a5eeafd2fc4f803dd608d8691f452e21f3ca5367195b6acc2a97c2074f1ad",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f00.png",
+      "sha256": "b0d9a2e70ce7e4c9eb1b6d9a9e7253380d7ebddcc441d3c62ca9bd00255f91bb",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f01.png",
+      "sha256": "7d176f09d31f78801ff301dd62d8bfc36cf672a743a61f7686543572bd20ab11",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f02.png",
+      "sha256": "776aa4e3e1097d99def998e116c85dc8e370682772249bbeda0560e979087d17",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f03.png",
+      "sha256": "cf72e4b055ac6430479061276be1f77f231c4fcb2d74874b138d3ecac69784a0",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f04.png",
+      "sha256": "dbfa2a9848262e43e034b3b51783159efa22f1db5d03403b9b28e81b68acc46a",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f05.png",
+      "sha256": "e71bcdeb33be3e84580c75ca3c63b6de65862fa93ffd61ca6dd7492c05d02f12",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/guard/frames/chr_role_guard_hit_f00.png",
+      "sha256": "57e314a9856df948986e1b623c42a463bd90e025d5bcf078843289e5d8109b30",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/guard/frames/chr_role_guard_hit_f01.png",
+      "sha256": "685d08f98f15076d6d1c306565b84f48672327d7ad4895f04a9d7825c478f9bf",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_idle_f00.png",
+      "sha256": "928d7a607814a8a5d9ffbdf8661492dd734a2e05f7d70a7a8117bb9ebd9d80b6",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_idle_f01.png",
+      "sha256": "c692eb6576b8a940ad8134b554562ff4156a98d03c23b75f933fc23b10748596",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_idle_f02.png",
+      "sha256": "f0dceaa1143ae808e536a3aacaeea702ce0450f6a58107574bf23d281f81b969",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_idle_f03.png",
+      "sha256": "bbbe60e23a1f04b1c82343e5e18a806baa3f2f5febc7e4ebd29b9fe1f2c589db",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_walk_f00.png",
+      "sha256": "1dd946e1f23baf53b87e22b632bd979a6c1b9aabd175f77b278b0e3cab183e52",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_walk_f01.png",
+      "sha256": "6927e38d486fea8419de2eef283533d11b64d27c1d3c0f69dd842da54dbe4a66",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_walk_f02.png",
+      "sha256": "578bddd07c0366b573bb568994da3cbedbadb7de1c75e1cd9952c039bd54e299",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_walk_f03.png",
+      "sha256": "8bf3af3230720e9c41459cb9e34e25a629653a51eda36b2c06bade63b3cd57ca",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_walk_f04.png",
+      "sha256": "b47d1808cb096373f8d200ed0658fcb254f926e8e416e14267cc6385017aa211",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_walk_f05.png",
+      "sha256": "bef5c8dbdd4ca050f1184787c9e85b055d1fdfb82e3cd7c570c9300fa2557ab6",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f00.png",
+      "sha256": "f8fa1520ca9d46837058e2e68a5f7c010317b36645928b3d703dae009022db97",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f01.png",
+      "sha256": "081a401e876fa9d0e99c359225d0364870f8a5366ab441d3b2be390826b88529",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f02.png",
+      "sha256": "aaf411ec8d24510b010a548497f769dab191ce4f3fab90382a0d83afc0c10dc6",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f03.png",
+      "sha256": "5ea7d68501100aa030bf04f7dffa494b16edf1713f4fe6e8b95b9f03a1226432",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f04.png",
+      "sha256": "0445e9e65460452942d298ecad4e82dfc13f0497ea7d9aa22cf958083768626d",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f05.png",
+      "sha256": "e4f56a22c0c8b5e39c99fb2409c5988e88c5e2169cb08e05d5a8e55f0dcb50bb",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_hit_f00.png",
+      "sha256": "9fb14ed4905bad3f255952ec4f8bde6f962279a7397bf3eb91ea631b4927fa5e",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_hit_f01.png",
+      "sha256": "01d91354b97fb287d25cadd2a13e2ffecc9c3176b3e0e69acbabf4c451b9276e",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_idle_f00.png",
+      "sha256": "e869fbec650126ffffbca3d41e51b1d9eb3e9af25d520e46baabd684bbfed67a",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_idle_f01.png",
+      "sha256": "f33e4f24d7587b2de62dac3772076b9b49f6c36310b9f094021244e3ea338428",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_idle_f02.png",
+      "sha256": "d11499cf6ce9bcbdf6fee5998a17337ab09e3f4c9165855142be33e139c5d957",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_idle_f03.png",
+      "sha256": "08a390f3e5005ff159c6bff3c29d12fa70b2bc1009a04ba2a12559a41bea29a2",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f00.png",
+      "sha256": "41c8c9088f92c1457a067a031603487ae75ada8a633aa144eff5d147384cd2bd",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f01.png",
+      "sha256": "35ab9074a49ec86e257530f2ac8044644ef372410668fa0e925208a8ee9dc4c0",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f02.png",
+      "sha256": "15348905d191c1ac42227fb7d81980fd88b041667f132c6e029b71ba7c0d4ee9",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f03.png",
+      "sha256": "f02a2b233153bde0b54e6596ca1039aebc964359bc1910abbf965952ec7f688b",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f04.png",
+      "sha256": "25ca1a48b658e77a1bb573db13da691a60c9c9c342f0571b9069f541b8df32c8",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f05.png",
+      "sha256": "01abea9f9418a39bea151a8d858786ff268b5dd87fcca522b8a0a0be3042ec68",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f00.png",
+      "sha256": "ae44cb219d095a691468f5e29dd5b3fec22f1282177c3d6072d825fe5198b3df",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f01.png",
+      "sha256": "56f71209ce2c1ce22369cafd1fce79829a03f047a4219e4239bb7930fa5765e1",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f02.png",
+      "sha256": "5a7729b0898ea753458879c6c58723cb88f0602c43fc21a4713c6b2e17a1fadd",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f03.png",
+      "sha256": "bd56f1d1b524d9763c577f479379c9aaa46f818711becd479a2b951a04fde6e0",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f04.png",
+      "sha256": "fc01fa830cc46551e2a7caad84e6a50a5d4b9d5f2fbc38b1f72770383fd91c8a",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f05.png",
+      "sha256": "bfc03f7b41c9da73b34fe91570c24eb9bc1f189fbfa33a870fc98d5e852b80db",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_hit_f00.png",
+      "sha256": "ea7f0d8e796dc4fdc5cab92297935bbb702fc2ebc5ba10ec96335d65e1ab969f",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_hit_f01.png",
+      "sha256": "43e533fab3af9f4e11c25e345d0e21da8c5e9b3a76acf1c6dbc6a5803ebc31b8",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_idle_f00.png",
+      "sha256": "7373312a34958c01dd1855848a483f71621d81b5c2d1b92086f64814efae1c79",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_idle_f01.png",
+      "sha256": "b6ffe253c2b1d59f03663da13e33d0050b6cdaf09a6fb28cb152d0b4ef4a9d90",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_idle_f02.png",
+      "sha256": "abbbd385901a7de98575692d474b68c6c857aeec4f5b3bf79d8d38ab6669e9d8",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_idle_f03.png",
+      "sha256": "48eac11bbcf03b9c38315223d384633a339478d4133d7f491cb72d7e3198a62d",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f00.png",
+      "sha256": "655d5aa53ae82f1bc06af2984441d2c677124aeed3ac481e6a03884fdd8905fe",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f01.png",
+      "sha256": "d260f5a9520407b9cfd6125035124c00d52cd2e6cb8c792b2a9a658841f70424",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f02.png",
+      "sha256": "a1c4996a6e38deee019fd42ac0de27e2419bd55ff1a3818c99fee5c6b54f9272",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f03.png",
+      "sha256": "3a9f2be61ef9ebcacc1850d36244d9b35f42088ffddffc160938706b87bbda03",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f04.png",
+      "sha256": "b8a7e774085ca8e3a8c52f161873cc12213940aedec6b688b9aa15c471d728b6",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f05.png",
+      "sha256": "a0d8d5825f4b0ea4b9daea6670d2dfa3e8161814405527bdc4594be918e5317a",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f00.png",
+      "sha256": "bc11fbcc3a2ba060804dc96ea62df23aaea60a3a6772216540ab661bbeedb75b",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f01.png",
+      "sha256": "3763e6b683a822b88349277747d292f91e1000bb97c60ac36389191eeb25e905",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f02.png",
+      "sha256": "d459598a84a8cdd38dc6a9008b60d47113ee23472ffd6d33fe9208f10029230e",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f03.png",
+      "sha256": "68249cd5abcfb36ae5f803d71d2514bc6c2a821785d702b6f0b48afa84187b80",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f04.png",
+      "sha256": "b7cb3500d6d2a578c58d580c0b7fcc5eb228fdebc01882e00abf0cd77150f027",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f05.png",
+      "sha256": "d99e444f8f181555eac5dab6d3d12859035a5633f1224ffe50dc07503464b213",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_hit_f00.png",
+      "sha256": "352d4011f2ed6d352d919bf3fa227e1a65338b82ec9c097efa0a18fcf51e6ab4",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_hit_f01.png",
+      "sha256": "bebf945eb3536ffe28644165ede2e0e29c54849768556c34c5787b434186d4cb",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f00.png",
+      "sha256": "52e70c84f52df9afc2426704e26c1267d18c5f6e5c081f823efb1dbb5ea670ec",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f01.png",
+      "sha256": "1ad16d92eedb41fff81b58b7b7391af741ab53aaab551571246945ed0d8b7bfa",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f02.png",
+      "sha256": "2a3a33b2a46c1d379fcef25400ed7468f13e029aa1bdb458dcdbaa509a470ef6",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f03.png",
+      "sha256": "63a6f5f87836320f194d119b3e3c7750a5f78e3885fe6c355710039b90de1fcf",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f04.png",
+      "sha256": "1461885b675747e52f534eaa9d289340e6ff12a36013bed6fb0ae5c6052d0a35",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f05.png",
+      "sha256": "e59833087b9043b81b581a352b23556670b1489fd825b6ce2540d03d35b29bf4",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f00.png",
+      "sha256": "af27f9a26f7b6df8cbf3d399b0688d7125b5eb946f8bb8f53d97bd425d60a5c0",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f01.png",
+      "sha256": "747bde1b8b897ec5db1020783beb7c8ee3c8860a9f676d4ed2ef756097732275",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f02.png",
+      "sha256": "6205c0fb99846e723e3432cc90e0e6b3629c94520138fa82b22c06364d98d0d7",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f03.png",
+      "sha256": "859bc5b19de97716dbf4f99420230660ffbd956799309409108d5abc2b093a02",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f04.png",
+      "sha256": "1378a83114e753d6b2acdeb5cdc9674b1bb0c47b3d463964985e5424492aced0",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f05.png",
+      "sha256": "7abd84f2838b9fa8fe23814107db3f0280913b06f8d611fcbc9ebfa2b146f5a4",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f06.png",
+      "sha256": "678b748452865fe0ece6e10697fd98b37d8c031a9832104abf32acb8f62ac464",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f07.png",
+      "sha256": "ed1eaa03ffe4fe696b955c2e307e9897307d7f28f1951c8a27fc800a86f89cc6",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_hit_f00.png",
+      "sha256": "4fd194cac9dc596e09c641f04282d4950efd4d5168e28a164469bff2f41e4579",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_hit_f01.png",
+      "sha256": "c3c7dd96422292f2e0a258563aec469e217edb043b217ecbbbf342f26c3eba75",
+      "origin": "First-party deterministic Bastion Dawn 2D pixel/vector rig pipeline",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f00.png",
+      "sha256": "38a2c3e2b19924ce59a88f08d770f1232943308822f3fa4f864a1a7ab7ab43d8",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f01.png",
+      "sha256": "b56a28e7c716840f67ade0ffe24545e4f91ae38f4dfa125a04db365b036e4ddc",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f02.png",
+      "sha256": "a95c73b3166c3a734e119b5a9ca83f580861a9a1d89ba30895badc97c1d99516",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f03.png",
+      "sha256": "c0d7e13f41687b6118bfc0c4557732e34eb7f02a3a18b5845038077619fbabfa",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f04.png",
+      "sha256": "d2a59177f9f765d8e2fd8829d32142cbd6dbfbd8b77c6706427f4e07e676bc45",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-003",
+      "asset_path": "art/production/ART-003/vfx/builder_repair_spark/frames/vfx_builder_repair_spark_f05.png",
+      "sha256": "b9203b381bdabe8948bfeb7fe7ae6b7ca8bd1673860e78784d3745763f398d7b",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/guard_shield_block/frames/vfx_guard_shield_block_f00.png",
+      "sha256": "57bd6328b49c8f9b48d138daf70f601dd797ea5e3754068bdc9c81ff27e02404",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/guard_shield_block/frames/vfx_guard_shield_block_f01.png",
+      "sha256": "773e36383c75594a0dc078e99b5691aa76742e2d670d555f800454adefd32a72",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/guard_shield_block/frames/vfx_guard_shield_block_f02.png",
+      "sha256": "29773bc88648ce690344f310c0ab79621f25d88a979f05ce64d89e7c3a1f91d6",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/guard_shield_block/frames/vfx_guard_shield_block_f03.png",
+      "sha256": "421b59d7933f38fa110ad09a07e23b43c2e06330db2f582ab00c9327a28828c6",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/fighter_slash_arc/frames/vfx_fighter_slash_arc_f00.png",
+      "sha256": "60a2256965e7ab5656c47f1e6529b7ffdbafa68938e9286ee1810f3ad5ea9016",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/fighter_slash_arc/frames/vfx_fighter_slash_arc_f01.png",
+      "sha256": "9b6e346681e87f63d645628d2003a00c2a97d0807c85491bb1485888ccf04b6f",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/fighter_slash_arc/frames/vfx_fighter_slash_arc_f02.png",
+      "sha256": "1c04f84b1572ebec46e09b2c9bcf11fdfe39a3b2da21700745cc3f7d6c7aa233",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/fighter_slash_arc/frames/vfx_fighter_slash_arc_f03.png",
+      "sha256": "dd06b878ec2d4a51df89035d2df2a255dd3a45a99275f7f9a1613bfa08f2b6fe",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f00.png",
+      "sha256": "b613107122a0f5b555e1de9d970eecda8023f646e8d84fc7b5e2e74621e3c1e1",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f01.png",
+      "sha256": "4be5b383d45921c4adb42af042582082e4d0c86d4251254f4dd2b1732dd0ed93",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f02.png",
+      "sha256": "76e1cb81ac644b21b57a61bc98b85cfaa12821f61984fcb09e15dcd6977c72be",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f03.png",
+      "sha256": "3b2851b78f3fb7b035382c8021387b3487d77cf470493fd90cb10adc0b06a288",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f04.png",
+      "sha256": "41dd1ccfef1071a372d550ac5847decf0a379cfdd9bace8592d149c6a0ddfa42",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f05.png",
+      "sha256": "7d965bf7d73c60a66a3e1b0fc89c062ada80dfaeacdc108e94c5e0a82c6b4669",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f00.png",
+      "sha256": "06af0820fe8dec6e1d6e50e4fb62a7fbe2729feec7dbeb6b53c8cff0acda9375",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f01.png",
+      "sha256": "96ddd298f3dda25fb40fd76a01d514aec508383acb45c52b59277e5b12df33cc",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f02.png",
+      "sha256": "b9f0beb208fade8518fdb56e00a98f35c3e0f7b0be06b09c38057c08942fb208",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f03.png",
+      "sha256": "175eb624e90d2364fdf1f36fd0da405abe03c21f6a771878a0cb6638d3c1ffdf",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f04.png",
+      "sha256": "236489eb14cad215576886d9e1d5a19d07454880c6408b0abeab753e7822020c",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f05.png",
+      "sha256": "7ac22256381cabe6af6c91cbc472cca9e453c1f8a07344d82b51d700768f3af8",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f06.png",
+      "sha256": "2fc4c22e6c441c9ec9195221c01998dee2bb72d0c17a7d4e9526ec8bcbfbd61b",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f07.png",
+      "sha256": "390af19021111b1f5b79e43573c0538c70b2f9d4c269c539ba6808cb030584a1",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f08.png",
+      "sha256": "8da2ce388c509e2c3106c6bbb1538cad6b099f2125f4d99b06b6aa7578a47322",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-004",
+      "asset_path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f09.png",
+      "sha256": "8d6186f9686a2b2f9ad3263a731b4aba0d4b65985993febb6a95c31f276971f8",
+      "origin": "First-party deterministic Bastion Dawn VFX frame generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/castle/frames/env_castle_band1_lv01_09.png",
+      "sha256": "faa449b556df1a570a3efc5598436818a57a2724898c6fb1283bab0e78eecd59",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/castle/frames/env_castle_band2_lv10_24.png",
+      "sha256": "fc9eaff0e59c3c721f5dce2614eedcdec5228fa684c60691e4caa86e4c357f35",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/castle/frames/env_castle_band3_lv25_39.png",
+      "sha256": "a255388dbf31a2f682ae5aba797b930e49c1bd307c0ea5659cacfdc4a9dd40c5",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/castle/frames/env_castle_band4_lv40_50.png",
+      "sha256": "e3de72a62853a389601968a46ce9c49a2827207dead94fff5cc197642b876d42",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/wall/states/env_wall_state1_healthy.png",
+      "sha256": "3964909d951782dbef930ed23fbd722ae21418b5cb846af91171666d561d60a5",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/wall/states/env_wall_state2_damaged.png",
+      "sha256": "8185e41db7d2df310226ea210cd0e287514dc98315fad8468764da8b5f0a679e",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/wall/states/env_wall_state3_critical.png",
+      "sha256": "2fd97063fe3bec023ea3fd28c10e8a12bcbb1447e4882cd706a6d0f976a23a2d",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/wall/states/env_wall_state4_breached.png",
+      "sha256": "7c05fbd1a83c7570e9cbe90d14b36587aebb738721cd57ddc94307aa52352977",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/wall/states/env_wall_state5_recovery.png",
+      "sha256": "b56430ca8632da69b8c8195a15ea7917bd62d825a37975a856a16e90d38bf591",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/wall/scaffold/env_wall_repair_scaffold.png",
+      "sha256": "58a2ee26a4388aa8cbc76a83003be95be88278505ca0f69f27e7157560e5d098",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/buildings/watchtower/env_bldg_watchtower.png",
+      "sha256": "db5428ab160e4d337bd1a7f90d06c10a9b48bc9f9f8bdc46a819ee832ae3808c",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/buildings/houses/env_house_01_artisan_gable.png",
+      "sha256": "d0567527f3defd5d72d6817229b264096d87196f54b8e8099caf85ce157984d5",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/buildings/houses/env_house_02_granary_round.png",
+      "sha256": "79e7ba150dffae6b0b69dbcd33abe01e69e84f3ee90310e37d6fac3b61e799ce",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/buildings/houses/env_house_03_mason_lodge.png",
+      "sha256": "7f12c1211900388f000d0313f46ca593f6454fd454517a13653324f594811d25",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/buildings/houses/env_house_04_bakery_chimney.png",
+      "sha256": "93a55cc1136fab36204865299fcc44d7cf8496e4573d5fbc78e320fdb564c2d3",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/buildings/houses/env_house_05_smithy_shed.png",
+      "sha256": "3ac321860e0860fbe82056bda45f9c36a2210ee40f1bcfb8e8d05844aed62943",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/buildings/houses/env_house_06_guard_quarters.png",
+      "sha256": "ff3f91f366109f8ed74582c3fb6271c6a99d02983935d88b546cb5ec1abd9d88",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/buildings/props/env_prop_supply_cart.png",
+      "sha256": "2048a1c52e5baacc02bb0c49eceee47cf9695656412a4285edb04d615e5e4840",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/buildings/props/env_prop_stone_crates.png",
+      "sha256": "fef89afe93d7c4d08a2a7cf06886d1c26c5688dcf9221e9c2f7b6749289f86b9",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/buildings/props/env_prop_sun_banner.png",
+      "sha256": "b4e2c978d6892e26eec5b7cbbcf11d063b267ebef9fa9e1729c3533d52820177",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/wall/layers/env_wall_state1_healthy_back.png",
+      "sha256": "fed061511c90344f46359df44d32ac0e41f689aa93e619e7400e9d2a125ff931",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/wall/layers/env_wall_state1_healthy_front.png",
+      "sha256": "7ace5ef334fb39b16f5fceb479bb234974672b8bcb6ed3364a5fccf75093b2e2",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/wall/layers/env_wall_state2_damaged_back.png",
+      "sha256": "abe43bdf50e246798a87c0288b2c22629b95bae3534c8207460aebf3e5713668",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/wall/layers/env_wall_state2_damaged_front.png",
+      "sha256": "5395b4a8309e6bc050bbfe9fdfc8d805ff26479a75cb3615eaa73ca27a66719e",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/wall/layers/env_wall_state3_critical_back.png",
+      "sha256": "05d7af423ff12d916cb0b6d592714e7b0541d29528ce16336e224328b8551662",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/wall/layers/env_wall_state3_critical_front.png",
+      "sha256": "7e3dc0161250b996fe34c3caec25f22ab44129dc913e2cb9f8bb930e61a6559a",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/wall/layers/env_wall_state4_breached_back.png",
+      "sha256": "409c2898d3ccd5d88ac9c6c7455caf8ad78e08879a9809478eed717a888e347e",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/wall/layers/env_wall_state4_breached_front.png",
+      "sha256": "c3d420c06625a0dcbfd64b18688d737de9924b2d783d1a2a35275223e0cd4e45",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/wall/layers/env_wall_state5_recovery_back.png",
+      "sha256": "e9701d62dd3688f1baef5445480ffc8e12e810761b08234355dbe261ceeda624",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/wall/layers/env_wall_state5_recovery_front.png",
+      "sha256": "bdda4206cb42151309b0d275f845170a809aa8d1f141e847513e04136dcd93c1",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/terrain/transitions/trans_ochre_verge_strip.png",
+      "sha256": "2118e3b9143128f115a32ec7e000ea7fba964587779218e8824582dde4704c25",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/terrain/transitions/trans_causeway_stone_curb.png",
+      "sha256": "d1c672f73b891df25187da89ece2c1fde697e59ba9c55e8dd8d03d5ae65ecfc9",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/terrain/transitions/trans_lane_bastion_apron.png",
+      "sha256": "44cffbf19f885348a7cf59aad947723fc54c14a3dfec649d56856cce39cdf33c",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/terrain/transitions/trans_meadow_patch_mask.png",
+      "sha256": "c8e877ae57274637e7c2259578d63fc8130ff8cf6ab6393121e8a86aae69d242",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/terrain/tiles/env_tile_01_meadow_main.png",
+      "sha256": "3f647ef08a3788ee94e85e0fbdda94547fd2c2457f5f78d794b5660cb02953c3",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/terrain/tiles/env_tile_02_meadow_variation.png",
+      "sha256": "b01d596be92c074951460dd6dccb2fe7bcb2b27194dde4beb80715a8f3f57bb5",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/terrain/tiles/env_tile_03_ochre_road_body.png",
+      "sha256": "d9de404e942e70ed73f24ce5d772804d72e4bca579e668166443f2da2303b573",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/terrain/tiles/env_tile_04_ochre_road_border.png",
+      "sha256": "0eff7a7bb34cde77c1d1093660021852c8c946984c4752379091de25c75cf38a",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/terrain/tiles/env_tile_05_limestone_causeway.png",
+      "sha256": "d845f9daf4203e4e0ad580543b0f9141b6b9ed02802fcc9440b700d9fe21b2da",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-005",
+      "asset_path": "art/production/ART-005/terrain/tiles/env_tile_06_courtyard_plaza.png",
+      "sha256": "27c162099001b74da855bc994cddffcd8c969bcccce1c4384da0be772b18a59d",
+      "origin": "First-party deterministic Bastion Dawn modular environment builder",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_wood.png",
+      "sha256": "b0dc1138cf314aee3bc567ffa21d9b3422ba95f514c4a0f993ed517481901178",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_stone.png",
+      "sha256": "bc637133ceba30044f070785df14d7d3e92fcbecb00b41e1402019080dcf4e8b",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_food.png",
+      "sha256": "2c7e622031bbecbc983e6dfa9ed3ee1288f8fcc014f56fa4489837b620668142",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_castle.png",
+      "sha256": "a9883d9b1c542d117945d8aebd46c8c8286195f625bc1a89187c77d76cde2352",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_wall.png",
+      "sha256": "a144786f9ba86948570e5b58342b3534de029a887d55f065b5f4994c43e71d81",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_boss.png",
+      "sha256": "ab24f5918b862d22f09571070ae5311d53ab51c9cbf2a1a04e00f8e3e4f07ad2",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_danger.png",
+      "sha256": "0a381ad883cf6cc80862c86f0373f979b2c858b32d54030f4ea4c2b36255f88f",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_timer.png",
+      "sha256": "6696c2d2a682eaeabbd9680b5840493f505fdb1559ba55d32954d1b0b2e768c4",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_builder.png",
+      "sha256": "981b986044b527e4c3e37d13b5b6562fa72459db5a9ea432e5a4374b35954f17",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_guard.png",
+      "sha256": "5bc9c1554dac856152ac7c0fd22e09644b7894904f404b42b75969bcba9af83c",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_fighter.png",
+      "sha256": "73978b77e3f4b597ea99eff2c5750e7ab5237790b3e9042445e162a5d956f181",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_vote_a.png",
+      "sha256": "a29a93f7bfe75df7a3276e6702754b99b1fa5a65950a4ca72acc50a4f0a1d3e5",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_vote_b.png",
+      "sha256": "ef1a351a009fbbfe5a804e26a91dc0431d2d2f3963817f7429acab1579041fed",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_vote_c.png",
+      "sha256": "755cc0f8bcf0c5f4c3e9fa00d454ad37b12dabe0ee1087b36d628822701dd82d",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_source_health.png",
+      "sha256": "7463589c917480708a9f5dea4079b340d8c2a07ba39c382fc0c94733fd1412fb",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_pause.png",
+      "sha256": "73125ecc39c8c2a0da8dea9dad6c54bc41e7219fab6f80193008f8cda2729008",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_resume.png",
+      "sha256": "36ee0cf33177c543a978cc0e4a37b58da0e8b633a6d1dcba56fe16ebfb4deb92",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_reconnect.png",
+      "sha256": "42e4737c305badc2326b4d1e9307fa6c0bf552751eb0115bfc7b3351cd4440c5",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_error.png",
+      "sha256": "f4ef2430ca1d008d9c4edbcd063f7f6dbccf9e379eaabc413700826184a37fc4",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/icons/ui_icon_militia.png",
+      "sha256": "b4726234b55f03a439111160bb2578b4e8ea0545cff78be3f2178a71ac26ac66",
+      "origin": "First-party Bastion Dawn vector/pixel UI icon pipeline (text-free)",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/components/ui_comp_resource_bar.png",
+      "sha256": "9eaa1b717b9dd14b906b0e5672faad65c3355963dc7723ecc831e387ec8bcb42",
+      "origin": "First-party Bastion Dawn 9-slice UI skin generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/components/ui_comp_hp_bar_frame.png",
+      "sha256": "f1e322bc2ba95d18acbfa5cbf3181da1d336cb0641a4c2709837860e03fdbdfd",
+      "origin": "First-party Bastion Dawn 9-slice UI skin generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/components/ui_comp_hp_bar_fill_healthy.png",
+      "sha256": "7b4ec1a9f1084b997941a1c606fd9290670da199b687b3973ddb5ba3899d2516",
+      "origin": "First-party Bastion Dawn 9-slice UI skin generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/components/ui_comp_hp_bar_fill_warn.png",
+      "sha256": "764c1eafd1856e8eab3a6e11bf7c63ac23829a5f7c9fe789124a216953d2e2c1",
+      "origin": "First-party Bastion Dawn 9-slice UI skin generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/components/ui_comp_hp_bar_fill_crit.png",
+      "sha256": "09f400dc391575cde7cad06b599cea4577e9b4f0a488d77ce322148763ad8dc1",
+      "origin": "First-party Bastion Dawn 9-slice UI skin generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/components/ui_comp_role_counter_builder.png",
+      "sha256": "147bb30e4c6cbac0c5a2180bd236d627fb3a2206a7f636d199420e963a3a9766",
+      "origin": "First-party Bastion Dawn 9-slice UI skin generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/components/ui_comp_role_counter_guard.png",
+      "sha256": "37bd1e47b4b8faa0cec04df9a396afd46fdee7da0a354319a02d0219372a20fb",
+      "origin": "First-party Bastion Dawn 9-slice UI skin generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/components/ui_comp_role_counter_fighter.png",
+      "sha256": "a0851d431c335f1f4699dd653c18cdba4ff982fddab1e20c566eedc3c61bb085",
+      "origin": "First-party Bastion Dawn 9-slice UI skin generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/components/ui_comp_vote_card_open.png",
+      "sha256": "e3dfeca15982ff12f8184715754152b800581bb3995fee561175c0fab13b693f",
+      "origin": "First-party Bastion Dawn 9-slice UI skin generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/components/ui_comp_vote_card_locked.png",
+      "sha256": "a56283261ea7dd48e05097665e3d28e35ded787e1423a71831054373c9597c7e",
+      "origin": "First-party Bastion Dawn 9-slice UI skin generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/components/ui_comp_status_pill_ok.png",
+      "sha256": "5d47a8701bc58747d4be5a637bae4bae9cd79d566d5bc61176ec3d1bd11742b1",
+      "origin": "First-party Bastion Dawn 9-slice UI skin generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/components/ui_comp_status_pill_warn.png",
+      "sha256": "b43f26bcfc4e704cc4cb86cf3d37187811cd983fa38d75a0e8fd593be64aa4dd",
+      "origin": "First-party Bastion Dawn 9-slice UI skin generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/components/ui_comp_status_pill_err.png",
+      "sha256": "663a16a792eb0fe3da7130770e69350996784dc5fd4c9e6062a9a13296952b6f",
+      "origin": "First-party Bastion Dawn 9-slice UI skin generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/components/ui_comp_cta_banner.png",
+      "sha256": "0f9856672d3152f9cf5fa593017072ad9e83f1b3feaefdf5cfd7130fc56673f7",
+      "origin": "First-party Bastion Dawn 9-slice UI skin generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-006",
+      "asset_path": "art/production/ART-006/components/ui_comp_toast_join.png",
+      "sha256": "756a7f08ed2d03a245859bace6737849c085feaad8367aa96d8d2eb7d13979e8",
+      "origin": "First-party Bastion Dawn 9-slice UI skin generator",
+      "third_party_content": "NONE",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-007",
+      "asset_path": "art/production/ART-007/sfx/wav/sfx_role_join.wav",
+      "sha256": "2c036cb264bf94aab08d89b8315dfd30b13090d3901d1b0606188f14bf0ca149",
+      "origin": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_role_join)",
+      "third_party_content": "NONE",
+      "music_muted_by_default": false,
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-007",
+      "asset_path": "art/production/ART-007/sfx/wav/sfx_builder_repair.wav",
+      "sha256": "1a03947f4e2ceeb7e2b0b036b8f94d8879e062e5bb0efe6bd75045705048e8f1",
+      "origin": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_builder_repair)",
+      "third_party_content": "NONE",
+      "music_muted_by_default": false,
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-007",
+      "asset_path": "art/production/ART-007/sfx/wav/sfx_guard_block.wav",
+      "sha256": "00148a0049d503e08582e76e0c7dd382e40fc473cbdaea98707e1c9d4ac74384",
+      "origin": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_guard_block)",
+      "third_party_content": "NONE",
+      "music_muted_by_default": false,
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-007",
+      "asset_path": "art/production/ART-007/sfx/wav/sfx_fighter_slash.wav",
+      "sha256": "39fd514f292c8f0a6765cac521826351f1e9a7bf2356f30823aa8054681ae5c2",
+      "origin": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_fighter_slash)",
+      "third_party_content": "NONE",
+      "music_muted_by_default": false,
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-007",
+      "asset_path": "art/production/ART-007/sfx/wav/sfx_enemy_attack.wav",
+      "sha256": "635b7b0805321fd87df04e7e11fa8c398c051eec982783dd59c4e27673456097",
+      "origin": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_enemy_attack)",
+      "third_party_content": "NONE",
+      "music_muted_by_default": false,
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-007",
+      "asset_path": "art/production/ART-007/sfx/wav/sfx_wall_damage.wav",
+      "sha256": "6a559d2017be61f05797aec7b4573244cd6ce3586252f36976491ab3cff5acd0",
+      "origin": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_wall_damage)",
+      "third_party_content": "NONE",
+      "music_muted_by_default": false,
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-007",
+      "asset_path": "art/production/ART-007/sfx/wav/sfx_wall_breach.wav",
+      "sha256": "c71874666887169c780eb8fc1f97442991374c50dbc56a167c25c84727be7b15",
+      "origin": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_wall_breach)",
+      "third_party_content": "NONE",
+      "music_muted_by_default": false,
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-007",
+      "asset_path": "art/production/ART-007/sfx/wav/sfx_boss_warning.wav",
+      "sha256": "b1edf126f2bfa970d49b7f5a2252962ce4900fec118bf2a948ebf0dc4d384f21",
+      "origin": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_boss_warning)",
+      "third_party_content": "NONE",
+      "music_muted_by_default": false,
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-007",
+      "asset_path": "art/production/ART-007/sfx/wav/sfx_boss_slam.wav",
+      "sha256": "d09e927c11c742abdb1e7088a71346bf267466ac40ee4259873b746e9ed5e655",
+      "origin": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_boss_slam)",
+      "third_party_content": "NONE",
+      "music_muted_by_default": false,
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-007",
+      "asset_path": "art/production/ART-007/sfx/wav/sfx_vote_closed.wav",
+      "sha256": "e38f6cdd0405d0c4ed7c20c92b46455a09dc9b6bc777edf620d1bdcc32cc1164",
+      "origin": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_vote_closed)",
+      "third_party_content": "NONE",
+      "music_muted_by_default": false,
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-007",
+      "asset_path": "art/production/ART-007/sfx/wav/sfx_wave_victory.wav",
+      "sha256": "7270eb5194b23581c86461bbd32a006a8440d292245e1af80fb8ffd36d96cb73",
+      "origin": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_wave_victory)",
+      "third_party_content": "NONE",
+      "music_muted_by_default": false,
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-007",
+      "asset_path": "art/production/ART-007/sfx/wav/sfx_wave_defeat.wav",
+      "sha256": "24781d466b3936d66146c6a2f1e736c206114ba9dacf398138e3807c068defa8",
+      "origin": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_wave_defeat)",
+      "third_party_content": "NONE",
+      "music_muted_by_default": false,
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-007",
+      "asset_path": "art/production/ART-007/ambient/wav/amb_village_dawn_loop.wav",
+      "sha256": "bd8db0edd086c84a6ecba5edb323fb5f5a2718f7895fcf0bca3bf819d500de19",
+      "origin": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (amb_village_dawn_loop)",
+      "third_party_content": "NONE",
+      "music_muted_by_default": false,
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-007",
+      "asset_path": "art/production/ART-007/music/wav/music_village_prep_loop.wav",
+      "sha256": "03c6f911a9f7267ec139eb0def34850e8ba8a037e1fd5679ddcef88de66300d0",
+      "origin": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (music_village_prep_loop)",
+      "third_party_content": "NONE",
+      "music_muted_by_default": true,
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "package_id": "ART-007",
+      "asset_path": "art/production/ART-007/music/wav/music_village_assault_loop.wav",
+      "sha256": "eb3f211ad449b94023e7d91079199081bd699af06a2184f49fb5c61f35f79945",
+      "origin": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (music_village_assault_loop)",
+      "third_party_content": "NONE",
+      "music_muted_by_default": true,
+      "rights_status": "PENDING_REVIEW"
+    }
+  ]
+}

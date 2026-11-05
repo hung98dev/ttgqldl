@@ -1,0 +1,108 @@
+{
+  "package_id": "ART-008",
+  "overall_status": "PASS",
+  "passed": 20,
+  "total": 20,
+  "results": [
+    {
+      "test_id": "N01_missing_sprite_rejected",
+      "status": "PASS",
+      "detail": "Correctly rejected (FileNotFoundError: Missing sprite detected: chr_role_fighter_missing_f99.png)"
+    },
+    {
+      "test_id": "N02_missing_audio_rejected",
+      "status": "PASS",
+      "detail": "Correctly rejected (FileNotFoundError: Missing audio file detected: sfx_nonexistent_cue.wav)"
+    },
+    {
+      "test_id": "N03_corrupted_atlas_overlap_rejected",
+      "status": "PASS",
+      "detail": "Correctly rejected (ValueError: Corrupted overlapping atlas slice rectangles rejected)"
+    },
+    {
+      "test_id": "N04_wrong_animation_fps_rejected",
+      "status": "PASS",
+      "detail": "Correctly rejected (ValueError: Canonical sprite FPS must be 12, got 24)"
+    },
+    {
+      "test_id": "N05_wrong_impact_frame_rejected",
+      "status": "PASS",
+      "detail": "Correctly rejected (ValueError: Boss CleaveSlam impact frame mismatch: 1 != 5)"
+    },
+    {
+      "test_id": "N06_corrupted_cue_mapping_rejected",
+      "status": "PASS",
+      "detail": "Correctly rejected (ValueError: Unknown or corrupted cue_id: SFX99_CORRUPT)"
+    },
+    {
+      "test_id": "N07_replayed_duplicate_victory_suppressed",
+      "status": "PASS",
+      "detail": "First=PLAYED, DuplicateReplay=SUPPRESSED_DUPLICATE_STREAM_SEQ"
+    },
+    {
+      "test_id": "N08_overbroad_dedupe_suppressing_legit_damage_rejected",
+      "status": "PASS",
+      "detail": "Correctly rejected (ValueError: Invalid once-per-wave milestone set: {'boss_incoming', 'wave_result', 'boss_spawned', 'vote_closed', 'damage_applied'})"
+    },
+    {
+      "test_id": "N09_incorrect_join_cooldown_rejected",
+      "status": "PASS",
+      "detail": "Correctly rejected (ValueError: Invalid SFX01 role-join cooldown contract)"
+    },
+    {
+      "test_id": "N10_music_unintentionally_enabled_rejected",
+      "status": "PASS",
+      "detail": "Correctly rejected (ValueError: Music must be muted by default (GATE-LEGAL))"
+    },
+    {
+      "test_id": "N11_boss_displayed_before_tick_2600_rejected",
+      "status": "PASS",
+      "detail": "Correctly rejected (ValueError: Premature or illegal Boss display at wave=10, tick=2500)"
+    },
+    {
+      "test_id": "N12_victory_before_settlement_rejected",
+      "status": "PASS",
+      "detail": "Correctly rejected (ValueError: Premature wave_result/RESULTS before tick 2800 (tick=2700))"
+    },
+    {
+      "test_id": "N13_queue_pressure_as_permanent_loss_rejected",
+      "status": "PASS",
+      "detail": "Correctly rejected (ValueError: Queue backpressure with 0 confirmed drops falsely displayed as permanent command loss)"
+    },
+    {
+      "test_id": "N14_operator_pause_not_cleared_by_reconnect",
+      "status": "PASS",
+      "detail": "After source reconnect, remaining pause_reasons=['operator_paused'] (operator_paused preserved)"
+    },
+    {
+      "test_id": "N15_unknown_stream_schema_rejected",
+      "status": "PASS",
+      "detail": "Correctly rejected (ValueError: Unknown stream schema_version: ws-unknown-v99)"
+    },
+    {
+      "test_id": "N16_stream_sequence_gap_triggers_resync_hold",
+      "status": "PASS",
+      "detail": "Sequence jump 1070->1099 handled via RESYNC_REQUIRED_SEQUENCE_GAP"
+    },
+    {
+      "test_id": "N17_stale_snapshot_shown_as_live_rejected",
+      "status": "PASS",
+      "detail": "Correctly rejected (ValueError: Stale snapshot must never be presented as live connected)"
+    },
+    {
+      "test_id": "N18_out_of_order_event_rejected",
+      "status": "PASS",
+      "detail": "Out-of-order seq 48 after 50 -> REJECTED_OUT_OF_ORDER_EVENT"
+    },
+    {
+      "test_id": "N19_resource_pool_exhaustion_bounded_safely",
+      "status": "PASS",
+      "detail": "Clamped entities=150/150, VFX=20/20, voices=7/12"
+    },
+    {
+      "test_id": "N20_broken_responsive_safe_area_rejected",
+      "status": "PASS",
+      "detail": "Correctly rejected (ValueError: HUD safe-zone violation: box=[36, 1462, 940, 1550])"
+    }
+  ]
+}

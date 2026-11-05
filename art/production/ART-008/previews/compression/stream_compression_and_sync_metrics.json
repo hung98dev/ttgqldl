@@ -1,0 +1,114 @@
+{
+  "package_id": "ART-008",
+  "honesty_statement": "Offline FFmpeg libx264 + AAC 48 kHz encode/decode verification. Does NOT satisfy GATE-OBS real hardware OBS capture or physical smartphone playback.",
+  "essential_hud_360p_typography_verified": {
+    "primary_cta_px_at_360p": 16.0,
+    "hp_and_timer_px_at_360p": 14.33,
+    "secondary_text_px_at_360p": 12.0,
+    "min_wcag_contrast_ratio": 11.4,
+    "right_18pct_safe_rail_respected": true,
+    "bottom_12pct_safe_rail_respected": true,
+    "single_primary_cta_text": "Bình luận XÂY / THỦ / ĐÁNH"
+  },
+  "compression_psnr_db": {
+    "combat_choreography_1080p_frame45_psnr_db": 34.17,
+    "combat_choreography_360p_frame45_psnr_db": 31.23
+  },
+  "encoded_clips": [
+    {
+      "file": "art/production/ART-008/previews/audiovisual/combat_choreography_1080p_h264_aac.mp4",
+      "resolution": [
+        1080,
+        1920
+      ],
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "actual_fps": 12.0,
+      "bitrate_kbps": 1282.16,
+      "file_size_bytes": 1923238,
+      "duration_s": 12.0,
+      "audio_sample_rate_hz": 48000,
+      "audio_channels": 2,
+      "container_av_start_offset_ms": 0.0,
+      "integrated_loudness_lufs": -14.53,
+      "true_peak_dbtp": -2.13,
+      "clipped_samples": 0
+    },
+    {
+      "file": "art/production/ART-008/previews/audiovisual/combat_choreography_720p_h264_aac.mp4",
+      "resolution": [
+        720,
+        1280
+      ],
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "actual_fps": 12.0,
+      "bitrate_kbps": 690.3,
+      "file_size_bytes": 1035456,
+      "duration_s": 12.0,
+      "audio_sample_rate_hz": 48000,
+      "audio_channels": 2,
+      "container_av_start_offset_ms": 0.0,
+      "integrated_loudness_lufs": -14.53,
+      "true_peak_dbtp": -2.13,
+      "clipped_samples": 0
+    },
+    {
+      "file": "art/production/ART-008/previews/audiovisual/combat_choreography_360p_h264_aac.mp4",
+      "resolution": [
+        360,
+        640
+      ],
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "actual_fps": 12.0,
+      "bitrate_kbps": 273.03,
+      "file_size_bytes": 409551,
+      "duration_s": 12.0,
+      "audio_sample_rate_hz": 48000,
+      "audio_channels": 2,
+      "container_av_start_offset_ms": 0.0,
+      "integrated_loudness_lufs": -14.53,
+      "true_peak_dbtp": -2.13,
+      "clipped_samples": 0
+    },
+    {
+      "file": "art/production/ART-008/previews/full_wave/wave10_full_300s_vertical_slice_1080p.mp4",
+      "resolution": [
+        1080,
+        1920
+      ],
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "actual_fps": 12.0,
+      "bitrate_kbps": 875.32,
+      "file_size_bytes": 2188302,
+      "duration_s": 20.0,
+      "audio_sample_rate_hz": 48000,
+      "audio_channels": 2,
+      "container_av_start_offset_ms": 0.0,
+      "integrated_loudness_lufs": -17.56,
+      "true_peak_dbtp": -1.18,
+      "clipped_samples": 0
+    },
+    {
+      "file": "art/production/ART-008/previews/full_wave/failure_reconnect_showcase_1080p.mp4",
+      "resolution": [
+        1080,
+        1920
+      ],
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "actual_fps": 12.0,
+      "bitrate_kbps": 1426.64,
+      "file_size_bytes": 1188866,
+      "duration_s": 6.667,
+      "audio_sample_rate_hz": 48000,
+      "audio_channels": 2,
+      "container_av_start_offset_ms": 0.0,
+      "integrated_loudness_lufs": -29.18,
+      "true_peak_dbtp": -4.89,
+      "clipped_samples": 0
+    }
+  ]
+}

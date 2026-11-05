@@ -446,6 +446,34 @@ def run_package_validation(pkg_dir: Path, run_rebuild_check: bool = True, probe_
             map_errs.append(f"Missing cue mappings: {sorted(missing_ids)}")
 
         by_id = {c.get("cue_id"): c for c in cues}
+        # Enforce SFX01 anti-spam cooldowns & priority-alert suppression (ART-008 Phase 2 Finding A)
+        j_cue = by_id.get("SFX01", {})
+        if (
+            j_cue.get("cooldown_ms") != 2000
+            or j_cue.get("assault_phase_cooldown_ms") != 3500
+            or float(j_cue.get("assault_phase_attenuation_db", 0.0)) != -5.5
+            or j_cue.get("suppress_during_priority_alerts") is not True
+        ):
+            map_errs.append(f"Invalid SFX01 join cooldown/suppression policy: {j_cue}")
+
+        # Enforce Two-Tier Deduplication contract (ART-008 Phase 2 Finding B & C)
+        dedupe = cue_obj.get("deduplication_and_replay_safety", {})
+        t1 = dedupe.get("tier_1_exact_outbox_delivery", {})
+        t2 = dedupe.get("tier_2_once_per_wave_milestones", {})
+        allowed_wave_milestones = ["vote_closed", "boss_incoming", "boss_spawned", "wave_result"]
+        if (
+            dedupe.get("two_tier_policy_version") != "ttg-audio-dedupe-v2"
+            or t1.get("ring_buffer_capacity") != 256
+            or t1.get("delivery_identity_key_format") != "{session_id}:{stream_seq}"
+            or t2.get("genuine_once_per_wave_events_only") != allowed_wave_milestones
+            or t2.get("ordinary_combat_and_damage_excluded") is not True
+        ):
+            map_errs.append(f"Invalid two-tier deduplication contract in audio_cue_mapping.json: {dedupe}")
+
+        suff_map = cue_obj.get("payload_sufficiency_classification", {}).get("source_4_m05_m06_adapter_dependencies", {})
+        if set(suff_map.keys()) != expected_ids:
+            map_errs.append(f"Missing payload_sufficiency_classification entries: got={sorted(suff_map.keys())}")
+
         # Enforce SFX11 Victory triggers ONLY on settled `wave_result` (`wave_tick >= 2800` & `victory`)
         v_cue = by_id.get("SFX11", {})
         v_events = v_cue.get("canonical_domain_events", [])
@@ -522,20 +550,38 @@ def run_package_validation(pkg_dir: Path, run_rebuild_check: bool = True, probe_
                 mute_errs.append(f"{mcid} muted_by_default != True in cue_mapping")
     record("16_music_muted_by_default", len(mute_errs) == 0, "; ".join(mute_errs) or "Music muted (-80 dB) by default in mixer, cue mapping & manifest")
 
-    # 17. Reproducible deterministic rebuild check
+    # 17. Reproducible deterministic rebuild check across ALL 15 canonical WAV masters (12 SFX + AMB01 + MUS01 + MUS02)
     if run_rebuild_check:
         reb_errs: List[str] = []
         _, re_sfx = build_audio.build_12_canonical_sfx()
-        for cid, stem, _ in CANONICAL_SFX:
-            if cid in decoded:
-                with tempfile.TemporaryDirectory() as td_r:
-                    tp_w = Path(td_r) / f"{stem}.wav"
-                    write_wav_24bit(tp_w, re_sfx[cid], sr=SR)
-                    if sha256_file(tp_w) != sha256_file(pkg_dir / "sfx" / "wav" / f"{stem}.wav"):
-                        max_diff = float(np.max(np.abs(re_sfx[cid].reshape(-1) - decoded[cid][0].reshape(-1))))
-                        if max_diff > 1e-6:
-                            reb_errs.append(f"{cid}: rebuild max_diff={max_diff}")
-        record("17_deterministic_rebuild_reproducibility", len(reb_errs) == 0, "; ".join(reb_errs) or "Exact bit-identical SHA-256 rebuild verified across all 12 SFX")
+        re_amb, _ = build_audio.build_ambient_village_dawn_loop()
+        re_mus1, _, _ = build_audio.build_music_01_village_prep()
+        re_mus2, _, _ = build_audio.build_music_02_village_assault()
+
+        rebuild_targets = (
+            [(cid, "sfx", stem, re_sfx[cid]) for cid, stem, _ in CANONICAL_SFX]
+            + [("AMB01", "ambient", "amb_village_dawn_loop", re_amb)]
+            + [
+                ("MUS01", "music", "music_village_prep_loop", re_mus1),
+                ("MUS02", "music", "music_village_assault_loop", re_mus2),
+            ]
+        )
+        with tempfile.TemporaryDirectory() as td_r:
+            for cid, cat, stem, re_arr in rebuild_targets:
+                orig_w = pkg_dir / cat / "wav" / f"{stem}.wav"
+                if not orig_w.exists():
+                    reb_errs.append(f"{cid}: missing original {orig_w.name}")
+                    continue
+                tp_w = Path(td_r) / f"{stem}.wav"
+                write_wav_24bit(tp_w, re_arr, sr=SR)
+                if sha256_file(tp_w) != sha256_file(orig_w):
+                    max_diff = float(np.max(np.abs(re_arr.reshape(-1) - decoded[cid][0].reshape(-1)))) if cid in decoded else 999.0
+                    reb_errs.append(f"{cid} ({stem}.wav): non-identical SHA-256 rebuild (max_sample_diff={max_diff})")
+        record(
+            "17_deterministic_rebuild_reproducibility",
+            len(reb_errs) == 0,
+            "; ".join(reb_errs) or "Exact bit-identical SHA-256 rebuild verified across all 15 WAV masters (12 SFX + AMB01 + MUS01 + MUS02; 0 byte diffs)",
+        )
     else:
         record("17_deterministic_rebuild_reproducibility", True, "Skipped in fast adversarial mutation sandbox")
 
@@ -713,13 +759,41 @@ def run_12_adversarial_negative_tests(src_pkg: Path) -> Dict[str, Any]:
         mut_invalid_victory,
     )
 
+    # 13. Outdated 450ms join cooldown weakening SFX01 anti-spam contract
+    def mut_wrong_cooldown(sb: Path) -> None:
+        cp = sb / "audio_cue_mapping.json"
+        c = json.loads(cp.read_text(encoding="utf-8"))
+        for item in c["cues"]:
+            if item["cue_id"] == "SFX01":
+                item["cooldown_ms"] = 450
+        write_json_lf(cp, c)
+
+    execute_case(
+        "adv_13_wrong_join_cooldown",
+        "Mutate SFX01 PREP cooldown from 2000ms down to outdated 450ms",
+        mut_wrong_cooldown,
+    )
+
+    # 14. Over-broad once-per-wave deduplication suppressing ordinary combat/damage events
+    def mut_overbroad_dedupe(sb: Path) -> None:
+        cp = sb / "audio_cue_mapping.json"
+        c = json.loads(cp.read_text(encoding="utf-8"))
+        c["deduplication_and_replay_safety"]["tier_2_once_per_wave_milestones"]["genuine_once_per_wave_events_only"].append("damage_applied")
+        write_json_lf(cp, c)
+
+    execute_case(
+        "adv_14_overbroad_wave_dedupe_suppressing_combat",
+        "Add ordinary damage_applied to Tier-2 once-per-wave milestone suppression list",
+        mut_overbroad_dedupe,
+    )
+
     all_rejected = all(c["validator_rejected_as_expected"] for c in cases)
     return {
         "package_id": "ART-007",
         "total_adversarial_cases": len(cases),
         "rejected_as_expected_count": sum(1 for c in cases if c["validator_rejected_as_expected"]),
         "false_positives_or_escapes": sum(1 for c in cases if not c["validator_rejected_as_expected"]),
-        "status": "PASS" if all_rejected and len(cases) == 12 else "FAIL",
+        "status": "PASS" if all_rejected and len(cases) == 14 else "FAIL",
         "cases": cases,
     }
 

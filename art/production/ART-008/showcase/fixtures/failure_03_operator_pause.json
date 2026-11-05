@@ -1,0 +1,101 @@
+{
+  "sequence_id": "failure_03_operator_pause",
+  "filename": "failure_03_operator_pause.json",
+  "synthetic_fixture": true,
+  "title": "3. Operator Pause (Independent of Source Reconnect)",
+  "invariants_verified": [
+    "Operator pause holds authoritative PAUSED banner and frozen world",
+    "Source reconnect event removes source_disconnected ONLY — operator_paused CANNOT clear automatically!"
+  ],
+  "reconnect_while_operator_paused_proof": {
+    "before_pause_reasons": [
+      "operator_paused",
+      "source_disconnected"
+    ],
+    "after_source_reconnect_pause_reasons": [
+      "operator_paused"
+    ],
+    "auto_cleared_by_reconnect": false
+  },
+  "fixture": {
+    "synthetic_fixture": true,
+    "fixture_id": "synth-fail-03_seq_2030",
+    "canonical_state_id": "PREP",
+    "attract_mode": false,
+    "schema_version": "ws-public-v1-synthetic",
+    "session_id": "synth-fail-03",
+    "mock_stream_seq": 2030,
+    "public_snapshot": {
+      "lifecycle": "paused",
+      "source_status": "mock",
+      "pause_reasons": [
+        "operator_paused"
+      ],
+      "wave_no": 8,
+      "wave_tick": 1120,
+      "remaining_seconds": 188,
+      "phase": "prep",
+      "village_level": 14,
+      "wall_tier": 6,
+      "wall_hp": 960,
+      "wall_max": 1000,
+      "townhall_hp": 2000,
+      "townhall_max": 2000,
+      "wood": 320,
+      "stone": 240,
+      "food": 410,
+      "counts": {
+        "unique_joined": 78,
+        "builder": 22,
+        "guard": 26,
+        "fighter": 30
+      },
+      "lanes": [
+        {
+          "id": "west",
+          "ordinary_hp": 0
+        },
+        {
+          "id": "center",
+          "ordinary_hp": 0
+        },
+        {
+          "id": "east",
+          "ordinary_hp": 0
+        }
+      ],
+      "vote": {
+        "open": true,
+        "selected": null,
+        "counts": {
+          "A": 14,
+          "B": 19,
+          "C": 11
+        }
+      },
+      "boss": {
+        "boss_incoming": false,
+        "boss_exists": false,
+        "boss_hp": 0,
+        "boss_max_hp": 1800
+      },
+      "settlement": {
+        "wave_result": null,
+        "consecutive_losses": 0,
+        "is_post_loss_recovery": false,
+        "pending_next_wave_count": 0
+      },
+      "system_assist": {
+        "militia_active": false,
+        "militia_attack_bonus": 0
+      },
+      "diagnostics": {
+        "connection_state": "live",
+        "metrics_available": true,
+        "queue_fill_pct": 12,
+        "retryable_rejected_count": 0,
+        "confirmed_valid_drops": 0
+      }
+    }
+  }
+}

@@ -953,17 +953,48 @@ def build_contracts_and_unity_presets(asset_records: Dict[str, Dict[str, Any]]) 
             "cosmetic_pitch_variation_formula": "uint64_le(first8(SHA256(session_id + ':' + wave_no + ':' + visual_event_seq))) % variant_count",
         },
         "deduplication_and_replay_safety": {
-            "ring_buffer_capacity": 256,
-            "session_scoped_monotonic_cursor": "last_audio_stream_seq",
-            "one_shot_milestone_key_format": "{session_id}:{wave_no}:{canonical_event_type}",
-            "redelivered_outbox_events_suppressed": [
-                "vote_closed",
-                "boss_incoming",
-                "boss_spawned",
-                "wall_breached_once_per_breach",
-                "wave_result",
-            ],
-            "resync_snapshot_policy": "On full public_snapshot resync after gap, update ambient/HUD loop state without re-firing past one-shot stings unless wave_result arrived within <=1500ms and key is unseen.",
+            "two_tier_policy_version": "ttg-audio-dedupe-v2",
+            "tier_1_exact_outbox_delivery": {
+                "ring_buffer_capacity": 256,
+                "session_scoped_monotonic_cursor": "last_audio_stream_seq",
+                "delivery_identity_key_format": "{session_id}:{stream_seq}",
+                "synthetic_fixture_key_format": "mock_seq:{session_id}:{wave_no}:{synthetic_seq}",
+                "rule": "Suppresses ONLY exact duplicate delivery of the same committed outbox sequence ID. Independently committed events sharing an event type (e.g. multiple damage_applied, repeated Fighter/Grunt/Boss attacks, repeated Builder repairs, or a second wall breach after mid-wave repair) have distinct stream_seq values and MUST remain independently playable subject only to acoustic cooldown_ms and voice-pool bounds.",
+            },
+            "tier_2_once_per_wave_milestones": {
+                "milestone_key_format": "{session_id}:{wave_no}:{canonical_milestone_type}",
+                "genuine_once_per_wave_events_only": [
+                    "vote_closed",
+                    "boss_incoming",
+                    "boss_spawned",
+                    "wave_result",
+                ],
+                "ordinary_combat_and_damage_excluded": True,
+                "wall_breach_excluded_reason": "Builder repair runs before combat at 200-tick boundaries (02_GAME_RULES.md), so wall_hp can legitimately drop >0->0, repair >0, and breach >0->0 again in the same wave; SFX07 uses Tier-1 stream_seq dedupe + 2000ms cooldown rather than once-per-wave suppression.",
+            },
+            "resync_snapshot_policy": "On full public_snapshot resync after gap, update ambient/HUD loop state without re-firing past one-shot stings unless wave_result arrived within <=1500ms and Tier-2 milestone key is unseen.",
+        },
+        "payload_sufficiency_classification": {
+            "source_1_committed_domain_events": "simulation.Event {Type, WaveNo, Tick, Phase, Amount, Boundary, Reason, Stage} + outbox {SessionID, StreamSeq}",
+            "source_2_committed_public_snapshots": "05_API_WEBSOCKET.md public_snapshot / public_state_diff {wall_hp, wall_max, townhall_hp, counts, lanes, boss_incoming, vote, lifecycle, pause_reasons, source_status}",
+            "source_3_local_cosmetic_scheduling": "12 FPS animation impact-frame offsets + deterministic SHA-256 variant hash (zero gameplay authority)",
+            "source_4_m05_m06_adapter_dependencies": {
+                "SFX01": "READY_FROM_EVENT_STREAM (role_accepted / role_changed in outbox; next_wave_queued requires M05 projection)",
+                "SFX02": "M05_VISUAL_EVENT_OR_M06_SNAPSHOT_DIFF (wall_upgraded is explicit; boundary Builder repair/gather requires comparing prev/new wall_hp/wood/stone at role_resolution with counts.builder > 0)",
+                "SFX03": "M05_VISUAL_EVENT_OR_M06_SNAPSHOT_DIFF (full Guard block has netDamage==0 so damage_applied is omitted; requires combat boundary + counts.guard > 0 + active enemy pool)",
+                "SFX04": "M06_COSMETIC_ACTOR_SCHEDULER (attack_resolved gives aggregate totalAttack; individual Fighter swing is local cosmetic scheduling when counts.fighter > 0)",
+                "SFX05": "M06_COSMETIC_ACTOR_SCHEDULER (Grunt/Runner/Brute attack cues are scheduled locally on combat boundaries when ordinary lane pools > 0)",
+                "SFX06": "M05_WS_PROJECTION_OR_M06_STATE_TRACKER (damage_applied carries netDamage only; requires prev_wall_hp > new_wall_hp > 0 from snapshot/diff tracker)",
+                "SFX07": "M05_WS_PROJECTION_OR_M06_STATE_TRACKER (requires prev_wall_hp > 0 && new_wall_hp == 0 transition from snapshot/diff tracker)",
+                "SFX08": "M05_WS_PROJECTION_AND_LOCAL_TICK_2450_ANTICIPATION (simulation emits boss_incoming when ordinary lanes clear pre-2600; tick-2450 anticipation banner when ordinary pools > 0 is local HUD/audio presentation on wave_no % 5 == 0)",
+                "SFX09": "M05_VISUAL_EVENT_OR_M06_SNAPSHOT_DIFF (boss_spawned is explicit at tick 2600; subsequent Boss slam at tick 2600/2800 correlates combat/final_combat boundary with boss_hp > 0)",
+                "SFX10": "READY_FROM_EVENT_STREAM (vote_closed carries selected VoteOption in Amount at tick 1200)",
+                "SFX11": "M05_WS_WAVE_RESULT_PROJECTION (simulation emits wave_result Amount=1 at tick 2800; M05 projects explicit wave_result per QA-SIM-12)",
+                "SFX12": "M05_WS_WAVE_RESULT_PROJECTION (simulation emits wave_result Amount=2 at tick 2800; M05 projects explicit wave_result per QA-SIM-12)",
+                "AMB01": "READY_FROM_SNAPSHOT_LIFECYCLE (driven by lifecycle + phase)",
+                "MUS01": "MUTED_BY_DEFAULT_GATE_LEGAL (driven by phase when unmuted post-clearance)",
+                "MUS02": "MUTED_BY_DEFAULT_GATE_LEGAL (driven by phase when unmuted post-clearance)",
+            },
         },
         "cues": [
             {
@@ -976,6 +1007,7 @@ def build_contracts_and_unity_presets(asset_records: Dict[str, Dict[str, Any]]) 
                 "cooldown_ms": 2000,
                 "assault_phase_cooldown_ms": 3500,
                 "assault_phase_attenuation_db": -5.5,
+                "suppress_during_priority_alerts": True,
                 "max_concurrent_instances": 1,
                 "canonical_domain_events": ["role_accepted", "role_changed", "next_wave_queued"],
                 "forbidden_triggers": ["duplicate_same_role_comment", "role_rejected_cooldown", "invalid_comment", "uncommitted_local_input"],
@@ -1449,6 +1481,22 @@ namespace TTGQLDL.EditorTools
         }
 
         [Serializable]
+        public class JoinCooldownCaseResult
+        {
+            public string case_id;
+            public string phase;
+            public bool priority_alert_active;
+            public int simulated_events;
+            public double duration_ms;
+            public double required_cooldown_ms;
+            public float applied_attenuation_db;
+            public float applied_linear_gain;
+            public int played_voices;
+            public int expected_voices;
+            public bool passed;
+        }
+
+        [Serializable]
         public class VerificationReport
         {
             public string package_id = "ART-007";
@@ -1463,12 +1511,130 @@ namespace TTGQLDL.EditorTools
             public bool music_muted_by_default_verified;
             public float default_music_source_volume;
             public bool music_source_mute_flag;
-            public int spam_burst_1000_events_played_voices;
+            public int prep_1s_burst_1000_events_played_voices;
+            public int prep_10s_burst_1000_events_played_voices;
+            public int assault_10s_burst_1000_events_played_voices;
+            public float assault_join_attenuation_db;
+            public float assault_join_linear_gain;
+            public int priority_alert_active_join_played_voices;
             public int duplicate_redelivered_victory_plays;
+            public int duplicate_redelivered_stream_seq_plays;
+            public int independent_wall_damage_3_events_plays;
+            public int independent_fighter_attack_2_events_plays;
+            public int independent_builder_repair_2_events_plays;
+            public int independent_grunt_attack_3_events_plays;
+            public int independent_boss_slam_2_events_plays;
+            public int independent_wall_breach_after_repair_2_events_plays;
+            public bool two_tier_dedupe_verified;
             public bool prefab_saved_cleanly;
             public long total_runtime_clip_memory_bytes;
             public string batchmode_hardware_speaker_note;
+            public List<JoinCooldownCaseResult> join_cooldown_cases = new List<JoinCooldownCaseResult>();
             public List<ClipCheckResult> clips = new List<ClipCheckResult>();
+        }
+
+        private static JoinCooldownCaseResult EvaluateParameterizedJoinBurst(
+            string caseId,
+            string phase,
+            bool priorityAlertActive,
+            int eventCount,
+            double stepMs,
+            int expectedPlays)
+        {
+            bool isAssault = string.Equals(phase, "ASSAULT", StringComparison.OrdinalIgnoreCase);
+            double cooldownMs = isAssault ? 3500.0 : 2000.0;
+            float attenDb = isAssault ? -5.5f : 0.0f;
+            float linearGain = Mathf.Pow(10f, attenDb / 20f);
+
+            int plays = 0;
+            double lastJoinMs = -1e9;
+            for (int ev = 0; ev < eventCount; ev++)
+            {
+                double tMs = ev * stepMs;
+                if (priorityAlertActive)
+                {
+                    continue; // SFX01 suppressed while any priority Alert sting (Boss/Breach/Vote/Result) is active
+                }
+                if (tMs - lastJoinMs >= cooldownMs)
+                {
+                    plays++;
+                    lastJoinMs = tMs;
+                }
+            }
+
+            return new JoinCooldownCaseResult
+            {
+                case_id = caseId,
+                phase = phase,
+                priority_alert_active = priorityAlertActive,
+                simulated_events = eventCount,
+                duration_ms = eventCount * stepMs,
+                required_cooldown_ms = cooldownMs,
+                applied_attenuation_db = attenDb,
+                applied_linear_gain = (float)Math.Round(linearGain, 4),
+                played_voices = plays,
+                expected_voices = expectedPlays,
+                passed = (plays == expectedPlays)
+            };
+        }
+
+        private sealed class TwoTierPresentationDeduplicator
+        {
+            private const int RingCapacity = 256;
+            private static readonly HashSet<string> GenuineOncePerWaveMilestones = new HashSet<string>(StringComparer.Ordinal)
+            {
+                "vote_closed",
+                "boss_incoming",
+                "boss_spawned",
+                "wave_result"
+            };
+
+            private readonly Queue<string> _recentRingOrder = new Queue<string>(RingCapacity);
+            private readonly HashSet<string> _recentRingSet = new HashSet<string>(StringComparer.Ordinal);
+            private readonly Dictionary<string, long> _sessionMaxCursor = new Dictionary<string, long>(StringComparer.Ordinal);
+            private readonly HashSet<string> _waveMilestones = new HashSet<string>(StringComparer.Ordinal);
+
+            public bool ShouldPlayCommittedEvent(string sessionId, int waveNo, long streamSeq, string canonicalEventType)
+            {
+                string deliveryKey = $"{sessionId}:{streamSeq}";
+                if (_recentRingSet.Contains(deliveryKey))
+                {
+                    return false;
+                }
+                if (_sessionMaxCursor.TryGetValue(sessionId, out long maxSeq) && streamSeq <= maxSeq - RingCapacity)
+                {
+                    return false; // Older than bounded 256-entry outbox replay window
+                }
+
+                RecordDeliveryKey(sessionId, streamSeq, deliveryKey);
+
+                if (GenuineOncePerWaveMilestones.Contains(canonicalEventType))
+                {
+                    string milestoneKey = $"{sessionId}:{waveNo}:{canonicalEventType}";
+                    if (!_waveMilestones.Add(milestoneKey))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            private void RecordDeliveryKey(string sessionId, long streamSeq, string deliveryKey)
+            {
+                if (_recentRingOrder.Count >= RingCapacity)
+                {
+                    string oldest = _recentRingOrder.Dequeue();
+                    _recentRingSet.Remove(oldest);
+                }
+                _recentRingOrder.Enqueue(deliveryKey);
+                _recentRingSet.Add(deliveryKey);
+
+                if (!_sessionMaxCursor.TryGetValue(sessionId, out long prev) || streamSeq > prev)
+                {
+                    _sessionMaxCursor[sessionId] = streamSeq;
+                }
+            }
         }
 
         public static void RunBatchVerification()
@@ -1634,29 +1800,99 @@ namespace TTGQLDL.EditorTools
             report.default_music_source_volume = musSrc.volume;
             report.music_muted_by_default_verified = musSrc.mute && musSrc.volume <= 0.0001f && !musSrc.playOnAwake;
 
-            // Verify bounded anti-spam cooldown (1,000 join comments over 1.0s w/ 450ms cooldown => max 3 triggers, <=8 voices)
-            int joinPlays = 0;
-            double lastJoinMs = -1000.0;
-            for (int ev = 0; ev < 1000; ev++)
-            {
-                double tMs = ev * 1.0; // 1000 events/sec burst
-                if (tMs - lastJoinMs >= 450.0)
-                {
-                    joinPlays++;
-                    lastJoinMs = tMs;
-                }
-            }
-            report.spam_burst_1000_events_played_voices = joinPlays;
+            // Parameterized anti-spam join tests matching canonical SFX01 contract:
+            // PREP: 2000ms cooldown (0.0 dB), ASSAULT: 3500ms cooldown (-5.5 dB = 0.5309 linear), Alert-active: 0 plays
+            var prep1s = EvaluateParameterizedJoinBurst("prep_1s_burst_2000ms", "PREP", false, 1000, 1.0, 1);
+            var prep10s = EvaluateParameterizedJoinBurst("prep_10s_burst_2000ms", "PREP", false, 1000, 10.0, 5);
+            var assault10s = EvaluateParameterizedJoinBurst("assault_10s_burst_3500ms_minus5p5db", "ASSAULT", false, 1000, 10.0, 3);
+            var alertPrep = EvaluateParameterizedJoinBurst("prep_suppressed_during_priority_alert", "PREP", true, 1000, 10.0, 0);
+            var alertAssault = EvaluateParameterizedJoinBurst("assault_suppressed_during_priority_alert", "ASSAULT", true, 1000, 10.0, 0);
 
-            // Verify outbox reconnect deduplication for wave_result victory sting
-            var seenKeys = new HashSet<string>();
-            int victoryPlays = 0;
-            for (int redelivery = 0; redelivery < 5; redelivery++)
+            report.join_cooldown_cases.Add(prep1s);
+            report.join_cooldown_cases.Add(prep10s);
+            report.join_cooldown_cases.Add(assault10s);
+            report.join_cooldown_cases.Add(alertPrep);
+            report.join_cooldown_cases.Add(alertAssault);
+
+            report.prep_1s_burst_1000_events_played_voices = prep1s.played_voices;
+            report.prep_10s_burst_1000_events_played_voices = prep10s.played_voices;
+            report.assault_10s_burst_1000_events_played_voices = assault10s.played_voices;
+            report.assault_join_attenuation_db = assault10s.applied_attenuation_db;
+            report.assault_join_linear_gain = assault10s.applied_linear_gain;
+            report.priority_alert_active_join_played_voices = alertPrep.played_voices + alertAssault.played_voices;
+
+            bool allJoinCasesOk = prep1s.passed && prep10s.passed && assault10s.passed && alertPrep.passed && alertAssault.passed;
+
+            // Verify Two-Tier Deduplication:
+            // Tier 1 suppresses duplicate (session_id, stream_seq) outbox redelivery while allowing ALL distinct independent gameplay events;
+            // Tier 2 suppresses duplicate once-per-wave milestones (vote_closed, boss_incoming, boss_spawned, wave_result) even across snapshot resync.
+            var deduper = new TwoTierPresentationDeduplicator();
+
+            int sameSeqPlays = 0;
+            for (int r = 0; r < 4; r++)
             {
-                string key = "sess-01:wave-10:wave_result";
-                if (seenKeys.Add(key)) victoryPlays++;
+                if (deduper.ShouldPlayCommittedEvent("sess-01", 10, 41, "damage_applied")) sameSeqPlays++;
+            }
+            report.duplicate_redelivered_stream_seq_plays = sameSeqPlays;
+
+            int wallDamagePlays = 0;
+            foreach (long seq in new long[] { 101, 108, 115 })
+            {
+                if (deduper.ShouldPlayCommittedEvent("sess-01", 10, seq, "damage_applied")) wallDamagePlays++;
+            }
+            report.independent_wall_damage_3_events_plays = wallDamagePlays;
+
+            int fighterPlays = 0;
+            foreach (long seq in new long[] { 120, 125 })
+            {
+                if (deduper.ShouldPlayCommittedEvent("sess-01", 10, seq, "attack_resolved")) fighterPlays++;
+            }
+            report.independent_fighter_attack_2_events_plays = fighterPlays;
+
+            int builderPlays = 0;
+            foreach (long seq in new long[] { 130, 140 })
+            {
+                if (deduper.ShouldPlayCommittedEvent("sess-01", 10, seq, "builder_repair_boundary")) builderPlays++;
+            }
+            report.independent_builder_repair_2_events_plays = builderPlays;
+
+            int gruntPlays = 0;
+            foreach (long seq in new long[] { 150, 152, 154 })
+            {
+                if (deduper.ShouldPlayCommittedEvent("sess-01", 10, seq, "enemy_attack_boundary")) gruntPlays++;
+            }
+            report.independent_grunt_attack_3_events_plays = gruntPlays;
+
+            int bossSlamPlays = 0;
+            foreach (long seq in new long[] { 210, 240 })
+            {
+                if (deduper.ShouldPlayCommittedEvent("sess-01", 10, seq, "boss_slam_combat")) bossSlamPlays++;
+            }
+            report.independent_boss_slam_2_events_plays = bossSlamPlays;
+
+            int wallBreachPlays = 0;
+            foreach (long seq in new long[] { 180, 195 })
+            {
+                if (deduper.ShouldPlayCommittedEvent("sess-01", 10, seq, "wall_breach_transition")) wallBreachPlays++;
+            }
+            report.independent_wall_breach_after_repair_2_events_plays = wallBreachPlays;
+
+            int victoryPlays = 0;
+            foreach (long seq in new long[] { 300, 300, 300, 301, 302 })
+            {
+                if (deduper.ShouldPlayCommittedEvent("sess-01", 10, seq, "wave_result")) victoryPlays++;
             }
             report.duplicate_redelivered_victory_plays = victoryPlays;
+
+            report.two_tier_dedupe_verified =
+                sameSeqPlays == 1 &&
+                wallDamagePlays == 3 &&
+                fighterPlays == 2 &&
+                builderPlays == 2 &&
+                gruntPlays == 3 &&
+                bossSlamPlays == 2 &&
+                wallBreachPlays == 2 &&
+                victoryPlays == 1;
 
             Directory.CreateDirectory("Assets/_TTGQLDL/Prefabs/Audio");
             string prefabPath = "Assets/_TTGQLDL/Prefabs/Audio/BroadcastAudioManager.prefab";
@@ -1667,7 +1903,11 @@ namespace TTGQLDL.EditorTools
             UnityEngine.Object.DestroyImmediate(rootGo);
             report.leaked_sources_after_shutdown = UnityEngine.Object.FindObjectsByType<AudioSource>().Length;
 
-            if (!report.music_muted_by_default_verified || !report.prefab_saved_cleanly || report.leaked_sources_after_shutdown != 0 || report.duplicate_redelivered_victory_plays != 1)
+            if (!report.music_muted_by_default_verified ||
+                !report.prefab_saved_cleanly ||
+                report.leaked_sources_after_shutdown != 0 ||
+                !allJoinCasesOk ||
+                !report.two_tier_dedupe_verified)
             {
                 throw new Exception("BroadcastAudioManager verification failed invariants.");
             }

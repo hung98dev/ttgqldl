@@ -13,17 +13,48 @@
     "cosmetic_pitch_variation_formula": "uint64_le(first8(SHA256(session_id + ':' + wave_no + ':' + visual_event_seq))) % variant_count"
   },
   "deduplication_and_replay_safety": {
-    "ring_buffer_capacity": 256,
-    "session_scoped_monotonic_cursor": "last_audio_stream_seq",
-    "one_shot_milestone_key_format": "{session_id}:{wave_no}:{canonical_event_type}",
-    "redelivered_outbox_events_suppressed": [
-      "vote_closed",
-      "boss_incoming",
-      "boss_spawned",
-      "wall_breached_once_per_breach",
-      "wave_result"
-    ],
-    "resync_snapshot_policy": "On full public_snapshot resync after gap, update ambient/HUD loop state without re-firing past one-shot stings unless wave_result arrived within <=1500ms and key is unseen."
+    "two_tier_policy_version": "ttg-audio-dedupe-v2",
+    "tier_1_exact_outbox_delivery": {
+      "ring_buffer_capacity": 256,
+      "session_scoped_monotonic_cursor": "last_audio_stream_seq",
+      "delivery_identity_key_format": "{session_id}:{stream_seq}",
+      "synthetic_fixture_key_format": "mock_seq:{session_id}:{wave_no}:{synthetic_seq}",
+      "rule": "Suppresses ONLY exact duplicate delivery of the same committed outbox sequence ID. Independently committed events sharing an event type (e.g. multiple damage_applied, repeated Fighter/Grunt/Boss attacks, repeated Builder repairs, or a second wall breach after mid-wave repair) have distinct stream_seq values and MUST remain independently playable subject only to acoustic cooldown_ms and voice-pool bounds."
+    },
+    "tier_2_once_per_wave_milestones": {
+      "milestone_key_format": "{session_id}:{wave_no}:{canonical_milestone_type}",
+      "genuine_once_per_wave_events_only": [
+        "vote_closed",
+        "boss_incoming",
+        "boss_spawned",
+        "wave_result"
+      ],
+      "ordinary_combat_and_damage_excluded": true,
+      "wall_breach_excluded_reason": "Builder repair runs before combat at 200-tick boundaries (02_GAME_RULES.md), so wall_hp can legitimately drop >0->0, repair >0, and breach >0->0 again in the same wave; SFX07 uses Tier-1 stream_seq dedupe + 2000ms cooldown rather than once-per-wave suppression."
+    },
+    "resync_snapshot_policy": "On full public_snapshot resync after gap, update ambient/HUD loop state without re-firing past one-shot stings unless wave_result arrived within <=1500ms and Tier-2 milestone key is unseen."
+  },
+  "payload_sufficiency_classification": {
+    "source_1_committed_domain_events": "simulation.Event {Type, WaveNo, Tick, Phase, Amount, Boundary, Reason, Stage} + outbox {SessionID, StreamSeq}",
+    "source_2_committed_public_snapshots": "05_API_WEBSOCKET.md public_snapshot / public_state_diff {wall_hp, wall_max, townhall_hp, counts, lanes, boss_incoming, vote, lifecycle, pause_reasons, source_status}",
+    "source_3_local_cosmetic_scheduling": "12 FPS animation impact-frame offsets + deterministic SHA-256 variant hash (zero gameplay authority)",
+    "source_4_m05_m06_adapter_dependencies": {
+      "SFX01": "READY_FROM_EVENT_STREAM (role_accepted / role_changed in outbox; next_wave_queued requires M05 projection)",
+      "SFX02": "M05_VISUAL_EVENT_OR_M06_SNAPSHOT_DIFF (wall_upgraded is explicit; boundary Builder repair/gather requires comparing prev/new wall_hp/wood/stone at role_resolution with counts.builder > 0)",
+      "SFX03": "M05_VISUAL_EVENT_OR_M06_SNAPSHOT_DIFF (full Guard block has netDamage==0 so damage_applied is omitted; requires combat boundary + counts.guard > 0 + active enemy pool)",
+      "SFX04": "M06_COSMETIC_ACTOR_SCHEDULER (attack_resolved gives aggregate totalAttack; individual Fighter swing is local cosmetic scheduling when counts.fighter > 0)",
+      "SFX05": "M06_COSMETIC_ACTOR_SCHEDULER (Grunt/Runner/Brute attack cues are scheduled locally on combat boundaries when ordinary lane pools > 0)",
+      "SFX06": "M05_WS_PROJECTION_OR_M06_STATE_TRACKER (damage_applied carries netDamage only; requires prev_wall_hp > new_wall_hp > 0 from snapshot/diff tracker)",
+      "SFX07": "M05_WS_PROJECTION_OR_M06_STATE_TRACKER (requires prev_wall_hp > 0 && new_wall_hp == 0 transition from snapshot/diff tracker)",
+      "SFX08": "M05_WS_PROJECTION_AND_LOCAL_TICK_2450_ANTICIPATION (simulation emits boss_incoming when ordinary lanes clear pre-2600; tick-2450 anticipation banner when ordinary pools > 0 is local HUD/audio presentation on wave_no % 5 == 0)",
+      "SFX09": "M05_VISUAL_EVENT_OR_M06_SNAPSHOT_DIFF (boss_spawned is explicit at tick 2600; subsequent Boss slam at tick 2600/2800 correlates combat/final_combat boundary with boss_hp > 0)",
+      "SFX10": "READY_FROM_EVENT_STREAM (vote_closed carries selected VoteOption in Amount at tick 1200)",
+      "SFX11": "M05_WS_WAVE_RESULT_PROJECTION (simulation emits wave_result Amount=1 at tick 2800; M05 projects explicit wave_result per QA-SIM-12)",
+      "SFX12": "M05_WS_WAVE_RESULT_PROJECTION (simulation emits wave_result Amount=2 at tick 2800; M05 projects explicit wave_result per QA-SIM-12)",
+      "AMB01": "READY_FROM_SNAPSHOT_LIFECYCLE (driven by lifecycle + phase)",
+      "MUS01": "MUTED_BY_DEFAULT_GATE_LEGAL (driven by phase when unmuted post-clearance)",
+      "MUS02": "MUTED_BY_DEFAULT_GATE_LEGAL (driven by phase when unmuted post-clearance)"
+    }
   },
   "cues": [
     {
@@ -36,6 +67,7 @@
       "cooldown_ms": 2000,
       "assault_phase_cooldown_ms": 3500,
       "assault_phase_attenuation_db": -5.5,
+      "suppress_during_priority_alerts": true,
       "max_concurrent_instances": 1,
       "canonical_domain_events": [
         "role_accepted",

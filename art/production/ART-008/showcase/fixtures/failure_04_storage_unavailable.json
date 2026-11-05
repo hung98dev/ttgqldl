@@ -1,0 +1,93 @@
+{
+  "sequence_id": "failure_04_storage_unavailable",
+  "filename": "failure_04_storage_unavailable.json",
+  "synthetic_fixture": true,
+  "title": "4. PostgreSQL Storage Unavailable (Highest Blocker Priority)",
+  "invariants_verified": [
+    "storage_unavailable outranks source_disconnected and operator_paused in primary banner",
+    "Zero speculative join toasts or fake durable ACKs emitted while DB is unavailable",
+    "Coexisting Boss truth preserved in secondary diagnostic pill"
+  ],
+  "fixture": {
+    "synthetic_fixture": true,
+    "fixture_id": "synth-fail-04_seq_2045",
+    "canonical_state_id": "FINALE",
+    "attract_mode": false,
+    "schema_version": "ws-public-v1-synthetic",
+    "session_id": "synth-fail-04",
+    "mock_stream_seq": 2045,
+    "public_snapshot": {
+      "lifecycle": "storage_unavailable",
+      "source_status": "disconnected",
+      "pause_reasons": [
+        "storage_unavailable",
+        "source_disconnected"
+      ],
+      "wave_no": 10,
+      "wave_tick": 2640,
+      "remaining_seconds": 36,
+      "phase": "finale",
+      "village_level": 14,
+      "wall_tier": 6,
+      "wall_hp": 380,
+      "wall_max": 1200,
+      "townhall_hp": 2000,
+      "townhall_max": 2000,
+      "wood": 320,
+      "stone": 240,
+      "food": 410,
+      "counts": {
+        "unique_joined": 168,
+        "builder": 40,
+        "guard": 52,
+        "fighter": 76
+      },
+      "lanes": [
+        {
+          "id": "west",
+          "ordinary_hp": 30
+        },
+        {
+          "id": "center",
+          "ordinary_hp": 90
+        },
+        {
+          "id": "east",
+          "ordinary_hp": 35
+        }
+      ],
+      "vote": {
+        "open": false,
+        "selected": null,
+        "counts": {
+          "A": 0,
+          "B": 0,
+          "C": 0
+        }
+      },
+      "boss": {
+        "boss_incoming": false,
+        "boss_exists": true,
+        "boss_hp": 980,
+        "boss_max_hp": 1800
+      },
+      "settlement": {
+        "wave_result": null,
+        "consecutive_losses": 0,
+        "is_post_loss_recovery": false,
+        "pending_next_wave_count": 0
+      },
+      "system_assist": {
+        "militia_active": false,
+        "militia_attack_bonus": 0
+      },
+      "diagnostics": {
+        "connection_state": "live",
+        "metrics_available": true,
+        "queue_fill_pct": 12,
+        "retryable_rejected_count": 0,
+        "confirmed_valid_drops": 0
+      }
+    }
+  }
+}

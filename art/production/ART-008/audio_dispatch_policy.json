@@ -1,0 +1,64 @@
+{
+  "package_id": "ART-008",
+  "policy_id": "ttg-audio-dispatch-v2",
+  "authority_rule": "Presentation-only consumer of committed non-speculative public events/snapshots. Never mutates gameplay state.",
+  "voice_pool": {
+    "total_preallocated_audio_sources": 12,
+    "combat_sfx_pool": 8,
+    "priority_alerts_pool": 2,
+    "ambient_loop_source": 1,
+    "music_loop_source": 1,
+    "dynamic_runtime_instantiation": false
+  },
+  "buses_default_db": {
+    "Master": 0.0,
+    "Alerts": 0.0,
+    "SFX": -1.5,
+    "Ambient": -3.0,
+    "Music": -80.0
+  },
+  "music_safety_lock": {
+    "muted_by_default": true,
+    "default_volume_db": -80.0,
+    "audio_source_mute_flag": true,
+    "release_gate_blocker": "GATE-LEGAL"
+  },
+  "join_chime_anti_spam_contract": {
+    "cue_id": "SFX01",
+    "prep_cooldown_ms": 2000,
+    "assault_and_finale_cooldown_ms": 3500,
+    "assault_attenuation_db": -5.5,
+    "suppressed_while_priority_alerts_active": true,
+    "verified_10s_burst_plays_prep": 5,
+    "verified_10s_burst_plays_assault": 3,
+    "verified_plays_during_alert": 0
+  },
+  "two_tier_deduplication_contract": {
+    "contract_id": "ttg-audio-dedupe-v2",
+    "tier_1_exact_delivery": {
+      "key_format": "{session_id}:{stream_seq}",
+      "ring_buffer_size": 256,
+      "monotonic_cursor_floor": "reject stream_seq <= max_seen_stream_seq - 256",
+      "preserves_independent_same_type_combat_events": true
+    },
+    "tier_2_once_per_wave_milestones": {
+      "key_format": "{session_id}:{wave_no}:{canonical_milestone}",
+      "allowed_milestones_only": [
+        "vote_closed",
+        "boss_incoming",
+        "boss_spawned",
+        "wave_result"
+      ],
+      "forbidden_on_repeatable_combat_cues": [
+        "SFX01",
+        "SFX02",
+        "SFX03",
+        "SFX04",
+        "SFX05",
+        "SFX06",
+        "SFX07",
+        "SFX09"
+      ]
+    }
+  }
+}

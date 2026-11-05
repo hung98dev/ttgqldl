@@ -1,0 +1,331 @@
+{
+  "package_id": "ART-008",
+  "style_lock": "Bastion Dawn v1",
+  "canonical_states_count": 16,
+  "combined_overlay_states_count": 8,
+  "priority_transitions_count": 16,
+  "safety_and_ux_invariants": {
+    "primary_cta_vi": "Bình luận XÂY / THỦ / ĐÁNH",
+    "competing_primary_ctas": 0,
+    "fake_viewer_touch_buttons": 0,
+    "camera_shake_amplitude_px": 0.0,
+    "max_flash_frequency_hz": 0.0,
+    "strobe_ceiling_hz": 3.0,
+    "max_transition_duration_ms": 220,
+    "hp_bar_lerp_duration_ms": 180,
+    "join_toast_single_slot_ttl_ms": 2000,
+    "scene_reloads_on_state_change": 0,
+    "boss_earliest_spawn_tick": 2600,
+    "results_earliest_settlement_tick": 2800,
+    "music_muted_by_default": true,
+    "right_safe_zone_max_x_1080p": 885.6,
+    "bottom_safe_zone_max_y_1080p": 1689.6
+  },
+  "priority_order_highest_first": [
+    "MAINTENANCE (lifecycle == stopped)",
+    "STORAGE_UNAVAILABLE (pause_reasons contains storage_unavailable)",
+    "SOURCE_RECONNECTING (pause_reasons contains source_disconnected)",
+    "PAUSED (pause_reasons contains operator_paused)",
+    "DEGRADED_DROPS (metrics_available && confirmed_valid_drops > 0)",
+    "BOSS_ACTIVE (wave_no % 5 == 0 && tick >= 2600 && boss_exists)",
+    "BOSS_INCOMING (wave_no % 5 == 0 && 2450 <= tick < 2600 && boss_incoming)",
+    "RESULTS_WIN / RESULTS_LOSS (phase == results && tick >= 2800)",
+    "ASSAULT / FINALE",
+    "PREP_15_WARN (1450 <= tick <= 1599)",
+    "PREP_60_WARN (1000 <= tick <= 1449)",
+    "PREP + VOTE_OPEN (even wave && 800 <= tick <= 1199)",
+    "PREP (0 <= tick <= 1599)",
+    "WAITING_FOR_VIEWER (P == 0)",
+    "ATTRACT"
+  ],
+  "priority_transitions": [
+    {
+      "transition_id": "T01",
+      "from_state": "ATTRACT",
+      "to_state": "WAITING_FOR_VIEWER",
+      "trigger_condition": "Session initialized with P=0",
+      "standard_motion": {
+        "description": "200ms banner crossfade + timer reset to 05:00",
+        "max_duration_ms": 220,
+        "camera_shake_px": 0.0,
+        "flash_hz": 0.0
+      },
+      "reduced_motion": {
+        "description": "Instant state swap (0px slide, 60ms alpha crossfade)",
+        "slide_offset_px": 0,
+        "scale_pulse": 1.0,
+        "flash_hz": 0.0
+      }
+    },
+    {
+      "transition_id": "T02",
+      "from_state": "WAITING_FOR_VIEWER",
+      "to_state": "PREP",
+      "trigger_condition": "First committed role_accepted (wave_tick=0, P>=1)",
+      "standard_motion": {
+        "description": "200ms banner crossfade + single-slot join toast 8px slide-in",
+        "max_duration_ms": 220,
+        "camera_shake_px": 0.0,
+        "flash_hz": 0.0
+      },
+      "reduced_motion": {
+        "description": "Instant banner swap + static 2.0s toast fade (0px slide)",
+        "slide_offset_px": 0,
+        "scale_pulse": 1.0,
+        "flash_hz": 0.0
+      }
+    },
+    {
+      "transition_id": "T03",
+      "from_state": "PREP",
+      "to_state": "PREP_60_WARN",
+      "trigger_condition": "wave_tick reaches 1000 (60s PREP remaining)",
+      "standard_motion": {
+        "description": "180ms navy->amber threat banner tint crossfade",
+        "max_duration_ms": 220,
+        "camera_shake_px": 0.0,
+        "flash_hz": 0.0
+      },
+      "reduced_motion": {
+        "description": "Instant navy->amber banner swap (0Hz pulse)",
+        "slide_offset_px": 0,
+        "scale_pulse": 1.0,
+        "flash_hz": 0.0
+      }
+    },
+    {
+      "transition_id": "T04",
+      "from_state": "PREP_60_WARN",
+      "to_state": "PREP_15_WARN",
+      "trigger_condition": "wave_tick reaches 1450 (15s PREP remaining)",
+      "standard_motion": {
+        "description": "180ms amber->crimson banner crossfade + dusk lighting grade",
+        "max_duration_ms": 220,
+        "camera_shake_px": 0.0,
+        "flash_hz": 0.0
+      },
+      "reduced_motion": {
+        "description": "Instant amber->crimson banner swap (0Hz flash)",
+        "slide_offset_px": 0,
+        "scale_pulse": 1.0,
+        "flash_hz": 0.0
+      }
+    },
+    {
+      "transition_id": "T05",
+      "from_state": "PREP",
+      "to_state": "PREP + VOTE_OPEN",
+      "trigger_condition": "Even wave_no and wave_tick in [800..1199]",
+      "standard_motion": {
+        "description": "180ms subordinate vote strip open skin crossfade inside dock",
+        "max_duration_ms": 220,
+        "camera_shake_px": 0.0,
+        "flash_hz": 0.0
+      },
+      "reduced_motion": {
+        "description": "Instant subordinate vote strip update",
+        "slide_offset_px": 0,
+        "scale_pulse": 1.0,
+        "flash_hz": 0.0
+      }
+    },
+    {
+      "transition_id": "T06",
+      "from_state": "PREP_15_WARN",
+      "to_state": "ASSAULT",
+      "trigger_condition": "wave_tick reaches 1600 (ASSAULT lock)",
+      "standard_motion": {
+        "description": "220ms banner slide-in (12px Y) + midday lighting + lane enemy entry",
+        "max_duration_ms": 220,
+        "camera_shake_px": 0.0,
+        "flash_hz": 0.0
+      },
+      "reduced_motion": {
+        "description": "Instant banner update (0px slide)",
+        "slide_offset_px": 0,
+        "scale_pulse": 1.0,
+        "flash_hz": 0.0
+      }
+    },
+    {
+      "transition_id": "T07",
+      "from_state": "ASSAULT",
+      "to_state": "FINALE",
+      "trigger_condition": "wave_tick reaches 2600",
+      "standard_motion": {
+        "description": "200ms banner update + dusk/eclipse palette shift",
+        "max_duration_ms": 220,
+        "camera_shake_px": 0.0,
+        "flash_hz": 0.0
+      },
+      "reduced_motion": {
+        "description": "Instant banner & palette update",
+        "slide_offset_px": 0,
+        "scale_pulse": 1.0,
+        "flash_hz": 0.0
+      }
+    },
+    {
+      "transition_id": "T08",
+      "from_state": "BOSS_INCOMING",
+      "to_state": "BOSS_ACTIVE",
+      "trigger_condition": "Boss wave tick 2450->2600 (boss_exists=true)",
+      "standard_motion": {
+        "description": "220ms Boss HP sub-bar reveal + Boss Warlord spawn at tick 2600",
+        "max_duration_ms": 220,
+        "camera_shake_px": 0.0,
+        "flash_hz": 0.0
+      },
+      "reduced_motion": {
+        "description": "Instant Boss HP sub-bar + Boss spawn at tick 2600",
+        "slide_offset_px": 0,
+        "scale_pulse": 1.0,
+        "flash_hz": 0.0
+      }
+    },
+    {
+      "transition_id": "T09",
+      "from_state": "FINALE",
+      "to_state": "RESULTS_WIN",
+      "trigger_condition": "Authoritative settlement wave_result=='win' at tick >= 2800",
+      "standard_motion": {
+        "description": "220ms emerald victory banner slide-in (10px Y) + SFX11 once",
+        "max_duration_ms": 220,
+        "camera_shake_px": 0.0,
+        "flash_hz": 0.0
+      },
+      "reduced_motion": {
+        "description": "Instant emerald victory banner swap + SFX11 once",
+        "slide_offset_px": 0,
+        "scale_pulse": 1.0,
+        "flash_hz": 0.0
+      }
+    },
+    {
+      "transition_id": "T10",
+      "from_state": "FINALE",
+      "to_state": "RESULTS_LOSS",
+      "trigger_condition": "Authoritative settlement wave_result=='loss' at tick >= 2800",
+      "standard_motion": {
+        "description": "220ms crimson loss banner crossfade + SFX12 once",
+        "max_duration_ms": 220,
+        "camera_shake_px": 0.0,
+        "flash_hz": 0.0
+      },
+      "reduced_motion": {
+        "description": "Instant crimson loss banner swap + SFX12 once",
+        "slide_offset_px": 0,
+        "scale_pulse": 1.0,
+        "flash_hz": 0.0
+      }
+    },
+    {
+      "transition_id": "T11",
+      "from_state": "RESULTS",
+      "to_state": "PREP (New Wave)",
+      "trigger_condition": "Rollover at tick 3000 -> wave_no+1, wave_tick=0",
+      "standard_motion": {
+        "description": "220ms wave counter increment + dawn palette restore (0 scene reload)",
+        "max_duration_ms": 220,
+        "camera_shake_px": 0.0,
+        "flash_hz": 0.0
+      },
+      "reduced_motion": {
+        "description": "Instant wave counter & dawn restore (0 scene reload)",
+        "slide_offset_px": 0,
+        "scale_pulse": 1.0,
+        "flash_hz": 0.0
+      }
+    },
+    {
+      "transition_id": "T12",
+      "from_state": "Gameplay",
+      "to_state": "SOURCE_RECONNECTING",
+      "trigger_condition": "source_status=='disconnected' or pause_reasons has source_disconnected",
+      "standard_motion": {
+        "description": "160ms amber reconnect banner + freeze world animations in place",
+        "max_duration_ms": 220,
+        "camera_shake_px": 0.0,
+        "flash_hz": 0.0
+      },
+      "reduced_motion": {
+        "description": "Instant amber reconnect banner + frozen world",
+        "slide_offset_px": 0,
+        "scale_pulse": 1.0,
+        "flash_hz": 0.0
+      }
+    },
+    {
+      "transition_id": "T13",
+      "from_state": "Gameplay",
+      "to_state": "PAUSED",
+      "trigger_condition": "pause_reasons has operator_paused",
+      "standard_motion": {
+        "description": "160ms operator pause banner + freeze world (never cleared by reconnect!)",
+        "max_duration_ms": 220,
+        "camera_shake_px": 0.0,
+        "flash_hz": 0.0
+      },
+      "reduced_motion": {
+        "description": "Instant operator pause banner + frozen world",
+        "slide_offset_px": 0,
+        "scale_pulse": 1.0,
+        "flash_hz": 0.0
+      }
+    },
+    {
+      "transition_id": "T14",
+      "from_state": "Gameplay",
+      "to_state": "STORAGE_UNAVAILABLE",
+      "trigger_condition": "pause_reasons has storage_unavailable (highest operational priority)",
+      "standard_motion": {
+        "description": "160ms crimson DB outage banner + freeze world + preserve Boss diag pill",
+        "max_duration_ms": 220,
+        "camera_shake_px": 0.0,
+        "flash_hz": 0.0
+      },
+      "reduced_motion": {
+        "description": "Instant crimson DB outage banner + frozen world",
+        "slide_offset_px": 0,
+        "scale_pulse": 1.0,
+        "flash_hz": 0.0
+      }
+    },
+    {
+      "transition_id": "T15",
+      "from_state": "Recovery",
+      "to_state": "Valid resumed presentation",
+      "trigger_condition": "Verified fresh public_snapshot after blocker cleared",
+      "standard_motion": {
+        "description": "180ms banner restore + resume 12 FPS clock from committed tick",
+        "max_duration_ms": 220,
+        "camera_shake_px": 0.0,
+        "flash_hz": 0.0
+      },
+      "reduced_motion": {
+        "description": "Instant banner restore + resume 12 FPS clock",
+        "slide_offset_px": 0,
+        "scale_pulse": 1.0,
+        "flash_hz": 0.0
+      }
+    },
+    {
+      "transition_id": "T16",
+      "from_state": "Any state",
+      "to_state": "MAINTENANCE",
+      "trigger_condition": "lifecycle=='stopped'",
+      "standard_motion": {
+        "description": "180ms maintenance banner + clear world units + maintenance CTA",
+        "max_duration_ms": 220,
+        "camera_shake_px": 0.0,
+        "flash_hz": 0.0
+      },
+      "reduced_motion": {
+        "description": "Instant maintenance state swap",
+        "slide_offset_px": 0,
+        "scale_pulse": 1.0,
+        "flash_hz": 0.0
+      }
+    }
+  ]
+}

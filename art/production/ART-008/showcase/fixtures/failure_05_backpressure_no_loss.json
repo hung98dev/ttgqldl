@@ -1,0 +1,89 @@
+{
+  "sequence_id": "failure_05_backpressure_no_loss",
+  "filename": "failure_05_backpressure_no_loss.json",
+  "synthetic_fixture": true,
+  "title": "5. Queue Backpressure Without Confirmed Event Loss (W0306 Discipline)",
+  "invariants_verified": [
+    "queue_fill_pct=86% and retryable_rejected_count=14 with confirmed_valid_drops==0",
+    "Displays subordinate amber backpressure notice ONLY — NEVER falsely claims permanent dropped valid commands!"
+  ],
+  "fixture": {
+    "synthetic_fixture": true,
+    "fixture_id": "synth-fail-05_seq_2060",
+    "canonical_state_id": "ASSAULT",
+    "attract_mode": false,
+    "schema_version": "ws-public-v1-synthetic",
+    "session_id": "synth-fail-05",
+    "mock_stream_seq": 2060,
+    "public_snapshot": {
+      "lifecycle": "running",
+      "source_status": "mock",
+      "pause_reasons": [],
+      "wave_no": 9,
+      "wave_tick": 1750,
+      "remaining_seconds": 125,
+      "phase": "assault",
+      "village_level": 14,
+      "wall_tier": 6,
+      "wall_hp": 820,
+      "wall_max": 1000,
+      "townhall_hp": 2000,
+      "townhall_max": 2000,
+      "wood": 320,
+      "stone": 240,
+      "food": 410,
+      "counts": {
+        "unique_joined": 128,
+        "builder": 30,
+        "guard": 40,
+        "fighter": 58
+      },
+      "lanes": [
+        {
+          "id": "west",
+          "ordinary_hp": 180
+        },
+        {
+          "id": "center",
+          "ordinary_hp": 240
+        },
+        {
+          "id": "east",
+          "ordinary_hp": 170
+        }
+      ],
+      "vote": {
+        "open": false,
+        "selected": null,
+        "counts": {
+          "A": 0,
+          "B": 0,
+          "C": 0
+        }
+      },
+      "boss": {
+        "boss_incoming": false,
+        "boss_exists": false,
+        "boss_hp": 0,
+        "boss_max_hp": 1800
+      },
+      "settlement": {
+        "wave_result": null,
+        "consecutive_losses": 0,
+        "is_post_loss_recovery": false,
+        "pending_next_wave_count": 0
+      },
+      "system_assist": {
+        "militia_active": false,
+        "militia_attack_bonus": 0
+      },
+      "diagnostics": {
+        "connection_state": "live",
+        "metrics_available": true,
+        "queue_fill_pct": 86,
+        "retryable_rejected_count": 14,
+        "confirmed_valid_drops": 0
+      }
+    }
+  }
+}
