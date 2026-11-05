@@ -1,0 +1,119 @@
+{
+  "package_id": "ART-009",
+  "single_source_authority": "art/production/ART-008/qa/performance_report.json",
+  "unity_version": "6000.6.7f1",
+  "cpu_model": "Intel(R) Core(TM) i5-14600K",
+  "gpu_model": "Intel(R) UHD Graphics 770",
+  "graphics_api": "Direct3D12",
+  "timing_scope": "cpu_camera_render_submission_editor_batchmode",
+  "one_percent_low_formula": "1000.0 / mean(slowest ceil(N * 0.01) frameTimesMs)",
+  "standalone_15min_soak_status": "NOT_EXECUTED",
+  "obs_hardware_capture_status": "NOT_EXECUTED",
+  "findings_remediated": {
+    "finding_A_one_percent_low_definition": {
+      "before_defect": "Computed `onePercentLowFps = 1000.0 / p99FrameTimeMs` (at N=180, p99 selected index 178 such that 10-entity 1%-low 397.91 FPS exceeded average 307.84 FPS!).",
+      "after_fix": "Sorts all N=180 frame durations descending, averages the slowest `ceil(180 * 0.01) = 2` frames, and computes `1000.0 / slowestOnePercentMeanMs`. Reports `p99FrameTimeMs` separately."
+    },
+    "finding_B_cpu_submission_vs_gpu_frame_time": {
+      "before_defect": "Labeled isolated `Stopwatch` around `Camera.Render()` without distinguishing CPU render-submission throughput from full GPU completion, standalone pacing, or OBS capture.",
+      "after_fix": "Explicit `timingScope = cpu_camera_render_submission_editor_batchmode`, queries `FrameTimingManager.IsFeatureEnabled()` (`gpuFrameTimingStatus = NOT_MEASURED_IN_EDITOR_BATCHMODE`), and marks standalone 15-min & OBS capture `NOT_EXECUTED`."
+    },
+    "finding_C_managed_gc_allocation": {
+      "before_defect": "Used `GC.GetTotalMemory(false)` before/after loop (net heap delta can be 0 even if per-frame allocations were collected).",
+      "after_fix": "Uses `GC.GetAllocatedBytesForCurrentThread()` cumulative monotonic thread allocation counter + `ProfilerRecorder(ProfilerCategory.Memory, 'GC Allocated In Frame')`, reporting `netHeapDeltaBytes` separately."
+    },
+    "finding_D_inconsistent_report_numbers_and_api_labels": {
+      "before_defect": "ART-008 README cited stale `261.66 FPS` while `performance_report.json` had `1016.38 FPS`; GPU render files were named `unity_d3d11_*.png` on a `Direct3D12` run; `drawCalls = 0` reported instead of `NOT_MEASURED`.",
+      "after_fix": "All Markdown & QA summaries single-sourced from `performance_report.json`; stale `unity_d3d11_*.png` removed and replaced by `unity_d3d12_*.png`; `drawCalls = -1` (`drawCallsStatus = NOT_MEASURED`)."
+    }
+  },
+  "audio_gain_verification": {
+    "prep_join_cooldown_ms": 2000,
+    "assault_join_cooldown_ms": 3500,
+    "assault_cue_attenuation_db": -5.5,
+    "assault_cue_linear_gain": 0.5309,
+    "sfx_bus_default_db": -1.5,
+    "sfx_bus_linear_gain": 0.8414,
+    "combined_assault_join_db": -7.0,
+    "combined_assault_join_linear_gain": 0.4467,
+    "music_muted_by_default": true,
+    "verdict": "CONFIRMED_INTENDED_COMBINATION_NOT_A_DEFECT (-5.5 dB cue attenuation + -1.5 dB SFX bus = -7.0 dB / 0.4467 linear)"
+  },
+  "tier_150_after": {
+    "visibleEntityCount": 150,
+    "averageFps": 1222.02,
+    "onePercentLowFps": 653.98,
+    "p99FrameTimeMs": 1.315,
+    "maxFrameTimeMs": 1.743,
+    "managedGcMeasurementMethod": "GC_GetAllocatedBytesForCurrentThread_Cumulative",
+    "managedGcAllocatedBytesTotal": 0,
+    "managedGcBytesPerFrame": 0.0,
+    "drawCalls": -1,
+    "drawCallsStatus": "NOT_MEASURED"
+  },
+  "all_tiers_summary": [
+    {
+      "visible_entities": 10,
+      "average_fps": 1976.99,
+      "one_percent_low_fps": 849.0,
+      "slowest_1pct_mean_ms": 1.178,
+      "p99_frame_time_ms": 1.154,
+      "managed_gc_bytes_per_frame": 0.0,
+      "draw_calls_status": "NOT_MEASURED",
+      "gpu_frame_timing_status": "NOT_MEASURED_IN_EDITOR_BATCHMODE"
+    },
+    {
+      "visible_entities": 50,
+      "average_fps": 159.71,
+      "one_percent_low_fps": 1.97,
+      "slowest_1pct_mean_ms": 506.65,
+      "p99_frame_time_ms": 498.439,
+      "managed_gc_bytes_per_frame": 0.0,
+      "draw_calls_status": "NOT_MEASURED",
+      "gpu_frame_timing_status": "NOT_MEASURED_IN_EDITOR_BATCHMODE"
+    },
+    {
+      "visible_entities": 100,
+      "average_fps": 1485.38,
+      "one_percent_low_fps": 1036.75,
+      "slowest_1pct_mean_ms": 0.965,
+      "p99_frame_time_ms": 0.901,
+      "managed_gc_bytes_per_frame": 0.0,
+      "draw_calls_status": "NOT_MEASURED",
+      "gpu_frame_timing_status": "NOT_MEASURED_IN_EDITOR_BATCHMODE"
+    },
+    {
+      "visible_entities": 150,
+      "average_fps": 1222.02,
+      "one_percent_low_fps": 653.98,
+      "slowest_1pct_mean_ms": 1.529,
+      "p99_frame_time_ms": 1.315,
+      "managed_gc_bytes_per_frame": 0.0,
+      "draw_calls_status": "NOT_MEASURED",
+      "gpu_frame_timing_status": "NOT_MEASURED_IN_EDITOR_BATCHMODE"
+    }
+  ],
+  "compressed_360p_stream_proof": {
+    "mp4": {
+      "file": "art/production/ART-009/previews/compressed_video/wave10_canonical_360p_h264_aac.mp4",
+      "resolution": [
+        360,
+        640
+      ],
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "actual_fps": 12.0,
+      "bitrate_kbps": 181.99,
+      "file_size_bytes": 272981,
+      "duration_s": 12.0,
+      "audio_sample_rate_hz": 48000,
+      "audio_channels": 2,
+      "container_av_start_offset_ms": 0.0,
+      "integrated_loudness_lufs": -14.54,
+      "true_peak_dbtp": -1.19,
+      "clipped_samples": 0
+    },
+    "vote_b_360p_psnr_db": 30.73,
+    "boss_active_360p_psnr_db": 30.63
+  }
+}

@@ -2,15 +2,678 @@
   "package_id": "ART-008",
   "fixture_id": "full_wave_300s_wave10_showcase",
   "synthetic_fixture": true,
-  "authoritative_rules_ref": "docs/plan/02_GAME_RULES.md + docs/plan/03_SIMULATION.md (ttg-rules-v1)",
+  "synthetic_rule_verified_fixture": true,
+  "is_executable_m02_replay": false,
+  "m05_ws_contract_status": "SYNTHETIC_PRESENTATION_FIXTURE_M05_NOT_STARTED",
+  "visual_units_authority_mode": "decorative_aggregate_pool_proxies",
+  "authoritative_rules_ref": "docs/plan/02_GAME_RULES.md + docs/plan/03_SIMULATION.md + tooling/refeval/model.go (ttg-rules-v1)",
   "wave_no": 10,
   "rollover_wave_no": 11,
   "logical_duration_seconds": 300,
   "logical_ticks_per_second": 10,
   "total_logical_ticks": 3000,
+  "selected_timeline_beats_count": 20,
+  "simulation_boundary_transitions_executed": 15,
   "max_logical_gap_between_visual_changes_seconds": 20.0,
-  "accelerated_showcase_video_duration_seconds": 31.5,
+  "accelerated_showcase_video_duration_seconds": 21.0,
   "music_muted_by_default": true,
+  "boundary_trace": [
+    {
+      "tick": 200,
+      "phase": "prep",
+      "builder": 49,
+      "guard": 4,
+      "fighter": 5,
+      "wall_tier": 6,
+      "wall_hp": 1616,
+      "wall_max": 2000,
+      "townhall_hp": 500,
+      "wood": 522,
+      "stone": 787,
+      "food": 540,
+      "construction_work": 1140,
+      "base_hp": 0,
+      "population_anchor": 0,
+      "ordinary_hp": 0,
+      "lanes": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "boss_hp": 0,
+      "boss_max_hp": 0,
+      "boss_state": "absent",
+      "upgraded_wall": false,
+      "wall_tier_before": 6,
+      "construction_work_before_upgrade": 1140,
+      "stone_before_upgrade": 787,
+      "vote_cost_charged": null,
+      "max_viewer_session_xp": 122
+    },
+    {
+      "tick": 400,
+      "phase": "prep",
+      "builder": 81,
+      "guard": 12,
+      "fighter": 16,
+      "wall_tier": 6,
+      "wall_hp": 1688,
+      "wall_max": 2000,
+      "townhall_hp": 500,
+      "wood": 526,
+      "stone": 796,
+      "food": 540,
+      "construction_work": 1140,
+      "base_hp": 0,
+      "population_anchor": 0,
+      "ordinary_hp": 0,
+      "lanes": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "boss_hp": 0,
+      "boss_max_hp": 0,
+      "boss_state": "absent",
+      "upgraded_wall": false,
+      "wall_tier_before": 6,
+      "construction_work_before_upgrade": 1140,
+      "stone_before_upgrade": 796,
+      "vote_cost_charged": null,
+      "max_viewer_session_xp": 124
+    },
+    {
+      "tick": 600,
+      "phase": "prep",
+      "builder": 100,
+      "guard": 20,
+      "fighter": 25,
+      "wall_tier": 6,
+      "wall_hp": 1768,
+      "wall_max": 2000,
+      "townhall_hp": 500,
+      "wood": 532,
+      "stone": 806,
+      "food": 540,
+      "construction_work": 1140,
+      "base_hp": 0,
+      "population_anchor": 0,
+      "ordinary_hp": 0,
+      "lanes": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "boss_hp": 0,
+      "boss_max_hp": 0,
+      "boss_state": "absent",
+      "upgraded_wall": false,
+      "wall_tier_before": 6,
+      "construction_work_before_upgrade": 1140,
+      "stone_before_upgrade": 806,
+      "vote_cost_charged": null,
+      "max_viewer_session_xp": 126
+    },
+    {
+      "tick": 800,
+      "phase": "prep",
+      "builder": 121,
+      "guard": 24,
+      "fighter": 35,
+      "wall_tier": 6,
+      "wall_hp": 1856,
+      "wall_max": 2000,
+      "townhall_hp": 500,
+      "wood": 538,
+      "stone": 817,
+      "food": 540,
+      "construction_work": 1140,
+      "base_hp": 0,
+      "population_anchor": 0,
+      "ordinary_hp": 0,
+      "lanes": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "boss_hp": 0,
+      "boss_max_hp": 0,
+      "boss_state": "absent",
+      "upgraded_wall": false,
+      "wall_tier_before": 6,
+      "construction_work_before_upgrade": 1140,
+      "stone_before_upgrade": 817,
+      "vote_cost_charged": null,
+      "max_viewer_session_xp": 128
+    },
+    {
+      "tick": 1000,
+      "phase": "prep",
+      "builder": 121,
+      "guard": 28,
+      "fighter": 45,
+      "wall_tier": 6,
+      "wall_hp": 1944,
+      "wall_max": 2000,
+      "townhall_hp": 500,
+      "wood": 544,
+      "stone": 828,
+      "food": 540,
+      "construction_work": 1140,
+      "base_hp": 0,
+      "population_anchor": 0,
+      "ordinary_hp": 0,
+      "lanes": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "boss_hp": 0,
+      "boss_max_hp": 0,
+      "boss_state": "absent",
+      "upgraded_wall": false,
+      "wall_tier_before": 6,
+      "construction_work_before_upgrade": 1140,
+      "stone_before_upgrade": 828,
+      "vote_cost_charged": null,
+      "max_viewer_session_xp": 130
+    },
+    {
+      "tick": 1200,
+      "phase": "prep",
+      "builder": 121,
+      "guard": 31,
+      "fighter": 52,
+      "wall_tier": 6,
+      "wall_hp": 2000,
+      "wall_max": 2000,
+      "townhall_hp": 500,
+      "wood": 556,
+      "stone": 839,
+      "food": 490,
+      "construction_work": 1172,
+      "base_hp": 0,
+      "population_anchor": 0,
+      "ordinary_hp": 0,
+      "lanes": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "boss_hp": 0,
+      "boss_max_hp": 0,
+      "boss_state": "absent",
+      "upgraded_wall": false,
+      "wall_tier_before": 6,
+      "construction_work_before_upgrade": 1172,
+      "stone_before_upgrade": 839,
+      "vote_cost_charged": {
+        "resource": "food",
+        "amount": 50
+      },
+      "max_viewer_session_xp": 132
+    },
+    {
+      "tick": 1400,
+      "phase": "prep",
+      "builder": 121,
+      "guard": 31,
+      "fighter": 52,
+      "wall_tier": 7,
+      "wall_hp": 2200,
+      "wall_max": 2200,
+      "townhall_hp": 500,
+      "wood": 580,
+      "stone": 250,
+      "food": 490,
+      "construction_work": 0,
+      "base_hp": 0,
+      "population_anchor": 0,
+      "ordinary_hp": 0,
+      "lanes": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "boss_hp": 0,
+      "boss_max_hp": 0,
+      "boss_state": "absent",
+      "upgraded_wall": true,
+      "wall_tier_before": 6,
+      "construction_work_before_upgrade": 1200,
+      "stone_before_upgrade": 850,
+      "vote_cost_charged": null,
+      "max_viewer_session_xp": 134
+    },
+    {
+      "tick": 1600,
+      "phase": "assault",
+      "builder": 48,
+      "guard": 92,
+      "fighter": 64,
+      "wall_tier": 7,
+      "wall_hp": 2200,
+      "wall_max": 2200,
+      "townhall_hp": 500,
+      "wood": 592,
+      "stone": 256,
+      "food": 490,
+      "construction_work": 48,
+      "base_hp": 620,
+      "population_anchor": 204,
+      "ordinary_hp": 620,
+      "lanes": [
+        [
+          52,
+          115,
+          43
+        ],
+        [
+          49,
+          108,
+          41
+        ],
+        [
+          53,
+          116,
+          43
+        ]
+      ],
+      "boss_hp": 0,
+      "boss_max_hp": 124,
+      "boss_state": "absent",
+      "upgraded_wall": false,
+      "wall_tier_before": 7,
+      "construction_work_before_upgrade": 48,
+      "stone_before_upgrade": 256,
+      "vote_cost_charged": null,
+      "max_viewer_session_xp": 136
+    },
+    {
+      "tick": 1800,
+      "phase": "assault",
+      "builder": 0,
+      "guard": 140,
+      "fighter": 64,
+      "wall_tier": 7,
+      "wall_hp": 2174,
+      "wall_max": 2200,
+      "townhall_hp": 500,
+      "wood": 592,
+      "stone": 256,
+      "food": 490,
+      "construction_work": 48,
+      "base_hp": 620,
+      "population_anchor": 204,
+      "ordinary_hp": 455,
+      "lanes": [
+        [
+          0,
+          112,
+          43
+        ],
+        [
+          0,
+          102,
+          41
+        ],
+        [
+          0,
+          114,
+          43
+        ]
+      ],
+      "boss_hp": 0,
+      "boss_max_hp": 124,
+      "guard_block": 88,
+      "attack": 165,
+      "raw_damage": 114,
+      "damage_applied": 26,
+      "defeated": false,
+      "boss_state": "scheduled",
+      "upgraded_wall": false,
+      "wall_tier_before": 7,
+      "construction_work_before_upgrade": 48,
+      "stone_before_upgrade": 256,
+      "vote_cost_charged": null,
+      "max_viewer_session_xp": 138
+    },
+    {
+      "tick": 2000,
+      "phase": "assault",
+      "builder": 0,
+      "guard": 140,
+      "fighter": 64,
+      "wall_tier": 7,
+      "wall_hp": 2174,
+      "wall_max": 2200,
+      "townhall_hp": 500,
+      "wood": 592,
+      "stone": 256,
+      "food": 490,
+      "construction_work": 48,
+      "base_hp": 620,
+      "population_anchor": 204,
+      "ordinary_hp": 290,
+      "lanes": [
+        [
+          0,
+          57,
+          43
+        ],
+        [
+          0,
+          47,
+          41
+        ],
+        [
+          0,
+          59,
+          43
+        ]
+      ],
+      "boss_hp": 0,
+      "boss_max_hp": 124,
+      "guard_block": 88,
+      "attack": 165,
+      "raw_damage": 73,
+      "damage_applied": 0,
+      "defeated": false,
+      "boss_state": "scheduled",
+      "upgraded_wall": false,
+      "wall_tier_before": 7,
+      "construction_work_before_upgrade": 48,
+      "stone_before_upgrade": 256,
+      "vote_cost_charged": null,
+      "max_viewer_session_xp": 140
+    },
+    {
+      "tick": 2200,
+      "phase": "assault",
+      "builder": 0,
+      "guard": 140,
+      "fighter": 64,
+      "wall_tier": 7,
+      "wall_hp": 2174,
+      "wall_max": 2200,
+      "townhall_hp": 500,
+      "wood": 592,
+      "stone": 256,
+      "food": 490,
+      "construction_work": 48,
+      "base_hp": 620,
+      "population_anchor": 204,
+      "ordinary_hp": 125,
+      "lanes": [
+        [
+          0,
+          2,
+          43
+        ],
+        [
+          0,
+          0,
+          33
+        ],
+        [
+          0,
+          4,
+          43
+        ]
+      ],
+      "boss_hp": 0,
+      "boss_max_hp": 124,
+      "guard_block": 88,
+      "attack": 165,
+      "raw_damage": 32,
+      "damage_applied": 0,
+      "defeated": false,
+      "boss_state": "scheduled",
+      "upgraded_wall": false,
+      "wall_tier_before": 7,
+      "construction_work_before_upgrade": 48,
+      "stone_before_upgrade": 256,
+      "vote_cost_charged": null,
+      "max_viewer_session_xp": 142
+    },
+    {
+      "tick": 2400,
+      "phase": "assault",
+      "builder": 0,
+      "guard": 140,
+      "fighter": 64,
+      "wall_tier": 7,
+      "wall_hp": 2174,
+      "wall_max": 2200,
+      "townhall_hp": 500,
+      "wood": 592,
+      "stone": 256,
+      "food": 490,
+      "construction_work": 48,
+      "base_hp": 620,
+      "population_anchor": 204,
+      "ordinary_hp": 0,
+      "lanes": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "boss_hp": 0,
+      "boss_max_hp": 124,
+      "guard_block": 88,
+      "attack": 165,
+      "raw_damage": 0,
+      "damage_applied": 0,
+      "defeated": false,
+      "boss_state": "incoming",
+      "upgraded_wall": false,
+      "wall_tier_before": 7,
+      "construction_work_before_upgrade": 48,
+      "stone_before_upgrade": 256,
+      "vote_cost_charged": null,
+      "max_viewer_session_xp": 144
+    },
+    {
+      "tick": 2600,
+      "phase": "finale",
+      "builder": 36,
+      "guard": 159,
+      "fighter": 9,
+      "wall_tier": 7,
+      "wall_hp": 2200,
+      "wall_max": 2200,
+      "townhall_hp": 500,
+      "wood": 598,
+      "stone": 262,
+      "food": 490,
+      "construction_work": 70,
+      "base_hp": 620,
+      "population_anchor": 204,
+      "ordinary_hp": 0,
+      "lanes": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "boss_hp": 62,
+      "boss_max_hp": 124,
+      "guard_block": 96,
+      "attack": 62,
+      "raw_damage": 31,
+      "damage_applied": 0,
+      "defeated": false,
+      "boss_state": "active",
+      "upgraded_wall": false,
+      "wall_tier_before": 7,
+      "construction_work_before_upgrade": 70,
+      "stone_before_upgrade": 262,
+      "vote_cost_charged": null,
+      "max_viewer_session_xp": 146
+    },
+    {
+      "tick": 2800,
+      "phase": "results",
+      "builder": 36,
+      "guard": 143,
+      "fighter": 25,
+      "wall_tier": 7,
+      "wall_hp": 2200,
+      "wall_max": 2200,
+      "townhall_hp": 500,
+      "wood": 710,
+      "stone": 328,
+      "food": 540,
+      "construction_work": 118,
+      "base_hp": 620,
+      "population_anchor": 204,
+      "ordinary_hp": 0,
+      "lanes": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "boss_hp": 0,
+      "boss_max_hp": 124,
+      "guard_block": 88,
+      "attack": 103,
+      "raw_damage": 0,
+      "damage_applied": 0,
+      "defeated": false,
+      "boss_state": "destroyed",
+      "upgraded_wall": false,
+      "wall_tier_before": 7,
+      "construction_work_before_upgrade": 118,
+      "stone_before_upgrade": 268,
+      "vote_cost_charged": null,
+      "max_viewer_session_xp": 148,
+      "settlement_result": "win",
+      "settlement_reward": {
+        "wood": 100,
+        "stone": 60,
+        "food": 50
+      }
+    }
+  ],
   "beats": [
     {
       "beat_id": "B00_WAITING",
@@ -19,7 +682,7 @@
       "logical_time_s": -0.1,
       "showcase_video_time_s": 0.0,
       "visual_state": "WAITING_FOR_VIEWER",
-      "meaningful_visual_change": "Lobby waiting state (P=0): empty lanes, intact wall, primary CTA 'Bình luận XÂY / THỦ / ĐÁNH'",
+      "meaningful_visual_change": "Lobby WAITING state (wave_tick=-1, P=0): empty lanes, Tier 6 wall 1560/2000, Townhall 500/500",
       "audio_events": [
         {
           "cue_id": "AMB01",
@@ -40,18 +703,23 @@
           "source_status": "mock",
           "pause_reasons": [],
           "wave_no": 10,
-          "wave_tick": 0,
+          "wave_tick": -1,
           "remaining_seconds": 300,
           "phase": "waiting",
+          "total_wins": 39,
           "village_level": 14,
+          "consecutive_wins_before_wave": 5,
+          "population_anchor": 0,
+          "base_hp": 0,
+          "max_viewer_session_xp": 120,
           "wall_tier": 6,
-          "wall_hp": 1000,
-          "wall_max": 1000,
-          "townhall_hp": 2000,
-          "townhall_max": 2000,
-          "wood": 320,
-          "stone": 240,
-          "food": 410,
+          "wall_hp": 1560,
+          "wall_max": 2000,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 520,
+          "stone": 780,
+          "food": 540,
           "counts": {
             "unique_joined": 0,
             "builder": 0,
@@ -61,15 +729,24 @@
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "center",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "east",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             }
           ],
           "vote": {
@@ -85,7 +762,7 @@
             "boss_incoming": false,
             "boss_exists": false,
             "boss_hp": 0,
-            "boss_max_hp": 1800
+            "boss_max_hp": 0
           },
           "settlement": {
             "wave_result": null,
@@ -112,9 +789,9 @@
       "wave_no": 10,
       "wave_tick": 0,
       "logical_time_s": 0.0,
-      "showcase_video_time_s": 1.5,
+      "showcase_video_time_s": 1.0,
       "visual_state": "PREP",
-      "meaningful_visual_change": "First valid participant joins Builder -> wave_tick=0 starts, Militia assist active (P=1<=10), Join Toast slides in",
+      "meaningful_visual_change": "First participant joins Builder -> wave_tick=0 starts, Militia assist +40 ATK (P=1<=10), Join Toast slides in",
       "audio_events": [
         {
           "cue_id": "SFX01",
@@ -138,15 +815,20 @@
           "wave_tick": 0,
           "remaining_seconds": 300,
           "phase": "prep",
+          "total_wins": 39,
           "village_level": 14,
+          "consecutive_wins_before_wave": 5,
+          "population_anchor": 0,
+          "base_hp": 0,
+          "max_viewer_session_xp": 120,
           "wall_tier": 6,
-          "wall_hp": 1000,
-          "wall_max": 1000,
-          "townhall_hp": 2000,
-          "townhall_max": 2000,
-          "wood": 320,
-          "stone": 240,
-          "food": 410,
+          "wall_hp": 1560,
+          "wall_max": 2000,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 520,
+          "stone": 780,
+          "food": 540,
           "counts": {
             "unique_joined": 1,
             "builder": 1,
@@ -156,15 +838,24 @@
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "center",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "east",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             }
           ],
           "vote": {
@@ -180,7 +871,7 @@
             "boss_incoming": false,
             "boss_exists": false,
             "boss_hp": 0,
-            "boss_max_hp": 1800
+            "boss_max_hp": 0
           },
           "settlement": {
             "wave_result": null,
@@ -190,7 +881,7 @@
           },
           "system_assist": {
             "militia_active": true,
-            "militia_attack_bonus": 35
+            "militia_attack_bonus": 40
           },
           "diagnostics": {
             "connection_state": "live",
@@ -213,9 +904,9 @@
       "wave_no": 10,
       "wave_tick": 200,
       "logical_time_s": 20.0,
-      "showcase_video_time_s": 3.0,
+      "showcase_video_time_s": 2.0,
       "visual_state": "PREP",
-      "meaningful_visual_change": "20s elapsed: 4 scaffolds active, Builders hammer wall masonry (+repair sparks), Guards & Fighters muster",
+      "meaningful_visual_change": "Tick 200: 49 Builders repair Tier 6 wall 1560->1616/2000 (+repair sparks), Guards & Fighters muster",
       "audio_events": [
         {
           "cue_id": "SFX02",
@@ -239,33 +930,47 @@
           "wave_tick": 200,
           "remaining_seconds": 280,
           "phase": "prep",
+          "total_wins": 39,
           "village_level": 14,
+          "consecutive_wins_before_wave": 5,
+          "population_anchor": 0,
+          "base_hp": 0,
+          "max_viewer_session_xp": 122,
           "wall_tier": 6,
-          "wall_hp": 1000,
-          "wall_max": 1000,
-          "townhall_hp": 2000,
-          "townhall_max": 2000,
-          "wood": 380,
-          "stone": 290,
-          "food": 450,
+          "wall_hp": 1616,
+          "wall_max": 2000,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 522,
+          "stone": 787,
+          "food": 540,
           "counts": {
-            "unique_joined": 44,
-            "builder": 12,
-            "guard": 14,
-            "fighter": 18
+            "unique_joined": 58,
+            "builder": 49,
+            "guard": 4,
+            "fighter": 5
           },
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "center",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "east",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             }
           ],
           "vote": {
@@ -281,7 +986,7 @@
             "boss_incoming": false,
             "boss_exists": false,
             "boss_hp": 0,
-            "boss_max_hp": 1800
+            "boss_max_hp": 0
           },
           "settlement": {
             "wave_result": null,
@@ -308,9 +1013,9 @@
       "wave_no": 10,
       "wave_tick": 400,
       "logical_time_s": 40.0,
-      "showcase_video_time_s": 4.5,
+      "showcase_video_time_s": 3.0,
       "visual_state": "PREP",
-      "meaningful_visual_change": "40s elapsed: role counters climb to 76 participants, resources harvested, timer 04:20",
+      "meaningful_visual_change": "Tick 400: 109 participants active, wall repaired to 1688/2000, timer 04:20",
       "audio_events": [
         {
           "cue_id": "SFX01",
@@ -334,33 +1039,47 @@
           "wave_tick": 400,
           "remaining_seconds": 260,
           "phase": "prep",
+          "total_wins": 39,
           "village_level": 14,
+          "consecutive_wins_before_wave": 5,
+          "population_anchor": 0,
+          "base_hp": 0,
+          "max_viewer_session_xp": 124,
           "wall_tier": 6,
-          "wall_hp": 1000,
-          "wall_max": 1000,
-          "townhall_hp": 2000,
-          "townhall_max": 2000,
-          "wood": 430,
-          "stone": 335,
-          "food": 495,
+          "wall_hp": 1688,
+          "wall_max": 2000,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 526,
+          "stone": 796,
+          "food": 540,
           "counts": {
-            "unique_joined": 76,
-            "builder": 22,
-            "guard": 24,
-            "fighter": 30
+            "unique_joined": 109,
+            "builder": 81,
+            "guard": 12,
+            "fighter": 16
           },
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "center",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "east",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             }
           ],
           "vote": {
@@ -376,7 +1095,7 @@
             "boss_incoming": false,
             "boss_exists": false,
             "boss_hp": 0,
-            "boss_max_hp": 1800
+            "boss_max_hp": 0
           },
           "settlement": {
             "wave_result": null,
@@ -409,9 +1128,9 @@
       "wave_no": 10,
       "wave_tick": 600,
       "logical_time_s": 60.0,
-      "showcase_video_time_s": 6.0,
+      "showcase_video_time_s": 4.0,
       "visual_state": "PREP",
-      "meaningful_visual_change": "Tick 600 (60s elapsed): wall reinforced to tier 7 (1100/1100 HP), Builders repair contact",
+      "meaningful_visual_change": "Tick 600: 100 Builders raise Tier 6 wall to 1768/2000 HP, wood/stone economy accrues",
       "audio_events": [
         {
           "cue_id": "SFX02",
@@ -435,33 +1154,47 @@
           "wave_tick": 600,
           "remaining_seconds": 240,
           "phase": "prep",
+          "total_wins": 39,
           "village_level": 14,
-          "wall_tier": 7,
-          "wall_hp": 1100,
-          "wall_max": 1100,
-          "townhall_hp": 2000,
-          "townhall_max": 2000,
-          "wood": 470,
-          "stone": 360,
-          "food": 520,
+          "consecutive_wins_before_wave": 5,
+          "population_anchor": 0,
+          "base_hp": 0,
+          "max_viewer_session_xp": 126,
+          "wall_tier": 6,
+          "wall_hp": 1768,
+          "wall_max": 2000,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 532,
+          "stone": 806,
+          "food": 540,
           "counts": {
-            "unique_joined": 102,
-            "builder": 28,
-            "guard": 32,
-            "fighter": 42
+            "unique_joined": 145,
+            "builder": 100,
+            "guard": 20,
+            "fighter": 25
           },
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "center",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "east",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             }
           ],
           "vote": {
@@ -477,7 +1210,7 @@
             "boss_incoming": false,
             "boss_exists": false,
             "boss_hp": 0,
-            "boss_max_hp": 1800
+            "boss_max_hp": 0
           },
           "settlement": {
             "wave_result": null,
@@ -504,9 +1237,9 @@
       "wave_no": 10,
       "wave_tick": 800,
       "logical_time_s": 80.0,
-      "showcase_video_time_s": 7.5,
+      "showcase_video_time_s": 5.0,
       "visual_state": "VOTE_OPEN",
-      "meaningful_visual_change": "Tick 800: Even-wave tactical vote opens in subordinate dock strip (A/B/C live tallies)",
+      "meaningful_visual_change": "Tick 800: Even-wave tactical vote opens in subordinate dock strip (A:-50G / B:-50L / C:0)",
       "audio_events": [],
       "fixture": {
         "synthetic_fixture": true,
@@ -524,33 +1257,47 @@
           "wave_tick": 800,
           "remaining_seconds": 220,
           "phase": "prep",
+          "total_wins": 39,
           "village_level": 14,
-          "wall_tier": 7,
-          "wall_hp": 1100,
-          "wall_max": 1100,
-          "townhall_hp": 2000,
-          "townhall_max": 2000,
-          "wood": 320,
-          "stone": 240,
-          "food": 410,
+          "consecutive_wins_before_wave": 5,
+          "population_anchor": 0,
+          "base_hp": 0,
+          "max_viewer_session_xp": 128,
+          "wall_tier": 6,
+          "wall_hp": 1856,
+          "wall_max": 2000,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 538,
+          "stone": 817,
+          "food": 540,
           "counts": {
-            "unique_joined": 122,
-            "builder": 34,
-            "guard": 38,
-            "fighter": 50
+            "unique_joined": 180,
+            "builder": 121,
+            "guard": 24,
+            "fighter": 35
           },
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "center",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "east",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             }
           ],
           "vote": {
@@ -566,7 +1313,7 @@
             "boss_incoming": false,
             "boss_exists": false,
             "boss_hp": 0,
-            "boss_max_hp": 1800
+            "boss_max_hp": 0
           },
           "settlement": {
             "wave_result": null,
@@ -593,9 +1340,9 @@
       "wave_no": 10,
       "wave_tick": 1000,
       "logical_time_s": 100.0,
-      "showcase_video_time_s": 9.0,
+      "showcase_video_time_s": 6.0,
       "visual_state": "PREP_60_WARN",
-      "meaningful_visual_change": "Tick 1000: PREP 60-second remaining amber warning banner + active vote tallies update",
+      "meaningful_visual_change": "Tick 1000: PREP 60s amber warning banner + wall reaches 1944/2000 + live vote tallies",
       "audio_events": [
         {
           "cue_id": "SFX01",
@@ -619,33 +1366,47 @@
           "wave_tick": 1000,
           "remaining_seconds": 200,
           "phase": "prep",
+          "total_wins": 39,
           "village_level": 14,
-          "wall_tier": 7,
-          "wall_hp": 1100,
-          "wall_max": 1100,
-          "townhall_hp": 2000,
-          "townhall_max": 2000,
-          "wood": 320,
-          "stone": 240,
-          "food": 410,
+          "consecutive_wins_before_wave": 5,
+          "population_anchor": 0,
+          "base_hp": 0,
+          "max_viewer_session_xp": 130,
+          "wall_tier": 6,
+          "wall_hp": 1944,
+          "wall_max": 2000,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 544,
+          "stone": 828,
+          "food": 540,
           "counts": {
-            "unique_joined": 148,
-            "builder": 40,
-            "guard": 46,
-            "fighter": 62
+            "unique_joined": 194,
+            "builder": 121,
+            "guard": 28,
+            "fighter": 45
           },
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "center",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "east",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             }
           ],
           "vote": {
@@ -661,7 +1422,7 @@
             "boss_incoming": false,
             "boss_exists": false,
             "boss_hp": 0,
-            "boss_max_hp": 1800
+            "boss_max_hp": 0
           },
           "settlement": {
             "wave_result": null,
@@ -688,9 +1449,9 @@
       "wave_no": 10,
       "wave_tick": 1200,
       "logical_time_s": 120.0,
-      "showcase_video_time_s": 10.5,
+      "showcase_video_time_s": 7.0,
       "visual_state": "PREP_60_WARN",
-      "meaningful_visual_change": "Tick 1200: Vote closes -> Option B locked in subordinate dock strip + gavel chime SFX10",
+      "meaningful_visual_change": "Tick 1200: Vote closes -> Option B locked (-50 Food charged once, Fighter ATK +15%) + gavel chime SFX10",
       "audio_events": [
         {
           "cue_id": "SFX10",
@@ -714,33 +1475,47 @@
           "wave_tick": 1200,
           "remaining_seconds": 180,
           "phase": "prep",
+          "total_wins": 39,
           "village_level": 14,
-          "wall_tier": 7,
-          "wall_hp": 1100,
-          "wall_max": 1100,
-          "townhall_hp": 2000,
-          "townhall_max": 2000,
-          "wood": 320,
-          "stone": 240,
-          "food": 410,
+          "consecutive_wins_before_wave": 5,
+          "population_anchor": 0,
+          "base_hp": 0,
+          "max_viewer_session_xp": 132,
+          "wall_tier": 6,
+          "wall_hp": 2000,
+          "wall_max": 2000,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 556,
+          "stone": 839,
+          "food": 490,
           "counts": {
-            "unique_joined": 166,
-            "builder": 44,
-            "guard": 52,
-            "fighter": 70
+            "unique_joined": 204,
+            "builder": 121,
+            "guard": 31,
+            "fighter": 52
           },
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "center",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "east",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             }
           ],
           "vote": {
@@ -750,13 +1525,22 @@
               "A": 34,
               "B": 68,
               "C": 25
+            },
+            "canonical_effect": {
+              "cost_resource": "food",
+              "cost_amount": 50,
+              "guard_block_multiplier_pct": 100,
+              "fighter_attack_multiplier_pct": 115,
+              "loss_penalty_divisor": 1,
+              "label_vi": "B: -50 Lương · Đánh +15%",
+              "label_en": "B: -50 Food · Attack +15%"
             }
           },
           "boss": {
             "boss_incoming": false,
             "boss_exists": false,
             "boss_hp": 0,
-            "boss_max_hp": 1800
+            "boss_max_hp": 0
           },
           "settlement": {
             "wave_result": null,
@@ -783,9 +1567,9 @@
       "wave_no": 10,
       "wave_tick": 1400,
       "logical_time_s": 140.0,
-      "showcase_video_time_s": 12.0,
+      "showcase_video_time_s": 8.0,
       "visual_state": "PREP_60_WARN",
-      "meaningful_visual_change": "Tick 1400: Option B wall reinforcement applied (1200/1200 HP), final pre-assault repair sparks",
+      "meaningful_visual_change": "Tick 1400: Construction work>=1200 & stone>=600 upgrades Wall Tier 6 -> Tier 7 (2200/2200 HP)",
       "audio_events": [
         {
           "cue_id": "SFX02",
@@ -809,33 +1593,47 @@
           "wave_tick": 1400,
           "remaining_seconds": 160,
           "phase": "prep",
+          "total_wins": 39,
           "village_level": 14,
-          "wall_tier": 8,
-          "wall_hp": 1200,
-          "wall_max": 1200,
-          "townhall_hp": 2000,
-          "townhall_max": 2000,
-          "wood": 320,
-          "stone": 240,
-          "food": 410,
+          "consecutive_wins_before_wave": 5,
+          "population_anchor": 0,
+          "base_hp": 0,
+          "max_viewer_session_xp": 134,
+          "wall_tier": 7,
+          "wall_hp": 2200,
+          "wall_max": 2200,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 580,
+          "stone": 250,
+          "food": 490,
           "counts": {
-            "unique_joined": 182,
-            "builder": 46,
-            "guard": 58,
-            "fighter": 78
+            "unique_joined": 204,
+            "builder": 121,
+            "guard": 31,
+            "fighter": 52
           },
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "center",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "east",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             }
           ],
           "vote": {
@@ -845,13 +1643,22 @@
               "A": 34,
               "B": 68,
               "C": 25
+            },
+            "canonical_effect": {
+              "cost_resource": "food",
+              "cost_amount": 50,
+              "guard_block_multiplier_pct": 100,
+              "fighter_attack_multiplier_pct": 115,
+              "loss_penalty_divisor": 1,
+              "label_vi": "B: -50 Lương · Đánh +15%",
+              "label_en": "B: -50 Food · Attack +15%"
             }
           },
           "boss": {
             "boss_incoming": false,
             "boss_exists": false,
             "boss_hp": 0,
-            "boss_max_hp": 1800
+            "boss_max_hp": 0
           },
           "settlement": {
             "wave_result": null,
@@ -878,7 +1685,7 @@
       "wave_no": 10,
       "wave_tick": 1450,
       "logical_time_s": 145.0,
-      "showcase_video_time_s": 13.5,
+      "showcase_video_time_s": 9.0,
       "visual_state": "PREP_15_WARN",
       "meaningful_visual_change": "Tick 1450: PREP 15-second crimson warning banner + dusk atmospheric grade",
       "audio_events": [],
@@ -898,33 +1705,47 @@
           "wave_tick": 1450,
           "remaining_seconds": 155,
           "phase": "prep",
+          "total_wins": 39,
           "village_level": 14,
-          "wall_tier": 8,
-          "wall_hp": 1200,
-          "wall_max": 1200,
-          "townhall_hp": 2000,
-          "townhall_max": 2000,
-          "wood": 320,
-          "stone": 240,
-          "food": 410,
+          "consecutive_wins_before_wave": 5,
+          "population_anchor": 0,
+          "base_hp": 0,
+          "max_viewer_session_xp": 134,
+          "wall_tier": 7,
+          "wall_hp": 2200,
+          "wall_max": 2200,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 580,
+          "stone": 250,
+          "food": 490,
           "counts": {
-            "unique_joined": 190,
-            "builder": 48,
-            "guard": 60,
-            "fighter": 82
+            "unique_joined": 204,
+            "builder": 121,
+            "guard": 31,
+            "fighter": 52
           },
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "center",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "east",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             }
           ],
           "vote": {
@@ -934,13 +1755,22 @@
               "A": 34,
               "B": 68,
               "C": 25
+            },
+            "canonical_effect": {
+              "cost_resource": "food",
+              "cost_amount": 50,
+              "guard_block_multiplier_pct": 100,
+              "fighter_attack_multiplier_pct": 115,
+              "loss_penalty_divisor": 1,
+              "label_vi": "B: -50 Lương · Đánh +15%",
+              "label_en": "B: -50 Food · Attack +15%"
             }
           },
           "boss": {
             "boss_incoming": false,
             "boss_exists": false,
             "boss_hp": 0,
-            "boss_max_hp": 1800
+            "boss_max_hp": 0
           },
           "settlement": {
             "wave_result": null,
@@ -967,9 +1797,9 @@
       "wave_no": 10,
       "wave_tick": 1600,
       "logical_time_s": 160.0,
-      "showcase_video_time_s": 15.0,
+      "showcase_video_time_s": 10.0,
       "visual_state": "ASSAULT",
-      "meaningful_visual_change": "Tick 1600: ASSAULT starts -> Grunt, Runner, and Brute columns enter West, Center, and East lanes",
+      "meaningful_visual_change": "Tick 1600: P=204 locks -> base_hp=620 spawns canonical West 210 / Center 198 / East 212 enemy pools",
       "audio_events": [
         {
           "cue_id": "SFX05",
@@ -993,33 +1823,47 @@
           "wave_tick": 1600,
           "remaining_seconds": 140,
           "phase": "assault",
+          "total_wins": 39,
           "village_level": 14,
-          "wall_tier": 8,
-          "wall_hp": 1200,
-          "wall_max": 1200,
-          "townhall_hp": 2000,
-          "townhall_max": 2000,
-          "wood": 320,
-          "stone": 240,
-          "food": 410,
+          "consecutive_wins_before_wave": 5,
+          "population_anchor": 204,
+          "base_hp": 620,
+          "max_viewer_session_xp": 136,
+          "wall_tier": 7,
+          "wall_hp": 2200,
+          "wall_max": 2200,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 592,
+          "stone": 256,
+          "food": 490,
           "counts": {
             "unique_joined": 204,
             "builder": 48,
-            "guard": 64,
-            "fighter": 92
+            "guard": 92,
+            "fighter": 64
           },
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 420
+              "ordinary_hp": 210,
+              "runner_hp": 52,
+              "grunt_hp": 115,
+              "brute_hp": 43
             },
             {
               "id": "center",
-              "ordinary_hp": 560
+              "ordinary_hp": 198,
+              "runner_hp": 49,
+              "grunt_hp": 108,
+              "brute_hp": 41
             },
             {
               "id": "east",
-              "ordinary_hp": 440
+              "ordinary_hp": 212,
+              "runner_hp": 53,
+              "grunt_hp": 116,
+              "brute_hp": 43
             }
           ],
           "vote": {
@@ -1029,13 +1873,22 @@
               "A": 34,
               "B": 68,
               "C": 25
+            },
+            "canonical_effect": {
+              "cost_resource": "food",
+              "cost_amount": 50,
+              "guard_block_multiplier_pct": 100,
+              "fighter_attack_multiplier_pct": 115,
+              "loss_penalty_divisor": 1,
+              "label_vi": "B: -50 Lương · Đánh +15%",
+              "label_en": "B: -50 Food · Attack +15%"
             }
           },
           "boss": {
             "boss_incoming": false,
             "boss_exists": false,
             "boss_hp": 0,
-            "boss_max_hp": 1800
+            "boss_max_hp": 124
           },
           "settlement": {
             "wave_result": null,
@@ -1062,9 +1915,9 @@
       "wave_no": 10,
       "wave_tick": 1800,
       "logical_time_s": 180.0,
-      "showcase_video_time_s": 16.5,
+      "showcase_video_time_s": 11.0,
       "visual_state": "ASSAULT",
-      "meaningful_visual_change": "Tick 1800: First combat boundary -> Fighter SwordSlash + Guard ShieldBrace + Wall takes 180 damage",
+      "meaningful_visual_change": "Tick 1800: Vote B (+15% Fighter ATK = 165) cuts enemy pools 620->455; Wall takes combat hit (2167/2200)",
       "audio_events": [
         {
           "cue_id": "SFX04",
@@ -1098,33 +1951,47 @@
           "wave_tick": 1800,
           "remaining_seconds": 120,
           "phase": "assault",
+          "total_wins": 39,
           "village_level": 14,
-          "wall_tier": 8,
-          "wall_hp": 1020,
-          "wall_max": 1200,
-          "townhall_hp": 2000,
-          "townhall_max": 2000,
-          "wood": 320,
-          "stone": 240,
-          "food": 410,
+          "consecutive_wins_before_wave": 5,
+          "population_anchor": 204,
+          "base_hp": 620,
+          "max_viewer_session_xp": 138,
+          "wall_tier": 7,
+          "wall_hp": 2174,
+          "wall_max": 2200,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 592,
+          "stone": 256,
+          "food": 490,
           "counts": {
-            "unique_joined": 212,
-            "builder": 50,
-            "guard": 66,
-            "fighter": 96
+            "unique_joined": 204,
+            "builder": 0,
+            "guard": 140,
+            "fighter": 64
           },
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 330
+              "ordinary_hp": 155,
+              "runner_hp": 0,
+              "grunt_hp": 112,
+              "brute_hp": 43
             },
             {
               "id": "center",
-              "ordinary_hp": 450
+              "ordinary_hp": 143,
+              "runner_hp": 0,
+              "grunt_hp": 102,
+              "brute_hp": 41
             },
             {
               "id": "east",
-              "ordinary_hp": 350
+              "ordinary_hp": 157,
+              "runner_hp": 0,
+              "grunt_hp": 114,
+              "brute_hp": 43
             }
           ],
           "vote": {
@@ -1134,13 +2001,22 @@
               "A": 34,
               "B": 68,
               "C": 25
+            },
+            "canonical_effect": {
+              "cost_resource": "food",
+              "cost_amount": 50,
+              "guard_block_multiplier_pct": 100,
+              "fighter_attack_multiplier_pct": 115,
+              "loss_penalty_divisor": 1,
+              "label_vi": "B: -50 Lương · Đánh +15%",
+              "label_en": "B: -50 Food · Attack +15%"
             }
           },
           "boss": {
             "boss_incoming": false,
             "boss_exists": false,
             "boss_hp": 0,
-            "boss_max_hp": 1800
+            "boss_max_hp": 124
           },
           "settlement": {
             "wave_result": null,
@@ -1167,9 +2043,9 @@
       "wave_no": 10,
       "wave_tick": 2000,
       "logical_time_s": 200.0,
-      "showcase_video_time_s": 18.0,
+      "showcase_video_time_s": 12.0,
       "visual_state": "ASSAULT",
-      "meaningful_visual_change": "Tick 2000: Wall drops below 60% (680/1200 -> env_wall_state2_damaged) while Builders actively repair",
+      "meaningful_visual_change": "Tick 2000: Cyclic combat cuts enemy pools 455->290 (100/88/102); Guards absorb retaliation (wall 2158/2200)",
       "audio_events": [
         {
           "cue_id": "SFX06",
@@ -1177,8 +2053,8 @@
           "mock_stream_seq": 1094
         },
         {
-          "cue_id": "SFX02",
-          "event_type": "role_resolution",
+          "cue_id": "SFX03",
+          "event_type": "damage_applied",
           "mock_stream_seq": 1095
         }
       ],
@@ -1198,33 +2074,47 @@
           "wave_tick": 2000,
           "remaining_seconds": 100,
           "phase": "assault",
+          "total_wins": 39,
           "village_level": 14,
-          "wall_tier": 8,
-          "wall_hp": 680,
-          "wall_max": 1200,
-          "townhall_hp": 2000,
-          "townhall_max": 2000,
-          "wood": 320,
-          "stone": 240,
-          "food": 410,
+          "consecutive_wins_before_wave": 5,
+          "population_anchor": 204,
+          "base_hp": 620,
+          "max_viewer_session_xp": 140,
+          "wall_tier": 7,
+          "wall_hp": 2174,
+          "wall_max": 2200,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 592,
+          "stone": 256,
+          "food": 490,
           "counts": {
-            "unique_joined": 222,
-            "builder": 52,
-            "guard": 68,
-            "fighter": 102
+            "unique_joined": 204,
+            "builder": 0,
+            "guard": 140,
+            "fighter": 64
           },
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 240
+              "ordinary_hp": 100,
+              "runner_hp": 0,
+              "grunt_hp": 57,
+              "brute_hp": 43
             },
             {
               "id": "center",
-              "ordinary_hp": 340
+              "ordinary_hp": 88,
+              "runner_hp": 0,
+              "grunt_hp": 47,
+              "brute_hp": 41
             },
             {
               "id": "east",
-              "ordinary_hp": 260
+              "ordinary_hp": 102,
+              "runner_hp": 0,
+              "grunt_hp": 59,
+              "brute_hp": 43
             }
           ],
           "vote": {
@@ -1234,13 +2124,22 @@
               "A": 34,
               "B": 68,
               "C": 25
+            },
+            "canonical_effect": {
+              "cost_resource": "food",
+              "cost_amount": 50,
+              "guard_block_multiplier_pct": 100,
+              "fighter_attack_multiplier_pct": 115,
+              "loss_penalty_divisor": 1,
+              "label_vi": "B: -50 Lương · Đánh +15%",
+              "label_en": "B: -50 Food · Attack +15%"
             }
           },
           "boss": {
             "boss_incoming": false,
             "boss_exists": false,
             "boss_hp": 0,
-            "boss_max_hp": 1800
+            "boss_max_hp": 124
           },
           "settlement": {
             "wave_result": null,
@@ -1267,9 +2166,9 @@
       "wave_no": 10,
       "wave_tick": 2200,
       "logical_time_s": 220.0,
-      "showcase_video_time_s": 19.5,
+      "showcase_video_time_s": 13.0,
       "visual_state": "ASSAULT",
-      "meaningful_visual_change": "Tick 2200: West & East flank HP reduced by Fighters; independent Fighter & Enemy strikes",
+      "meaningful_visual_change": "Tick 2200: West/Center/East flanks reduced monotonically 290->125 (45/33/47 HP remaining)",
       "audio_events": [
         {
           "cue_id": "SFX04",
@@ -1298,33 +2197,47 @@
           "wave_tick": 2200,
           "remaining_seconds": 80,
           "phase": "assault",
+          "total_wins": 39,
           "village_level": 14,
-          "wall_tier": 8,
-          "wall_hp": 590,
-          "wall_max": 1200,
-          "townhall_hp": 2000,
-          "townhall_max": 2000,
-          "wood": 320,
-          "stone": 240,
-          "food": 410,
+          "consecutive_wins_before_wave": 5,
+          "population_anchor": 204,
+          "base_hp": 620,
+          "max_viewer_session_xp": 142,
+          "wall_tier": 7,
+          "wall_hp": 2174,
+          "wall_max": 2200,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 592,
+          "stone": 256,
+          "food": 490,
           "counts": {
-            "unique_joined": 232,
-            "builder": 54,
-            "guard": 70,
-            "fighter": 108
+            "unique_joined": 204,
+            "builder": 0,
+            "guard": 140,
+            "fighter": 64
           },
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 120
+              "ordinary_hp": 45,
+              "runner_hp": 0,
+              "grunt_hp": 2,
+              "brute_hp": 43
             },
             {
               "id": "center",
-              "ordinary_hp": 230
+              "ordinary_hp": 33,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 33
             },
             {
               "id": "east",
-              "ordinary_hp": 140
+              "ordinary_hp": 47,
+              "runner_hp": 0,
+              "grunt_hp": 4,
+              "brute_hp": 43
             }
           ],
           "vote": {
@@ -1334,13 +2247,22 @@
               "A": 34,
               "B": 68,
               "C": 25
+            },
+            "canonical_effect": {
+              "cost_resource": "food",
+              "cost_amount": 50,
+              "guard_block_multiplier_pct": 100,
+              "fighter_attack_multiplier_pct": 115,
+              "loss_penalty_divisor": 1,
+              "label_vi": "B: -50 Lương · Đánh +15%",
+              "label_en": "B: -50 Food · Attack +15%"
             }
           },
           "boss": {
             "boss_incoming": false,
             "boss_exists": false,
             "boss_hp": 0,
-            "boss_max_hp": 1800
+            "boss_max_hp": 124
           },
           "settlement": {
             "wave_result": null,
@@ -1367,13 +2289,13 @@
       "wave_no": 10,
       "wave_tick": 2400,
       "logical_time_s": 240.0,
-      "showcase_video_time_s": 21.0,
-      "visual_state": "ASSAULT",
-      "meaningful_visual_change": "Tick 2400: Center vanguard thinned to 90 HP; Builders restore wall to 640/1200 before finale",
+      "showcase_video_time_s": 14.0,
+      "visual_state": "BOSS_INCOMING",
+      "meaningful_visual_change": "Tick 2400: Ordinary lanes cleared to 0/0/0 -> Boss state transitions to INCOMING (Boss still unspawned < 2600)",
       "audio_events": [
         {
-          "cue_id": "SFX02",
-          "event_type": "role_resolution",
+          "cue_id": "SFX04",
+          "event_type": "attack_resolved",
           "mock_stream_seq": 1115
         }
       ],
@@ -1393,33 +2315,47 @@
           "wave_tick": 2400,
           "remaining_seconds": 60,
           "phase": "assault",
+          "total_wins": 39,
           "village_level": 14,
-          "wall_tier": 8,
-          "wall_hp": 640,
-          "wall_max": 1200,
-          "townhall_hp": 2000,
-          "townhall_max": 2000,
-          "wood": 320,
-          "stone": 240,
-          "food": 410,
+          "consecutive_wins_before_wave": 5,
+          "population_anchor": 204,
+          "base_hp": 620,
+          "max_viewer_session_xp": 144,
+          "wall_tier": 7,
+          "wall_hp": 2174,
+          "wall_max": 2200,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 592,
+          "stone": 256,
+          "food": 490,
           "counts": {
-            "unique_joined": 239,
-            "builder": 55,
-            "guard": 72,
-            "fighter": 112
+            "unique_joined": 204,
+            "builder": 0,
+            "guard": 140,
+            "fighter": 64
           },
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 50
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "center",
-              "ordinary_hp": 90
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "east",
-              "ordinary_hp": 60
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             }
           ],
           "vote": {
@@ -1429,13 +2365,22 @@
               "A": 34,
               "B": 68,
               "C": 25
+            },
+            "canonical_effect": {
+              "cost_resource": "food",
+              "cost_amount": 50,
+              "guard_block_multiplier_pct": 100,
+              "fighter_attack_multiplier_pct": 115,
+              "loss_penalty_divisor": 1,
+              "label_vi": "B: -50 Lương · Đánh +15%",
+              "label_en": "B: -50 Food · Attack +15%"
             }
           },
           "boss": {
-            "boss_incoming": false,
+            "boss_incoming": true,
             "boss_exists": false,
             "boss_hp": 0,
-            "boss_max_hp": 1800
+            "boss_max_hp": 124
           },
           "settlement": {
             "wave_result": null,
@@ -1462,9 +2407,9 @@
       "wave_no": 10,
       "wave_tick": 2450,
       "logical_time_s": 245.0,
-      "showcase_video_time_s": 22.5,
+      "showcase_video_time_s": 15.0,
       "visual_state": "BOSS_INCOMING",
-      "meaningful_visual_change": "Tick 2450: Boss Warning banner + eclipse palette + ground rune telegraph ONLY (Boss sprite NOT spawned before 2600!)",
+      "meaningful_visual_change": "Tick 2450: Boss Warning banner + eclipse palette + ground rune telegraph ONLY (boss_exists=false, boss_hp=0)",
       "audio_events": [
         {
           "cue_id": "SFX08",
@@ -1488,33 +2433,47 @@
           "wave_tick": 2450,
           "remaining_seconds": 55,
           "phase": "assault",
+          "total_wins": 39,
           "village_level": 14,
-          "wall_tier": 8,
-          "wall_hp": 640,
-          "wall_max": 1200,
-          "townhall_hp": 2000,
-          "townhall_max": 2000,
-          "wood": 320,
-          "stone": 240,
-          "food": 410,
+          "consecutive_wins_before_wave": 5,
+          "population_anchor": 204,
+          "base_hp": 620,
+          "max_viewer_session_xp": 144,
+          "wall_tier": 7,
+          "wall_hp": 2174,
+          "wall_max": 2200,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 592,
+          "stone": 256,
+          "food": 490,
           "counts": {
-            "unique_joined": 245,
-            "builder": 56,
-            "guard": 74,
-            "fighter": 115
+            "unique_joined": 204,
+            "builder": 0,
+            "guard": 140,
+            "fighter": 64
           },
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 20
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "center",
-              "ordinary_hp": 40
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "east",
-              "ordinary_hp": 25
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             }
           ],
           "vote": {
@@ -1524,13 +2483,22 @@
               "A": 34,
               "B": 68,
               "C": 25
+            },
+            "canonical_effect": {
+              "cost_resource": "food",
+              "cost_amount": 50,
+              "guard_block_multiplier_pct": 100,
+              "fighter_attack_multiplier_pct": 115,
+              "loss_penalty_divisor": 1,
+              "label_vi": "B: -50 Lương · Đánh +15%",
+              "label_en": "B: -50 Food · Attack +15%"
             }
           },
           "boss": {
             "boss_incoming": true,
             "boss_exists": false,
             "boss_hp": 0,
-            "boss_max_hp": 1800
+            "boss_max_hp": 124
           },
           "settlement": {
             "wave_result": null,
@@ -1557,9 +2525,9 @@
       "wave_no": 10,
       "wave_tick": 2600,
       "logical_time_s": 260.0,
-      "showcase_video_time_s": 24.5,
+      "showcase_video_time_s": 16.5,
       "visual_state": "BOSS_ACTIVE",
-      "meaningful_visual_change": "Tick 2600: FINALE starts -> Boss Warlord spawns on Center Causeway, executes CleaveSlam + wall drops to critical state 3 (260/1200)",
+      "meaningful_visual_change": "Tick 2600: FINALE -> Boss Warlord spawns at canonical 124 max HP, takes 62 Vote-B slash dmg -> 62/124 HP active",
       "audio_events": [
         {
           "cue_id": "SFX09",
@@ -1567,7 +2535,7 @@
           "mock_stream_seq": 1130
         },
         {
-          "cue_id": "SFX06",
+          "cue_id": "SFX03",
           "event_type": "damage_applied",
           "mock_stream_seq": 1131
         }
@@ -1588,33 +2556,47 @@
           "wave_tick": 2600,
           "remaining_seconds": 40,
           "phase": "finale",
+          "total_wins": 39,
           "village_level": 14,
-          "wall_tier": 8,
-          "wall_hp": 260,
-          "wall_max": 1200,
-          "townhall_hp": 1920,
-          "townhall_max": 2000,
-          "wood": 320,
-          "stone": 240,
-          "food": 410,
+          "consecutive_wins_before_wave": 5,
+          "population_anchor": 204,
+          "base_hp": 620,
+          "max_viewer_session_xp": 146,
+          "wall_tier": 7,
+          "wall_hp": 2200,
+          "wall_max": 2200,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 598,
+          "stone": 262,
+          "food": 490,
           "counts": {
-            "unique_joined": 260,
-            "builder": 58,
-            "guard": 78,
-            "fighter": 124
+            "unique_joined": 204,
+            "builder": 36,
+            "guard": 159,
+            "fighter": 9
           },
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 40
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "center",
-              "ordinary_hp": 120
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "east",
-              "ordinary_hp": 40
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             }
           ],
           "vote": {
@@ -1624,13 +2606,22 @@
               "A": 34,
               "B": 68,
               "C": 25
+            },
+            "canonical_effect": {
+              "cost_resource": "food",
+              "cost_amount": 50,
+              "guard_block_multiplier_pct": 100,
+              "fighter_attack_multiplier_pct": 115,
+              "loss_penalty_divisor": 1,
+              "label_vi": "B: -50 Lương · Đánh +15%",
+              "label_en": "B: -50 Food · Attack +15%"
             }
           },
           "boss": {
             "boss_incoming": false,
             "boss_exists": true,
-            "boss_hp": 1120,
-            "boss_max_hp": 1800
+            "boss_hp": 62,
+            "boss_max_hp": 124
           },
           "settlement": {
             "wave_result": null,
@@ -1657,9 +2648,9 @@
       "wave_no": 10,
       "wave_tick": 2800,
       "logical_time_s": 280.0,
-      "showcase_video_time_s": 26.5,
+      "showcase_video_time_s": 18.0,
       "visual_state": "RESULTS_WIN",
-      "meaningful_visual_change": "Tick 2800: Final combat resolves Boss HP -> 0, authoritative settlement RESULTS_WIN + Victory fanfare SFX11",
+      "meaningful_visual_change": "Tick 2800: Final combat slays Boss (62->0 HP), single settlement WIN (+100W/+60S/+50F, Townhall 500/500)",
       "audio_events": [
         {
           "cue_id": "SFX04",
@@ -1688,33 +2679,47 @@
           "wave_tick": 2800,
           "remaining_seconds": 20,
           "phase": "results",
-          "village_level": 15,
-          "wall_tier": 8,
-          "wall_hp": 340,
-          "wall_max": 1200,
-          "townhall_hp": 1920,
-          "townhall_max": 2000,
-          "wood": 320,
-          "stone": 240,
-          "food": 410,
+          "total_wins": 40,
+          "village_level": 14,
+          "consecutive_wins_before_wave": 5,
+          "population_anchor": 204,
+          "base_hp": 620,
+          "max_viewer_session_xp": 148,
+          "wall_tier": 7,
+          "wall_hp": 2200,
+          "wall_max": 2200,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 710,
+          "stone": 328,
+          "food": 540,
           "counts": {
-            "unique_joined": 260,
-            "builder": 58,
-            "guard": 78,
-            "fighter": 124
+            "unique_joined": 204,
+            "builder": 36,
+            "guard": 143,
+            "fighter": 25
           },
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "center",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "east",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             }
           ],
           "vote": {
@@ -1724,13 +2729,22 @@
               "A": 34,
               "B": 68,
               "C": 25
+            },
+            "canonical_effect": {
+              "cost_resource": "food",
+              "cost_amount": 50,
+              "guard_block_multiplier_pct": 100,
+              "fighter_attack_multiplier_pct": 115,
+              "loss_penalty_divisor": 1,
+              "label_vi": "B: -50 Lương · Đánh +15%",
+              "label_en": "B: -50 Food · Attack +15%"
             }
           },
           "boss": {
             "boss_incoming": false,
             "boss_exists": false,
             "boss_hp": 0,
-            "boss_max_hp": 1800
+            "boss_max_hp": 124
           },
           "settlement": {
             "wave_result": "win",
@@ -1757,9 +2771,9 @@
       "wave_no": 10,
       "wave_tick": 2900,
       "logical_time_s": 290.0,
-      "showcase_video_time_s": 28.5,
+      "showcase_video_time_s": 19.0,
       "visual_state": "RESULTS_WIN",
-      "meaningful_visual_change": "Tick 2900: Results summary holds with 34 queued next-wave registrations shown in subordinate strip",
+      "meaningful_visual_change": "Tick 2900: Results hold (zero illegal repair or role mutation); 34 next-wave players queued for Wave 11",
       "audio_events": [],
       "fixture": {
         "synthetic_fixture": true,
@@ -1777,33 +2791,47 @@
           "wave_tick": 2900,
           "remaining_seconds": 10,
           "phase": "results",
-          "village_level": 15,
-          "wall_tier": 8,
-          "wall_hp": 420,
-          "wall_max": 1200,
-          "townhall_hp": 1920,
-          "townhall_max": 2000,
-          "wood": 320,
-          "stone": 240,
-          "food": 410,
+          "total_wins": 40,
+          "village_level": 14,
+          "consecutive_wins_before_wave": 5,
+          "population_anchor": 204,
+          "base_hp": 620,
+          "max_viewer_session_xp": 148,
+          "wall_tier": 7,
+          "wall_hp": 2200,
+          "wall_max": 2200,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 710,
+          "stone": 328,
+          "food": 540,
           "counts": {
-            "unique_joined": 260,
-            "builder": 58,
-            "guard": 78,
-            "fighter": 124
+            "unique_joined": 204,
+            "builder": 36,
+            "guard": 143,
+            "fighter": 25
           },
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "center",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "east",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             }
           ],
           "vote": {
@@ -1813,13 +2841,22 @@
               "A": 34,
               "B": 68,
               "C": 25
+            },
+            "canonical_effect": {
+              "cost_resource": "food",
+              "cost_amount": 50,
+              "guard_block_multiplier_pct": 100,
+              "fighter_attack_multiplier_pct": 115,
+              "loss_penalty_divisor": 1,
+              "label_vi": "B: -50 Lương · Đánh +15%",
+              "label_en": "B: -50 Food · Attack +15%"
             }
           },
           "boss": {
             "boss_incoming": false,
             "boss_exists": false,
             "boss_hp": 0,
-            "boss_max_hp": 1800
+            "boss_max_hp": 124
           },
           "settlement": {
             "wave_result": "win",
@@ -1846,9 +2883,9 @@
       "wave_no": 11,
       "wave_tick": 0,
       "logical_time_s": 300.0,
-      "showcase_video_time_s": 30.0,
+      "showcase_video_time_s": 20.0,
       "visual_state": "PREP",
-      "meaningful_visual_change": "Tick 3000 -> Wave 11 Tick 0 rollover in-place (zero scene reload): Dawn lighting restored, 34 queued players active",
+      "meaningful_visual_change": "Tick 3000 -> Wave 11 Tick 0 rollover in-place (0 scene reloads): 34 queued players promoted, odd-wave objective active",
       "audio_events": [
         {
           "cue_id": "SFX01",
@@ -1872,15 +2909,20 @@
           "wave_tick": 0,
           "remaining_seconds": 300,
           "phase": "prep",
-          "village_level": 15,
-          "wall_tier": 8,
-          "wall_hp": 720,
-          "wall_max": 1200,
-          "townhall_hp": 1950,
-          "townhall_max": 2000,
-          "wood": 320,
-          "stone": 240,
-          "food": 410,
+          "total_wins": 40,
+          "village_level": 14,
+          "consecutive_wins_before_wave": 6,
+          "population_anchor": 0,
+          "base_hp": 0,
+          "max_viewer_session_xp": 148,
+          "wall_tier": 7,
+          "wall_hp": 2200,
+          "wall_max": 2200,
+          "townhall_hp": 500,
+          "townhall_max": 500,
+          "wood": 710,
+          "stone": 328,
+          "food": 540,
           "counts": {
             "unique_joined": 34,
             "builder": 11,
@@ -1890,15 +2932,24 @@
           "lanes": [
             {
               "id": "west",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "center",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             },
             {
               "id": "east",
-              "ordinary_hp": 0
+              "ordinary_hp": 0,
+              "runner_hp": 0,
+              "grunt_hp": 0,
+              "brute_hp": 0
             }
           ],
           "vote": {
@@ -1914,7 +2965,7 @@
             "boss_incoming": false,
             "boss_exists": false,
             "boss_hp": 0,
-            "boss_max_hp": 1800
+            "boss_max_hp": 0
           },
           "settlement": {
             "wave_result": null,
@@ -1936,5 +2987,115 @@
         }
       }
     }
-  ]
+  ],
+  "supplementary_states": {
+    "defeat_wave10_breach": {
+      "state_id": "RESULTS_LOSS_DEFEAT_FLOOR",
+      "wave_no": 10,
+      "wave_tick": 2800,
+      "description": "Canonical Townhall-breach defeat settled at tick 2800: -20% resource penalty + 250/2000 Wall & 250/500 Townhall recovery floors (matches M02 C011).",
+      "fixture": {
+        "synthetic_fixture": true,
+        "fixture_id": "synth-wave10-defeat_seq_1980",
+        "canonical_state_id": "RESULTS",
+        "attract_mode": false,
+        "schema_version": "ws-public-v1-synthetic",
+        "session_id": "synth-wave10-defeat",
+        "mock_stream_seq": 1980,
+        "public_snapshot": {
+          "lifecycle": "running",
+          "source_status": "mock",
+          "pause_reasons": [],
+          "wave_no": 10,
+          "wave_tick": 2800,
+          "remaining_seconds": 20,
+          "phase": "results",
+          "total_wins": 39,
+          "village_level": 14,
+          "consecutive_wins_before_wave": 2,
+          "population_anchor": 30,
+          "base_hp": 254,
+          "max_viewer_session_xp": 110,
+          "wall_tier": 6,
+          "wall_hp": 250,
+          "wall_max": 2000,
+          "townhall_hp": 250,
+          "townhall_max": 500,
+          "wood": 176,
+          "stone": 144,
+          "food": 168,
+          "counts": {
+            "unique_joined": 30,
+            "builder": 0,
+            "guard": 30,
+            "fighter": 0
+          },
+          "lanes": [
+            {
+              "id": "west",
+              "ordinary_hp": 86,
+              "runner_hp": 21,
+              "grunt_hp": 47,
+              "brute_hp": 18
+            },
+            {
+              "id": "center",
+              "ordinary_hp": 81,
+              "runner_hp": 20,
+              "grunt_hp": 44,
+              "brute_hp": 17
+            },
+            {
+              "id": "east",
+              "ordinary_hp": 87,
+              "runner_hp": 21,
+              "grunt_hp": 47,
+              "brute_hp": 19
+            }
+          ],
+          "vote": {
+            "open": false,
+            "selected": "B",
+            "counts": {
+              "A": 8,
+              "B": 15,
+              "C": 7
+            },
+            "canonical_effect": {
+              "cost_resource": "food",
+              "cost_amount": 50,
+              "guard_block_multiplier_pct": 100,
+              "fighter_attack_multiplier_pct": 115,
+              "loss_penalty_divisor": 1,
+              "label_vi": "B: -50 Lương · Đánh +15%",
+              "label_en": "B: -50 Food · Attack +15%"
+            }
+          },
+          "boss": {
+            "boss_incoming": false,
+            "boss_exists": false,
+            "boss_hp": 0,
+            "boss_max_hp": 51
+          },
+          "settlement": {
+            "wave_result": "loss",
+            "consecutive_losses": 1,
+            "is_post_loss_recovery": true,
+            "pending_next_wave_count": 12
+          },
+          "system_assist": {
+            "militia_active": false,
+            "militia_attack_bonus": 0
+          },
+          "diagnostics": {
+            "connection_state": "live",
+            "metrics_available": true,
+            "queue_fill_pct": 12,
+            "retryable_rejected_count": 0,
+            "confirmed_valid_drops": 0
+          }
+        }
+      }
+    }
+  }
 }

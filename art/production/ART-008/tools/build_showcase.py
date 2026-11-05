@@ -15,6 +15,7 @@ strictly muted -80 dB by default) into:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import subprocess
@@ -92,6 +93,69 @@ CUE_TO_WAV: Dict[str, Path] = {
 
 def db_to_lin(db: float) -> float:
     return 0.0 if db <= -79.5 else (10.0 ** (db / 20.0))
+
+
+def sha256_file(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(131072), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+class ShowcaseHudRenderer(CompositionalHudRenderer):
+    """
+    Presentation adapter subclass for ART-008/009 showcase renders (keeps ART-006 untouched):
+    - Formats locked even-wave votes with canonical resource cost & combat effect (e.g. B:-50L,Đánh+15%).
+    - Formats even-wave pre-vote PREP ticks (<800) accurately as ĐỢT CHẴN rather than ĐỢT LẺ.
+    """
+
+    def resolve_hud_presentation(self, fixture: Dict[str, Any], locale: str = "vi-VN") -> Dict[str, Any]:
+        res = super().resolve_hud_presentation(fixture, locale=locale)
+        snap = fixture["public_snapshot"]
+        lifecycle = snap["lifecycle"]
+        pause_set = list(snap.get("pause_reasons", []))
+        is_frozen = (lifecycle in ("waiting", "paused", "source_disconnected", "storage_unavailable", "stopped")) or len(pause_set) > 0
+        if is_frozen or bool(fixture.get("attract_mode", False)) or snap["phase"] == "waiting":
+            return res
+
+        wave_no = int(snap["wave_no"])
+        tick = int(snap["wave_tick"])
+        vote = snap["vote"]
+        settle = snap["settlement"]
+        en = locale != "vi-VN"
+
+        if snap["phase"] == "results" and int(settle["pending_next_wave_count"]) > 0:
+            return res
+        if bool(vote["open"]) and (wave_no % 2 == 0) and (800 <= tick <= 1199):
+            v_rem = max(0, (1200 - tick) // 10)
+            vc = vote["counts"]
+            txt = (
+                f"VOTE {v_rem}s · A:{vc['A']}(-50W,Def+15%) B:{vc['B']}(-50F,Atk+15%) C:{vc['C']}(0)"
+                if en else
+                f"VOTE {v_rem}s · A:{vc['A']}(-50G,Thủ+15%) B:{vc['B']}(-50L,Đánh+15%) C:{vc['C']}(0)"
+            )
+            res["sub_strip"] = ("open", "ui_icon_vote_b", txt)
+        elif vote.get("selected") and (wave_no % 2 == 0):
+            vc = vote["counts"]
+            sel = vote["selected"]
+            if sel == "A":
+                eff = "A:-50W,Def+15%" if en else "A:-50G,Thủ+15%"
+            elif sel == "B":
+                eff = "B:-50F,Atk+15%" if en else "B:-50L,Đánh+15%"
+            else:
+                eff = "C:0,Def-10%,-50%Loss" if en else "C:0,Thủ-10%,-50%phạt"
+            prefix = "LOCKED" if en else "CHỐT"
+            res["sub_strip"] = ("locked", "ui_icon_vote_c", f"{prefix} [{eff}] · A:{vc['A']} B:{vc['B']} C:{vc['C']}")
+        elif wave_no % 2 == 0:
+            nt = min(20, int(snap["wall_tier"]) + 1)
+            txt = (
+                f"EVEN WAVE {wave_no}: Vote A/B/C at 03:40 · Wall Tier {nt}"
+                if en else
+                f"ĐỢT CHẴN {wave_no}: Bầu A/B/C lúc 03:40 · Tường Cấp {nt}"
+            )
+            res["sub_strip"] = ("open", "ui_icon_wall", txt)
+        return res
 
 
 class AudioTimelineMixer:
@@ -428,11 +492,20 @@ def build_combat_choreography_previews(
 
     for f in range(total_frames):
         if f < 78:
+            # Canonical Wave 10 ASSAULT: P_anchor=204, consecutive_wins_before_wave=5 => base_hp=620 (210/198/212), boss_max_hp=124, wall_tier=7 => wall_max=2200
+            prog = f / 78.0
+            w_cur = max(24, int(round(190 * (1.0 - 0.75 * prog))))
+            c_cur = max(20, int(round(178 * (1.0 - 0.75 * prog))))
+            e_cur = max(26, int(round(192 * (1.0 - 0.75 * prog))))
             fix = make_snapshot(
                 stream_seq=3000 + f, wave_no=10, wave_tick=1800 + f * 6, phase="assault",
-                wall_tier=8, wall_hp=920 if f < 63 else 660, wall_max=1200,
-                builder=48, guard=64, fighter=92,
-                west_hp=260, center_hp=340, east_hp=240,
+                village_level=14, total_wins=39, consecutive_wins_before_wave=5,
+                wall_tier=7, wall_hp=1960 if f < 63 else 1180, wall_max=2200,
+                townhall_hp=500, townhall_max=500,
+                wood=592, stone=256, food=490,
+                builder=48, guard=92, fighter=64, population_anchor=204,
+                west_hp=w_cur, center_hp=c_cur, east_hp=e_cur,
+                boss_incoming=False, boss_exists=False, boss_hp=0, boss_max_hp=124,
                 vote_selected="B", vote_a=34, vote_b=68, vote_c=25,
                 join_toast_alias="MinhBao" if f < 18 else None,
                 join_toast_role="fighter" if f < 18 else None,
@@ -440,27 +513,37 @@ def build_combat_choreography_previews(
         elif f < 96:
             fix = make_snapshot(
                 stream_seq=3000 + f, wave_no=10, wave_tick=2450 + (f - 78) * 5, phase="assault",
-                wall_tier=8, wall_hp=640, wall_max=1200,
-                builder=52, guard=70, fighter=104,
-                west_hp=60, center_hp=90, east_hp=55,
-                boss_incoming=True, boss_exists=False, boss_hp=0, boss_max_hp=1800,
+                village_level=14, total_wins=39, consecutive_wins_before_wave=5,
+                wall_tier=7, wall_hp=1220, wall_max=2200,
+                townhall_hp=500, townhall_max=500,
+                wood=596, stone=260, food=490,
+                builder=36, guard=104, fighter=64, population_anchor=204,
+                west_hp=0, center_hp=0, east_hp=0,
+                boss_incoming=True, boss_exists=False, boss_hp=0, boss_max_hp=124,
                 vote_selected="B", vote_a=34, vote_b=68, vote_c=25,
             )
         elif f < 124:
             fix = make_snapshot(
                 stream_seq=3000 + f, wave_no=10, wave_tick=2600 + (f - 96) * 6, phase="finale",
-                wall_tier=8, wall_hp=280, wall_max=1200, townhall_hp=1920, townhall_max=2000,
-                builder=56, guard=76, fighter=118,
-                west_hp=40, center_hp=110, east_hp=40,
-                boss_incoming=False, boss_exists=True, boss_hp=max(180, 1600 - (f - 96) * 45), boss_max_hp=1800,
+                village_level=14, total_wins=39, consecutive_wins_before_wave=5,
+                wall_tier=7, wall_hp=520, wall_max=2200,
+                townhall_hp=480, townhall_max=500,
+                wood=598, stone=262, food=490,
+                builder=36, guard=140, fighter=28, population_anchor=204,
+                west_hp=0, center_hp=0, east_hp=0,
+                boss_incoming=False, boss_exists=True, boss_hp=max(12, 112 - (f - 96) * 3), boss_max_hp=124,
                 vote_selected="B", vote_a=34, vote_b=68, vote_c=25,
             )
         else:
             fix = make_snapshot(
                 stream_seq=3000 + f, wave_no=10, wave_tick=2800 + (f - 124) * 5, phase="results",
-                village_level=15, wall_tier=8, wall_hp=360, wall_max=1200, townhall_hp=1920, townhall_max=2000,
-                builder=58, guard=78, fighter=124,
-                wave_result="win", pending_next_wave_count=24,
+                village_level=15, total_wins=40, consecutive_wins_before_wave=5,
+                wall_tier=7, wall_hp=640, wall_max=2200,
+                townhall_hp=480, townhall_max=500,
+                wood=710, stone=328, food=540,
+                builder=36, guard=143, fighter=25, population_anchor=204,
+                boss_incoming=False, boss_exists=False, boss_hp=0, boss_max_hp=124,
+                wave_result="win", pending_next_wave_count=19,
                 vote_selected="B", vote_a=34, vote_b=68, vote_c=25,
             )
 
@@ -680,14 +763,14 @@ def build_hud_transition_previews(
 ) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     rep_states = [
-        ("ATTRACT -> WAITING", make_snapshot(stream_seq=4001, wave_no=1, wave_tick=0, phase="waiting", lifecycle="waiting")),
-        ("WAITING -> PREP", make_snapshot(stream_seq=4002, wave_no=10, wave_tick=0, phase="prep", builder=1, militia_active=True, militia_bonus=35, join_toast_alias="MinhBao", join_toast_role="builder")),
-        ("PREP + VOTE_OPEN", make_snapshot(stream_seq=4003, wave_no=10, wave_tick=850, phase="prep", builder=28, guard=32, fighter=40, vote_open=True, vote_a=19, vote_b=34, vote_c=12)),
-        ("PREP_60 -> PREP_15", make_snapshot(stream_seq=4004, wave_no=10, wave_tick=1460, phase="prep", builder=44, guard=54, fighter=72, vote_selected="B", vote_a=34, vote_b=68, vote_c=25)),
-        ("PREP -> ASSAULT", make_snapshot(stream_seq=4005, wave_no=10, wave_tick=1650, phase="assault", wall_hp=980, wall_max=1200, builder=48, guard=64, fighter=92, west_hp=320, center_hp=420, east_hp=310)),
-        ("BOSS_INCOMING -> ACTIVE", make_snapshot(stream_seq=4006, wave_no=10, wave_tick=2620, phase="finale", wall_hp=320, wall_max=1200, builder=56, guard=76, fighter=118, west_hp=40, center_hp=110, east_hp=40, boss_exists=True, boss_hp=1240, boss_max_hp=1800)),
-        ("GAMEPLAY -> RECONNECT", make_snapshot(stream_seq=4007, wave_no=10, wave_tick=2630, phase="finale", lifecycle="source_disconnected", source_status="disconnected", pause_reasons=["source_disconnected"], wall_hp=320, wall_max=1200, builder=56, guard=76, fighter=118, boss_exists=True, boss_hp=1240, boss_max_hp=1800)),
-        ("FINALE -> RESULTS_WIN", make_snapshot(stream_seq=4008, wave_no=10, wave_tick=2810, phase="results", wall_hp=380, wall_max=1200, builder=58, guard=78, fighter=124, wave_result="win", pending_next_wave_count=22)),
+        ("ATTRACT -> WAITING", make_snapshot(stream_seq=4001, wave_no=1, wave_tick=-1, phase="waiting", lifecycle="waiting", village_level=1, total_wins=0, consecutive_wins_before_wave=0, wall_tier=1, wall_hp=1000, wall_max=1000, townhall_hp=500, townhall_max=500, wood=120, stone=80, food=100)),
+        ("WAITING -> PREP", make_snapshot(stream_seq=4002, wave_no=10, wave_tick=0, phase="prep", village_level=14, total_wins=39, consecutive_wins_before_wave=5, wall_tier=6, wall_hp=1560, wall_max=2000, townhall_hp=500, townhall_max=500, builder=1, militia_active=True, militia_bonus=40, join_toast_alias="MinhBao", join_toast_role="builder")),
+        ("PREP + VOTE_OPEN", make_snapshot(stream_seq=4003, wave_no=10, wave_tick=850, phase="prep", village_level=14, total_wins=39, consecutive_wins_before_wave=5, wall_tier=6, wall_hp=1856, wall_max=2000, townhall_hp=500, townhall_max=500, builder=121, guard=24, fighter=35, vote_open=True, vote_a=18, vote_b=31, vote_c=14)),
+        ("PREP_60 -> PREP_15", make_snapshot(stream_seq=4004, wave_no=10, wave_tick=1460, phase="prep", village_level=14, total_wins=39, consecutive_wins_before_wave=5, wall_tier=7, wall_hp=2200, wall_max=2200, townhall_hp=500, townhall_max=500, wood=574, stone=248, food=490, builder=64, guard=80, fighter=60, vote_selected="B", vote_a=34, vote_b=68, vote_c=25)),
+        ("PREP -> ASSAULT", make_snapshot(stream_seq=4005, wave_no=10, wave_tick=1600, phase="assault", village_level=14, total_wins=39, consecutive_wins_before_wave=5, wall_tier=7, wall_hp=2200, wall_max=2200, townhall_hp=500, townhall_max=500, wood=592, stone=256, food=490, builder=48, guard=92, fighter=64, population_anchor=204, west_hp=210, center_hp=198, east_hp=212, boss_max_hp=124, vote_selected="B", vote_a=34, vote_b=68, vote_c=25)),
+        ("BOSS_INCOMING -> ACTIVE", make_snapshot(stream_seq=4006, wave_no=10, wave_tick=2600, phase="finale", village_level=14, total_wins=39, consecutive_wins_before_wave=5, wall_tier=7, wall_hp=2200, wall_max=2200, townhall_hp=500, townhall_max=500, wood=598, stone=262, food=490, builder=36, guard=159, fighter=9, population_anchor=204, west_hp=0, center_hp=0, east_hp=0, boss_exists=True, boss_hp=62, boss_max_hp=124, vote_selected="B", vote_a=34, vote_b=68, vote_c=25)),
+        ("GAMEPLAY -> RECONNECT", make_snapshot(stream_seq=4007, wave_no=10, wave_tick=2620, phase="finale", lifecycle="source_disconnected", source_status="disconnected", pause_reasons=["source_disconnected"], village_level=14, total_wins=39, consecutive_wins_before_wave=5, wall_tier=7, wall_hp=2200, wall_max=2200, townhall_hp=500, townhall_max=500, wood=598, stone=262, food=490, builder=36, guard=159, fighter=9, population_anchor=204, boss_exists=True, boss_hp=62, boss_max_hp=124, vote_selected="B", vote_a=34, vote_b=68, vote_c=25)),
+        ("FINALE -> RESULTS_WIN", make_snapshot(stream_seq=4008, wave_no=10, wave_tick=2800, phase="results", village_level=15, total_wins=40, consecutive_wins_before_wave=5, wall_tier=7, wall_hp=2200, wall_max=2200, townhall_hp=500, townhall_max=500, wood=710, stone=328, food=540, builder=36, guard=143, fighter=25, population_anchor=204, boss_max_hp=124, wave_result="win", pending_next_wave_count=19, vote_selected="B", vote_a=34, vote_b=68, vote_c=25)),
     ]
 
     f_hdr = load_font(26, bold=True)
@@ -970,25 +1053,26 @@ def build_mobile_grayscale_compression_previews(
 
 
 def build_all_art008(run_unity: bool = False) -> Dict[str, Any]:
+    fixtures_dir = ART008_DIR / "showcase" / "fixtures"
+    previews_dir = ART008_DIR / "previews"
+    fixtures_dir.mkdir(parents=True, exist_ok=True)
+
+    # 1. Build contracts & canonical rule-verified synthetic fixtures first
+    wave10_doc = build_wave10_full_300s_fixture()
+    wave10_path = fixtures_dir / "full_wave_300s_wave10_showcase.json"
+    write_json_lf(wave10_path, wave10_doc)
+
+    failures = build_eight_failure_sequences()
+    for seq in failures:
+        write_json_lf(fixtures_dir / seq["filename"], seq)
+
     if run_unity:
         from run_unity_showcase import run_isolated_unity_showcase
         run_isolated_unity_showcase()
 
     composer = ModularBattlefieldComposer()
-    hud = CompositionalHudRenderer(composer)
+    hud = ShowcaseHudRenderer(composer)
     mixer = AudioTimelineMixer()
-
-    fixtures_dir = ART008_DIR / "showcase" / "fixtures"
-    previews_dir = ART008_DIR / "previews"
-    fixtures_dir.mkdir(parents=True, exist_ok=True)
-
-    # 1. Build contracts & synthetic fixtures
-    wave10_doc = build_wave10_full_300s_fixture()
-    write_json_lf(fixtures_dir / "full_wave_300s_wave10_showcase.json", wave10_doc)
-
-    failures = build_eight_failure_sequences()
-    for seq in failures:
-        write_json_lf(fixtures_dir / seq["filename"], seq)
 
     # 2. Render Phase 3 & 9 Combat Choreography clips + Sync Board
     print("[ART-008] Rendering 1080p/720p/360p H.264+AAC combat choreography & sync proof...")
@@ -996,7 +1080,7 @@ def build_all_art008(run_unity: bool = False) -> Dict[str, Any]:
         composer, hud, mixer, previews_dir / "audiovisual"
     )
 
-    # 3. Write animation_vfx_audio_sync.json, hud_transition_mapping.json, audio_dispatch_policy.json, presentation_timeline.json
+    # 3. Write animation_vfx_audio_sync.json, hud_transition_mapping.json, audio_dispatch_policy.json
     sync_doc = build_animation_vfx_audio_sync(observed_sync)
     write_json_lf(ART008_DIR / "animation_vfx_audio_sync.json", sync_doc)
 
@@ -1006,11 +1090,34 @@ def build_all_art008(run_unity: bool = False) -> Dict[str, Any]:
     audio_pol_doc = build_audio_dispatch_policy()
     write_json_lf(ART008_DIR / "audio_dispatch_policy.json", audio_pol_doc)
 
+    # 4. Render Phase 5 7-Class Transition Audit
+    print("[ART-008] Rendering 7-class 12 FPS transition video & proof sheet...")
+    build_seven_class_transition_previews(mixer, previews_dir / "animation_transitions")
+
+    # 5. Render Phase 6 HUD Priority Transitions (Standard vs Reduced Motion)
+    print("[ART-008] Rendering HUD priority transitions (standard vs reduced motion)...")
+    build_hud_transition_previews(composer, hud, mixer, previews_dir / "hud_transitions")
+
+    # 6. Render Phase 7 & 8 Full Wave 10 + 8 Failure/Reconnect Previews
+    print("[ART-008] Rendering Wave 10 300s full-wave showcase & 8 failure sequences...")
+    extra_mp4 = build_full_wave_and_failure_previews(
+        composer, hud, mixer, wave10_doc, failures, previews_dir / "full_wave"
+    )
+
+    # Write presentation_timeline.json with truthful montage vs logical duration & SHA-256 link
     timeline_summary = {
         "package_id": "ART-008",
-        "timeline_version": "bastion-dawn-v1-presentation-timeline",
+        "remediated_by_package": "ART-009",
+        "timeline_version": "bastion-dawn-v1-presentation-timeline-v2",
         "authority_separation": "Presentation-only mapping: Committed Game State -> Visual State -> Animation -> VFX -> Audio Cue. Never mutates gameplay ticks or computes combat.",
+        "logical_wave_duration_s": 300,
+        "encoded_montage_duration_s": float(extra_mp4["wave10_mp4"]["duration_s"]),
+        "selected_timeline_beats_count": len(wave10_doc["beats"]),
+        "simulation_boundary_transitions_executed": int(wave10_doc["simulation_boundary_transitions_executed"]),
+        "is_executable_m02_replay": False,
+        "duration_truthfulness_note": "20.0s accelerated review montage of 20 selected canonical beats across a 300s logical wave (14 boundary transitions executed via bounded ttg-rules-v1 step reducer; NOT 300s of continuous live gameplay capture).",
         "full_wave_fixture_ref": "art/production/ART-008/showcase/fixtures/full_wave_300s_wave10_showcase.json",
+        "canonical_wave10_fixture_sha256": sha256_file(wave10_path),
         "failure_sequence_refs": [f"art/production/ART-008/showcase/fixtures/{s['filename']}" for s in failures],
         "wave10_beats_summary": [
             {
@@ -1028,20 +1135,6 @@ def build_all_art008(run_unity: bool = False) -> Dict[str, Any]:
     }
     write_json_lf(ART008_DIR / "presentation_timeline.json", timeline_summary)
 
-    # 4. Render Phase 5 7-Class Transition Audit
-    print("[ART-008] Rendering 7-class 12 FPS transition video & proof sheet...")
-    build_seven_class_transition_previews(mixer, previews_dir / "animation_transitions")
-
-    # 5. Render Phase 6 HUD Priority Transitions (Standard vs Reduced Motion)
-    print("[ART-008] Rendering HUD priority transitions (standard vs reduced motion)...")
-    build_hud_transition_previews(composer, hud, mixer, previews_dir / "hud_transitions")
-
-    # 6. Render Phase 7 & 8 Full Wave 10 + 8 Failure/Reconnect Previews
-    print("[ART-008] Rendering Wave 10 300s full-wave showcase & 8 failure sequences...")
-    extra_mp4 = build_full_wave_and_failure_previews(
-        composer, hud, mixer, wave10_doc, failures, previews_dir / "full_wave"
-    )
-
     # 7. Render Phase 9 Mobile 1080p/720p/360p, Grayscale & Compression Artifact Proofs
     print("[ART-008] Rendering mobile 360p/720p/1080p, BT.709 grayscale & H.264 compression proofs...")
     comp_metrics = build_mobile_grayscale_compression_previews(
@@ -1054,19 +1147,19 @@ def build_all_art008(run_unity: bool = False) -> Dict[str, Any]:
     )
 
     # If Unity Direct3D12 renders exist, create a side-by-side comparison board in previews/mobile!
-    u_assault = ART008_DIR / "showcase" / "isolated_unity" / "unity_d3d11_assault_7classes_1080p.png"
-    u_boss = ART008_DIR / "showcase" / "isolated_unity" / "unity_d3d11_boss_slam_finale_1080p.png"
-    u_rec = ART008_DIR / "showcase" / "isolated_unity" / "unity_d3d11_reconnect_inplace_hud_1080p.png"
+    u_assault = ART008_DIR / "showcase" / "isolated_unity" / "unity_d3d12_assault_7classes_1080p.png"
+    u_boss = ART008_DIR / "showcase" / "isolated_unity" / "unity_d3d12_boss_slam_finale_1080p.png"
+    u_rec = ART008_DIR / "showcase" / "isolated_unity" / "unity_d3d12_reconnect_inplace_hud_1080p.png"
     if u_assault.exists() and u_boss.exists() and u_rec.exists():
         ub = Image.new("RGB", (1760, 1080), (14, 19, 28))
         ud = ImageDraw.Draw(ub)
-        f_hdr = load_font(28, bold=True)
+        f_hdr = load_font(26, bold=True)
         f_lbl = load_font(19, bold=True)
-        ud.text((32, 18), "ART-008 — REAL UNITY 6000.6.7f1 HARDWARE GPU RENDERS (ORTHO SIZE=5.0, PPU=192, IN-PLACE 9-SLICE HUD)", font=f_hdr, fill=(246, 235, 205))
+        ud.text((32, 18), "ART-008/009 — REAL UNITY 6000.6.7f1 DIRECT3D12 GPU RENDERS (ORTHO=5.0, PPU=192, TRUTHFUL IN-PLACE HUD)", font=f_hdr, fill=(246, 235, 205))
         for idx, (up, lbl) in enumerate([
-            (u_assault, "1. Assault 7-Class Roster & Lanes"),
-            (u_boss, "2. Wave 10 Finale Boss CleaveSlam (Tick>=2600)"),
-            (u_rec, "3. In-Place Source Reconnect (0 Scene Reload)"),
+            (u_assault, "1. Assault 7-Class Roster (210/198/212)"),
+            (u_boss, "2. Wave 10 Boss Active 62/124 (Tick>=2600)"),
+            (u_rec, "3. In-Place Source Lost (0 Scene Reload)"),
         ]):
             uim = Image.open(up).convert("RGB").resize((520, 924), Image.Resampling.LANCZOS)
             x0 = 40 + idx * 560

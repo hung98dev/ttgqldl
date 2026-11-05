@@ -23,15 +23,20 @@
       "wave_tick": 1920,
       "remaining_seconds": 108,
       "phase": "assault",
+      "total_wins": 39,
       "village_level": 14,
+      "consecutive_wins_before_wave": 5,
+      "population_anchor": 128,
+      "base_hp": 506,
+      "max_viewer_session_xp": 120,
       "wall_tier": 6,
-      "wall_hp": 690,
-      "wall_max": 1000,
-      "townhall_hp": 2000,
-      "townhall_max": 2000,
-      "wood": 320,
-      "stone": 240,
-      "food": 410,
+      "wall_hp": 1080,
+      "wall_max": 2000,
+      "townhall_hp": 500,
+      "townhall_max": 500,
+      "wood": 520,
+      "stone": 780,
+      "food": 540,
       "counts": {
         "unique_joined": 133,
         "builder": 31,
@@ -41,15 +46,24 @@
       "lanes": [
         {
           "id": "west",
-          "ordinary_hp": 140
+          "ordinary_hp": 112,
+          "runner_hp": 28,
+          "grunt_hp": 61,
+          "brute_hp": 23
         },
         {
           "id": "center",
-          "ordinary_hp": 190
+          "ordinary_hp": 102,
+          "runner_hp": 25,
+          "grunt_hp": 56,
+          "brute_hp": 21
         },
         {
           "id": "east",
-          "ordinary_hp": 130
+          "ordinary_hp": 114,
+          "runner_hp": 28,
+          "grunt_hp": 62,
+          "brute_hp": 24
         }
       ],
       "vote": {
@@ -65,7 +79,7 @@
         "boss_incoming": false,
         "boss_exists": false,
         "boss_hp": 0,
-        "boss_max_hp": 1800
+        "boss_max_hp": 0
       },
       "settlement": {
         "wave_result": null,

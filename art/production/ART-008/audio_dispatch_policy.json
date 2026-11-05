@@ -28,6 +28,15 @@
     "prep_cooldown_ms": 2000,
     "assault_and_finale_cooldown_ms": 3500,
     "assault_attenuation_db": -5.5,
+    "assault_gain_accounting": {
+      "cue_attenuation_db": -5.5,
+      "cue_linear_gain": 0.5309,
+      "sfx_bus_gain_db": -1.5,
+      "sfx_bus_linear_gain": 0.8414,
+      "combined_output_db": -7.0,
+      "combined_output_linear_gain": 0.4467,
+      "explanation": "Intended combination of -5.5 dB per-cue ASSAULT attenuation and -1.5 dB SFX bus gain (-7.0 dB = 10^(-7/20) = 0.4467 linear)."
+    },
     "suppressed_while_priority_alerts_active": true,
     "verified_10s_burst_plays_prep": 5,
     "verified_10s_burst_plays_assault": 3,

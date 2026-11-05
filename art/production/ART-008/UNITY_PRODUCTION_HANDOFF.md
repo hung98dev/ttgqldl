@@ -44,7 +44,7 @@ Import directly from the canonical package directories verified in `unified_asse
 |---|---|---|
 | `BroadcastAudioDispatcher.cs` | Parameterized `SFX01` cooldowns (`2000ms` PREP / `3500ms @ -5.5 dB` ASSAULT), alert suppression, `ttg-audio-dedupe-v2` Two-Tier dedupe, independent buses, Music `-80 dB` lock | `12` preallocated `AudioSource`s (`0` runtime spawns) |
 | `SpriteTransitionController.cs` + `BoundedVfxPool` | `12 FPS` non-interpolated sprite stepping, impact-frame VFX/SFX firing, auto return from non-looping action/hit to `idle`/`idlemarch`, auto-clear VFX | `<= 150` pooled units, `<= 20` pooled VFX bursts |
-| `HudInPlacePresenter.cs` | In-place 16-state + 8-overlay HUD switcher with `<= 220 ms` micro-motion and `ReducedMotion` toggle inside `82% x 88%` safe area | `0` scene reloads, `1` single-slot Join Toast |
+| `HudInPlacePresenter.cs` | In-place `SyntheticCommittedView` 16-state + 8-overlay HUD adapter (`vi-VN` & `en-US`, zero hardcoded counters) with `<= 220 ms` micro-motion and `ReducedMotion` toggle inside `82% x 88%` safe area | `0` scene reloads, `1` single-slot Join Toast |
 
 ---
 

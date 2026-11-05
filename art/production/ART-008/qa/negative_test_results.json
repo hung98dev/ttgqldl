@@ -42,7 +42,7 @@
     {
       "test_id": "N08_overbroad_dedupe_suppressing_legit_damage_rejected",
       "status": "PASS",
-      "detail": "Correctly rejected (ValueError: Invalid once-per-wave milestone set: {'boss_incoming', 'wave_result', 'boss_spawned', 'vote_closed', 'damage_applied'})"
+      "detail": "Correctly rejected (ValueError: Invalid once-per-wave milestone set: {'vote_closed', 'boss_incoming', 'damage_applied', 'boss_spawned', 'wave_result'})"
     },
     {
       "test_id": "N09_incorrect_join_cooldown_rejected",

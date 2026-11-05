@@ -27,15 +27,20 @@
       "wave_tick": 2640,
       "remaining_seconds": 36,
       "phase": "finale",
+      "total_wins": 39,
       "village_level": 14,
-      "wall_tier": 6,
-      "wall_hp": 380,
-      "wall_max": 1200,
-      "townhall_hp": 2000,
-      "townhall_max": 2000,
-      "wood": 320,
-      "stone": 240,
-      "food": 410,
+      "consecutive_wins_before_wave": 5,
+      "population_anchor": 168,
+      "base_hp": 544,
+      "max_viewer_session_xp": 120,
+      "wall_tier": 7,
+      "wall_hp": 480,
+      "wall_max": 2200,
+      "townhall_hp": 440,
+      "townhall_max": 500,
+      "wood": 520,
+      "stone": 780,
+      "food": 540,
       "counts": {
         "unique_joined": 168,
         "builder": 40,
@@ -45,31 +50,49 @@
       "lanes": [
         {
           "id": "west",
-          "ordinary_hp": 30
+          "ordinary_hp": 24,
+          "runner_hp": 6,
+          "grunt_hp": 13,
+          "brute_hp": 5
         },
         {
           "id": "center",
-          "ordinary_hp": 90
+          "ordinary_hp": 0,
+          "runner_hp": 0,
+          "grunt_hp": 0,
+          "brute_hp": 0
         },
         {
           "id": "east",
-          "ordinary_hp": 35
+          "ordinary_hp": 28,
+          "runner_hp": 7,
+          "grunt_hp": 15,
+          "brute_hp": 6
         }
       ],
       "vote": {
         "open": false,
-        "selected": null,
+        "selected": "B",
         "counts": {
-          "A": 0,
-          "B": 0,
-          "C": 0
+          "A": 28,
+          "B": 64,
+          "C": 19
+        },
+        "canonical_effect": {
+          "cost_resource": "food",
+          "cost_amount": 50,
+          "guard_block_multiplier_pct": 100,
+          "fighter_attack_multiplier_pct": 115,
+          "loss_penalty_divisor": 1,
+          "label_vi": "B: -50 Lương · Đánh +15%",
+          "label_en": "B: -50 Food · Attack +15%"
         }
       },
       "boss": {
         "boss_incoming": false,
         "boss_exists": true,
-        "boss_hp": 980,
-        "boss_max_hp": 1800
+        "boss_hp": 64,
+        "boss_max_hp": 109
       },
       "settlement": {
         "wave_result": null,

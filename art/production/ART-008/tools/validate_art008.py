@@ -294,9 +294,9 @@ def run_positive_checks(ci_fast: bool = False) -> List[Dict[str, Any]]:
         "art/production/ART-008/previews/mobile/mobile_360p_720p_1080p_comparison_board.png",
         "art/production/ART-008/previews/grayscale/bt709_grayscale_readability_board.png",
         "art/production/ART-008/previews/compression/h264_aac_stream_artifact_board.png",
-        "art/production/ART-008/showcase/isolated_unity/unity_d3d11_assault_7classes_1080p.png",
-        "art/production/ART-008/showcase/isolated_unity/unity_d3d11_boss_slam_finale_1080p.png",
-        "art/production/ART-008/showcase/isolated_unity/unity_d3d11_reconnect_inplace_hud_1080p.png",
+        "art/production/ART-008/showcase/isolated_unity/unity_d3d12_assault_7classes_1080p.png",
+        "art/production/ART-008/showcase/isolated_unity/unity_d3d12_boss_slam_finale_1080p.png",
+        "art/production/ART-008/showcase/isolated_unity/unity_d3d12_reconnect_inplace_hud_1080p.png",
     ]
     for rf in req_art008_files:
         rp = REPO_ROOT / rf

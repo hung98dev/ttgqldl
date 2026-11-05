@@ -4,7 +4,7 @@
   "synthetic_fixture": true,
   "title": "2. Source Reconnect With Stale-Snapshot Guard",
   "invariants_verified": [
-    "Stale snapshot (connection_state=='stale' or older stream_seq) is flagged CẢNH BÁO DỮ LIỆU CŨ, never silently treated as fresh live",
+    "Stale snapshot (connection_state=='stale' or older stream_seq) is flagged TRỄ >3S, never silently treated as fresh live",
     "Only after verified fresh stream_seq arrives with pause_reasons==[] does presentation resume"
   ],
   "stale_snapshot_rejected_step": {
@@ -23,15 +23,20 @@
       "wave_tick": 1835,
       "remaining_seconds": 116,
       "phase": "assault",
+      "total_wins": 39,
       "village_level": 14,
+      "consecutive_wins_before_wave": 5,
+      "population_anchor": 74,
+      "base_hp": 392,
+      "max_viewer_session_xp": 120,
       "wall_tier": 6,
-      "wall_hp": 760,
-      "wall_max": 1000,
-      "townhall_hp": 2000,
-      "townhall_max": 2000,
-      "wood": 320,
-      "stone": 240,
-      "food": 410,
+      "wall_hp": 1180,
+      "wall_max": 2000,
+      "townhall_hp": 500,
+      "townhall_max": 500,
+      "wood": 520,
+      "stone": 780,
+      "food": 540,
       "counts": {
         "unique_joined": 74,
         "builder": 18,
@@ -41,15 +46,24 @@
       "lanes": [
         {
           "id": "west",
-          "ordinary_hp": 220
+          "ordinary_hp": 118,
+          "runner_hp": 29,
+          "grunt_hp": 64,
+          "brute_hp": 25
         },
         {
           "id": "center",
-          "ordinary_hp": 290
+          "ordinary_hp": 110,
+          "runner_hp": 27,
+          "grunt_hp": 60,
+          "brute_hp": 23
         },
         {
           "id": "east",
-          "ordinary_hp": 195
+          "ordinary_hp": 120,
+          "runner_hp": 30,
+          "grunt_hp": 66,
+          "brute_hp": 24
         }
       ],
       "vote": {
@@ -65,7 +79,7 @@
         "boss_incoming": false,
         "boss_exists": false,
         "boss_hp": 0,
-        "boss_max_hp": 1800
+        "boss_max_hp": 0
       },
       "settlement": {
         "wave_result": null,
@@ -102,15 +116,20 @@
       "wave_tick": 1845,
       "remaining_seconds": 115,
       "phase": "assault",
+      "total_wins": 39,
       "village_level": 14,
+      "consecutive_wins_before_wave": 5,
+      "population_anchor": 74,
+      "base_hp": 392,
+      "max_viewer_session_xp": 120,
       "wall_tier": 6,
-      "wall_hp": 740,
-      "wall_max": 1000,
-      "townhall_hp": 2000,
-      "townhall_max": 2000,
-      "wood": 320,
-      "stone": 240,
-      "food": 410,
+      "wall_hp": 1160,
+      "wall_max": 2000,
+      "townhall_hp": 500,
+      "townhall_max": 500,
+      "wood": 520,
+      "stone": 780,
+      "food": 540,
       "counts": {
         "unique_joined": 76,
         "builder": 19,
@@ -120,15 +139,24 @@
       "lanes": [
         {
           "id": "west",
-          "ordinary_hp": 200
+          "ordinary_hp": 104,
+          "runner_hp": 26,
+          "grunt_hp": 57,
+          "brute_hp": 21
         },
         {
           "id": "center",
-          "ordinary_hp": 265
+          "ordinary_hp": 98,
+          "runner_hp": 24,
+          "grunt_hp": 53,
+          "brute_hp": 21
         },
         {
           "id": "east",
-          "ordinary_hp": 180
+          "ordinary_hp": 106,
+          "runner_hp": 26,
+          "grunt_hp": 58,
+          "brute_hp": 22
         }
       ],
       "vote": {
@@ -144,7 +172,7 @@
         "boss_incoming": false,
         "boss_exists": false,
         "boss_hp": 0,
-        "boss_max_hp": 1800
+        "boss_max_hp": 0
       },
       "settlement": {
         "wave_result": null,

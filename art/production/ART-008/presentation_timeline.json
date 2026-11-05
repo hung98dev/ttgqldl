@@ -1,8 +1,16 @@
 {
   "package_id": "ART-008",
-  "timeline_version": "bastion-dawn-v1-presentation-timeline",
+  "remediated_by_package": "ART-009",
+  "timeline_version": "bastion-dawn-v1-presentation-timeline-v2",
   "authority_separation": "Presentation-only mapping: Committed Game State -> Visual State -> Animation -> VFX -> Audio Cue. Never mutates gameplay ticks or computes combat.",
+  "logical_wave_duration_s": 300,
+  "encoded_montage_duration_s": 20.0,
+  "selected_timeline_beats_count": 20,
+  "simulation_boundary_transitions_executed": 15,
+  "is_executable_m02_replay": false,
+  "duration_truthfulness_note": "20.0s accelerated review montage of 20 selected canonical beats across a 300s logical wave (14 boundary transitions executed via bounded ttg-rules-v1 step reducer; NOT 300s of continuous live gameplay capture).",
   "full_wave_fixture_ref": "art/production/ART-008/showcase/fixtures/full_wave_300s_wave10_showcase.json",
+  "canonical_wave10_fixture_sha256": "10cc1562a6810f837929b01fe145778e3eca2dd4b3d3503616e853072453e02d",
   "failure_sequence_refs": [
     "art/production/ART-008/showcase/fixtures/failure_01_source_disconnect.json",
     "art/production/ART-008/showcase/fixtures/failure_02_source_reconnect.json",
@@ -20,7 +28,7 @@
       "wave_tick": -1,
       "logical_time_s": -0.1,
       "visual_state": "WAITING_FOR_VIEWER",
-      "meaningful_visual_change": "Lobby waiting state (P=0): empty lanes, intact wall, primary CTA 'Bình luận XÂY / THỦ / ĐÁNH'",
+      "meaningful_visual_change": "Lobby WAITING state (wave_tick=-1, P=0): empty lanes, Tier 6 wall 1560/2000, Townhall 500/500",
       "audio_cues": [
         "AMB01"
       ],
@@ -32,7 +40,7 @@
       "wave_tick": 0,
       "logical_time_s": 0.0,
       "visual_state": "PREP",
-      "meaningful_visual_change": "First valid participant joins Builder -> wave_tick=0 starts, Militia assist active (P=1<=10), Join Toast slides in",
+      "meaningful_visual_change": "First participant joins Builder -> wave_tick=0 starts, Militia assist +40 ATK (P=1<=10), Join Toast slides in",
       "audio_cues": [
         "SFX01"
       ],
@@ -44,7 +52,7 @@
       "wave_tick": 200,
       "logical_time_s": 20.0,
       "visual_state": "PREP",
-      "meaningful_visual_change": "20s elapsed: 4 scaffolds active, Builders hammer wall masonry (+repair sparks), Guards & Fighters muster",
+      "meaningful_visual_change": "Tick 200: 49 Builders repair Tier 6 wall 1560->1616/2000 (+repair sparks), Guards & Fighters muster",
       "audio_cues": [
         "SFX02"
       ],
@@ -56,7 +64,7 @@
       "wave_tick": 400,
       "logical_time_s": 40.0,
       "visual_state": "PREP",
-      "meaningful_visual_change": "40s elapsed: role counters climb to 76 participants, resources harvested, timer 04:20",
+      "meaningful_visual_change": "Tick 400: 109 participants active, wall repaired to 1688/2000, timer 04:20",
       "audio_cues": [
         "SFX01"
       ],
@@ -68,7 +76,7 @@
       "wave_tick": 600,
       "logical_time_s": 60.0,
       "visual_state": "PREP",
-      "meaningful_visual_change": "Tick 600 (60s elapsed): wall reinforced to tier 7 (1100/1100 HP), Builders repair contact",
+      "meaningful_visual_change": "Tick 600: 100 Builders raise Tier 6 wall to 1768/2000 HP, wood/stone economy accrues",
       "audio_cues": [
         "SFX02"
       ],
@@ -80,7 +88,7 @@
       "wave_tick": 800,
       "logical_time_s": 80.0,
       "visual_state": "VOTE_OPEN",
-      "meaningful_visual_change": "Tick 800: Even-wave tactical vote opens in subordinate dock strip (A/B/C live tallies)",
+      "meaningful_visual_change": "Tick 800: Even-wave tactical vote opens in subordinate dock strip (A:-50G / B:-50L / C:0)",
       "audio_cues": [],
       "mock_stream_seq": 1032
     },
@@ -90,7 +98,7 @@
       "wave_tick": 1000,
       "logical_time_s": 100.0,
       "visual_state": "PREP_60_WARN",
-      "meaningful_visual_change": "Tick 1000: PREP 60-second remaining amber warning banner + active vote tallies update",
+      "meaningful_visual_change": "Tick 1000: PREP 60s amber warning banner + wall reaches 1944/2000 + live vote tallies",
       "audio_cues": [
         "SFX01"
       ],
@@ -102,7 +110,7 @@
       "wave_tick": 1200,
       "logical_time_s": 120.0,
       "visual_state": "PREP_60_WARN",
-      "meaningful_visual_change": "Tick 1200: Vote closes -> Option B locked in subordinate dock strip + gavel chime SFX10",
+      "meaningful_visual_change": "Tick 1200: Vote closes -> Option B locked (-50 Food charged once, Fighter ATK +15%) + gavel chime SFX10",
       "audio_cues": [
         "SFX10"
       ],
@@ -114,7 +122,7 @@
       "wave_tick": 1400,
       "logical_time_s": 140.0,
       "visual_state": "PREP_60_WARN",
-      "meaningful_visual_change": "Tick 1400: Option B wall reinforcement applied (1200/1200 HP), final pre-assault repair sparks",
+      "meaningful_visual_change": "Tick 1400: Construction work>=1200 & stone>=600 upgrades Wall Tier 6 -> Tier 7 (2200/2200 HP)",
       "audio_cues": [
         "SFX02"
       ],
@@ -136,7 +144,7 @@
       "wave_tick": 1600,
       "logical_time_s": 160.0,
       "visual_state": "ASSAULT",
-      "meaningful_visual_change": "Tick 1600: ASSAULT starts -> Grunt, Runner, and Brute columns enter West, Center, and East lanes",
+      "meaningful_visual_change": "Tick 1600: P=204 locks -> base_hp=620 spawns canonical West 210 / Center 198 / East 212 enemy pools",
       "audio_cues": [
         "SFX05"
       ],
@@ -148,7 +156,7 @@
       "wave_tick": 1800,
       "logical_time_s": 180.0,
       "visual_state": "ASSAULT",
-      "meaningful_visual_change": "Tick 1800: First combat boundary -> Fighter SwordSlash + Guard ShieldBrace + Wall takes 180 damage",
+      "meaningful_visual_change": "Tick 1800: Vote B (+15% Fighter ATK = 165) cuts enemy pools 620->455; Wall takes combat hit (2167/2200)",
       "audio_cues": [
         "SFX04",
         "SFX03",
@@ -162,10 +170,10 @@
       "wave_tick": 2000,
       "logical_time_s": 200.0,
       "visual_state": "ASSAULT",
-      "meaningful_visual_change": "Tick 2000: Wall drops below 60% (680/1200 -> env_wall_state2_damaged) while Builders actively repair",
+      "meaningful_visual_change": "Tick 2000: Cyclic combat cuts enemy pools 455->290 (100/88/102); Guards absorb retaliation (wall 2158/2200)",
       "audio_cues": [
         "SFX06",
-        "SFX02"
+        "SFX03"
       ],
       "mock_stream_seq": 1095
     },
@@ -175,7 +183,7 @@
       "wave_tick": 2200,
       "logical_time_s": 220.0,
       "visual_state": "ASSAULT",
-      "meaningful_visual_change": "Tick 2200: West & East flank HP reduced by Fighters; independent Fighter & Enemy strikes",
+      "meaningful_visual_change": "Tick 2200: West/Center/East flanks reduced monotonically 290->125 (45/33/47 HP remaining)",
       "audio_cues": [
         "SFX04",
         "SFX05"
@@ -187,10 +195,10 @@
       "wave_no": 10,
       "wave_tick": 2400,
       "logical_time_s": 240.0,
-      "visual_state": "ASSAULT",
-      "meaningful_visual_change": "Tick 2400: Center vanguard thinned to 90 HP; Builders restore wall to 640/1200 before finale",
+      "visual_state": "BOSS_INCOMING",
+      "meaningful_visual_change": "Tick 2400: Ordinary lanes cleared to 0/0/0 -> Boss state transitions to INCOMING (Boss still unspawned < 2600)",
       "audio_cues": [
-        "SFX02"
+        "SFX04"
       ],
       "mock_stream_seq": 1115
     },
@@ -200,7 +208,7 @@
       "wave_tick": 2450,
       "logical_time_s": 245.0,
       "visual_state": "BOSS_INCOMING",
-      "meaningful_visual_change": "Tick 2450: Boss Warning banner + eclipse palette + ground rune telegraph ONLY (Boss sprite NOT spawned before 2600!)",
+      "meaningful_visual_change": "Tick 2450: Boss Warning banner + eclipse palette + ground rune telegraph ONLY (boss_exists=false, boss_hp=0)",
       "audio_cues": [
         "SFX08"
       ],
@@ -212,10 +220,10 @@
       "wave_tick": 2600,
       "logical_time_s": 260.0,
       "visual_state": "BOSS_ACTIVE",
-      "meaningful_visual_change": "Tick 2600: FINALE starts -> Boss Warlord spawns on Center Causeway, executes CleaveSlam + wall drops to critical state 3 (260/1200)",
+      "meaningful_visual_change": "Tick 2600: FINALE -> Boss Warlord spawns at canonical 124 max HP, takes 62 Vote-B slash dmg -> 62/124 HP active",
       "audio_cues": [
         "SFX09",
-        "SFX06"
+        "SFX03"
       ],
       "mock_stream_seq": 1131
     },
@@ -225,7 +233,7 @@
       "wave_tick": 2800,
       "logical_time_s": 280.0,
       "visual_state": "RESULTS_WIN",
-      "meaningful_visual_change": "Tick 2800: Final combat resolves Boss HP -> 0, authoritative settlement RESULTS_WIN + Victory fanfare SFX11",
+      "meaningful_visual_change": "Tick 2800: Final combat slays Boss (62->0 HP), single settlement WIN (+100W/+60S/+50F, Townhall 500/500)",
       "audio_cues": [
         "SFX04",
         "SFX11"
@@ -238,7 +246,7 @@
       "wave_tick": 2900,
       "logical_time_s": 290.0,
       "visual_state": "RESULTS_WIN",
-      "meaningful_visual_change": "Tick 2900: Results summary holds with 34 queued next-wave registrations shown in subordinate strip",
+      "meaningful_visual_change": "Tick 2900: Results hold (zero illegal repair or role mutation); 34 next-wave players queued for Wave 11",
       "audio_cues": [],
       "mock_stream_seq": 1148
     },
@@ -248,7 +256,7 @@
       "wave_tick": 0,
       "logical_time_s": 300.0,
       "visual_state": "PREP",
-      "meaningful_visual_change": "Tick 3000 -> Wave 11 Tick 0 rollover in-place (zero scene reload): Dawn lighting restored, 34 queued players active",
+      "meaningful_visual_change": "Tick 3000 -> Wave 11 Tick 0 rollover in-place (0 scene reloads): 34 queued players promoted, odd-wave objective active",
       "audio_cues": [
         "SFX01"
       ],

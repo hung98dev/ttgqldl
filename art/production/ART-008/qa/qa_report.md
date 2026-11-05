@@ -42,7 +42,7 @@
 | `N05_wrong_impact_frame_rejected` | `PASS` | Correctly rejected (ValueError: Boss CleaveSlam impact frame mismatch: 1 != 5) |
 | `N06_corrupted_cue_mapping_rejected` | `PASS` | Correctly rejected (ValueError: Unknown or corrupted cue_id: SFX99_CORRUPT) |
 | `N07_replayed_duplicate_victory_suppressed` | `PASS` | First=PLAYED, DuplicateReplay=SUPPRESSED_DUPLICATE_STREAM_SEQ |
-| `N08_overbroad_dedupe_suppressing_legit_damage_rejected` | `PASS` | Correctly rejected (ValueError: Invalid once-per-wave milestone set: {'boss_incoming', 'wave_result', 'boss_spawned', 'vote_closed', 'damage_applied'}) |
+| `N08_overbroad_dedupe_suppressing_legit_damage_rejected` | `PASS` | Correctly rejected (ValueError: Invalid once-per-wave milestone set: {'vote_closed', 'boss_incoming', 'damage_applied', 'boss_spawned', 'wave_result'}) |
 | `N09_incorrect_join_cooldown_rejected` | `PASS` | Correctly rejected (ValueError: Invalid SFX01 role-join cooldown contract) |
 | `N10_music_unintentionally_enabled_rejected` | `PASS` | Correctly rejected (ValueError: Music must be muted by default (GATE-LEGAL)) |
 | `N11_boss_displayed_before_tick_2600_rejected` | `PASS` | Correctly rejected (ValueError: Premature or illegal Boss display at wave=10, tick=2500) |

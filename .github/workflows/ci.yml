@@ -452,7 +452,7 @@ jobs:
           exit "${fail}"
 
   art008:
-    name: art008 (unified manifest, synthetic timeline & safety contracts)
+    name: art008-009 (unified manifest, canonical ttg-rules-v1 fixtures & safety contracts)
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
@@ -460,8 +460,17 @@ jobs:
         # v7.0.1 - verified tag SHA; pinning the immutable commit avoids tag-move supply-chain risk
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
+      # Static stdlib-only checks (<5s): validates SHA-256 manifests, canonical
+      # ttg-rules-v1 gameplay fixtures, negative mutation guards, and single-source
+      # performance/audio contracts. Does NOT perform licensed Unity GPU rendering.
       - name: Validate ART-008 unified manifest, timeline & negative safety guards
         run: python3 -B art/production/ART-008/tools/validate_art008.py --ci-fast
+
+      - name: Validate ART-009 canonical ttg-rules-v1 fixtures & negative mutations
+        run: python3 -B art/production/ART-009/tools/validate_canonical_fixtures.py --ci-fast
+
+      - name: Validate ART-009 remediation package, single-source metrics & status gates
+        run: python3 -B art/production/ART-009/tools/validate_art009.py --ci-fast
 
 
 

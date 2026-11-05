@@ -36,15 +36,20 @@
       "wave_tick": 1680,
       "remaining_seconds": 132,
       "phase": "assault",
-      "village_level": 14,
-      "wall_tier": 6,
-      "wall_hp": 780,
-      "wall_max": 1000,
-      "townhall_hp": 2000,
-      "townhall_max": 2000,
-      "wood": 320,
-      "stone": 240,
-      "food": 410,
+      "total_wins": 15,
+      "village_level": 6,
+      "consecutive_wins_before_wave": 0,
+      "population_anchor": 106,
+      "base_hp": 363,
+      "max_viewer_session_xp": 120,
+      "wall_tier": 4,
+      "wall_hp": 1120,
+      "wall_max": 1600,
+      "townhall_hp": 420,
+      "townhall_max": 500,
+      "wood": 520,
+      "stone": 780,
+      "food": 540,
       "counts": {
         "unique_joined": 106,
         "builder": 26,
@@ -54,31 +59,49 @@
       "lanes": [
         {
           "id": "west",
-          "ordinary_hp": 150
+          "ordinary_hp": 114,
+          "runner_hp": 28,
+          "grunt_hp": 62,
+          "brute_hp": 24
         },
         {
           "id": "center",
-          "ordinary_hp": 210
+          "ordinary_hp": 108,
+          "runner_hp": 27,
+          "grunt_hp": 59,
+          "brute_hp": 22
         },
         {
           "id": "east",
-          "ordinary_hp": 145
+          "ordinary_hp": 116,
+          "runner_hp": 29,
+          "grunt_hp": 63,
+          "brute_hp": 24
         }
       ],
       "vote": {
         "open": false,
-        "selected": null,
+        "selected": "C",
         "counts": {
-          "A": 0,
-          "B": 0,
-          "C": 0
+          "A": 12,
+          "B": 18,
+          "C": 36
+        },
+        "canonical_effect": {
+          "cost_resource": "none",
+          "cost_amount": 0,
+          "guard_block_multiplier_pct": 90,
+          "fighter_attack_multiplier_pct": 100,
+          "loss_penalty_divisor": 2,
+          "label_vi": "C: 0 phí · Thủ -10% · Giảm 50% phạt",
+          "label_en": "C: Free · Guard -10% · -50% Loss Penalty"
         }
       },
       "boss": {
         "boss_incoming": false,
         "boss_exists": false,
         "boss_hp": 0,
-        "boss_max_hp": 1800
+        "boss_max_hp": 0
       },
       "settlement": {
         "wave_result": null,

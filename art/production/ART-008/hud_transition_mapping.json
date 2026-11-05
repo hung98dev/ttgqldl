@@ -28,14 +28,14 @@
     "PAUSED (pause_reasons contains operator_paused)",
     "DEGRADED_DROPS (metrics_available && confirmed_valid_drops > 0)",
     "BOSS_ACTIVE (wave_no % 5 == 0 && tick >= 2600 && boss_exists)",
-    "BOSS_INCOMING (wave_no % 5 == 0 && 2450 <= tick < 2600 && boss_incoming)",
+    "BOSS_INCOMING (wave_no % 5 == 0 && 2400 <= tick < 2600 && boss_incoming)",
     "RESULTS_WIN / RESULTS_LOSS (phase == results && tick >= 2800)",
     "ASSAULT / FINALE",
     "PREP_15_WARN (1450 <= tick <= 1599)",
     "PREP_60_WARN (1000 <= tick <= 1449)",
     "PREP + VOTE_OPEN (even wave && 800 <= tick <= 1199)",
     "PREP (0 <= tick <= 1599)",
-    "WAITING_FOR_VIEWER (P == 0)",
+    "WAITING_FOR_VIEWER (P == 0 && tick == -1)",
     "ATTRACT"
   ],
   "priority_transitions": [
@@ -43,7 +43,7 @@
       "transition_id": "T01",
       "from_state": "ATTRACT",
       "to_state": "WAITING_FOR_VIEWER",
-      "trigger_condition": "Session initialized with P=0",
+      "trigger_condition": "Session initialized with P=0 (wave_tick=-1)",
       "standard_motion": {
         "description": "200ms banner crossfade + timer reset to 05:00",
         "max_duration_ms": 220,

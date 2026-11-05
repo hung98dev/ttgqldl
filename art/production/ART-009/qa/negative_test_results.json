@@ -1,0 +1,112 @@
+{
+  "total_negative_tests": 15,
+  "rejected_count": 15,
+  "all_rejected": true,
+  "results": [
+    {
+      "test_id": "N01_TOWNHALL_MAX_2000",
+      "description": "Inject townhall_max = 2000 & townhall_hp = 1850",
+      "expected_catching_rule": "R02_TOWNHALL_MAX_500",
+      "rejected_as_expected": true,
+      "sample_failure_reason": "full_wave.B00_WAITING: townhall_max=2000 != canonical 500"
+    },
+    {
+      "test_id": "N02_TIER8_WALL_MAX_1200",
+      "description": "Inject Tier 8 with wall_max = 1200 (expected 2400)",
+      "expected_catching_rule": "R03_WALL_MAX_FROM_TIER",
+      "rejected_as_expected": true,
+      "sample_failure_reason": "full_wave.B01_FIRST_JOIN_WAVE_START: wall_tier=8 has wall_max=1200, expected 2400"
+    },
+    {
+      "test_id": "N03_INVALID_LANE_420_560_440",
+      "description": "Inject 420/560/440 lane split for base_hp = 1420",
+      "expected_catching_rule": "R12_CANONICAL_LANE_SPLIT_AT_SPAWN",
+      "rejected_as_expected": true,
+      "sample_failure_reason": "tick 1600 base_hp=1420 != canonical_base_hp(P=204, cw=5, cl=0)=620"
+    },
+    {
+      "test_id": "N04_BOSS_MAX_1800",
+      "description": "Inject boss_max_hp = 1800 for base_hp = 1420 (expected 284)",
+      "expected_catching_rule": "R13_BOSS_MAX_FROM_BASE_HP",
+      "rejected_as_expected": true,
+      "sample_failure_reason": "full_wave.B10_ASSAULT_START: boss_max_hp=1800 != ceil(1420/5)=284"
+    },
+    {
+      "test_id": "N05_WRONG_VOTE_B_TEXT",
+      "description": "Inject Vote B wall-repair text ('SỬA TƯỜNG +25%')",
+      "expected_catching_rule": "R11_VOTE_ABC_COSTS_AND_EFFECTS",
+      "rejected_as_expected": true,
+      "sample_failure_reason": "HudInPlacePresenter.cs contains forbidden Vote B description matching /SỬA\\s*TƯỜNG\\s*\\+25%/"
+    },
+    {
+      "test_id": "N06_WAITING_TICK_ZERO",
+      "description": "Inject WAITING snapshot with wave_tick = 0",
+      "expected_catching_rule": "R08_WAITING_TICK_MINUS_ONE",
+      "rejected_as_expected": true,
+      "sample_failure_reason": "full_wave.B00_WAITING: WAITING snapshot has wave_tick=0 instead of -1"
+    },
+    {
+      "test_id": "N07_DUPLICATE_VICTORY",
+      "description": "Inject duplicate wave_victory settlement event",
+      "expected_catching_rule": "R18_SINGLE_SETTLEMENT_AND_REWARDS",
+      "rejected_as_expected": true,
+      "sample_failure_reason": "Wave 10 showcase must emit exactly 1 settlement event beat, found 2"
+    },
+    {
+      "test_id": "N08_BOSS_BEFORE_2600",
+      "description": "Inject active Boss before tick 2600",
+      "expected_catching_rule": "R14_BOSS_ABSENT_BEFORE_2600",
+      "rejected_as_expected": true,
+      "sample_failure_reason": "full_wave.B10_ASSAULT_START: Boss prematurely active before tick 2600 (tick=1600, boss={'boss_incoming': False, 'boss_exists': True, 'boss_hp': 120, 'boss_max_hp': 124})"
+    },
+    {
+      "test_id": "N09_UNSUPPORTED_PHASE_BOUNDARY",
+      "description": "Inject phase='assault' at tick 1500 (< 1600)",
+      "expected_catching_rule": "R09_PHASE_AT_EVERY_TICK",
+      "rejected_as_expected": true,
+      "sample_failure_reason": "full_wave.B01_FIRST_JOIN_WAVE_START: wave_tick=1500 (lifecycle=running) has phase='assault', expected 'prep'"
+    },
+    {
+      "test_id": "N10_INVALID_RESOURCE_AWARD",
+      "description": "Inject invalid +250 Wood victory settlement reward",
+      "expected_catching_rule": "R18_SINGLE_SETTLEMENT_AND_REWARDS",
+      "rejected_as_expected": true,
+      "sample_failure_reason": "tick 2800 win settlement_reward={'wood': 250, 'stone': 60, 'food': 50} != canonical +100W/+60S/+50F"
+    },
+    {
+      "test_id": "N11_INCORRECT_XP_CAP",
+      "description": "Inject session XP = 340 (> 300 cap)",
+      "expected_catching_rule": "R25_NO_UNSUPPORTED_M05_WS_SCHEMA_CLAIM",
+      "rejected_as_expected": true,
+      "sample_failure_reason": "full_wave.B01_FIRST_JOIN_WAVE_START: max_viewer_session_xp=340 violates 0..300 session XP cap"
+    },
+    {
+      "test_id": "N12_STALE_UI_COUNTER",
+      "description": "Inject stale HUD Castle HP text disagreeing with fixture",
+      "expected_catching_rule": "R23_HUD_MATCHES_UNDERLYING_FIXTURE",
+      "rejected_as_expected": true,
+      "sample_failure_reason": "01_waiting: castle_hp_text='CHÍNH 999/500' mismatches fixture 500/500"
+    },
+    {
+      "test_id": "N13_MISSING_SYNTHETIC_WATERMARK",
+      "description": "Inject mock source_status with watermark_visible = False",
+      "expected_catching_rule": "R22_TRUTHFUL_STATUS_AND_WATERMARK_TEXT",
+      "rejected_as_expected": true,
+      "sample_failure_reason": "Unity state 01_waiting has source_status='mock' but watermark_visible=False"
+    },
+    {
+      "test_id": "N14_WRONG_MUSIC_RIGHTS_DEFAULT",
+      "description": "Inject gate_legal_status=APPROVED and unmuted music",
+      "expected_catching_rule": "R22_TRUTHFUL_STATUS_AND_WATERMARK_TEXT",
+      "rejected_as_expected": true,
+      "sample_failure_reason": "rights_audit.global_rights_status='APPROVED' != 'PENDING_REVIEW'"
+    },
+    {
+      "test_id": "N15_FALSE_PERFORMANCE_METRIC_STATUS",
+      "description": "Inject 1000/p99 1%-low definition & draw_calls=0 MEASURED",
+      "expected_catching_rule": "R24_REBUILD_HASHES_AND_PREVIEW_PROVENANCE",
+      "rejected_as_expected": true,
+      "sample_failure_reason": "entities_10: missing canonical 1% low FPS definition over slowest ceil(N*0.01) frames"
+    }
+  ]
+}

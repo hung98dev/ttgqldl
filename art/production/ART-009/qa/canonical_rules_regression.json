@@ -1,0 +1,211 @@
+{
+  "rules_version": "ttg-rules-v1",
+  "total_rules": 25,
+  "passed_rules": 25,
+  "failed_rules": 0,
+  "overall_passed": true,
+  "golden_vectors_cross_checked": 25,
+  "snapshots_inspected": 30,
+  "rules": [
+    {
+      "rule_id": "R01_TOWNHALL_HP_BOUNDS",
+      "title": "Townhall current HP is always within 0..500",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R02_TOWNHALL_MAX_500",
+      "title": "Townhall maximum HP is always 500 across fixtures and Unity HUD",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R03_WALL_MAX_FROM_TIER",
+      "title": "wall_max strictly equals 1000 + 200 * (wall_tier - 1)",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R04_WALL_HP_BOUNDS",
+      "title": "Wall current HP is always within 0..wall_max",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R05_VILLAGE_LEVEL_BOUNDS",
+      "title": "Village level is within 1..50 and matches total_wins formula",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R06_WALL_TIER_BOUNDS",
+      "title": "Wall tier is always within 1..20",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R07_RESOURCE_BOUNDS",
+      "title": "Resources (wood, stone, food) remain within 0..1,000,000",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R08_WAITING_TICK_MINUS_ONE",
+      "title": "WAITING state consistently uses wave_tick = -1 and P = 0",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R09_PHASE_AT_EVERY_TICK",
+      "title": "Phase derivation matches [-1=waiting, 0..1599=prep, 1600..2599=assault, 2600..2799=finale, 2800..2999=results]",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R10_EVEN_WAVE_ONLY_VOTE",
+      "title": "Voting opens only on even waves during ticks 800..1199 and locks at 1200",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R11_VOTE_ABC_COSTS_AND_EFFECTS",
+      "title": "Vote A/B/C costs, effects, localization, and one-time tick-1200 deduction match ttg-rules-v1",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R12_CANONICAL_LANE_SPLIT_AT_SPAWN",
+      "title": "Initial three-lane HP (34%/32%/rem) and runner/grunt/brute subpools (25%/55%/rem) follow ttg-rules-v1",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R13_BOSS_MAX_FROM_BASE_HP",
+      "title": "Boss max HP strictly equals ceil(base_hp / 5) and never uses cinematic 1800 pools",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R14_BOSS_ABSENT_BEFORE_2600",
+      "title": "Boss does not exist and has 0 authoritative HP prior to tick 2600",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R15_BOSS_EVERY_FIFTH_WAVE_ONLY",
+      "title": "Boss spawns/incoming occurs exclusively on every fifth wave (wave_no % 5 == 0)",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R16_NO_PREMATURE_RESULTS",
+      "title": "Wave settlement result is never emitted before tick 2800 and always present in 2800..2999",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R17_MONOTONIC_ENEMY_HP_AND_DECORATIVE_UNITS",
+      "title": "Ordinary and Boss HP decrease monotonically after spawn; visual units are decorative proxies",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R18_SINGLE_SETTLEMENT_AND_REWARDS",
+      "title": "Settlement executes once at tick 2800 with exact +100W/+60S/+50F rewards and zero RESULTS repair",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R19_ROLE_COUNTS_AND_MILITIA_MATH",
+      "title": "Role counts sum to unique_joined and militia bonus equals max(0, 40 - 4*(P-1)) for 1<=P<=10",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R20_RESULTS_QUEUED_NEXT_WAVE_ISOLATION",
+      "title": "Registrations during RESULTS stay queued for Wave+1 and promote cleanly at tick 3000 rollover",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R21_WALL_UPGRADE_RULES",
+      "title": "Wall tier upgrades obey 200*tier work and 100*tier stone thresholds at 200-tick boundaries",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R22_TRUTHFUL_STATUS_AND_WATERMARK_TEXT",
+      "title": "Backpressure vs drops, synthetic watermarks, and Music PENDING_REVIEW mute (-80 dB) remain truthful",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R23_HUD_MATCHES_UNDERLYING_FIXTURE",
+      "title": "All 12 GPU-rendered Unity HUD states derive 100% of counters from SyntheticCommittedView fixtures",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R24_REBUILD_HASHES_AND_PREVIEW_PROVENANCE",
+      "title": "Timeline durations, SHA-256 provenance, 1% low FPS math, GC profiler counters, and README figures agree",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    },
+    {
+      "rule_id": "R25_NO_UNSUPPORTED_M05_WS_SCHEMA_CLAIM",
+      "title": "Fixtures explicitly mark M05 WS schema as NOT_STARTED synthetic views and enforce <= 300 session XP cap",
+      "passed": true,
+      "failure_count": 0,
+      "failures": [],
+      "evidence": {}
+    }
+  ]
+}

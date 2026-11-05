@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """
-ART-008 — Isolated Unity 6000.6.7f1 Vertical-Slice Showcase & Performance Runner.
+ART-008 / ART-009 — Isolated Unity 6000.6.7f1 Vertical-Slice Showcase & Performance Runner.
 
 Executes inside an isolated temporary Unity 6000.6.7f1 project outside `unity/`
-(preserving M06 = NOT_STARTED), using real Direct3D11 GPU rendering (NO -nographics)
+(preserving M06 = NOT_STARTED), using real hardware GPU rendering (NO -nographics)
 to import all 229 canonical sprites + 15 canonical WAVs, verify all 7 character
-classes & transitions, verify BroadcastAudioDispatcher, capture 3 real 1080x1920
-Direct3D11 camera frames, and benchmark 10 / 50 / 100 / 150 pooled entities.
+classes & transitions, verify BroadcastAudioDispatcher & gain accounting, render
+all 12 canonical SyntheticCommittedView HUD states at 1080p / 720p / 360p (+ English
+Vote B proof), and benchmark 10 / 50 / 100 / 150 pooled entities with truthful
+1%-low FPS and cumulative thread GC allocation counters.
 """
 
 from __future__ import annotations
@@ -22,22 +24,171 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 
-REPO_ROOT = Path(__file__).resolve().parents[4]
+TOOLS_DIR = Path(__file__).resolve().parent
+REPO_ROOT = TOOLS_DIR.parents[3]
 ART006_DIR = REPO_ROOT / "art" / "production" / "ART-006"
 ART008_DIR = REPO_ROOT / "art" / "production" / "ART-008"
+ART009_DIR = REPO_ROOT / "art" / "production" / "ART-009"
 SCENE_SRC_DIR = ART008_DIR / "showcase" / "scene_source"
+FIXTURES_DIR = ART008_DIR / "showcase" / "fixtures"
 ISOLATED_OUT_DIR = ART008_DIR / "showcase" / "isolated_unity"
 QA_OUT_DIR = ART008_DIR / "qa"
 
 UNITY_EXE = Path(r"C:\Program Files\Unity\Hub\Editor\6000.6.7f1\Editor\Unity.exe")
 
+if str(TOOLS_DIR) not in sys.path:
+    sys.path.insert(0, str(TOOLS_DIR))
+
+from showcase_contracts import build_eight_failure_sequences, build_wave10_full_300s_fixture  # noqa: E402
+
 
 def verify_csharp_sprite_stems(valid_stems: set[str]) -> None:
     cs_text = (SCENE_SRC_DIR / "ART008UnityShowcaseVerifier.cs").read_text(encoding="utf-8")
-    direct_refs = set(re.findall(r'"((?:env_|trans_|ui_comp_|vfx_boss_slam_telegraph_f05)[a-z0-9_]*)"', cs_text))
+    direct_refs = set(
+        re.findall(r'"((?:env_|trans_|ui_comp_|ui_icon_|vfx_boss_slam_telegraph_f)[a-z0-9_]*)"', cs_text)
+    )
     missing = sorted(r for r in direct_refs if r not in valid_stems)
     if missing:
         raise RuntimeError(f"C# verifier references missing sprite stems: {missing}")
+
+
+def fixture_to_committed_view(
+    state_id: str,
+    visual_state_id: str,
+    fixture_doc: Dict[str, Any],
+    *,
+    out_1080p: Path,
+    out_720p: Path | None = None,
+    out_360p: Path | None = None,
+) -> Dict[str, Any]:
+    s = fixture_doc["public_snapshot"]
+    cnts = s["counts"]
+    lanes = {ln["id"]: int(ln["ordinary_hp"]) for ln in s["lanes"]}
+    boss = s["boss"]
+    vote = s["vote"]
+    vc = vote.get("counts", {})
+    settle = s["settlement"]
+    assist = s["system_assist"]
+    diag = s["diagnostics"]
+    toast = s.get("join_toast")
+
+    return {
+        "stateId": state_id,
+        "fixtureId": str(fixture_doc.get("fixture_id", state_id)),
+        "visualStateId": visual_state_id,
+        "lifecycle": str(s["lifecycle"]),
+        "sourceStatus": str(s["source_status"]),
+        "pauseReasons": list(s.get("pause_reasons", [])),
+        "waveNo": int(s["wave_no"]),
+        "waveTick": int(s["wave_tick"]),
+        "remainingSeconds": int(s["remaining_seconds"]),
+        "phase": str(s["phase"]),
+        "villageLevel": int(s["village_level"]),
+        "wallTier": int(s["wall_tier"]),
+        "wallHp": int(s["wall_hp"]),
+        "wallMax": int(s["wall_max"]),
+        "townhallHp": int(s["townhall_hp"]),
+        "townhallMax": int(s["townhall_max"]),
+        "wood": int(s["wood"]),
+        "stone": int(s["stone"]),
+        "food": int(s["food"]),
+        "builderCount": int(cnts["builder"]),
+        "guardCount": int(cnts["guard"]),
+        "fighterCount": int(cnts["fighter"]),
+        "uniqueJoined": int(cnts["unique_joined"]),
+        "westHp": lanes.get("west", 0),
+        "centerHp": lanes.get("center", 0),
+        "eastHp": lanes.get("east", 0),
+        "bossIncoming": bool(boss.get("boss_incoming", False)),
+        "bossExists": bool(boss.get("boss_exists", False)),
+        "bossHp": int(boss.get("boss_hp", 0)),
+        "bossMaxHp": int(boss.get("boss_max_hp", 0)),
+        "voteOpen": bool(vote.get("open", False)),
+        "voteSelected": str(vote.get("selected") or ""),
+        "voteA": int(vc.get("A", 0)),
+        "voteB": int(vc.get("B", 0)),
+        "voteC": int(vc.get("C", 0)),
+        "waveResult": str(settle.get("wave_result") or ""),
+        "isPostLossRecovery": bool(settle.get("is_post_loss_recovery", False)),
+        "pendingNextWaveCount": int(settle.get("pending_next_wave_count", 0)),
+        "militiaActive": bool(assist.get("militia_active", False)),
+        "militiaAttackBonus": int(assist.get("militia_attack_bonus", 0)),
+        "connectionState": str(diag.get("connection_state", "live")),
+        "metricsAvailable": bool(diag.get("metrics_available", True)),
+        "queueFillPct": int(diag.get("queue_fill_pct", 0)),
+        "retryableRejectedCount": int(diag.get("retryable_rejected_count", 0)),
+        "confirmedValidDrops": int(diag.get("confirmed_valid_drops", 0)),
+        "showJoinToast": toast is not None,
+        "joinToastAlias": str(toast.get("display_alias", "")) if toast else "",
+        "joinToastRole": str(toast.get("role", "")) if toast else "",
+        "outputPng1080p": str(out_1080p),
+        "outputPng720p": str(out_720p) if out_720p else "",
+        "outputPng360p": str(out_360p) if out_360p else "",
+    }
+
+
+def build_12_canonical_unity_states() -> tuple[List[Dict[str, Any]], Dict[str, Any]]:
+    FIXTURES_DIR.mkdir(parents=True, exist_ok=True)
+    wave10_doc = build_wave10_full_300s_fixture()
+    (FIXTURES_DIR / "full_wave_300s_wave10_showcase.json").write_text(
+        json.dumps(wave10_doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n"
+    )
+    failures = build_eight_failure_sequences()
+    for seq in failures:
+        (FIXTURES_DIR / seq["filename"]).write_text(
+            json.dumps(seq, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n"
+        )
+
+    beats = {b["beat_id"]: b for b in wave10_doc["beats"]}
+    fails = {f["sequence_id"]: f for f in failures}
+    defeat_state = wave10_doc["supplementary_states"]["defeat_wave10_breach"]
+
+    hud_dir = ART009_DIR / "previews" / "corrected_hud"
+    mob_dir = ART009_DIR / "previews" / "mobile"
+    hud_dir.mkdir(parents=True, exist_ok=True)
+    mob_dir.mkdir(parents=True, exist_ok=True)
+
+    state_specs = [
+        ("01_waiting", "WAITING_FOR_VIEWER", wave10_doc["beats"][0]["fixture"]),
+        ("02_prep", "PREP", beats["B02_PREP_CONSTRUCTION_20S"]["fixture"]),
+        ("03_vote_open", "VOTE_OPEN", beats["B05_EVEN_WAVE_VOTE_OPEN"]["fixture"]),
+        ("04_vote_b_locked", "PREP_60_WARN", beats["B07_VOTE_CLOSED"]["fixture"]),
+        ("05_assault", "ASSAULT", beats["B10_ASSAULT_START"]["fixture"]),
+        ("06_boss_incoming", "BOSS_INCOMING", beats["B15_BOSS_INCOMING_2450"]["fixture"]),
+        ("07_boss_active", "BOSS_ACTIVE", beats["B16_FINALE_BOSS_SPAWN_2600"]["fixture"]),
+        ("08_victory", "RESULTS_WIN", beats["B17_SETTLEMENT_VICTORY_2800"]["fixture"]),
+        ("09_defeat", "RESULTS_LOSS", defeat_state["fixture"]),
+        ("10_source_disconnected", "SOURCE_RECONNECTING", fails["failure_01_source_disconnect"]["fixture"]),
+        ("11_storage_unavailable", "STORAGE_UNAVAILABLE", fails["failure_04_storage_unavailable"]["fixture"]),
+        ("12_wave_rollover", "PREP_WAVE_11", beats["B19_ROLLOVER_WAVE11_3000"]["fixture"]),
+    ]
+
+    states_out: List[Dict[str, Any]] = []
+    for sid, vis_id, fix in state_specs:
+        states_out.append(
+            fixture_to_committed_view(
+                sid,
+                vis_id,
+                fix,
+                out_1080p=hud_dir / f"{sid}_1080p.png",
+                out_720p=mob_dir / f"{sid}_720p.png",
+                out_360p=mob_dir / f"{sid}_360p.png",
+            )
+        )
+
+    en_vote_state = fixture_to_committed_view(
+        "04b_vote_b_locked_en",
+        "PREP_60_WARN_EN",
+        beats["B07_VOTE_CLOSED"]["fixture"],
+        out_1080p=hud_dir / "04b_vote_b_locked_en_1080p.png",
+    )
+    return states_out, en_vote_state
+
+
+def to_repo_posix(path_str: str) -> str:
+    if not path_str:
+        return ""
+    return Path(path_str).resolve().relative_to(REPO_ROOT).as_posix()
 
 
 def run_isolated_unity_showcase() -> Dict[str, Any]:
@@ -46,6 +197,11 @@ def run_isolated_unity_showcase() -> Dict[str, Any]:
 
     ISOLATED_OUT_DIR.mkdir(parents=True, exist_ok=True)
     QA_OUT_DIR.mkdir(parents=True, exist_ok=True)
+    (ART009_DIR / "qa").mkdir(parents=True, exist_ok=True)
+
+    # Remove mislabeled legacy d3d11 filenames so only accurate d3d12 outputs remain
+    for old_png in ISOLATED_OUT_DIR.glob("unity_d3d11_*.png"):
+        old_png.unlink()
 
     unified = json.loads((ART008_DIR / "unified_asset_manifest.json").read_text(encoding="utf-8"))
     ui_comp = json.loads((ART006_DIR / "ui_component_manifest.json").read_text(encoding="utf-8"))
@@ -60,15 +216,17 @@ def run_isolated_unity_showcase() -> Dict[str, Any]:
     }
     verify_csharp_sprite_stems(valid_stems)
 
+    states_12, en_vote_state = build_12_canonical_unity_states()
+
     out_verif = QA_OUT_DIR / "unity_isolated_verification.json"
     out_perf = QA_OUT_DIR / "performance_report.json"
     out_scene_sum = ISOLATED_OUT_DIR / "scene_hierarchy_manifest.json"
-    out_png_assault = ISOLATED_OUT_DIR / "unity_d3d11_assault_7classes_1080p.png"
-    out_png_boss = ISOLATED_OUT_DIR / "unity_d3d11_boss_slam_finale_1080p.png"
-    out_png_reconn = ISOLATED_OUT_DIR / "unity_d3d11_reconnect_inplace_hud_1080p.png"
+    out_png_assault = ISOLATED_OUT_DIR / "unity_d3d12_assault_7classes_1080p.png"
+    out_png_boss = ISOLATED_OUT_DIR / "unity_d3d12_boss_slam_finale_1080p.png"
+    out_png_reconn = ISOLATED_OUT_DIR / "unity_d3d12_reconnect_inplace_hud_1080p.png"
     log_copy = ISOLATED_OUT_DIR / "unity_batchmode_execution_excerpt.log"
 
-    with tempfile.TemporaryDirectory(prefix="ttg_art008_u6_", ignore_cleanup_errors=True) as tmp_str:
+    with tempfile.TemporaryDirectory(prefix="ttg_art009_u6_", ignore_cleanup_errors=True) as tmp_str:
         proj_dir = Path(tmp_str) / "ART008_Isolated_Unity6"
         (proj_dir / "Packages").mkdir(parents=True, exist_ok=True)
         (proj_dir / "ProjectSettings").mkdir(parents=True, exist_ok=True)
@@ -81,7 +239,6 @@ def run_isolated_unity_showcase() -> Dict[str, Any]:
             proj_dir / "ProjectSettings" / "ProjectVersion.txt",
         )
 
-        # Stage C# runtime scripts and Editor verifier
         rt_dir = proj_dir / "Assets" / "_TTGQLDL_Showcase" / "Runtime"
         ed_dir = proj_dir / "Assets" / "Editor"
         rt_dir.mkdir(parents=True, exist_ok=True)
@@ -91,7 +248,6 @@ def run_isolated_unity_showcase() -> Dict[str, Any]:
             shutil.copy2(SCENE_SRC_DIR / cs_name, rt_dir / cs_name)
         shutil.copy2(SCENE_SRC_DIR / "ART008UnityShowcaseVerifier.cs", ed_dir / "ART008UnityShowcaseVerifier.cs")
 
-        # Stage all 229 PNG sprites & 15 WAV masters into isolated Assets tree
         sprite_rules: List[Dict[str, Any]] = []
         for entry in unified["assets"]:
             src_rel = entry["asset_path"]
@@ -129,6 +285,8 @@ def run_isolated_unity_showcase() -> Dict[str, Any]:
 
         cfg_payload = {
             "spriteRules": sprite_rules,
+            "verificationStates": states_12,
+            "englishVoteProofState": en_vote_state,
             "outputVerificationJson": str(out_verif),
             "outputPerformanceJson": str(out_perf),
             "outputSceneSummaryJson": str(out_scene_sum),
@@ -143,7 +301,7 @@ def run_isolated_unity_showcase() -> Dict[str, Any]:
         env = os.environ.copy()
         env["ART008_UNITY_CONFIG_JSON"] = str(cfg_file)
 
-        # IMPORTANT: Do NOT pass -nographics so Direct3D11 initializes and renders genuine 1080x1920 GPU frames!
+        # IMPORTANT: Do NOT pass -nographics so hardware GPU initializes and renders genuine 1080p/720p/360p frames!
         cmd = [
             str(UNITY_EXE),
             "-batchmode",
@@ -155,7 +313,7 @@ def run_isolated_unity_showcase() -> Dict[str, Any]:
             "-logFile",
             str(unity_log),
         ]
-        print(f"[ART-008] Launching isolated Unity 6000.6.7f1 Direct3D11 showcase ({len(sprite_rules)} sprites + 15 WAVs)...")
+        print(f"[ART-008/009] Launching isolated Unity 6000.6.7f1 hardware GPU showcase ({len(sprite_rules)} sprites, 15 WAVs, 12x3 HUD renders)...")
         proc = subprocess.run(cmd, env=env, capture_output=True, text=True)
 
         if unity_log.exists():
@@ -166,13 +324,12 @@ def run_isolated_unity_showcase() -> Dict[str, Any]:
                     clean_ln = ln.replace(tmp_str, "<TEMP>").replace(tmp_str.replace("\\", "/"), "<TEMP>")
                     clean_ln = re.sub(r"[A-Za-z]:[\\/][Uu]sers[\\/][^\\/\s]+", "<USER_HOME>", clean_ln)
                     excerpt.append(clean_ln)
-            log_copy.write_text("\n".join(excerpt[:220]) + "\n", encoding="utf-8")
+            log_copy.write_text("\n".join(excerpt[:220]) + "\n", encoding="utf-8", newline="\n")
 
         if proc.returncode != 0:
             tail = "\n".join(lines[-80:]) if unity_log.exists() else proc.stderr
             raise RuntimeError(f"Unity exited with code {proc.returncode}:\n{tail}")
 
-        # Copy generated .unity scene YAML & BroadcastAudioDispatcher.prefab for handoff inspection
         gen_scene = proj_dir / "Assets" / "_TTGQLDL_Showcase" / "Scenes" / "BastionDawn_ART008_VerticalSlice.unity"
         gen_prefab = proj_dir / "Assets" / "_TTGQLDL_Showcase" / "Prefabs" / "BroadcastAudioDispatcher.prefab"
         if gen_scene.exists():
@@ -180,22 +337,32 @@ def run_isolated_unity_showcase() -> Dict[str, Any]:
         if gen_prefab.exists():
             shutil.copy2(gen_prefab, ISOLATED_OUT_DIR / "BroadcastAudioDispatcher.prefab")
 
-    # Normalize renderedGpuFrames paths to repo-relative POSIX strings so committed JSON contains zero temp/host-user paths
+    # Normalize all output paths to repo-relative POSIX strings (zero host-user path leaks)
     verif_doc = json.loads(out_verif.read_text(encoding="utf-8"))
-    verif_doc["renderedGpuFrames"] = [
-        Path(p).resolve().relative_to(REPO_ROOT).as_posix()
-        for p in verif_doc.get("renderedGpuFrames", [])
-    ]
-    out_verif.write_text(json.dumps(verif_doc, indent=2) + "\n", encoding="utf-8")
+    verif_doc["renderedGpuFrames"] = [to_repo_posix(p) for p in verif_doc.get("renderedGpuFrames", [])]
+    for st in verif_doc.get("hud_verification_states", []):
+        st["render_1080p"] = to_repo_posix(st.get("render_1080p", ""))
+        st["render_720p"] = to_repo_posix(st.get("render_720p", ""))
+        st["render_360p"] = to_repo_posix(st.get("render_360p", ""))
+    if isinstance(verif_doc.get("english_vote_b_proof"), dict) and verif_doc["english_vote_b_proof"].get("state_id"):
+        ep = verif_doc["english_vote_b_proof"]
+        ep["render_1080p"] = to_repo_posix(ep.get("render_1080p", ""))
+        ep["render_720p"] = to_repo_posix(ep.get("render_720p", ""))
+        ep["render_360p"] = to_repo_posix(ep.get("render_360p", ""))
+
+    out_verif.write_text(json.dumps(verif_doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+    (ART009_DIR / "qa" / "unity_isolated_verification.json").write_text(
+        json.dumps(verif_doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n"
+    )
 
     perf_doc = json.loads(out_perf.read_text(encoding="utf-8"))
-    out_perf.write_text(json.dumps(perf_doc, indent=2) + "\n", encoding="utf-8")
+    out_perf.write_text(json.dumps(perf_doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
 
     print(
         f"[UNITY SHOWCASE {verif_doc['status']}] "
         f"GPU={verif_doc['graphicsDeviceName']} ({verif_doc['graphicsDeviceType']}) | "
         f"Sprites={verif_doc['importedSpriteCount']} | Clips={verif_doc['importedAudioClipCount']} | "
-        f"Classes={len(verif_doc['classMeasurements'])} | LoadTiers={len(perf_doc['loadTiers'])}"
+        f"HUD12={len(verif_doc['hud_verification_states'])} | Renders={len(verif_doc['renderedGpuFrames'])}"
     )
     return {"verification": verif_doc, "performance": perf_doc}
 
