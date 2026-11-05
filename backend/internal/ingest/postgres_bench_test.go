@@ -143,6 +143,9 @@ func BenchmarkBatcher256(b *testing.B) {
 }
 
 func TestDurableBatchLatencyPercentiles(t *testing.T) {
+	if os.Getenv("TTG_TEST_LATENCY") != "1" {
+		t.Skip("latency soak runs only when TTG_TEST_LATENCY=1")
+	}
 	pool := testPool(t)
 	session := createSession(t, pool, "mock", "running", 1, 240, 0)
 	appender := newTestAppender(t, pool)

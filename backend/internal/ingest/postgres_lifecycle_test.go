@@ -8,11 +8,8 @@ import (
 	"strings"
 	"sync"
 	"testing"
-	"time"
 
 	"github.com/jackc/pgx/v5/pgconn"
-
-	"github.com/hung98dev/ttgqldl/backend/internal/storage"
 )
 
 func TestDurableConcurrentDuplicate(t *testing.T) {
@@ -307,17 +304,14 @@ func TestDurableSequenceOverflow(t *testing.T) {
 }
 
 func TestDurableStorageUnavailable(t *testing.T) {
-	pool, err := storage.Open(context.Background(), storage.Options{
-		DSN: "postgres://app:pw@127.0.0.1:1/ttgqldl?sslmode=disable", ConnectTimeout: 300 * time.Millisecond,
-	})
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer pool.Close()
+	pool := testPool(t)
 	appender, err := NewPostgresAppender(pool)
 	if err != nil {
 		t.Fatal(err)
 	}
+	// Closing the pool makes Begin fail deterministically without relying on a
+	// network-blackholed port that could hang a shared CI runner.
+	pool.Close()
 	unavailableSession := testUUID(t)
 	_, err = appender.AppendSession(context.Background(), unavailableSession, []DurableCandidate{
 		candidateFor(unavailableSession, "unavailable", actorFor(15), mustAction(t, "XÂY")),
