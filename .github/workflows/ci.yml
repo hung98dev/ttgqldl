@@ -150,6 +150,15 @@ jobs:
             done
             exit "${status}"
           fi
+          # W0307 population/source/identity race coverage with the real database.
+          go test -race -count=1 -timeout 600s ./internal/source/... ./internal/identity/... ./internal/ingest/... 2>&1 | tee /tmp/w0307-race.log
+          status=${PIPESTATUS[0]}
+          if [ "${status}" -ne 0 ]; then
+            grep -E '^--- FAIL|^=== RUN|panic:|test timed out|DATA RACE' /tmp/w0307-race.log | tail -n 8 | while IFS= read -r line; do
+              echo "::error::${line}"
+            done
+            exit "${status}"
+          fi
 
       - name: migration lifecycle on a disposable database
         run: |
