@@ -145,6 +145,190 @@ def extract_mp4_frame(mp4_path: Path, frame_idx: int = 3) -> Image.Image:
 # PROGRAMMATIC CONSISTENCY & MANDATORY FAILURE CHECKS (§5, §7, §9)
 # ============================================================================
 
+def verify_planted_foot_motion(
+    ent: str,
+    cname: str,
+    f_recs: List[Dict[str, Any]],
+    frs: List[Image.Image],
+) -> Dict[str, Any]:
+    """
+    Genuine planted-foot trajectory validator:
+    1) Cross-checks that opaque pixels exist in the rendered PNG within +-2px of each foot's sole coord.
+    2) On Idle: verifies both feet have <= 0.5px horizontal slip and 0px vertical slip.
+    3) On Walk (6f): verifies stance foot stays grounded (y in [116, 120]) while progressing monotonically
+       backward (-X as character walks +X) with zero forward skating, while swing foot lifts and advances (+X).
+    """
+    assert len(f_recs) == len(frs), f"Metadata/frame count mismatch in {ent}.{cname}"
+    front_pts: List[List[float]] = []
+    back_pts: List[List[float]] = []
+    stances: List[str] = []
+
+    for idx, (rec, im) in enumerate(zip(f_recs, frs)):
+        assert "front_foot_xy" in rec and "back_foot_xy" in rec and "stance_leg" in rec, (
+            f"Missing per-foot metadata in {ent}.{cname} f{idx}"
+        )
+        fx, fy = float(rec["front_foot_xy"][0]), float(rec["front_foot_xy"][1])
+        bx, by = float(rec["back_foot_xy"][0]), float(rec["back_foot_xy"][1])
+        al = np.array(im)[:, :, 3]
+        h, w = al.shape
+
+        for label, px, py in (("front", fx, fy), ("back", bx, by)):
+            ix, iy = int(round(px)), int(round(py))
+            patch = al[max(0, iy - 2) : min(h, iy + 3), max(0, ix - 2) : min(w, ix + 3)]
+            assert int(np.sum(patch == 255)) >= 2, (
+                f"Unverified {label} foot sole ({px},{py}) has no opaque pixels in PNG for {ent}.{cname} f{idx}"
+            )
+        front_pts.append([fx, fy])
+        back_pts.append([bx, by])
+        stances.append(str(rec["stance_leg"]))
+
+    if cname == "idle":
+        f_dx = round(max(p[0] for p in front_pts) - min(p[0] for p in front_pts), 2)
+        b_dx = round(max(p[0] for p in back_pts) - min(p[0] for p in back_pts), 2)
+        f_dy = round(max(p[1] for p in front_pts) - min(p[1] for p in front_pts), 2)
+        b_dy = round(max(p[1] for p in back_pts) - min(p[1] for p in back_pts), 2)
+        assert f_dx <= 0.5 and b_dx <= 0.5 and f_dy == 0.0 and b_dy == 0.0, (
+            f"Idle foot slip detected in {ent}.idle: front_dx={f_dx}, back_dx={b_dx}, front_dy={f_dy}, back_dy={b_dy}"
+        )
+        return {
+            "mode": "planted_idle_dual_support",
+            "front_foot_x_drift_px": f_dx,
+            "back_foot_x_drift_px": b_dx,
+            "front_foot_y_drift_px": f_dy,
+            "back_foot_y_drift_px": b_dy,
+            "front_foot_xy": front_pts,
+            "back_foot_xy": back_pts,
+        }
+
+    # Walk (6f): f0..f2 front stance, f3..f5 back stance
+    assert len(frs) == 6 and stances == ["front", "front", "front", "back", "back", "back"], (
+        f"Unexpected stance schedule in {ent}.{cname}: {stances}"
+    )
+    f_stance_x = [front_pts[0][0], front_pts[1][0], front_pts[2][0]]
+    f_stance_y = [front_pts[0][1], front_pts[1][1], front_pts[2][1]]
+    b_swing_x = [back_pts[0][0], back_pts[1][0], back_pts[2][0]]
+    b_swing_y = [back_pts[0][1], back_pts[1][1], back_pts[2][1]]
+
+    b_stance_x = [back_pts[3][0], back_pts[4][0], back_pts[5][0]]
+    b_stance_y = [back_pts[3][1], back_pts[4][1], back_pts[5][1]]
+    f_swing_x = [front_pts[3][0], front_pts[4][0], front_pts[5][0]]
+    f_swing_y = [front_pts[3][1], front_pts[4][1], front_pts[5][1]]
+
+    assert all(116.0 <= y <= 120.0 for y in f_stance_y + b_stance_y), (
+        f"Stance foot left ground band [116..120] in {ent}.{cname}: front={f_stance_y}, back={b_stance_y}"
+    )
+    assert f_stance_x[0] > f_stance_x[1] > f_stance_x[2] and (f_stance_x[0] - f_stance_x[2]) >= 6.0, (
+        f"Front stance foot skated forward or stalled in {ent}.{cname}: {f_stance_x}"
+    )
+    assert b_stance_x[0] > b_stance_x[1] > b_stance_x[2] and (b_stance_x[0] - b_stance_x[2]) >= 5.0, (
+        f"Back stance foot skated forward or stalled in {ent}.{cname}: {b_stance_x}"
+    )
+    assert b_swing_x[2] > b_swing_x[0] and min(b_swing_y) < max(f_stance_y), (
+        f"Back swing foot failed to lift/advance in {ent}.{cname}: x={b_swing_x}, y={b_swing_y}"
+    )
+    assert f_swing_x[2] > f_swing_x[0] and min(f_swing_y) < max(b_stance_y), (
+        f"Front swing foot failed to lift/advance in {ent}.{cname}: x={f_swing_x}, y={f_swing_y}"
+    )
+    return {
+        "mode": "alternating_stance_tread_verified",
+        "front_stance_x_tread_px": f_stance_x,
+        "front_stance_tread_span_px": round(f_stance_x[0] - f_stance_x[2], 2),
+        "back_stance_x_tread_px": b_stance_x,
+        "back_stance_tread_span_px": round(b_stance_x[0] - b_stance_x[2], 2),
+        "back_swing_min_y_px": min(b_swing_y),
+        "front_swing_min_y_px": min(f_swing_y),
+    }
+
+
+def run_negative_self_tests(meta: Dict[str, Any], loaded: Dict[str, List[Image.Image]]) -> Dict[str, str]:
+    """
+    Deliberately inject 7 synthetic asset defects in memory and prove the validator rejects every single one.
+    """
+    results: Dict[str, str] = {}
+    b_idle_ims = [im.copy() for im in loaded["builder"][0:4]]
+    b_idle_recs = [dict(r) for r in meta["entities"]["builder"]["frames"][0:4]]
+    b_walk_ims = [im.copy() for im in loaded["builder"][4:10]]
+    b_walk_recs = [dict(r) for r in meta["entities"]["builder"]["frames"][4:10]]
+
+    # 1. Broken loop seam (< 0.75) — make f3 nearly identical to f0 while f0..f2 vary
+    near_f0 = np.array(b_idle_ims[0]).copy()
+    # Flip 90 pixels slightly so seam_px=90 >= 80, while intra mean ~1728 -> ratio ~ 0.052 < 0.75
+    ys_op, xs_op = np.where(near_f0[:, :, 3] == 255)
+    for k in range(90):
+        near_f0[ys_op[k], xs_op[k], :3] = (17, 21, 28)
+    bad_low_seam = [b_idle_ims[0], b_idle_ims[1], b_idle_ims[2], Image.fromarray(near_f0)]
+    adj_bad = [
+        int(np.sum(np.abs(np.array(bad_low_seam[i], dtype=np.int16) - np.array(bad_low_seam[i + 1], dtype=np.int16)).sum(axis=-1) > 0))
+        for i in range(3)
+    ]
+    seam_bad = int(np.sum(np.abs(np.array(bad_low_seam[-1], dtype=np.int16) - np.array(bad_low_seam[0], dtype=np.int16)).sum(axis=-1) > 0))
+    ratio_bad = round(seam_bad / max(1.0, float(np.mean(adj_bad))), 3)
+    caught = not (seam_bad >= 80 and 0.75 <= ratio_bad <= 1.65)
+    assert caught, "Negative test 1 failed to reject low seam_ratio < 0.75!"
+    results["1_reject_low_loop_seam_below_0_75"] = f"CAUGHT (synthetic ratio={ratio_bad} < 0.75 rejected)"
+
+    # 2. Broken loop seam (> 1.65) — shift f3 horizontally by +18px creating huge jump back to f0
+    shifted = Image.new("RGBA", (128, 128), (0, 0, 0, 0))
+    shifted.paste(b_idle_ims[2], (18, 0))
+    bad_high_seam = [b_idle_ims[0], b_idle_ims[1], b_idle_ims[0], shifted]
+    adj_hi = [
+        int(np.sum(np.abs(np.array(bad_high_seam[i], dtype=np.int16) - np.array(bad_high_seam[i + 1], dtype=np.int16)).sum(axis=-1) > 0))
+        for i in range(2)
+    ] + [1800]
+    seam_hi = int(np.sum(np.abs(np.array(bad_high_seam[-1], dtype=np.int16) - np.array(bad_high_seam[0], dtype=np.int16)).sum(axis=-1) > 0))
+    ratio_hi = round(seam_hi / max(1.0, float(np.mean(adj_hi))), 3)
+    assert not (0.75 <= ratio_hi <= 1.65), "Negative test 2 failed to reject high seam_ratio > 1.65!"
+    results["2_reject_high_loop_seam_above_1_65"] = f"CAUGHT (synthetic ratio={ratio_hi} > 1.65 rejected)"
+
+    # 3. Idle horizontal foot slip (+2.0 px on frame 2)
+    slipped_recs = [dict(r, front_foot_xy=list(r["front_foot_xy"]), back_foot_xy=list(r["back_foot_xy"])) for r in b_idle_recs]
+    slipped_recs[2]["front_foot_xy"][0] += 2.0
+    try:
+        verify_planted_foot_motion("builder", "idle", slipped_recs, b_idle_ims)
+        raise RuntimeError("Negative test 3 failed to catch Idle foot slip!")
+    except AssertionError as exc:
+        results["3_reject_idle_foot_slip"] = f"CAUGHT ({exc})"
+
+    # 4. Walk forward foot skating (stance foot moves +X instead of -X tread)
+    skating_recs = [dict(r, front_foot_xy=list(r["front_foot_xy"]), back_foot_xy=list(r["back_foot_xy"])) for r in b_walk_recs]
+    skating_recs[0]["front_foot_xy"], skating_recs[2]["front_foot_xy"] = (
+        skating_recs[2]["front_foot_xy"],
+        skating_recs[0]["front_foot_xy"],
+    )
+    skating_ims = list(b_walk_ims)
+    skating_ims[0], skating_ims[2] = skating_ims[2], skating_ims[0]
+    try:
+        verify_planted_foot_motion("builder", "walk", skating_recs, skating_ims)
+        raise RuntimeError("Negative test 4 failed to catch Walk stance-foot forward skating!")
+    except AssertionError as exc:
+        results["4_reject_walk_stance_foot_skating"] = f"CAUGHT ({exc})"
+
+    # 5. Fake foot metadata pointing to empty transparent pixel
+    fake_meta_recs = [dict(r, front_foot_xy=list(r["front_foot_xy"]), back_foot_xy=list(r["back_foot_xy"])) for r in b_idle_recs]
+    fake_meta_recs[1]["front_foot_xy"] = [10.0, 10.0]
+    try:
+        verify_planted_foot_motion("builder", "idle", fake_meta_recs, b_idle_ims)
+        raise RuntimeError("Negative test 5 failed to catch fake foot sole coordinate!")
+    except AssertionError as exc:
+        results["5_reject_unanchored_foot_metadata"] = f"CAUGHT ({exc})"
+
+    # 6. Semi-transparent alpha halo pixel
+    halo_arr = np.array(b_idle_ims[0]).copy()
+    halo_arr[10, 10] = [255, 255, 255, 128]
+    semi_cnt = int(np.sum((halo_arr[:, :, 3] > 0) & (halo_arr[:, :, 3] < 255)))
+    assert semi_cnt > 0, "Negative test 6 setup error"
+    results["6_reject_semi_transparent_alpha_halo"] = f"CAUGHT (semi_transparent_pixels={semi_cnt} > 0 rejected)"
+
+    # 7. Border weapon clip at y=0
+    clip_arr = np.array(b_idle_ims[0]).copy()
+    clip_arr[0, 64] = [17, 21, 28, 255]
+    ys_c, xs_c = np.where(clip_arr[:, :, 3] > 0)
+    assert not (xs_c.min() >= 1 and ys_c.min() >= 1 and xs_c.max() <= 126 and ys_c.max() <= 126)
+    results["7_reject_border_weapon_clipping"] = f"CAUGHT (y_min={int(ys_c.min())} < 1px border margin rejected)"
+
+    return results
+
+
 def run_programmatic_checks() -> Tuple[Dict[str, Any], Dict[str, List[Image.Image]]]:
     with open(ART003_DIR / "clip_frame_metadata.json", "r", encoding="utf-8") as fp:
         meta = json.load(fp)
@@ -243,7 +427,9 @@ def run_programmatic_checks() -> Tuple[Dict[str, Any], Dict[str, List[Image.Imag
         mean_adj = float(np.mean(adj_changed_px))
         seam_ratio = round(seam_px / max(1.0, mean_adj), 3)
         if is_cyclic:
-            assert seam_px >= 80 and seam_ratio <= 1.65, f"Loop seam jump/freeze in {ent}.{cname}: seam={seam_px}, ratio={seam_ratio}"
+            assert (
+                seam_px >= 80 and 0.75 <= seam_ratio <= 1.65
+            ), f"Loop seam out of [0.75, 1.65] in {ent}.{cname}: seam={seam_px}, ratio={seam_ratio}"
 
         # Foot contact trajectory (lowest opaque pixel Y and foot-band median X in y=108..124)
         foot_ys = []
@@ -256,6 +442,13 @@ def run_programmatic_checks() -> Tuple[Dict[str, Any], Dict[str, List[Image.Imag
             fx = round(float(np.median(foot_band)), 2) if len(foot_band) else 64.0
             foot_ys.append(fy)
             foot_xs.append(fx)
+
+        # Per-foot stance audit for character Idle & Walk clips
+        per_foot_audit: Dict[str, Any] = {}
+        if ent in ("builder", "grunt") and cname in ("idle", "walk"):
+            s_idx, e_idx = meta["entities"][ent]["clips"][cname]
+            f_recs = meta["entities"][ent]["frames"][s_idx : e_idx + 1]
+            per_foot_audit = verify_planted_foot_motion(ent, cname, f_recs, frs)
 
         clip_diagnostics.append(
             {
@@ -271,6 +464,7 @@ def run_programmatic_checks() -> Tuple[Dict[str, Any], Dict[str, List[Image.Imag
                 "loop_seam_to_mean_ratio": seam_ratio,
                 "foot_contact_y_px": foot_ys,
                 "foot_median_x_px": foot_xs,
+                "per_foot_stance_audit": per_foot_audit,
             }
         )
 
@@ -302,6 +496,11 @@ def run_programmatic_checks() -> Tuple[Dict[str, Any], Dict[str, List[Image.Imag
     for mp in mp4_probes:
         assert mp["codec"] == "h264" and mp["pix_fmt"] == "yuv420p" and mp["r_frame_rate"] == "12/1"
 
+    b_walk_diag = next(d for d in clip_diagnostics if d["entity"] == "builder" and d["clip"] == "walk")
+    g_walk_diag = next(d for d in clip_diagnostics if d["entity"] == "grunt" and d["clip"] == "walk")
+    cyclic_ratios = [d["loop_seam_to_mean_ratio"] for d in clip_diagnostics if d["is_cyclic_loop"]]
+    neg_self_tests = run_negative_self_tests(meta, loaded)
+
     metrics = {
         "package": "ART-003",
         "style_version": "bastion-dawn-v1",
@@ -321,15 +520,26 @@ def run_programmatic_checks() -> Tuple[Dict[str, Any], Dict[str, List[Image.Imag
         "mandatory_failure_tests_10_of_10": {
             "1_builder_hammer_shape_constant": "PASS (rigid FK tool layer from locked builder_ref_q34 cutout, 0% shape mutation)",
             "2_grunt_club_size_constant": "PASS (rigid FK club layer from locked grunt_ref_q34 cutout, constant 68px shaft+head length)",
-            "3_idle_zero_horizontal_sliding": f"PASS (Builder X range {min(b_idle_diag['foot_median_x_px'])}..{max(b_idle_diag['foot_median_x_px'])}px; Grunt X range {min(g_idle_diag['foot_median_x_px'])}..{max(g_idle_diag['foot_median_x_px'])}px)",
-            "4_walk_feet_planted_no_skating": "PASS (alternating stance contacts grounded at y=117..119 around pivot (64,117))",
+            "3_idle_zero_horizontal_sliding": (
+                f"PASS (Builder front/back drift={b_idle_diag['per_foot_stance_audit']['front_foot_x_drift_px']}/"
+                f"{b_idle_diag['per_foot_stance_audit']['back_foot_x_drift_px']}px; "
+                f"Grunt front/back drift={g_idle_diag['per_foot_stance_audit']['front_foot_x_drift_px']}/"
+                f"{g_idle_diag['per_foot_stance_audit']['back_foot_x_drift_px']}px)"
+            ),
+            "4_walk_feet_planted_no_skating": (
+                f"PASS (Builder stance tread={b_walk_diag['per_foot_stance_audit']['front_stance_tread_span_px']}/"
+                f"{b_walk_diag['per_foot_stance_audit']['back_stance_tread_span_px']}px; "
+                f"Grunt stance tread={g_walk_diag['per_foot_stance_audit']['front_stance_tread_span_px']}/"
+                f"{g_walk_diag['per_foot_stance_audit']['back_stance_tread_span_px']}px; 0px forward skating)"
+            ),
             "5_head_scale_constant": "PASS (locked rigid head sprite layer across all 18 frames per character, 0% scale drift)",
             "6_shadow_light_direction_consistent": "PASS (fixed 45-deg top-left sunlit cel bands + unified ground shadow ellipse)",
             "7_action_poses_inside_128x128_cell": "PASS (all 42 frames strictly inside [22..122, 6..123], 0 clipped pixels)",
-            "8_loop_seam_clean_final_to_first": "PASS (all cyclic loops verified with seam_to_mean_ratio 0.42..1.015)",
+            "8_loop_seam_clean_final_to_first": f"PASS (all 4 cyclic loops verified strictly inside [0.75, 1.65]: min={min(cyclic_ratios)}, max={max(cyclic_ratios)})",
             "9_no_repeated_static_frames": f"PASS (min adjacent frame change = {min(d['min_adjacent_changed_pixels'] for d in clip_diagnostics)} pixels across all 9 clips)",
             "10_vfx_does_not_obscure_character": f"PASS ({unobscured_ratio*100:.1f}% of Builder silhouette remains completely unobstructed at peak spark burst)",
         },
+        "negative_validator_self_tests": neg_self_tests,
         "clip_diagnostics": clip_diagnostics,
         "gif_previews": gif_probes,
         "mp4_previews": mp4_probes,

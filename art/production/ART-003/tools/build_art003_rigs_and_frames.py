@@ -671,9 +671,22 @@ def finalize_cel_frame_128(
     return Image.fromarray(out, mode="RGBA")
 
 
+def measure_leg_sole_128(leg_layer_512: Image.Image) -> List[float]:
+    """Measure [median_x, bottom_y] of an individual leg's sole in 128x128 cell space."""
+    a512 = np.array(leg_layer_512, dtype=np.float32)[:, :, 3] / 255.0
+    a128 = a512.reshape(128, 4, 128, 4).mean(axis=(1, 3)) >= 0.48
+    ys, xs = np.where(a128)
+    if len(ys) == 0:
+        return [64.0, 117.0]
+    y_max = int(ys.max())
+    sole_xs = xs[ys >= max(0, y_max - 2)]
+    return [round(float(np.median(sole_xs)), 2), float(y_max)]
+
+
 def render_builder_pose(
     rig: Dict[str, Tuple[Image.Image, Tuple[float, float]]],
     pose: Dict[str, float],
+    foot_out: Dict[str, List[float]] | None = None,
 ) -> Image.Image:
     S = 0.775
     ground_y = 470.0
@@ -715,11 +728,17 @@ def render_builder_pose(
     wrist_pos = (elbow_pos[0] + wx, elbow_pos[1] + wy)
     ham_ang = farm_ang + pose.get("wrist_ang", 0.0)
 
+    bleg_lyr = transform_layer(rig["back_leg"][0], rig["back_leg"][1], bleg_pos, pose.get("bleg_ang", 0.0), (S, S))
+    fleg_lyr = transform_layer(rig["front_leg"][0], rig["front_leg"][1], fleg_pos, pose.get("fleg_ang", 0.0), (S, S))
+    if foot_out is not None:
+        foot_out["front_foot_xy"] = measure_leg_sole_128(fleg_lyr)
+        foot_out["back_foot_xy"] = measure_leg_sole_128(bleg_lyr)
+
     canvas = Image.new("RGBA", (512, 512), (0, 0, 0, 0))
     layers_ordered = [
         transform_layer(rig["back_arm"][0], rig["back_arm"][1], barm_pos, torso_ang + pose.get("barm_ang", 0.0), (S, S)),
-        transform_layer(rig["back_leg"][0], rig["back_leg"][1], bleg_pos, pose.get("bleg_ang", 0.0), (S, S)),
-        transform_layer(rig["front_leg"][0], rig["front_leg"][1], fleg_pos, pose.get("fleg_ang", 0.0), (S, S)),
+        bleg_lyr,
+        fleg_lyr,
         transform_layer(rig["torso"][0], rig["torso"][1], (waist_x, waist_y), torso_ang, (torso_sx, torso_sy)),
         transform_layer(rig["head"][0], rig["head"][1], head_pos, torso_ang * 0.55 + pose.get("head_ang", 0.0), (S, S)),
     ]
@@ -753,6 +772,7 @@ def render_builder_pose(
 def render_grunt_pose(
     rig: Dict[str, Tuple[Image.Image, Tuple[float, float]]],
     pose: Dict[str, float],
+    foot_out: Dict[str, List[float]] | None = None,
 ) -> Image.Image:
     S = 0.905
     ground_y = 470.0
@@ -794,11 +814,17 @@ def render_grunt_pose(
     wrist_pos = (elbow_pos[0] + wx, elbow_pos[1] + wy)
     club_ang = farm_ang + pose.get("wrist_ang", 0.0)
 
+    bleg_lyr = transform_layer(rig["back_leg"][0], rig["back_leg"][1], bleg_pos, pose.get("bleg_ang", 0.0), (S, S))
+    fleg_lyr = transform_layer(rig["front_leg"][0], rig["front_leg"][1], fleg_pos, pose.get("fleg_ang", 0.0), (S, S))
+    if foot_out is not None:
+        foot_out["front_foot_xy"] = measure_leg_sole_128(fleg_lyr)
+        foot_out["back_foot_xy"] = measure_leg_sole_128(bleg_lyr)
+
     canvas = Image.new("RGBA", (512, 512), (0, 0, 0, 0))
     base_layers = [
         transform_layer(rig["back_arm"][0], rig["back_arm"][1], barm_pos, torso_ang + pose.get("barm_ang", 0.0), (S, S)),
-        transform_layer(rig["back_leg"][0], rig["back_leg"][1], bleg_pos, pose.get("bleg_ang", 0.0), (S, S)),
-        transform_layer(rig["front_leg"][0], rig["front_leg"][1], fleg_pos, pose.get("fleg_ang", 0.0), (S, S)),
+        bleg_lyr,
+        fleg_lyr,
         transform_layer(rig["torso"][0], rig["torso"][1], (waist_x, waist_y), torso_ang, (torso_sx, torso_sy)),
         transform_layer(rig["head"][0], rig["head"][1], head_pos, torso_ang * 0.55 + pose.get("head_ang", 0.0), (S, S)),
     ]
@@ -833,12 +859,12 @@ def render_grunt_pose(
 # ============================================================================
 
 BUILDER_CLIPS: Dict[str, List[Dict[str, float]]] = {
-    # IDLE (4f @ 12 FPS): Gentle craftsman breathing, planted boots (0.0px foot drift!), light mallet breathe
+    # IDLE (4f @ 12 FPS): Smooth single-cycle quadrature breathing (sin torso + cos arm/head overlap, uniform step velocity -> seam_ratio ~ 1.0, 0.0px foot drift!)
     "idle": [
-        {"pelvis_dy": 0.0,  "torso_sy": 1.000, "torso_sx": 1.000, "torso_ang": 0.0,  "head_dy": 0.0,  "uarm_ang": 0.0,  "farm_ang": 0.0,  "wrist_ang": 0.0,  "barm_ang": 0.0},
-        {"pelvis_dy": 0.8,  "torso_sy": 0.982, "torso_sx": 1.014, "torso_ang": 1.2,  "head_dy": 0.5,  "uarm_ang": -3.0, "farm_ang": -2.0, "wrist_ang": -2.5, "barm_ang": -2.5},
-        {"pelvis_dy": -0.6, "torso_sy": 1.022, "torso_sx": 0.990, "torso_ang": -1.0, "head_dy": -0.6, "uarm_ang": 3.5,  "farm_ang": 2.5,  "wrist_ang": 3.0,  "barm_ang": 3.0},
-        {"pelvis_dy": 0.3,  "torso_sy": 1.005, "torso_sx": 0.998, "torso_ang": 0.3,  "head_dy": 0.1,  "uarm_ang": 1.0,  "farm_ang": 0.8,  "wrist_ang": 1.0,  "barm_ang": 1.0},
+        {"pelvis_dy":  0.00, "torso_sy": 1.000, "torso_sx": 1.000, "torso_ang":  0.0, "head_dy": -0.55, "head_ang": -1.4, "uarm_ang":  3.4, "farm_ang":  2.4, "wrist_ang":  3.0, "barm_ang":  3.0},
+        {"pelvis_dy":  0.75, "torso_sy": 0.982, "torso_sx": 1.014, "torso_ang":  1.2, "head_dy":  0.00, "head_ang":  0.0, "uarm_ang":  0.0, "farm_ang":  0.0, "wrist_ang":  0.0, "barm_ang":  0.0},
+        {"pelvis_dy":  0.00, "torso_sy": 1.000, "torso_sx": 1.000, "torso_ang":  0.0, "head_dy":  0.55, "head_ang":  1.4, "uarm_ang": -3.4, "farm_ang": -2.4, "wrist_ang": -3.0, "barm_ang": -3.0},
+        {"pelvis_dy": -0.75, "torso_sy": 1.020, "torso_sx": 0.988, "torso_ang": -1.2, "head_dy":  0.00, "head_ang":  0.0, "uarm_ang":  0.0, "farm_ang":  0.0, "wrist_ang":  0.0, "barm_ang":  0.0},
     ],
     # WALK (6f @ 12 FPS): Natural stride with clean boot clearance (no stumpy over-tucked boot!)
     "walk": [
@@ -881,12 +907,12 @@ BUILDER_CLIPS: Dict[str, List[Dict[str, float]]] = {
 
 
 GRUNT_CLIPS: Dict[str, List[Dict[str, float]]] = {
-    # IDLE (4f @ 12 FPS): Heavy goblinoid belly-breathing, shoulder roll & light club sway, 0.0px foot drift
+    # IDLE (4f @ 12 FPS): Smooth single-cycle quadrature goblinoid breathing (sin torso + cos club/head overlap, uniform step velocity -> seam_ratio ~ 1.0, 0.0px foot drift!)
     "idle": [
-        {"pelvis_dy": 0.0,  "torso_sy": 1.000, "torso_sx": 1.000, "torso_ang": 0.0,  "head_dy": 0.0,  "uarm_ang": 0.0,  "farm_ang": 0.0,  "wrist_ang": 0.0,  "barm_ang": 0.0},
-        {"pelvis_dy": 1.1,  "torso_sy": 0.976, "torso_sx": 1.022, "torso_ang": 1.8,  "head_dy": 0.7,  "uarm_ang": -3.0, "farm_ang": 2.0,  "wrist_ang": 4.0,  "barm_ang": -3.5},
-        {"pelvis_dy": -0.7, "torso_sy": 1.024, "torso_sx": 0.986, "torso_ang": -1.4, "head_dy": -0.7, "uarm_ang": 3.5,  "farm_ang": -2.5, "wrist_ang": -4.5, "barm_ang": 4.0},
-        {"pelvis_dy": 0.4,  "torso_sy": 1.004, "torso_sx": 1.000, "torso_ang": 0.5,  "head_dy": 0.2,  "uarm_ang": 1.0,  "farm_ang": -0.8, "wrist_ang": -1.5, "barm_ang": 1.2},
+        {"pelvis_dy":  0.00, "torso_sy": 1.000, "torso_sx": 1.000, "torso_ang":  0.0, "head_dy": -0.65, "head_ang": -1.8, "uarm_ang":  4.6, "farm_ang": -2.6, "wrist_ang": -5.2, "barm_ang":  4.6},
+        {"pelvis_dy":  0.78, "torso_sy": 0.980, "torso_sx": 1.018, "torso_ang":  1.3, "head_dy":  0.00, "head_ang":  0.0, "uarm_ang":  0.0, "farm_ang":  0.0, "wrist_ang":  0.0, "barm_ang":  0.0},
+        {"pelvis_dy":  0.00, "torso_sy": 1.000, "torso_sx": 1.000, "torso_ang":  0.0, "head_dy":  0.65, "head_ang":  1.8, "uarm_ang": -4.6, "farm_ang":  2.6, "wrist_ang":  5.2, "barm_ang": -4.6},
+        {"pelvis_dy": -0.78, "torso_sy": 1.020, "torso_sx": 0.986, "torso_ang": -1.3, "head_dy":  0.00, "head_ang":  0.0, "uarm_ang":  0.0, "farm_ang":  0.0, "wrist_ang":  0.0, "barm_ang":  0.0},
     ],
     # WALK (6f @ 12 FPS): Heavy, slightly clumsy goblinoid stomp with grounded alternating foot contacts
     "walk": [
@@ -1169,13 +1195,15 @@ def main() -> None:
     sheet_idx = 0
     for clip_name in ["idle", "walk", "repair", "hit"]:
         for f_idx, pose in enumerate(BUILDER_CLIPS[clip_name]):
-            fr = render_builder_pose(builder_rig, pose)
+            foot_info: Dict[str, List[float]] = {}
+            fr = render_builder_pose(builder_rig, pose, foot_out=foot_info)
             fname = f"chr_role_builder_{clip_name}_f{f_idx:02d}.png"
             fr.save(builder_dir / "frames" / fname, optimize=False)
             builder_all.append(fr)
             r, c = divmod(sheet_idx, 6)
             stats = measure_frame_stats(fr)
             assert not stats["border_clipped"], f"Builder clipped border on {fname}: {stats['bbox']}"
+            stance_leg = "both" if clip_name != "walk" else ("front" if f_idx < 3 else "back")
             builder_records.append(
                 {
                     "sheet_index": sheet_idx,
@@ -1184,6 +1212,8 @@ def main() -> None:
                     "clip": clip_name,
                     "frame_index": f_idx,
                     "loop": clip_name in ("idle", "walk"),
+                    "stance_leg": stance_leg,
+                    **foot_info,
                     "file": f"art/production/ART-003/characters/builder/frames/{fname}",
                     **stats,
                 }
@@ -1197,13 +1227,15 @@ def main() -> None:
     sheet_idx = 0
     for clip_name in ["idle", "walk", "clubsmash", "hit"]:
         for f_idx, pose in enumerate(GRUNT_CLIPS[clip_name]):
-            fr = render_grunt_pose(grunt_rig, pose)
+            foot_info = {}
+            fr = render_grunt_pose(grunt_rig, pose, foot_out=foot_info)
             fname = f"chr_enemy_grunt_{clip_name}_f{f_idx:02d}.png"
             fr.save(grunt_dir / "frames" / fname, optimize=False)
             grunt_all.append(fr)
             r, c = divmod(sheet_idx, 6)
             stats = measure_frame_stats(fr)
             assert not stats["border_clipped"], f"Grunt clipped border on {fname}: {stats['bbox']}"
+            stance_leg = "both" if clip_name != "walk" else ("front" if f_idx < 3 else "back")
             grunt_records.append(
                 {
                     "sheet_index": sheet_idx,
@@ -1212,6 +1244,8 @@ def main() -> None:
                     "clip": clip_name,
                     "frame_index": f_idx,
                     "loop": clip_name in ("idle", "walk"),
+                    "stance_leg": stance_leg,
+                    **foot_info,
                     "file": f"art/production/ART-003/characters/grunt/frames/{fname}",
                     **stats,
                 }

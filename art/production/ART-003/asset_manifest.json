@@ -35,9 +35,9 @@
       "path": "art/production/ART-003/APPROVAL_RECORD.md",
       "category": "documentation_or_metadata",
       "format": "MD",
-      "bytes": 3471,
+      "bytes": 3517,
       "dimensions": null,
-      "sha256": "97a92b192749f5325f875290b1b0a531039e2b752a8d47447aa4918b22625936",
+      "sha256": "d18d88bce90b889443ee9fcf5bbae34aab26f67a3e15fb5dc17129779313c12c",
       "provenance": "First-party ART-003 technical documentation / machine-readable metadata",
       "canonical_sources": [
         "art/concepts/ART-002/asset_manifest.json"
@@ -50,7 +50,7 @@
       "format": "JSON",
       "bytes": 32911,
       "dimensions": null,
-      "sha256": "151cced93b2e51b1b94a86b2b5b76304e45afcdb9bf3638f4f920fb5b797f580",
+      "sha256": "e2c7d067c6eca3959755be112ef559f8e8c0d1586b212f02cacf4bc68adc5478",
       "provenance": "Deterministic 1024x1024 RGBA32 atlas packer & Unity 6000.6.7f1 preset config (build_art003_atlas_and_previews.py)",
       "canonical_sources": [
         "art/concepts/ART-002/asset_manifest.json"
@@ -61,12 +61,12 @@
       "path": "art/production/ART-003/atlas/Characters_Pilot_Atlas.png",
       "category": "unity_pilot_atlas",
       "format": "PNG",
-      "bytes": 105674,
+      "bytes": 104464,
       "dimensions": [
         1024,
         1024
       ],
-      "sha256": "077d9ec7fbfd4bacc0c3794fc289486f38be2ac41db988d3ff727dfac898e58d",
+      "sha256": "8c3ced0ab86f47449ae444501fb11382b5f6894e4a2137687721e69b17bab902",
       "provenance": "Deterministic 1024x1024 RGBA32 atlas packer & Unity 6000.6.7f1 preset config (build_art003_atlas_and_previews.py)",
       "canonical_sources": [
         "art/concepts/ART-002/asset_manifest.json"
@@ -116,12 +116,12 @@
       "path": "art/production/ART-003/characters/builder/chr_role_builder_sheet.png",
       "category": "sprite_sheet_png",
       "format": "PNG",
-      "bytes": 45468,
+      "bytes": 44991,
       "dimensions": [
         768,
         384
       ],
-      "sha256": "baed6970341a0d490f39b08d0bdf846fb9fc8c39d50daa732d921ad38fcf2c15",
+      "sha256": "2ca18983784192e4cf81896b690214b32654eeb9f5a696cc60e4fd5953337653",
       "provenance": "Deterministic fixed-grid RGBA32 sheet packer (build_art003_rigs_and_frames.py)",
       "canonical_sources": [
         "art/concepts/ART-002/characters/builder_model_sheet.png",
@@ -167,12 +167,12 @@
       "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f00.png",
       "category": "animation_frame_png",
       "format": "PNG",
-      "bytes": 3344,
+      "bytes": 3297,
       "dimensions": [
         128,
         128
       ],
-      "sha256": "1112092fc1b4136005fefdd9465e36bf4b7b268b01da6a1067f17dc5e4f52f3a",
+      "sha256": "086759065134d4e76064883beb5f4f704fe8742065d3b17e602627bc47968605",
       "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
       "canonical_sources": [
         "art/concepts/ART-002/characters/builder_model_sheet.png",
@@ -184,12 +184,12 @@
       "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f01.png",
       "category": "animation_frame_png",
       "format": "PNG",
-      "bytes": 3256,
+      "bytes": 3273,
       "dimensions": [
         128,
         128
       ],
-      "sha256": "4e32afd449f1716c00a74ce5a458d5c091a0895b676b69e2a76c82a8dfd78d97",
+      "sha256": "285b630b7f3639af98b7aa71000dacac9a47ddb59477c466cb99c8e2587f0841",
       "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
       "canonical_sources": [
         "art/concepts/ART-002/characters/builder_model_sheet.png",
@@ -201,12 +201,12 @@
       "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f02.png",
       "category": "animation_frame_png",
       "format": "PNG",
-      "bytes": 3424,
+      "bytes": 3228,
       "dimensions": [
         128,
         128
       ],
-      "sha256": "f3515a7dade49fb4c5a22a1411299ae27783c3ea078f45186665c3544e072ed0",
+      "sha256": "1eecc5ca71bec2b479df6ff4407cf49a23e73e409d05783d1b71f29a763b7277",
       "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
       "canonical_sources": [
         "art/concepts/ART-002/characters/builder_model_sheet.png",
@@ -218,12 +218,12 @@
       "path": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f03.png",
       "category": "animation_frame_png",
       "format": "PNG",
-      "bytes": 3280,
+      "bytes": 3282,
       "dimensions": [
         128,
         128
       ],
-      "sha256": "b0b431ffa5d0093584fbea30249b1d38f75d0016ec229fbd32eb5ec7eb70e714",
+      "sha256": "9bc3b9753f7f330a1295527adb2d6564d6eb6332e4f75bcdd371bda26eef2eb2",
       "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
       "canonical_sources": [
         "art/concepts/ART-002/characters/builder_model_sheet.png",
@@ -456,12 +456,12 @@
       "path": "art/production/ART-003/characters/grunt/chr_enemy_grunt_sheet.png",
       "category": "sprite_sheet_png",
       "format": "PNG",
-      "bytes": 50329,
+      "bytes": 50192,
       "dimensions": [
         768,
         384
       ],
-      "sha256": "af3d82c02b03d5a12f1ee55ecbfaa19f0de6cce94085c630e0dbae64cedc46cc",
+      "sha256": "a73bc93e60bc9ec54367aa80a4dd36468fa91e1089c6fc3635d8d2b70f2eaeae",
       "provenance": "Deterministic fixed-grid RGBA32 sheet packer (build_art003_rigs_and_frames.py)",
       "canonical_sources": [
         "art/concepts/ART-002/characters/grunt_model_sheet.png",
@@ -609,12 +609,12 @@
       "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f00.png",
       "category": "animation_frame_png",
       "format": "PNG",
-      "bytes": 3612,
+      "bytes": 3698,
       "dimensions": [
         128,
         128
       ],
-      "sha256": "f217b5a1e0bb8e53ca01ff9917c2976b077bdc8155c42bab838368bdbe62193e",
+      "sha256": "1b2cac50b9127947aa68de14e40304e8e8686d4a8ba25f64d620fa9618997b1f",
       "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
       "canonical_sources": [
         "art/concepts/ART-002/characters/grunt_model_sheet.png",
@@ -626,12 +626,12 @@
       "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f01.png",
       "category": "animation_frame_png",
       "format": "PNG",
-      "bytes": 3562,
+      "bytes": 3546,
       "dimensions": [
         128,
         128
       ],
-      "sha256": "19f2ac1b3fb5c7cab356f9a579dd0d2f588498aab6e72a64dc8174366f431e11",
+      "sha256": "40c6c63a7de1e37d5ffc290750573143a4668bdded26f51873c2a59de64b5998",
       "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
       "canonical_sources": [
         "art/concepts/ART-002/characters/grunt_model_sheet.png",
@@ -643,12 +643,12 @@
       "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f02.png",
       "category": "animation_frame_png",
       "format": "PNG",
-      "bytes": 3642,
+      "bytes": 3614,
       "dimensions": [
         128,
         128
       ],
-      "sha256": "fb6b327046f72db61aa18eb870a4ce06c36ad20743b53a02ecec38a5a7996f06",
+      "sha256": "5a28cac89a9bd6613d43cf358a0845398fa061544e0e7ede6aaa2897d50ca9b9",
       "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
       "canonical_sources": [
         "art/concepts/ART-002/characters/grunt_model_sheet.png",
@@ -660,12 +660,12 @@
       "path": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f03.png",
       "category": "animation_frame_png",
       "format": "PNG",
-      "bytes": 3648,
+      "bytes": 3644,
       "dimensions": [
         128,
         128
       ],
-      "sha256": "2c66fdb6a1bbb6274bdbf06d59482ce28ee6069f1047a6cd466dae555a6fa7cc",
+      "sha256": "2118e4d772cc0eb120f15ded142f76fd136e2e913beb2efe1f2b5e8322580a9f",
       "provenance": "Controlled 2D skeletal/cutout FK deformation + Bastion Dawn v1 16-color/3px-#11151C cleanup from locked ART-002 character turnaround/sprite references",
       "canonical_sources": [
         "art/concepts/ART-002/characters/grunt_model_sheet.png",
@@ -796,9 +796,9 @@
       "path": "art/production/ART-003/clip_frame_metadata.json",
       "category": "documentation_or_metadata",
       "format": "JSON",
-      "bytes": 40122,
+      "bytes": 47183,
       "dimensions": null,
-      "sha256": "8e01785337d308110aaf8cce8038f94b7e0b44f2bb3a5836f2ebc5aa7c434e04",
+      "sha256": "461eacb2dcc94985b0d9f514c05a4549259d95806d4eac0a66d2a89126e504c6",
       "provenance": "First-party ART-003 technical documentation / machine-readable metadata",
       "canonical_sources": [
         "art/concepts/ART-002/asset_manifest.json"
@@ -809,12 +809,12 @@
       "path": "art/production/ART-003/previews/contact_sheets/contact_builder_all_18f.png",
       "category": "animation_preview",
       "format": "PNG",
-      "bytes": 148094,
+      "bytes": 147285,
       "dimensions": [
         1600,
         1000
       ],
-      "sha256": "418bd022c1612ccd53c63199ae2292c66c94f69a005a60475461ac76d258854c",
+      "sha256": "87c7b4077f28e713635035b9639f5cc8d8c808ccfd8d0b52e09f088f728c8c45",
       "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
       "canonical_sources": [
         "art/concepts/ART-002/characters/builder_model_sheet.png",
@@ -826,12 +826,12 @@
       "path": "art/production/ART-003/previews/contact_sheets/contact_grunt_all_18f.png",
       "category": "animation_preview",
       "format": "PNG",
-      "bytes": 161201,
+      "bytes": 160699,
       "dimensions": [
         1600,
         1000
       ],
-      "sha256": "520876c8460a65b89e639c4df07b852d296698ae37222d76e4ede4057640335f",
+      "sha256": "3206388d65cfc220787e6080c71469f43c76ae5fa9d911b59bc129d5ff74ec12",
       "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
       "canonical_sources": [
         "art/concepts/ART-002/characters/grunt_model_sheet.png",
@@ -859,12 +859,12 @@
       "path": "art/production/ART-003/previews/gifs/preview_builder_hit_12fps.gif",
       "category": "animation_preview",
       "format": "GIF",
-      "bytes": 73882,
+      "bytes": 73863,
       "dimensions": [
         430,
         320
       ],
-      "sha256": "26c6c4a13ef27fdd0b36a24421602c8625294672742fd12a4fdcaccdea99249f",
+      "sha256": "aaa5a9328b865b5173c4b01d1991edd9bf4476e985a2298c7119bc8bd2070aeb",
       "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
       "canonical_sources": [
         "art/concepts/ART-002/characters/builder_model_sheet.png",
@@ -876,12 +876,12 @@
       "path": "art/production/ART-003/previews/gifs/preview_builder_idle_12fps.gif",
       "category": "animation_preview",
       "format": "GIF",
-      "bytes": 50317,
+      "bytes": 50313,
       "dimensions": [
         430,
         320
       ],
-      "sha256": "ed32117ef3c9224d9c8dab99128fe1b40c8a6a5a4bcd163923c9a1877dc21aa3",
+      "sha256": "b7f4e0f107fb22d0c287fdcee0b704b2d3ba0eff7d6ef3ccbde7f1860f3b77ea",
       "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
       "canonical_sources": [
         "art/concepts/ART-002/characters/builder_model_sheet.png",
@@ -944,12 +944,12 @@
       "path": "art/production/ART-003/previews/gifs/preview_gameplay_composite_1080p_crop_12fps.gif",
       "category": "animation_preview",
       "format": "GIF",
-      "bytes": 192560,
+      "bytes": 193770,
       "dimensions": [
         580,
         540
       ],
-      "sha256": "880b67b905a27197fe26307b55fc533931e3f004afc43fe24506c08987b7d785",
+      "sha256": "60701f33c72d0ad1f66292905f0431e203c13b3c92a6afebed3ebdc7b895e903",
       "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
       "canonical_sources": [
         "art/concepts/ART-002/asset_manifest.json"
@@ -977,12 +977,12 @@
       "path": "art/production/ART-003/previews/gifs/preview_grunt_hit_12fps.gif",
       "category": "animation_preview",
       "format": "GIF",
-      "bytes": 77956,
+      "bytes": 78225,
       "dimensions": [
         430,
         320
       ],
-      "sha256": "1b1d9bdc7cdb911760847020e671b45b5d6648418731dfb8f3f1186056ae8b2f",
+      "sha256": "741ceec88810a0fd11a1b17d55d0288a9d549cb2f0f75ae48a58a4e493538b35",
       "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
       "canonical_sources": [
         "art/concepts/ART-002/characters/grunt_model_sheet.png",
@@ -994,12 +994,12 @@
       "path": "art/production/ART-003/previews/gifs/preview_grunt_idle_12fps.gif",
       "category": "animation_preview",
       "format": "GIF",
-      "bytes": 52854,
+      "bytes": 52980,
       "dimensions": [
         430,
         320
       ],
-      "sha256": "c1ae3a4d82de48d9422a56a70a0f48631b852eeb9d5d3ad38bbd7f8d04aa648e",
+      "sha256": "bc15e60807812c3206ca56b7cd5c54868ccac0454d6e38ea976a299b679a6223",
       "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
       "canonical_sources": [
         "art/concepts/ART-002/characters/grunt_model_sheet.png",
@@ -1044,12 +1044,12 @@
       "path": "art/production/ART-003/previews/mp4/preview_gameplay_1080x1920_h264_12fps.mp4",
       "category": "animation_preview",
       "format": "MP4",
-      "bytes": 361862,
+      "bytes": 366100,
       "dimensions": [
         1080,
         1920
       ],
-      "sha256": "d0523b17765b7af4afe1cfc626b7a2febb4761284ec51ba8a6aee87cd8745b97",
+      "sha256": "0b1b79a0ce16f6877e969123f3068f1aa0b19e31aeb17c31fc5cebbefd24d26f",
       "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
       "canonical_sources": [
         "art/concepts/ART-002/asset_manifest.json"
@@ -1060,12 +1060,12 @@
       "path": "art/production/ART-003/previews/mp4/preview_gameplay_360x640_h264_12fps.mp4",
       "category": "animation_preview",
       "format": "MP4",
-      "bytes": 46057,
+      "bytes": 46219,
       "dimensions": [
         360,
         640
       ],
-      "sha256": "2182b30934f318e80abf39532186142b00a39f4e59affb5361497f26b6dad165",
+      "sha256": "1e4fa23e0d87a76bc5c72ac0d52d1afc2d621e0f2e8f9a0f504b516fa514517c",
       "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
       "canonical_sources": [
         "art/concepts/ART-002/asset_manifest.json"
@@ -1076,12 +1076,12 @@
       "path": "art/production/ART-003/previews/mp4/preview_gameplay_720x1280_h264_12fps.mp4",
       "category": "animation_preview",
       "format": "MP4",
-      "bytes": 145138,
+      "bytes": 147625,
       "dimensions": [
         720,
         1280
       ],
-      "sha256": "e68260dbfa70d7761553f1ded52d60c0598e3d2e1bd0fed606ff4c52c1698426",
+      "sha256": "1bd31c6bbd391bd88940f2ef3469602f5b28ca9237fa58c87e9ae1f9bcb5c526",
       "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
       "canonical_sources": [
         "art/concepts/ART-002/asset_manifest.json"
@@ -1092,12 +1092,12 @@
       "path": "art/production/ART-003/previews/mp4/preview_pilot_all_clips_showcase_12fps.mp4",
       "category": "animation_preview",
       "format": "MP4",
-      "bytes": 708717,
+      "bytes": 716941,
       "dimensions": [
         1280,
         720
       ],
-      "sha256": "4f2eb05b8fe2a0a300f9e15763b31eb81543c2a43cb155d1bfa676be88235fd7",
+      "sha256": "841569862bcf001c2af7ce4a44b63029b0d600923a5ee2e1dc0523a62cdd2d67",
       "provenance": "Programmatic 12.0 FPS preview generator via Pillow + ffmpeg libx264 (build_art003_atlas_and_previews.py)",
       "canonical_sources": [
         "art/concepts/ART-002/asset_manifest.json"
@@ -1108,12 +1108,12 @@
       "path": "art/production/ART-003/qa/qa_360x640_and_grayscale_proof.png",
       "category": "qa_evidence",
       "format": "PNG",
-      "bytes": 169969,
+      "bytes": 169932,
       "dimensions": [
         1680,
         920
       ],
-      "sha256": "a321fa40c01d7bd37858a8a26524bf74c9f7c9a8e1437d0cc486cc2aa616f009",
+      "sha256": "0207836592cce96eaf8e1eaf28a6b93956c2192a7ef5326423da378f3144aeab",
       "provenance": "Automated pixel/temporal/H.264/Unity QA harness (validate_art003_qa_and_manifest.py)",
       "canonical_sources": [
         "art/concepts/ART-002/asset_manifest.json"
@@ -1124,12 +1124,12 @@
       "path": "art/production/ART-003/qa/qa_at_scale_gameplay_board.png",
       "category": "qa_evidence",
       "format": "PNG",
-      "bytes": 279084,
+      "bytes": 279554,
       "dimensions": [
         1820,
         1080
       ],
-      "sha256": "238b16f479b4cf6e91591303cb617d61dd69fac114783221d3b36a38fe89752d",
+      "sha256": "ae7e99d71cef24f9796ce6798022923aaa08bc6d9f28b9a2fafd8a4d8b1e9aff",
       "provenance": "Automated pixel/temporal/H.264/Unity QA harness (validate_art003_qa_and_manifest.py)",
       "canonical_sources": [
         "art/concepts/ART-002/asset_manifest.json"
@@ -1140,12 +1140,12 @@
       "path": "art/production/ART-003/qa/qa_foot_pivot_and_alpha_audit.png",
       "category": "qa_evidence",
       "format": "PNG",
-      "bytes": 106709,
+      "bytes": 106674,
       "dimensions": [
         1720,
         920
       ],
-      "sha256": "bae431e9cc2143a0707ba8e8614394a8ef94c7b2c5129eb11130641152d5f477",
+      "sha256": "d53a78e04f2861cdf0bdee63a0159788d965ff85925fdf6614a6ea37c08b5c51",
       "provenance": "Automated pixel/temporal/H.264/Unity QA harness (validate_art003_qa_and_manifest.py)",
       "canonical_sources": [
         "art/concepts/ART-002/asset_manifest.json"
@@ -1156,12 +1156,12 @@
       "path": "art/production/ART-003/qa/qa_h264_compression_proof.png",
       "category": "qa_evidence",
       "format": "PNG",
-      "bytes": 278315,
+      "bytes": 280635,
       "dimensions": [
         1740,
         920
       ],
-      "sha256": "4aaf0c916d43e2b384b85a2e32fbad19edcb2a6cf538d18a7d2b273a02191558",
+      "sha256": "1b0225015e73e47b7d80a8c51f5a71787806833045a2b7b0f1ef34c4b855bf04",
       "provenance": "Automated pixel/temporal/H.264/Unity QA harness (validate_art003_qa_and_manifest.py)",
       "canonical_sources": [
         "art/concepts/ART-002/asset_manifest.json"
@@ -1172,9 +1172,9 @@
       "path": "art/production/ART-003/qa/qa_metrics.json",
       "category": "qa_evidence",
       "format": "JSON",
-      "bytes": 32911,
+      "bytes": 36571,
       "dimensions": null,
-      "sha256": "1d35e060c9fcc6141571896b2668bcf9d8491ae4d904a7a0e25eb713787432b2",
+      "sha256": "7f3752cb0de17f6b30ecef804e07c9c0469b9f37404535d5688f59f3ae0282c9",
       "provenance": "Automated pixel/temporal/H.264/Unity QA harness (validate_art003_qa_and_manifest.py)",
       "canonical_sources": [
         "art/concepts/ART-002/asset_manifest.json"
@@ -1185,9 +1185,9 @@
       "path": "art/production/ART-003/qa/qa_report.md",
       "category": "qa_evidence",
       "format": "MD",
-      "bytes": 8084,
+      "bytes": 10342,
       "dimensions": null,
-      "sha256": "eaa4b2d317d964113c5005677b9b601f0c5913efad84023b630713062ca7c129",
+      "sha256": "4d0030250eb532e52bcef6b9eb215490cc7e7b40624682052855e43bb01a0d9c",
       "provenance": "Automated pixel/temporal/H.264/Unity QA harness (validate_art003_qa_and_manifest.py)",
       "canonical_sources": [
         "art/concepts/ART-002/asset_manifest.json"
@@ -1198,12 +1198,12 @@
       "path": "art/production/ART-003/qa/qa_temporal_flicker_and_onion_skin.png",
       "category": "qa_evidence",
       "format": "PNG",
-      "bytes": 115008,
+      "bytes": 114721,
       "dimensions": [
         1720,
         940
       ],
-      "sha256": "c52ef39bd8e06ebcd747bef7d3e6a845ab5ac9c80a0d28091524cae140e2a4e9",
+      "sha256": "5cf1445004a6a9e2127dca5ffc3ad87e6edd611d044bfdcb9461c7b5dd84a1b9",
       "provenance": "Automated pixel/temporal/H.264/Unity QA harness (validate_art003_qa_and_manifest.py)",
       "canonical_sources": [
         "art/concepts/ART-002/asset_manifest.json"
@@ -1253,9 +1253,9 @@
       "path": "art/production/ART-003/tools/build_art003_rigs_and_frames.py",
       "category": "reproducible_pipeline_script",
       "format": "PY",
-      "bytes": 62773,
+      "bytes": 64557,
       "dimensions": null,
-      "sha256": "fe13daf120512bac652f3950661087babf459d8405c9e7f4f3119b08719c0d5d",
+      "sha256": "b6ee2fffa51bf0745a4f5216dcfefac9433758c29b68cae3d8009e3baf2eefc7",
       "provenance": "First-party Python 3 production & QA pipeline script authored in ART-003",
       "canonical_sources": [
         "art/concepts/ART-002/asset_manifest.json"
@@ -1266,9 +1266,9 @@
       "path": "art/production/ART-003/tools/validate_art003_qa_and_manifest.py",
       "category": "reproducible_pipeline_script",
       "format": "PY",
-      "bytes": 42296,
+      "bytes": 53727,
       "dimensions": null,
-      "sha256": "21e3ba145caa8e793a04b2e0b0a7724813bfb21bcd1af045f27b8312ff51424c",
+      "sha256": "63eff9e65088e994eed557d34742f7e11feafca845062d6a021a1da6d50437c9",
       "provenance": "First-party Python 3 production & QA pipeline script authored in ART-003",
       "canonical_sources": [
         "art/concepts/ART-002/asset_manifest.json"

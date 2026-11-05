@@ -1,0 +1,3677 @@
+{
+  "package_id": "ART-004",
+  "style_version": "bastion-dawn-v1",
+  "fps": 12,
+  "frame_duration_ms": 83.333,
+  "gif_centisecond_cadence_ms": [
+    80,
+    80,
+    90
+  ],
+  "target_ppu": 192,
+  "camera_orthographic_size": 5.0,
+  "reference_1080p_pixels_per_world_unit": 192.0,
+  "counts": {
+    "character_classes": 5,
+    "character_frames": 88,
+    "vfx_archetypes": 4,
+    "vfx_frames": 24,
+    "total_frames": 112,
+    "sprite_sheets": 9
+  },
+  "entities": {
+    "guard": {
+      "entity_id": "chr_role_guard",
+      "kind": "character",
+      "cell_size": [
+        128,
+        128
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.08
+      ],
+      "pivot_pixel_top_down": [
+        64.0,
+        117.76
+      ],
+      "sheet": "art/production/ART-004/characters/guard/chr_role_guard_sheet.png",
+      "sheet_dimensions": [
+        768,
+        384
+      ],
+      "grid_cols_rows": [
+        6,
+        3
+      ],
+      "palette_hex": [
+        "#11151C",
+        "#60A5FA",
+        "#2E7CF6",
+        "#1D4ED8",
+        "#1E3A8A",
+        "#F8FAFC",
+        "#DCE6F2",
+        "#94A3B8",
+        "#64748B",
+        "#334155",
+        "#F4C29F",
+        "#DA9B74",
+        "#AD6E4D",
+        "#8B5E3C",
+        "#5C3D28"
+      ],
+      "standing_source_body_px": 87,
+      "standing_source_total_bbox_px": 87,
+      "target_body_1080p_px": 48.0,
+      "unity_ppu": 192,
+      "unity_visual_root_scale": 0.55172,
+      "displayed_total_height_px": {
+        "1080x1920": 48.0,
+        "720x1280": 32.0,
+        "360x640": 16.0
+      },
+      "clips": {
+        "idle": [
+          0,
+          3
+        ],
+        "walk": [
+          4,
+          9
+        ],
+        "shieldbrace": [
+          10,
+          15
+        ],
+        "hit": [
+          16,
+          17
+        ]
+      },
+      "frames": [
+        {
+          "frame_index": 0,
+          "clip": "idle",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/characters/guard/frames/chr_role_guard_idle_f00.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            37,
+            31,
+            88,
+            117
+          ],
+          "pixel_height": 87,
+          "pixel_width": 52,
+          "opaque_pixels": 3088,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            53.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            71.0,
+            116.0
+          ]
+        },
+        {
+          "frame_index": 1,
+          "clip": "idle",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/characters/guard/frames/chr_role_guard_idle_f01.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            38,
+            33,
+            89,
+            117
+          ],
+          "pixel_height": 85,
+          "pixel_width": 52,
+          "opaque_pixels": 3042,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            53.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            71.0,
+            116.0
+          ]
+        },
+        {
+          "frame_index": 2,
+          "clip": "idle",
+          "clip_frame_index": 2,
+          "file": "art/production/ART-004/characters/guard/frames/chr_role_guard_idle_f02.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            39,
+            32,
+            88,
+            117
+          ],
+          "pixel_height": 86,
+          "pixel_width": 50,
+          "opaque_pixels": 3029,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            53.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            71.0,
+            116.0
+          ]
+        },
+        {
+          "frame_index": 3,
+          "clip": "idle",
+          "clip_frame_index": 3,
+          "file": "art/production/ART-004/characters/guard/frames/chr_role_guard_idle_f03.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            37,
+            30,
+            88,
+            117
+          ],
+          "pixel_height": 88,
+          "pixel_width": 52,
+          "opaque_pixels": 3076,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            53.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            71.0,
+            116.0
+          ]
+        },
+        {
+          "frame_index": 4,
+          "clip": "walk",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/characters/guard/frames/chr_role_guard_walk_f00.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            43,
+            32,
+            90,
+            117
+          ],
+          "pixel_height": 86,
+          "pixel_width": 48,
+          "opaque_pixels": 2795,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            63.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            64.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 5,
+          "clip": "walk",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/characters/guard/frames/chr_role_guard_walk_f01.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            41,
+            34,
+            91,
+            117
+          ],
+          "pixel_height": 84,
+          "pixel_width": 51,
+          "opaque_pixels": 2947,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            57.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            68.5,
+            115.0
+          ]
+        },
+        {
+          "frame_index": 6,
+          "clip": "walk",
+          "clip_frame_index": 2,
+          "file": "art/production/ART-004/characters/guard/frames/chr_role_guard_walk_f02.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            37,
+            29,
+            89,
+            117
+          ],
+          "pixel_height": 89,
+          "pixel_width": 53,
+          "opaque_pixels": 3116,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            49.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            75.0,
+            114.0
+          ]
+        },
+        {
+          "frame_index": 7,
+          "clip": "walk",
+          "clip_frame_index": 3,
+          "file": "art/production/ART-004/characters/guard/frames/chr_role_guard_walk_f03.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            34,
+            32,
+            89,
+            117
+          ],
+          "pixel_height": 86,
+          "pixel_width": 56,
+          "opaque_pixels": 3091,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            44.0,
+            116.0
+          ],
+          "back_foot_xy": [
+            78.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 8,
+          "clip": "walk",
+          "clip_frame_index": 4,
+          "file": "art/production/ART-004/characters/guard/frames/chr_role_guard_walk_f04.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            36,
+            34,
+            90,
+            117
+          ],
+          "pixel_height": 84,
+          "pixel_width": 55,
+          "opaque_pixels": 3050,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            48.0,
+            114.0
+          ],
+          "back_foot_xy": [
+            74.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 9,
+          "clip": "walk",
+          "clip_frame_index": 5,
+          "file": "art/production/ART-004/characters/guard/frames/chr_role_guard_walk_f05.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            40,
+            29,
+            89,
+            117
+          ],
+          "pixel_height": 89,
+          "pixel_width": 50,
+          "opaque_pixels": 2958,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            59.0,
+            114.0
+          ],
+          "back_foot_xy": [
+            68.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 10,
+          "clip": "shieldbrace",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f00.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            32,
+            33,
+            91,
+            117
+          ],
+          "pixel_height": 85,
+          "pixel_width": 60,
+          "opaque_pixels": 3179,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            50.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            73.0,
+            116.0
+          ]
+        },
+        {
+          "frame_index": 11,
+          "clip": "shieldbrace",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f01.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            31,
+            37,
+            98,
+            117
+          ],
+          "pixel_height": 81,
+          "pixel_width": 68,
+          "opaque_pixels": 3248,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            52.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            77.0,
+            116.0
+          ]
+        },
+        {
+          "frame_index": 12,
+          "clip": "shieldbrace",
+          "clip_frame_index": 2,
+          "file": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f02.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            29,
+            39,
+            101,
+            117
+          ],
+          "pixel_height": 79,
+          "pixel_width": 73,
+          "opaque_pixels": 3289,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            52.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            78.0,
+            116.0
+          ]
+        },
+        {
+          "frame_index": 13,
+          "clip": "shieldbrace",
+          "clip_frame_index": 3,
+          "file": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f03.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            21,
+            41,
+            95,
+            117
+          ],
+          "pixel_height": 77,
+          "pixel_width": 75,
+          "opaque_pixels": 3164,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            48.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            74.0,
+            116.0
+          ]
+        },
+        {
+          "frame_index": 14,
+          "clip": "shieldbrace",
+          "clip_frame_index": 4,
+          "file": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f04.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            32,
+            37,
+            97,
+            117
+          ],
+          "pixel_height": 81,
+          "pixel_width": 66,
+          "opaque_pixels": 3210,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            52.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            76.0,
+            116.0
+          ]
+        },
+        {
+          "frame_index": 15,
+          "clip": "shieldbrace",
+          "clip_frame_index": 5,
+          "file": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f05.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            36,
+            33,
+            92,
+            117
+          ],
+          "pixel_height": 85,
+          "pixel_width": 57,
+          "opaque_pixels": 3151,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            52.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            73.0,
+            116.0
+          ]
+        },
+        {
+          "frame_index": 16,
+          "clip": "hit",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/characters/guard/frames/chr_role_guard_hit_f00.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            24,
+            36,
+            88,
+            117
+          ],
+          "pixel_height": 82,
+          "pixel_width": 65,
+          "opaque_pixels": 3011,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            48.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            70.0,
+            115.0
+          ]
+        },
+        {
+          "frame_index": 17,
+          "clip": "hit",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/characters/guard/frames/chr_role_guard_hit_f01.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            31,
+            34,
+            89,
+            117
+          ],
+          "pixel_height": 84,
+          "pixel_width": 59,
+          "opaque_pixels": 3043,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            51.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            71.0,
+            116.0
+          ]
+        }
+      ]
+    },
+    "fighter": {
+      "entity_id": "chr_role_fighter",
+      "kind": "character",
+      "cell_size": [
+        128,
+        128
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.08
+      ],
+      "pivot_pixel_top_down": [
+        64.0,
+        117.76
+      ],
+      "sheet": "art/production/ART-004/characters/fighter/chr_role_fighter_sheet.png",
+      "sheet_dimensions": [
+        768,
+        384
+      ],
+      "grid_cols_rows": [
+        6,
+        3
+      ],
+      "palette_hex": [
+        "#11151C",
+        "#F87171",
+        "#E63946",
+        "#B91C1C",
+        "#7F1D1D",
+        "#F8FAFC",
+        "#E2E8F0",
+        "#94A3B8",
+        "#64748B",
+        "#334155",
+        "#FEF08A",
+        "#EAB308",
+        "#A16207",
+        "#F4C29F",
+        "#8B5E3C",
+        "#4A3222"
+      ],
+      "standing_source_body_px": 86,
+      "standing_source_total_bbox_px": 98,
+      "target_body_1080p_px": 48.0,
+      "unity_ppu": 192,
+      "unity_visual_root_scale": 0.55814,
+      "displayed_total_height_px": {
+        "1080x1920": 54.7,
+        "720x1280": 36.5,
+        "360x640": 18.2
+      },
+      "clips": {
+        "idle": [
+          0,
+          3
+        ],
+        "walk": [
+          4,
+          9
+        ],
+        "swordslash": [
+          10,
+          15
+        ],
+        "hit": [
+          16,
+          17
+        ]
+      },
+      "frames": [
+        {
+          "frame_index": 0,
+          "clip": "idle",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_idle_f00.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            32,
+            20,
+            80,
+            117
+          ],
+          "pixel_height": 98,
+          "pixel_width": 49,
+          "opaque_pixels": 2961,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            52.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            68.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 1,
+          "clip": "idle",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_idle_f01.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            34,
+            22,
+            84,
+            117
+          ],
+          "pixel_height": 96,
+          "pixel_width": 51,
+          "opaque_pixels": 2967,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            52.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            68.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 2,
+          "clip": "idle",
+          "clip_frame_index": 2,
+          "file": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_idle_f02.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            36,
+            21,
+            89,
+            117
+          ],
+          "pixel_height": 97,
+          "pixel_width": 54,
+          "opaque_pixels": 2934,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            52.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            68.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 3,
+          "clip": "idle",
+          "clip_frame_index": 3,
+          "file": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_idle_f03.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            34,
+            19,
+            85,
+            117
+          ],
+          "pixel_height": 99,
+          "pixel_width": 52,
+          "opaque_pixels": 2993,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            52.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            68.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 4,
+          "clip": "walk",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_walk_f00.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            40,
+            21,
+            95,
+            117
+          ],
+          "pixel_height": 97,
+          "pixel_width": 56,
+          "opaque_pixels": 2673,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            60.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            60.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 5,
+          "clip": "walk",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_walk_f01.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            37,
+            23,
+            90,
+            117
+          ],
+          "pixel_height": 95,
+          "pixel_width": 54,
+          "opaque_pixels": 2829,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 15,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            55.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            65.0,
+            115.0
+          ]
+        },
+        {
+          "frame_index": 6,
+          "clip": "walk",
+          "clip_frame_index": 2,
+          "file": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_walk_f02.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            31,
+            18,
+            80,
+            117
+          ],
+          "pixel_height": 100,
+          "pixel_width": 50,
+          "opaque_pixels": 2968,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            48.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            73.0,
+            114.0
+          ]
+        },
+        {
+          "frame_index": 7,
+          "clip": "walk",
+          "clip_frame_index": 3,
+          "file": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_walk_f03.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            30,
+            21,
+            84,
+            123
+          ],
+          "pixel_height": 103,
+          "pixel_width": 55,
+          "opaque_pixels": 2944,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            44.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            75.5,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 8,
+          "clip": "walk",
+          "clip_frame_index": 4,
+          "file": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_walk_f04.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            31,
+            23,
+            79,
+            120
+          ],
+          "pixel_height": 98,
+          "pixel_width": 49,
+          "opaque_pixels": 2885,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            48.0,
+            115.0
+          ],
+          "back_foot_xy": [
+            71.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 9,
+          "clip": "walk",
+          "clip_frame_index": 5,
+          "file": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_walk_f05.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            36,
+            18,
+            89,
+            117
+          ],
+          "pixel_height": 100,
+          "pixel_width": 54,
+          "opaque_pixels": 2899,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            57.0,
+            115.0
+          ],
+          "back_foot_xy": [
+            65.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 10,
+          "clip": "swordslash",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f00.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            41,
+            21,
+            91,
+            117
+          ],
+          "pixel_height": 97,
+          "pixel_width": 51,
+          "opaque_pixels": 2733,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            49.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            70.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 11,
+          "clip": "swordslash",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f01.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            35,
+            23,
+            75,
+            117
+          ],
+          "pixel_height": 95,
+          "pixel_width": 41,
+          "opaque_pixels": 2383,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            47.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            69.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 12,
+          "clip": "swordslash",
+          "clip_frame_index": 2,
+          "file": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f02.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            34,
+            18,
+            78,
+            117
+          ],
+          "pixel_height": 100,
+          "pixel_width": 45,
+          "opaque_pixels": 2423,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            48.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            70.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 13,
+          "clip": "swordslash",
+          "clip_frame_index": 3,
+          "file": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f03.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            43,
+            23,
+            104,
+            117
+          ],
+          "pixel_height": 95,
+          "pixel_width": 62,
+          "opaque_pixels": 3255,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            48.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            72.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 14,
+          "clip": "swordslash",
+          "clip_frame_index": 4,
+          "file": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f04.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            43,
+            26,
+            95,
+            117
+          ],
+          "pixel_height": 92,
+          "pixel_width": 53,
+          "opaque_pixels": 2688,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            48.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            72.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 15,
+          "clip": "swordslash",
+          "clip_frame_index": 5,
+          "file": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f05.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            40,
+            22,
+            94,
+            117
+          ],
+          "pixel_height": 96,
+          "pixel_width": 55,
+          "opaque_pixels": 2815,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            51.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            70.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 16,
+          "clip": "hit",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_hit_f00.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            27,
+            26,
+            80,
+            117
+          ],
+          "pixel_height": 92,
+          "pixel_width": 54,
+          "opaque_pixels": 2600,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            46.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            66.5,
+            115.0
+          ]
+        },
+        {
+          "frame_index": 17,
+          "clip": "hit",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_hit_f01.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            36,
+            24,
+            92,
+            117
+          ],
+          "pixel_height": 94,
+          "pixel_width": 57,
+          "opaque_pixels": 2747,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            49.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            68.0,
+            117.0
+          ]
+        }
+      ]
+    },
+    "runner": {
+      "entity_id": "chr_enemy_runner",
+      "kind": "character",
+      "cell_size": [
+        128,
+        128
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.08
+      ],
+      "pivot_pixel_top_down": [
+        64.0,
+        117.76
+      ],
+      "sheet": "art/production/ART-004/characters/runner/chr_enemy_runner_sheet.png",
+      "sheet_dimensions": [
+        768,
+        384
+      ],
+      "grid_cols_rows": [
+        6,
+        3
+      ],
+      "palette_hex": [
+        "#11151C",
+        "#C084FC",
+        "#9B5DE5",
+        "#7E22CE",
+        "#581C87",
+        "#6B3A8C",
+        "#4C286E",
+        "#2E1047",
+        "#F8FAFC",
+        "#CBD5E1",
+        "#94A3B8",
+        "#475569",
+        "#334155"
+      ],
+      "standing_source_body_px": 81,
+      "standing_source_total_bbox_px": 81,
+      "target_body_1080p_px": 44.0,
+      "unity_ppu": 192,
+      "unity_visual_root_scale": 0.54321,
+      "displayed_total_height_px": {
+        "1080x1920": 44.0,
+        "720x1280": 29.3,
+        "360x640": 14.7
+      },
+      "clips": {
+        "idle": [
+          0,
+          3
+        ],
+        "run": [
+          4,
+          9
+        ],
+        "daggerlunge": [
+          10,
+          15
+        ],
+        "hit": [
+          16,
+          17
+        ]
+      },
+      "frames": [
+        {
+          "frame_index": 0,
+          "clip": "idle",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_idle_f00.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            38,
+            37,
+            78,
+            117
+          ],
+          "pixel_height": 81,
+          "pixel_width": 41,
+          "opaque_pixels": 1562,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            52.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            71.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 1,
+          "clip": "idle",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_idle_f01.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            40,
+            39,
+            80,
+            117
+          ],
+          "pixel_height": 79,
+          "pixel_width": 41,
+          "opaque_pixels": 1532,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            52.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            71.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 2,
+          "clip": "idle",
+          "clip_frame_index": 2,
+          "file": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_idle_f02.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            43,
+            38,
+            81,
+            117
+          ],
+          "pixel_height": 80,
+          "pixel_width": 39,
+          "opaque_pixels": 1527,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            52.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            71.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 3,
+          "clip": "idle",
+          "clip_frame_index": 3,
+          "file": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_idle_f03.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            41,
+            36,
+            80,
+            117
+          ],
+          "pixel_height": 82,
+          "pixel_width": 40,
+          "opaque_pixels": 1564,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            52.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            71.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 4,
+          "clip": "run",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f00.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            48,
+            40,
+            88,
+            118
+          ],
+          "pixel_height": 79,
+          "pixel_width": 41,
+          "opaque_pixels": 1363,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            66.5,
+            118.0
+          ],
+          "back_foot_xy": [
+            60.0,
+            118.0
+          ]
+        },
+        {
+          "frame_index": 5,
+          "clip": "run",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f01.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            44,
+            42,
+            83,
+            118
+          ],
+          "pixel_height": 77,
+          "pixel_width": 40,
+          "opaque_pixels": 1428,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            59.0,
+            118.0
+          ],
+          "back_foot_xy": [
+            67.0,
+            115.0
+          ]
+        },
+        {
+          "frame_index": 6,
+          "clip": "run",
+          "clip_frame_index": 2,
+          "file": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f02.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            37,
+            36,
+            86,
+            117
+          ],
+          "pixel_height": 82,
+          "pixel_width": 50,
+          "opaque_pixels": 1522,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            47.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            77.0,
+            112.0
+          ]
+        },
+        {
+          "frame_index": 7,
+          "clip": "run",
+          "clip_frame_index": 3,
+          "file": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f03.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            33,
+            40,
+            93,
+            116
+          ],
+          "pixel_height": 77,
+          "pixel_width": 61,
+          "opaque_pixels": 1549,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            39.0,
+            114.0
+          ],
+          "back_foot_xy": [
+            82.0,
+            116.0
+          ]
+        },
+        {
+          "frame_index": 8,
+          "clip": "run",
+          "clip_frame_index": 4,
+          "file": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f04.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            36,
+            42,
+            85,
+            117
+          ],
+          "pixel_height": 76,
+          "pixel_width": 50,
+          "opaque_pixels": 1471,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            46.5,
+            113.0
+          ],
+          "back_foot_xy": [
+            76.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 9,
+          "clip": "run",
+          "clip_frame_index": 5,
+          "file": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f05.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            43,
+            36,
+            82,
+            118
+          ],
+          "pixel_height": 83,
+          "pixel_width": 40,
+          "opaque_pixels": 1515,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            58.5,
+            114.0
+          ],
+          "back_foot_xy": [
+            68.0,
+            118.0
+          ]
+        },
+        {
+          "frame_index": 10,
+          "clip": "daggerlunge",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f00.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            27,
+            41,
+            79,
+            117
+          ],
+          "pixel_height": 77,
+          "pixel_width": 53,
+          "opaque_pixels": 1480,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            47.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            72.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 11,
+          "clip": "daggerlunge",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f01.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            46,
+            39,
+            86,
+            117
+          ],
+          "pixel_height": 79,
+          "pixel_width": 41,
+          "opaque_pixels": 1487,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            50.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            76.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 12,
+          "clip": "daggerlunge",
+          "clip_frame_index": 2,
+          "file": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f02.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            48,
+            43,
+            100,
+            117
+          ],
+          "pixel_height": 75,
+          "pixel_width": 53,
+          "opaque_pixels": 1457,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            52.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            80.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 13,
+          "clip": "daggerlunge",
+          "clip_frame_index": 3,
+          "file": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f03.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            49,
+            44,
+            93,
+            117
+          ],
+          "pixel_height": 74,
+          "pixel_width": 45,
+          "opaque_pixels": 1381,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            53.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            80.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 14,
+          "clip": "daggerlunge",
+          "clip_frame_index": 4,
+          "file": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f04.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            48,
+            38,
+            84,
+            117
+          ],
+          "pixel_height": 80,
+          "pixel_width": 37,
+          "opaque_pixels": 1512,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            52.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            75.5,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 15,
+          "clip": "daggerlunge",
+          "clip_frame_index": 5,
+          "file": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f05.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            38,
+            40,
+            79,
+            117
+          ],
+          "pixel_height": 78,
+          "pixel_width": 42,
+          "opaque_pixels": 1519,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            51.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            72.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 16,
+          "clip": "hit",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_hit_f00.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            27,
+            40,
+            77,
+            117
+          ],
+          "pixel_height": 78,
+          "pixel_width": 51,
+          "opaque_pixels": 1475,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            46.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            70.0,
+            115.0
+          ]
+        },
+        {
+          "frame_index": 17,
+          "clip": "hit",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_hit_f01.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            35,
+            40,
+            78,
+            117
+          ],
+          "pixel_height": 78,
+          "pixel_width": 44,
+          "opaque_pixels": 1487,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            50.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            71.0,
+            117.0
+          ]
+        }
+      ]
+    },
+    "brute": {
+      "entity_id": "chr_enemy_brute",
+      "kind": "character",
+      "cell_size": [
+        128,
+        128
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.08
+      ],
+      "pivot_pixel_top_down": [
+        64.0,
+        117.76
+      ],
+      "sheet": "art/production/ART-004/characters/brute/chr_enemy_brute_sheet.png",
+      "sheet_dimensions": [
+        768,
+        384
+      ],
+      "grid_cols_rows": [
+        6,
+        3
+      ],
+      "palette_hex": [
+        "#11151C",
+        "#FDBA74",
+        "#FB923C",
+        "#F3722C",
+        "#C2410C",
+        "#7C2D12",
+        "#94A3B8",
+        "#6E6A66",
+        "#4A525D",
+        "#333842",
+        "#785233",
+        "#4A321F"
+      ],
+      "standing_source_body_px": 96,
+      "standing_source_total_bbox_px": 96,
+      "target_body_1080p_px": 64.0,
+      "unity_ppu": 192,
+      "unity_visual_root_scale": 0.66667,
+      "displayed_total_height_px": {
+        "1080x1920": 64.0,
+        "720x1280": 42.7,
+        "360x640": 21.3
+      },
+      "clips": {
+        "idle": [
+          0,
+          3
+        ],
+        "march": [
+          4,
+          9
+        ],
+        "gauntletcrush": [
+          10,
+          15
+        ],
+        "hit": [
+          16,
+          17
+        ]
+      },
+      "frames": [
+        {
+          "frame_index": 0,
+          "clip": "idle",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_idle_f00.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            24,
+            22,
+            95,
+            117
+          ],
+          "pixel_height": 96,
+          "pixel_width": 72,
+          "opaque_pixels": 4706,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            52.0,
+            116.0
+          ],
+          "back_foot_xy": [
+            73.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 1,
+          "clip": "idle",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_idle_f01.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            26,
+            24,
+            97,
+            117
+          ],
+          "pixel_height": 94,
+          "pixel_width": 72,
+          "opaque_pixels": 4644,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            52.0,
+            116.0
+          ],
+          "back_foot_xy": [
+            73.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 2,
+          "clip": "idle",
+          "clip_frame_index": 2,
+          "file": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_idle_f02.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            27,
+            23,
+            100,
+            117
+          ],
+          "pixel_height": 95,
+          "pixel_width": 74,
+          "opaque_pixels": 4602,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            52.0,
+            116.0
+          ],
+          "back_foot_xy": [
+            73.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 3,
+          "clip": "idle",
+          "clip_frame_index": 3,
+          "file": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_idle_f03.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            25,
+            20,
+            97,
+            117
+          ],
+          "pixel_height": 98,
+          "pixel_width": 73,
+          "opaque_pixels": 4685,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            52.0,
+            116.0
+          ],
+          "back_foot_xy": [
+            73.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 4,
+          "clip": "march",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f00.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            33,
+            23,
+            109,
+            118
+          ],
+          "pixel_height": 96,
+          "pixel_width": 77,
+          "opaque_pixels": 4090,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            59.0,
+            118.0
+          ],
+          "back_foot_xy": [
+            68.0,
+            118.0
+          ]
+        },
+        {
+          "frame_index": 5,
+          "clip": "march",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f01.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            30,
+            27,
+            104,
+            117
+          ],
+          "pixel_height": 91,
+          "pixel_width": 75,
+          "opaque_pixels": 4370,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            55.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            70.0,
+            115.0
+          ]
+        },
+        {
+          "frame_index": 6,
+          "clip": "march",
+          "clip_frame_index": 2,
+          "file": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f02.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            24,
+            20,
+            91,
+            117
+          ],
+          "pixel_height": 98,
+          "pixel_width": 68,
+          "opaque_pixels": 4624,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            48.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            76.0,
+            114.0
+          ]
+        },
+        {
+          "frame_index": 7,
+          "clip": "march",
+          "clip_frame_index": 3,
+          "file": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f03.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            18,
+            23,
+            91,
+            118
+          ],
+          "pixel_height": 96,
+          "pixel_width": 74,
+          "opaque_pixels": 4427,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            44.5,
+            116.0
+          ],
+          "back_foot_xy": [
+            77.0,
+            118.0
+          ]
+        },
+        {
+          "frame_index": 8,
+          "clip": "march",
+          "clip_frame_index": 4,
+          "file": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f04.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            23,
+            27,
+            92,
+            117
+          ],
+          "pixel_height": 91,
+          "pixel_width": 70,
+          "opaque_pixels": 4455,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            48.5,
+            114.0
+          ],
+          "back_foot_xy": [
+            75.5,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 9,
+          "clip": "march",
+          "clip_frame_index": 5,
+          "file": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f05.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            29,
+            20,
+            102,
+            118
+          ],
+          "pixel_height": 99,
+          "pixel_width": 74,
+          "opaque_pixels": 4523,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            57.0,
+            115.0
+          ],
+          "back_foot_xy": [
+            70.0,
+            118.0
+          ]
+        },
+        {
+          "frame_index": 10,
+          "clip": "gauntletcrush",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f00.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            26,
+            26,
+            114,
+            117
+          ],
+          "pixel_height": 92,
+          "pixel_width": 89,
+          "opaque_pixels": 3994,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            48.5,
+            116.0
+          ],
+          "back_foot_xy": [
+            73.5,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 11,
+          "clip": "gauntletcrush",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f01.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            26,
+            22,
+            121,
+            117
+          ],
+          "pixel_height": 96,
+          "pixel_width": 96,
+          "opaque_pixels": 4052,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            48.0,
+            116.0
+          ],
+          "back_foot_xy": [
+            73.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 12,
+          "clip": "gauntletcrush",
+          "clip_frame_index": 2,
+          "file": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f02.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            24,
+            12,
+            118,
+            117
+          ],
+          "pixel_height": 106,
+          "pixel_width": 95,
+          "opaque_pixels": 4149,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            47.5,
+            116.0
+          ],
+          "back_foot_xy": [
+            73.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 13,
+          "clip": "gauntletcrush",
+          "clip_frame_index": 3,
+          "file": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f03.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            43,
+            29,
+            122,
+            117
+          ],
+          "pixel_height": 89,
+          "pixel_width": 80,
+          "opaque_pixels": 4058,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            50.0,
+            116.0
+          ],
+          "back_foot_xy": [
+            77.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 14,
+          "clip": "gauntletcrush",
+          "clip_frame_index": 4,
+          "file": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f04.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            43,
+            32,
+            120,
+            117
+          ],
+          "pixel_height": 86,
+          "pixel_width": 78,
+          "opaque_pixels": 3933,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            50.5,
+            116.0
+          ],
+          "back_foot_xy": [
+            78.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 15,
+          "clip": "gauntletcrush",
+          "clip_frame_index": 5,
+          "file": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f05.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            32,
+            24,
+            103,
+            117
+          ],
+          "pixel_height": 94,
+          "pixel_width": 72,
+          "opaque_pixels": 4482,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            52.0,
+            116.0
+          ],
+          "back_foot_xy": [
+            75.0,
+            117.0
+          ]
+        },
+        {
+          "frame_index": 16,
+          "clip": "hit",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_hit_f00.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            21,
+            26,
+            81,
+            116
+          ],
+          "pixel_height": 91,
+          "pixel_width": 61,
+          "opaque_pixels": 3639,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            47.5,
+            116.0
+          ],
+          "back_foot_xy": [
+            72.0,
+            115.0
+          ]
+        },
+        {
+          "frame_index": 17,
+          "clip": "hit",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_hit_f01.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            26,
+            25,
+            90,
+            117
+          ],
+          "pixel_height": 93,
+          "pixel_width": 65,
+          "opaque_pixels": 4140,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 12,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            50.0,
+            116.0
+          ],
+          "back_foot_xy": [
+            72.5,
+            117.0
+          ]
+        }
+      ]
+    },
+    "boss": {
+      "entity_id": "chr_boss_warlord",
+      "kind": "boss_character",
+      "cell_size": [
+        256,
+        256
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.08
+      ],
+      "pivot_pixel_top_down": [
+        128.0,
+        235.52
+      ],
+      "sheet": "art/production/ART-004/characters/boss/chr_boss_warlord_sheet.png",
+      "sheet_dimensions": [
+        1024,
+        1024
+      ],
+      "grid_cols_rows": [
+        4,
+        4
+      ],
+      "palette_hex": [
+        "#11151C",
+        "#FCE7F3",
+        "#F0ABFC",
+        "#D946EF",
+        "#A21CAF",
+        "#9F8AB8",
+        "#6D5687",
+        "#4C3B63",
+        "#38264E",
+        "#28183B",
+        "#1E102B",
+        "#6B215C",
+        "#4A154B",
+        "#5C4033"
+      ],
+      "standing_source_body_px": 176,
+      "standing_source_total_bbox_px": 176,
+      "target_body_1080p_px": 102.0,
+      "unity_ppu": 192,
+      "unity_visual_root_scale": 0.57955,
+      "displayed_total_height_px": {
+        "1080x1920": 102.0,
+        "720x1280": 68.0,
+        "360x640": 34.0
+      },
+      "clips": {
+        "idlemarch": [
+          0,
+          5
+        ],
+        "cleaveslam": [
+          6,
+          13
+        ],
+        "hit": [
+          14,
+          15
+        ]
+      },
+      "frames": [
+        {
+          "frame_index": 0,
+          "clip": "idlemarch",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f00.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            74,
+            61,
+            188,
+            236
+          ],
+          "pixel_height": 176,
+          "pixel_width": 115,
+          "opaque_pixels": 8393,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            114.0,
+            235.0
+          ],
+          "back_foot_xy": [
+            124.0,
+            236.0
+          ]
+        },
+        {
+          "frame_index": 1,
+          "clip": "idlemarch",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f01.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            68,
+            66,
+            179,
+            236
+          ],
+          "pixel_height": 171,
+          "pixel_width": 112,
+          "opaque_pixels": 8988,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            103.0,
+            236.0
+          ],
+          "back_foot_xy": [
+            132.0,
+            232.0
+          ]
+        },
+        {
+          "frame_index": 2,
+          "clip": "idlemarch",
+          "clip_frame_index": 2,
+          "file": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f02.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            61,
+            57,
+            160,
+            235
+          ],
+          "pixel_height": 179,
+          "pixel_width": 100,
+          "opaque_pixels": 9044,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            89.0,
+            235.0
+          ],
+          "back_foot_xy": [
+            138.5,
+            229.0
+          ]
+        },
+        {
+          "frame_index": 3,
+          "clip": "idlemarch",
+          "clip_frame_index": 3,
+          "file": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f03.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            59,
+            61,
+            164,
+            236
+          ],
+          "pixel_height": 176,
+          "pixel_width": 106,
+          "opaque_pixels": 9417,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            79.0,
+            232.0
+          ],
+          "back_foot_xy": [
+            142.0,
+            235.0
+          ]
+        },
+        {
+          "frame_index": 4,
+          "clip": "idlemarch",
+          "clip_frame_index": 4,
+          "file": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f04.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            60,
+            66,
+            155,
+            235
+          ],
+          "pixel_height": 170,
+          "pixel_width": 96,
+          "opaque_pixels": 8860,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            88.0,
+            230.0
+          ],
+          "back_foot_xy": [
+            138.0,
+            235.0
+          ]
+        },
+        {
+          "frame_index": 5,
+          "clip": "idlemarch",
+          "clip_frame_index": 5,
+          "file": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f05.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            67,
+            57,
+            179,
+            236
+          ],
+          "pixel_height": 180,
+          "pixel_width": 113,
+          "opaque_pixels": 9150,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            108.5,
+            231.0
+          ],
+          "back_foot_xy": [
+            130.0,
+            236.0
+          ]
+        },
+        {
+          "frame_index": 6,
+          "clip": "cleaveslam",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f00.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            74,
+            65,
+            190,
+            236
+          ],
+          "pixel_height": 172,
+          "pixel_width": 117,
+          "opaque_pixels": 8692,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            91.0,
+            236.0
+          ],
+          "back_foot_xy": [
+            137.0,
+            235.0
+          ]
+        },
+        {
+          "frame_index": 7,
+          "clip": "cleaveslam",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f01.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            69,
+            50,
+            155,
+            236
+          ],
+          "pixel_height": 187,
+          "pixel_width": 87,
+          "opaque_pixels": 8598,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            89.0,
+            236.0
+          ],
+          "back_foot_xy": [
+            136.0,
+            235.0
+          ]
+        },
+        {
+          "frame_index": 8,
+          "clip": "cleaveslam",
+          "clip_frame_index": 2,
+          "file": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f02.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            67,
+            30,
+            148,
+            236
+          ],
+          "pixel_height": 207,
+          "pixel_width": 82,
+          "opaque_pixels": 8577,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            89.5,
+            236.0
+          ],
+          "back_foot_xy": [
+            137.0,
+            235.0
+          ]
+        },
+        {
+          "frame_index": 9,
+          "clip": "cleaveslam",
+          "clip_frame_index": 3,
+          "file": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f03.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            67,
+            28,
+            151,
+            236
+          ],
+          "pixel_height": 209,
+          "pixel_width": 85,
+          "opaque_pixels": 8558,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            90.5,
+            236.0
+          ],
+          "back_foot_xy": [
+            138.0,
+            235.0
+          ]
+        },
+        {
+          "frame_index": 10,
+          "clip": "cleaveslam",
+          "clip_frame_index": 4,
+          "file": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f04.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            88,
+            52,
+            219,
+            236
+          ],
+          "pixel_height": 185,
+          "pixel_width": 132,
+          "opaque_pixels": 10469,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 14,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            96.0,
+            236.0
+          ],
+          "back_foot_xy": [
+            145.0,
+            235.0
+          ]
+        },
+        {
+          "frame_index": 11,
+          "clip": "cleaveslam",
+          "clip_frame_index": 5,
+          "file": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f05.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            89,
+            73,
+            203,
+            236
+          ],
+          "pixel_height": 164,
+          "pixel_width": 115,
+          "opaque_pixels": 8623,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            97.0,
+            236.0
+          ],
+          "back_foot_xy": [
+            148.0,
+            235.0
+          ]
+        },
+        {
+          "frame_index": 12,
+          "clip": "cleaveslam",
+          "clip_frame_index": 6,
+          "file": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f06.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            86,
+            70,
+            195,
+            236
+          ],
+          "pixel_height": 167,
+          "pixel_width": 110,
+          "opaque_pixels": 8697,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            97.0,
+            236.0
+          ],
+          "back_foot_xy": [
+            145.0,
+            235.0
+          ]
+        },
+        {
+          "frame_index": 13,
+          "clip": "cleaveslam",
+          "clip_frame_index": 7,
+          "file": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f07.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            73,
+            63,
+            180,
+            236
+          ],
+          "pixel_height": 174,
+          "pixel_width": 108,
+          "opaque_pixels": 9085,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            96.0,
+            236.0
+          ],
+          "back_foot_xy": [
+            139.0,
+            235.0
+          ]
+        },
+        {
+          "frame_index": 14,
+          "clip": "hit",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_hit_f00.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            68,
+            66,
+            189,
+            236
+          ],
+          "pixel_height": 171,
+          "pixel_width": 122,
+          "opaque_pixels": 8585,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            89.0,
+            236.0
+          ],
+          "back_foot_xy": [
+            131.0,
+            232.0
+          ]
+        },
+        {
+          "frame_index": 15,
+          "clip": "hit",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_hit_f01.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            69,
+            64,
+            184,
+            236
+          ],
+          "pixel_height": 173,
+          "pixel_width": 116,
+          "opaque_pixels": 8861,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 13,
+          "stance_leg": "action",
+          "front_foot_xy": [
+            93.0,
+            236.0
+          ],
+          "back_foot_xy": [
+            135.0,
+            235.0
+          ]
+        }
+      ]
+    },
+    "vfx_fighter_slash_arc": {
+      "entity_id": "vfx_fighter_slash_arc",
+      "kind": "combat_vfx",
+      "cell_size": [
+        128,
+        128
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.5
+      ],
+      "synchronized_with": "fighter.swordslash[f02..f05]",
+      "sheet": "art/production/ART-004/vfx/fighter_slash_arc/vfx_fighter_slash_arc_sheet.png",
+      "sheet_dimensions": [
+        512,
+        128
+      ],
+      "grid_cols_rows": [
+        4,
+        1
+      ],
+      "palette_hex": [
+        "#11151C",
+        "#FFFFFF",
+        "#FFE4E6",
+        "#FB7185",
+        "#E63946",
+        "#B91C1C",
+        "#7F1D1D"
+      ],
+      "clips": {
+        "burst": [
+          0,
+          3
+        ]
+      },
+      "frames": [
+        {
+          "frame_index": 0,
+          "clip": "burst",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/vfx/fighter_slash_arc/frames/vfx_fighter_slash_arc_f00.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            46,
+            25,
+            97,
+            62
+          ],
+          "pixel_height": 38,
+          "pixel_width": 52,
+          "opaque_pixels": 439,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 7
+        },
+        {
+          "frame_index": 1,
+          "clip": "burst",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/vfx/fighter_slash_arc/frames/vfx_fighter_slash_arc_f01.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            57,
+            16,
+            111,
+            104
+          ],
+          "pixel_height": 89,
+          "pixel_width": 55,
+          "opaque_pixels": 1335,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 7
+        },
+        {
+          "frame_index": 2,
+          "clip": "burst",
+          "clip_frame_index": 2,
+          "file": "art/production/ART-004/vfx/fighter_slash_arc/frames/vfx_fighter_slash_arc_f02.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            79,
+            38,
+            106,
+            112
+          ],
+          "pixel_height": 75,
+          "pixel_width": 28,
+          "opaque_pixels": 726,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 5
+        },
+        {
+          "frame_index": 3,
+          "clip": "burst",
+          "clip_frame_index": 3,
+          "file": "art/production/ART-004/vfx/fighter_slash_arc/frames/vfx_fighter_slash_arc_f03.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            80,
+            61,
+            108,
+            114
+          ],
+          "pixel_height": 54,
+          "pixel_width": 29,
+          "opaque_pixels": 250,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 3
+        }
+      ]
+    },
+    "vfx_guard_shield_block": {
+      "entity_id": "vfx_guard_shield_block",
+      "kind": "combat_vfx",
+      "cell_size": [
+        128,
+        128
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.5
+      ],
+      "synchronized_with": "guard.shieldbrace[f02..f05]",
+      "sheet": "art/production/ART-004/vfx/guard_shield_block/vfx_guard_shield_block_sheet.png",
+      "sheet_dimensions": [
+        512,
+        128
+      ],
+      "grid_cols_rows": [
+        4,
+        1
+      ],
+      "palette_hex": [
+        "#11151C",
+        "#FFFFFF",
+        "#DBEAFE",
+        "#60A5FA",
+        "#2E7CF6",
+        "#1D4ED8",
+        "#1E3A8A"
+      ],
+      "clips": {
+        "burst": [
+          0,
+          3
+        ]
+      },
+      "frames": [
+        {
+          "frame_index": 0,
+          "clip": "burst",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/vfx/guard_shield_block/frames/vfx_guard_shield_block_f00.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            47,
+            41,
+            90,
+            86
+          ],
+          "pixel_height": 46,
+          "pixel_width": 44,
+          "opaque_pixels": 1200,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 7
+        },
+        {
+          "frame_index": 1,
+          "clip": "burst",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/vfx/guard_shield_block/frames/vfx_guard_shield_block_f01.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            39,
+            26,
+            92,
+            101
+          ],
+          "pixel_height": 76,
+          "pixel_width": 54,
+          "opaque_pixels": 1379,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 6
+        },
+        {
+          "frame_index": 2,
+          "clip": "burst",
+          "clip_frame_index": 2,
+          "file": "art/production/ART-004/vfx/guard_shield_block/frames/vfx_guard_shield_block_f02.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            32,
+            19,
+            99,
+            109
+          ],
+          "pixel_height": 91,
+          "pixel_width": 68,
+          "opaque_pixels": 830,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 5
+        },
+        {
+          "frame_index": 3,
+          "clip": "burst",
+          "clip_frame_index": 3,
+          "file": "art/production/ART-004/vfx/guard_shield_block/frames/vfx_guard_shield_block_f03.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            28,
+            18,
+            102,
+            109
+          ],
+          "pixel_height": 92,
+          "pixel_width": 75,
+          "opaque_pixels": 385,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 2
+        }
+      ]
+    },
+    "vfx_unit_hit_puff": {
+      "entity_id": "vfx_unit_hit_puff",
+      "kind": "combat_vfx",
+      "cell_size": [
+        128,
+        128
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.5
+      ],
+      "synchronized_with": "any_unit.hit[f00..f01]+dissipation",
+      "sheet": "art/production/ART-004/vfx/unit_hit_puff/vfx_unit_hit_puff_sheet.png",
+      "sheet_dimensions": [
+        768,
+        128
+      ],
+      "grid_cols_rows": [
+        6,
+        1
+      ],
+      "palette_hex": [
+        "#11151C",
+        "#FFFBEB",
+        "#E2E8F0",
+        "#CBD5E1",
+        "#94A3B8",
+        "#64748B",
+        "#475569"
+      ],
+      "clips": {
+        "burst": [
+          0,
+          5
+        ]
+      },
+      "frames": [
+        {
+          "frame_index": 0,
+          "clip": "burst",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f00.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            47,
+            47,
+            80,
+            80
+          ],
+          "pixel_height": 34,
+          "pixel_width": 34,
+          "opaque_pixels": 352,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 7
+        },
+        {
+          "frame_index": 1,
+          "clip": "burst",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f01.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            35,
+            39,
+            93,
+            88
+          ],
+          "pixel_height": 50,
+          "pixel_width": 59,
+          "opaque_pixels": 1428,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 7
+        },
+        {
+          "frame_index": 2,
+          "clip": "burst",
+          "clip_frame_index": 2,
+          "file": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f02.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            27,
+            33,
+            102,
+            94
+          ],
+          "pixel_height": 62,
+          "pixel_width": 76,
+          "opaque_pixels": 1942,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 6
+        },
+        {
+          "frame_index": 3,
+          "clip": "burst",
+          "clip_frame_index": 3,
+          "file": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f03.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            22,
+            30,
+            107,
+            96
+          ],
+          "pixel_height": 67,
+          "pixel_width": 86,
+          "opaque_pixels": 1330,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 4
+        },
+        {
+          "frame_index": 4,
+          "clip": "burst",
+          "clip_frame_index": 4,
+          "file": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f04.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            18,
+            29,
+            111,
+            99
+          ],
+          "pixel_height": 71,
+          "pixel_width": 94,
+          "opaque_pixels": 599,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 3
+        },
+        {
+          "frame_index": 5,
+          "clip": "burst",
+          "clip_frame_index": 5,
+          "file": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f05.png",
+          "cell_size": [
+            128,
+            128
+          ],
+          "bbox": [
+            29,
+            29,
+            111,
+            93
+          ],
+          "pixel_height": 65,
+          "pixel_width": 83,
+          "opaque_pixels": 124,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 2
+        }
+      ]
+    },
+    "vfx_boss_slam_telegraph": {
+      "entity_id": "vfx_boss_slam_telegraph",
+      "kind": "combat_vfx",
+      "cell_size": [
+        256,
+        256
+      ],
+      "normalized_pivot": [
+        0.5,
+        0.43
+      ],
+      "synchronized_with": "boss.cleaveslam[f00..f04 warn, f05..f07 impact, f08..f09 dissipate]",
+      "sheet": "art/production/ART-004/vfx/boss_slam_telegraph/vfx_boss_slam_telegraph_sheet.png",
+      "sheet_dimensions": [
+        1280,
+        512
+      ],
+      "grid_cols_rows": [
+        5,
+        2
+      ],
+      "palette_hex": [
+        "#11151C",
+        "#FCE7F3",
+        "#F5D0FE",
+        "#E879F9",
+        "#D946EF",
+        "#A21CAF",
+        "#7E22CE",
+        "#581C87",
+        "#3B0764"
+      ],
+      "clips": {
+        "burst": [
+          0,
+          9
+        ]
+      },
+      "frames": [
+        {
+          "frame_index": 0,
+          "clip": "burst",
+          "clip_frame_index": 0,
+          "file": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f00.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            38,
+            103,
+            217,
+            186
+          ],
+          "pixel_height": 84,
+          "pixel_width": 180,
+          "opaque_pixels": 5087,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 5
+        },
+        {
+          "frame_index": 1,
+          "clip": "burst",
+          "clip_frame_index": 1,
+          "file": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f01.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            39,
+            103,
+            216,
+            186
+          ],
+          "pixel_height": 84,
+          "pixel_width": 178,
+          "opaque_pixels": 4902,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 5
+        },
+        {
+          "frame_index": 2,
+          "clip": "burst",
+          "clip_frame_index": 2,
+          "file": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f02.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            42,
+            101,
+            213,
+            188
+          ],
+          "pixel_height": 88,
+          "pixel_width": 172,
+          "opaque_pixels": 4637,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 5
+        },
+        {
+          "frame_index": 3,
+          "clip": "burst",
+          "clip_frame_index": 3,
+          "file": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f03.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            43,
+            101,
+            212,
+            188
+          ],
+          "pixel_height": 88,
+          "pixel_width": 170,
+          "opaque_pixels": 4298,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 5
+        },
+        {
+          "frame_index": 4,
+          "clip": "burst",
+          "clip_frame_index": 4,
+          "file": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f04.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            43,
+            101,
+            212,
+            188
+          ],
+          "pixel_height": 88,
+          "pixel_width": 170,
+          "opaque_pixels": 4143,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 6
+        },
+        {
+          "frame_index": 5,
+          "clip": "burst",
+          "clip_frame_index": 5,
+          "file": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f05.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            39,
+            81,
+            216,
+            188
+          ],
+          "pixel_height": 108,
+          "pixel_width": 178,
+          "opaque_pixels": 6453,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 6
+        },
+        {
+          "frame_index": 6,
+          "clip": "burst",
+          "clip_frame_index": 6,
+          "file": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f06.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            23,
+            83,
+            232,
+            195
+          ],
+          "pixel_height": 113,
+          "pixel_width": 210,
+          "opaque_pixels": 6342,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 8
+        },
+        {
+          "frame_index": 7,
+          "clip": "burst",
+          "clip_frame_index": 7,
+          "file": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f07.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            14,
+            89,
+            241,
+            200
+          ],
+          "pixel_height": 112,
+          "pixel_width": 228,
+          "opaque_pixels": 4017,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 5
+        },
+        {
+          "frame_index": 8,
+          "clip": "burst",
+          "clip_frame_index": 8,
+          "file": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f08.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            14,
+            87,
+            241,
+            202
+          ],
+          "pixel_height": 116,
+          "pixel_width": 228,
+          "opaque_pixels": 1293,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 3
+        },
+        {
+          "frame_index": 9,
+          "clip": "burst",
+          "clip_frame_index": 9,
+          "file": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f09.png",
+          "cell_size": [
+            256,
+            256
+          ],
+          "bbox": [
+            16,
+            86,
+            239,
+            203
+          ],
+          "pixel_height": 118,
+          "pixel_width": 224,
+          "opaque_pixels": 614,
+          "semi_transparent_pixels": 0,
+          "unique_colors": 2
+        }
+      ]
+    }
+  }
+}

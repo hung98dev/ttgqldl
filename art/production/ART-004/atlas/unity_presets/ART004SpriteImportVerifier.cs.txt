@@ -1,0 +1,33 @@
+// Reference Editor script for M06 integration under unity/Assets/_TTGQLDL/Editor/
+// Stored outside unity/ as .cs.txt in ART-004 so M01-M05 runtime/editor assemblies stay untouched.
+using UnityEditor;
+using UnityEngine;
+
+namespace Ttgqldl.Editor.Art004
+{
+    public static class ART004SpriteImportVerifier
+    {
+        public static void ApplyAndVerifySprite(string assetPath, Vector2 normalizedPivot)
+        {
+            var importer = (TextureImporter)AssetImporter.GetAtPath(assetPath);
+            importer.textureType = TextureImporterType.Sprite;
+            importer.spriteImportMode = SpriteImportMode.Single;
+            importer.spritePixelsPerUnit = 192f;
+            importer.mipmapEnabled = false;
+            importer.filterMode = FilterMode.Point;
+            importer.alphaIsTransparency = true;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+
+            var settings = new TextureImporterSettings();
+            importer.ReadTextureSettings(settings);
+            settings.spriteAlignment = (int)SpriteAlignment.Custom;
+            settings.spritePivot = normalizedPivot;
+            settings.spriteMeshType = SpriteMeshType.FullRect;
+            importer.SetTextureSettings(settings);
+            importer.SaveAndReimport();
+
+            var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(assetPath);
+            Debug.Log($"[ART-004] Verified {assetPath}: rect={sprite.rect}, pivot={sprite.pivot}, ppu={sprite.pixelsPerUnit}, filter={sprite.texture.filterMode}");
+        }
+    }
+}

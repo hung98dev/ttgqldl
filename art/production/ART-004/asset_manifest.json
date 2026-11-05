@@ -1,0 +1,2207 @@
+{
+  "package_id": "ART-004",
+  "style_version": "bastion-dawn-v1",
+  "source_art002_package": "art/concepts/ART-002/asset_manifest.json",
+  "source_art003_pilot_package": "art/production/ART-003/asset_manifest.json",
+  "owner_approval_reference": "art/concepts/ART-002/OWNER_APPROVAL.md",
+  "rights_status": "PENDING_REVIEW",
+  "ip_cleanliness_statement": "100% repository-owned ART-002 character references + deterministic Python/Pillow/SciPy 2D skeletal cutout & cel VFX synthesis. Zero third-party ripped sprites, copyrighted anime/game characters, unlicensed textures, or audio assets.",
+  "tool_versions": {
+    "python": "3.13+",
+    "pillow": "13.0.0",
+    "numpy": "2.5.4",
+    "ffmpeg": "libx264 yuv420p @ 12/1 FPS",
+    "unity_isolated_verifier": "6000.6.7f1 (-batchmode -nographics)"
+  },
+  "total_hashed_files": 190,
+  "files": [
+    {
+      "path": "art/production/ART-004/ANIMATION_PIPELINE.md",
+      "role": "package_documentation_or_metadata",
+      "production_method": "authored_art004_production_blueprint",
+      "bytes": 5514,
+      "sha256": "ef365a233c60186f2b4d21d651e6d33caaaee11e7ee896a7737f5346fb0d76a0",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/APPROVAL_RECORD.md",
+      "role": "package_documentation_or_metadata",
+      "production_method": "authored_art004_production_blueprint",
+      "bytes": 3796,
+      "sha256": "dd24e601d00bb496b5cc4517e3b8ebdd7d657b351b3d0bab338d30d7285625b2",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/README.md",
+      "role": "package_documentation_or_metadata",
+      "production_method": "authored_art004_production_blueprint",
+      "bytes": 4870,
+      "sha256": "ca733525c4d37aa85691e45e70fa1743b5b4b429f8dfaa25f30dd75d6a291101",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/UNITY_INTEGRATION_GUIDE.md",
+      "role": "package_documentation_or_metadata",
+      "production_method": "authored_art004_production_blueprint",
+      "bytes": 6383,
+      "sha256": "54ec4918941cfe8a65466ca8c4d43b2b2335c7481e9b9262bb7f6acffa71c1e7",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/atlas/ART004_Master_Atlas.json",
+      "role": "unity_master_atlas_package",
+      "production_method": "deterministic_2048_atlas_packer_and_unity_preset_generator",
+      "bytes": 111629,
+      "sha256": "a8983d8e5784013287d85773a8b33c89337db04b5238bfe305a03363d98baf6f",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/atlas/ART004_Master_Atlas.png",
+      "role": "unity_master_atlas_package",
+      "production_method": "deterministic_2048_atlas_packer_and_unity_preset_generator",
+      "bytes": 343270,
+      "sha256": "3a1348b306f794596c95387dba412dff3f53eb87404a2c5a56aa4af947e0a178",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "path": "art/production/ART-004/atlas/unity_presets/ART004SpriteImportVerifier.cs.txt",
+      "role": "unity_master_atlas_package",
+      "production_method": "deterministic_2048_atlas_packer_and_unity_preset_generator",
+      "bytes": 1575,
+      "sha256": "d038161015bc8392bd9d357815abbe5cd73a83f65ec6c1f6dcd9722de5c25ab0",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/atlas/unity_presets/ART004_Master.spriteatlasv2.yaml",
+      "role": "unity_master_atlas_package",
+      "production_method": "deterministic_2048_atlas_packer_and_unity_preset_generator",
+      "bytes": 627,
+      "sha256": "2f0ad294040738e36555277530ed88758b96a1b435a37ac45328c5c408c27250",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/atlas/unity_presets/TTG_ART004_Boss256_Point192.preset.yaml",
+      "role": "unity_master_atlas_package",
+      "production_method": "deterministic_2048_atlas_packer_and_unity_preset_generator",
+      "bytes": 1583,
+      "sha256": "b60cb4ff61651f75eb6e2ffbcce7d4cf18560d5c35c480da7abfe837bb90f095",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/atlas/unity_presets/TTG_ART004_Character128_Point192.preset.yaml",
+      "role": "unity_master_atlas_package",
+      "production_method": "deterministic_2048_atlas_packer_and_unity_preset_generator",
+      "bytes": 1588,
+      "sha256": "23edbf873fab0378b9d4c5164fbfb84246db36de10dbdd75945278500b5bb961",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/atlas/unity_presets/TTG_ART004_VFX_Point192.preset.yaml",
+      "role": "unity_master_atlas_package",
+      "production_method": "deterministic_2048_atlas_packer_and_unity_preset_generator",
+      "bytes": 1578,
+      "sha256": "e87f4a9841f06eb09c6807f836e5bf6f496a5286203202c4e8f924bbb7f5354c",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/characters/boss/chr_boss_warlord_sheet.png",
+      "role": "character_sprite_sheet",
+      "production_method": "deterministic_grid_pack_from_art004_character_frames",
+      "bytes": 134331,
+      "sha256": "2c420477bddbd9ca9a057e82af0baa4801dbba6022d605b540fc64066b543cbf",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f00.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 8871,
+      "sha256": "af27f9a26f7b6df8cbf3d399b0688d7125b5eb946f8bb8f53d97bd425d60a5c0",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f01.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 8285,
+      "sha256": "747bde1b8b897ec5db1020783beb7c8ee3c8860a9f676d4ed2ef756097732275",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f02.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 8467,
+      "sha256": "6205c0fb99846e723e3432cc90e0e6b3629c94520138fa82b22c06364d98d0d7",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f03.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 8495,
+      "sha256": "859bc5b19de97716dbf4f99420230660ffbd956799309409108d5abc2b093a02",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f04.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 9896,
+      "sha256": "1378a83114e753d6b2acdeb5cdc9674b1bb0c47b3d463964985e5424492aced0",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f05.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 9403,
+      "sha256": "7abd84f2838b9fa8fe23814107db3f0280913b06f8d611fcbc9ebfa2b146f5a4",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f06.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 9555,
+      "sha256": "678b748452865fe0ece6e10697fd98b37d8c031a9832104abf32acb8f62ac464",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_cleaveslam_f07.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 9725,
+      "sha256": "ed1eaa03ffe4fe696b955c2e307e9897307d7f28f1951c8a27fc800a86f89cc6",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_hit_f00.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 8865,
+      "sha256": "4fd194cac9dc596e09c641f04282d4950efd4d5168e28a164469bff2f41e4579",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_hit_f01.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 9060,
+      "sha256": "c3c7dd96422292f2e0a258563aec469e217edb043b217ecbbbf342f26c3eba75",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f00.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 9199,
+      "sha256": "52e70c84f52df9afc2426704e26c1267d18c5f6e5c081f823efb1dbb5ea670ec",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f01.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 9785,
+      "sha256": "1ad16d92eedb41fff81b58b7b7391af741ab53aaab551571246945ed0d8b7bfa",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f02.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 9747,
+      "sha256": "2a3a33b2a46c1d379fcef25400ed7468f13e029aa1bdb458dcdbaa509a470ef6",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f03.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 9821,
+      "sha256": "63a6f5f87836320f194d119b3e3c7750a5f78e3885fe6c355710039b90de1fcf",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f04.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 9272,
+      "sha256": "1461885b675747e52f534eaa9d289340e6ff12a36013bed6fb0ae5c6052d0a35",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f05.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 9781,
+      "sha256": "e59833087b9043b81b581a352b23556670b1489fd825b6ce2540d03d35b29bf4",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/boss/rig_debug_sheet.png",
+      "role": "character_sprite_sheet",
+      "production_method": "deterministic_grid_pack_from_art004_character_frames",
+      "bytes": 80765,
+      "sha256": "d513e1655b2b422076ce8147ea5ccb74d74607370e0369cbab566c2581d122b7",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        1480,
+        560
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/chr_enemy_brute_sheet.png",
+      "role": "character_sprite_sheet",
+      "production_method": "deterministic_grid_pack_from_art004_character_frames",
+      "bytes": 57256,
+      "sha256": "b1c14701587ba822d1683f442b9131f2e1a09b5c08d5b482d8a7e16850c9d6a5",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        768,
+        384
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f00.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 4062,
+      "sha256": "bc11fbcc3a2ba060804dc96ea62df23aaea60a3a6772216540ab661bbeedb75b",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f01.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 3776,
+      "sha256": "3763e6b683a822b88349277747d292f91e1000bb97c60ac36389191eeb25e905",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f02.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 4012,
+      "sha256": "d459598a84a8cdd38dc6a9008b60d47113ee23472ffd6d33fe9208f10029230e",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f03.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 4198,
+      "sha256": "68249cd5abcfb36ae5f803d71d2514bc6c2a821785d702b6f0b48afa84187b80",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f04.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 3756,
+      "sha256": "b7cb3500d6d2a578c58d580c0b7fcc5eb228fdebc01882e00abf0cd77150f027",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_gauntletcrush_f05.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 4104,
+      "sha256": "d99e444f8f181555eac5dab6d3d12859035a5633f1224ffe50dc07503464b213",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_hit_f00.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 3841,
+      "sha256": "352d4011f2ed6d352d919bf3fa227e1a65338b82ec9c097efa0a18fcf51e6ab4",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_hit_f01.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 4005,
+      "sha256": "bebf945eb3536ffe28644165ede2e0e29c54849768556c34c5787b434186d4cb",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_idle_f00.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 4090,
+      "sha256": "7373312a34958c01dd1855848a483f71621d81b5c2d1b92086f64814efae1c79",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_idle_f01.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 4050,
+      "sha256": "b6ffe253c2b1d59f03663da13e33d0050b6cdaf09a6fb28cb152d0b4ef4a9d90",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_idle_f02.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 4143,
+      "sha256": "abbbd385901a7de98575692d474b68c6c857aeec4f5b3bf79d8d38ab6669e9d8",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_idle_f03.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 4181,
+      "sha256": "48eac11bbcf03b9c38315223d384633a339478d4133d7f491cb72d7e3198a62d",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f00.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 3958,
+      "sha256": "655d5aa53ae82f1bc06af2984441d2c677124aeed3ac481e6a03884fdd8905fe",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f01.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 4008,
+      "sha256": "d260f5a9520407b9cfd6125035124c00d52cd2e6cb8c792b2a9a658841f70424",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f02.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 4195,
+      "sha256": "a1c4996a6e38deee019fd42ac0de27e2419bd55ff1a3818c99fee5c6b54f9272",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f03.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 4186,
+      "sha256": "3a9f2be61ef9ebcacc1850d36244d9b35f42088ffddffc160938706b87bbda03",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f04.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 4077,
+      "sha256": "b8a7e774085ca8e3a8c52f161873cc12213940aedec6b688b9aa15c471d728b6",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/frames/chr_enemy_brute_march_f05.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 4142,
+      "sha256": "a0d8d5825f4b0ea4b9daea6670d2dfa3e8161814405527bdc4594be918e5317a",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/brute/rig_debug_sheet.png",
+      "role": "character_sprite_sheet",
+      "production_method": "deterministic_grid_pack_from_art004_character_frames",
+      "bytes": 81417,
+      "sha256": "67980b6de6b562fb3a1258e7787f4dce0b8509d70aad58867a1bbf570e32b34b",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        1480,
+        560
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/chr_role_fighter_sheet.png",
+      "role": "character_sprite_sheet",
+      "production_method": "deterministic_grid_pack_from_art004_character_frames",
+      "bytes": 43979,
+      "sha256": "38970225cd7b6302a62a5d6f47cdc70ccfd94676bd61f0c5d09bd528ff1bff7b",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        768,
+        384
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_hit_f00.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 3181,
+      "sha256": "9fb14ed4905bad3f255952ec4f8bde6f962279a7397bf3eb91ea631b4927fa5e",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_hit_f01.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2991,
+      "sha256": "01d91354b97fb287d25cadd2a13e2ffecc9c3176b3e0e69acbabf4c451b9276e",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_idle_f00.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 3338,
+      "sha256": "928d7a607814a8a5d9ffbdf8661492dd734a2e05f7d70a7a8117bb9ebd9d80b6",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_idle_f01.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 3288,
+      "sha256": "c692eb6576b8a940ad8134b554562ff4156a98d03c23b75f933fc23b10748596",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_idle_f02.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 3277,
+      "sha256": "f0dceaa1143ae808e536a3aacaeea702ce0450f6a58107574bf23d281f81b969",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_idle_f03.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 3251,
+      "sha256": "bbbe60e23a1f04b1c82343e5e18a806baa3f2f5febc7e4ebd29b9fe1f2c589db",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f00.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 3240,
+      "sha256": "f8fa1520ca9d46837058e2e68a5f7c010317b36645928b3d703dae009022db97",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f01.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2828,
+      "sha256": "081a401e876fa9d0e99c359225d0364870f8a5366ab441d3b2be390826b88529",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f02.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2839,
+      "sha256": "aaf411ec8d24510b010a548497f769dab191ce4f3fab90382a0d83afc0c10dc6",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f03.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 3865,
+      "sha256": "5ea7d68501100aa030bf04f7dffa494b16edf1713f4fe6e8b95b9f03a1226432",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f04.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 3245,
+      "sha256": "0445e9e65460452942d298ecad4e82dfc13f0497ea7d9aa22cf958083768626d",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_swordslash_f05.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 3136,
+      "sha256": "e4f56a22c0c8b5e39c99fb2409c5988e88c5e2169cb08e05d5a8e55f0dcb50bb",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_walk_f00.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 3046,
+      "sha256": "1dd946e1f23baf53b87e22b632bd979a6c1b9aabd175f77b278b0e3cab183e52",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_walk_f01.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 3122,
+      "sha256": "6927e38d486fea8419de2eef283533d11b64d27c1d3c0f69dd842da54dbe4a66",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_walk_f02.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 3306,
+      "sha256": "578bddd07c0366b573bb568994da3cbedbadb7de1c75e1cd9952c039bd54e299",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_walk_f03.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 3397,
+      "sha256": "8bf3af3230720e9c41459cb9e34e25a629653a51eda36b2c06bade63b3cd57ca",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_walk_f04.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 3314,
+      "sha256": "b47d1808cb096373f8d200ed0658fcb254f926e8e416e14267cc6385017aa211",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/frames/chr_role_fighter_walk_f05.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 3195,
+      "sha256": "bef5c8dbdd4ca050f1184787c9e85b055d1fdfb82e3cd7c570c9300fa2557ab6",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/fighter/rig_debug_sheet.png",
+      "role": "character_sprite_sheet",
+      "production_method": "deterministic_grid_pack_from_art004_character_frames",
+      "bytes": 66348,
+      "sha256": "f7c2220cdb034b62841687e6de8a1805aa75359bce90e1e0ec58c81db3c25b71",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        1480,
+        560
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/chr_role_guard_sheet.png",
+      "role": "character_sprite_sheet",
+      "production_method": "deterministic_grid_pack_from_art004_character_frames",
+      "bytes": 33155,
+      "sha256": "f871b600119001ed23dfda2fe8dc48e6827a1815bdc8abd03d8b0537b11b90f1",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        768,
+        384
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/frames/chr_role_guard_hit_f00.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2629,
+      "sha256": "57e314a9856df948986e1b623c42a463bd90e025d5bcf078843289e5d8109b30",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/frames/chr_role_guard_hit_f01.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2660,
+      "sha256": "685d08f98f15076d6d1c306565b84f48672327d7ad4895f04a9d7825c478f9bf",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/frames/chr_role_guard_idle_f00.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2494,
+      "sha256": "034bdd97d87f63f9642f6b038f888324f78eeeabde1e464676007cdb16be9eb2",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/frames/chr_role_guard_idle_f01.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2409,
+      "sha256": "db145a3bd6d0907f8ba8bee85c69db2e3b779a9b4c8130c6c0bb03a8c624fbde",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/frames/chr_role_guard_idle_f02.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2513,
+      "sha256": "a62e08f15ef5f0f803333c399abc58c32a732bcf04b8bb85a5cb220ed6510ed9",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/frames/chr_role_guard_idle_f03.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2629,
+      "sha256": "dbf548a94cf3fbc013f817c6054381f5dec1eada852c64c2daba3f29b21b48e7",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f00.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2658,
+      "sha256": "b0d9a2e70ce7e4c9eb1b6d9a9e7253380d7ebddcc441d3c62ca9bd00255f91bb",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f01.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2640,
+      "sha256": "7d176f09d31f78801ff301dd62d8bfc36cf672a743a61f7686543572bd20ab11",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f02.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2679,
+      "sha256": "776aa4e3e1097d99def998e116c85dc8e370682772249bbeda0560e979087d17",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f03.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2884,
+      "sha256": "cf72e4b055ac6430479061276be1f77f231c4fcb2d74874b138d3ecac69784a0",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f04.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2688,
+      "sha256": "dbfa2a9848262e43e034b3b51783159efa22f1db5d03403b9b28e81b68acc46a",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/frames/chr_role_guard_shieldbrace_f05.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2554,
+      "sha256": "e71bcdeb33be3e84580c75ca3c63b6de65862fa93ffd61ca6dd7492c05d02f12",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/frames/chr_role_guard_walk_f00.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2392,
+      "sha256": "02e31f9913bb2a0c4f52ca159d4932064626759c4187f59f35cea81b8f680e15",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/frames/chr_role_guard_walk_f01.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2446,
+      "sha256": "af7682b7970416318143074faa3e4f418fe6e6d5f2bb305e52237b651a64e6e3",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/frames/chr_role_guard_walk_f02.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2518,
+      "sha256": "d70ca732a538421f7062f46e0b4b8713f6d82caa2df2c8d2edeecf31446fb27b",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/frames/chr_role_guard_walk_f03.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2605,
+      "sha256": "515ef4579b21e3908ff4a0ed98dd7e13e5d03e9fd8cdf026aef4f1e96521375e",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/frames/chr_role_guard_walk_f04.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2549,
+      "sha256": "1f7fc61ca3dea07bb8d9cca01f5fb1267484b4e3080d8cc44e6ccee633d3be52",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/frames/chr_role_guard_walk_f05.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2439,
+      "sha256": "ab7a5eeafd2fc4f803dd608d8691f452e21f3ca5367195b6acc2a97c2074f1ad",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/guard/rig_debug_sheet.png",
+      "role": "character_sprite_sheet",
+      "production_method": "deterministic_grid_pack_from_art004_character_frames",
+      "bytes": 63422,
+      "sha256": "244344b2c28107586d5407916313d23fb15d6148d6e9e3a92609d409f294da59",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        1480,
+        560
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/chr_enemy_runner_sheet.png",
+      "role": "character_sprite_sheet",
+      "production_method": "deterministic_grid_pack_from_art004_character_frames",
+      "bytes": 27968,
+      "sha256": "a6f4d0416521eea96e67a42e891b1463bf126ea81148a78a9f176af82d1a985e",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        768,
+        384
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f00.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2226,
+      "sha256": "ae44cb219d095a691468f5e29dd5b3fec22f1282177c3d6072d825fe5198b3df",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f01.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2212,
+      "sha256": "56f71209ce2c1ce22369cafd1fce79829a03f047a4219e4239bb7930fa5765e1",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f02.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2318,
+      "sha256": "5a7729b0898ea753458879c6c58723cb88f0602c43fc21a4713c6b2e17a1fadd",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f03.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2176,
+      "sha256": "bd56f1d1b524d9763c577f479379c9aaa46f818711becd479a2b951a04fde6e0",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f04.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2173,
+      "sha256": "fc01fa830cc46551e2a7caad84e6a50a5d4b9d5f2fbc38b1f72770383fd91c8a",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_daggerlunge_f05.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2221,
+      "sha256": "bfc03f7b41c9da73b34fe91570c24eb9bc1f189fbfa33a870fc98d5e852b80db",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_hit_f00.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2186,
+      "sha256": "ea7f0d8e796dc4fdc5cab92297935bbb702fc2ebc5ba10ec96335d65e1ab969f",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_hit_f01.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2204,
+      "sha256": "43e533fab3af9f4e11c25e345d0e21da8c5e9b3a76acf1c6dbc6a5803ebc31b8",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_idle_f00.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2238,
+      "sha256": "e869fbec650126ffffbca3d41e51b1d9eb3e9af25d520e46baabd684bbfed67a",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_idle_f01.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2159,
+      "sha256": "f33e4f24d7587b2de62dac3772076b9b49f6c36310b9f094021244e3ea338428",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_idle_f02.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2153,
+      "sha256": "d11499cf6ce9bcbdf6fee5998a17337ab09e3f4c9165855142be33e139c5d957",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_idle_f03.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2271,
+      "sha256": "08a390f3e5005ff159c6bff3c29d12fa70b2bc1009a04ba2a12559a41bea29a2",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f00.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2175,
+      "sha256": "41c8c9088f92c1457a067a031603487ae75ada8a633aa144eff5d147384cd2bd",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f01.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2208,
+      "sha256": "35ab9074a49ec86e257530f2ac8044644ef372410668fa0e925208a8ee9dc4c0",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f02.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2292,
+      "sha256": "15348905d191c1ac42227fb7d81980fd88b041667f132c6e029b71ba7c0d4ee9",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f03.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2352,
+      "sha256": "f02a2b233153bde0b54e6596ca1039aebc964359bc1910abbf965952ec7f688b",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f04.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2313,
+      "sha256": "25ca1a48b658e77a1bb573db13da691a60c9c9c342f0571b9069f541b8df32c8",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/frames/chr_enemy_runner_run_f05.png",
+      "role": "character_animation_frame",
+      "production_method": "deterministic_2d_part_rig_from_approved_art002_turnaround",
+      "bytes": 2234,
+      "sha256": "01abea9f9418a39bea151a8d858786ff268b5dd87fcca522b8a0a0be3042ec68",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/characters/runner/rig_debug_sheet.png",
+      "role": "character_sprite_sheet",
+      "production_method": "deterministic_grid_pack_from_art004_character_frames",
+      "bytes": 56140,
+      "sha256": "b9f84ef21c06e0e33c052dc94993a2dd0635609040963ce9484d5c3236364e99",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        1480,
+        560
+      ]
+    },
+    {
+      "path": "art/production/ART-004/clip_frame_metadata.json",
+      "role": "package_documentation_or_metadata",
+      "production_method": "authored_art004_production_blueprint",
+      "bytes": 91358,
+      "sha256": "b6882d069aba356b209e150920a91a6e703bc603857aa73954d765fec88131c2",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/previews/contact_sheets/contact_all_7_classes_comparison.png",
+      "role": "static_contact_sheet",
+      "production_method": "deterministic_multiscale_contact_sheet_builder",
+      "bytes": 136672,
+      "sha256": "b9f0dfad6f61c0ef8019cc432a5670227dccf2ae25004a8cbdc15de3ccdb4bbd",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        1660,
+        820
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/contact_sheets/contact_boss_16f.png",
+      "role": "static_contact_sheet",
+      "production_method": "deterministic_multiscale_contact_sheet_builder",
+      "bytes": 250803,
+      "sha256": "b7dd6424eb54a164ef183efbc9a1ca35e698546f979a8845a1f36380f3f9eec6",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        1464,
+        1396
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/contact_sheets/contact_brute_18f.png",
+      "role": "static_contact_sheet",
+      "production_method": "deterministic_multiscale_contact_sheet_builder",
+      "bytes": 181346,
+      "sha256": "56fcb0c06e320ece2ffcf1e6edd8d793f6ee38e685f63e05207fd47f9d04bdca",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        1636,
+        982
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/contact_sheets/contact_fighter_18f.png",
+      "role": "static_contact_sheet",
+      "production_method": "deterministic_multiscale_contact_sheet_builder",
+      "bytes": 145804,
+      "sha256": "65cc877dc9ae11c5cd5ea4f6abe3373b8ba7e893f0270eadb83225c64dc469e9",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        1636,
+        982
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/contact_sheets/contact_guard_18f.png",
+      "role": "static_contact_sheet",
+      "production_method": "deterministic_multiscale_contact_sheet_builder",
+      "bytes": 122882,
+      "sha256": "53012aca4f2fb959c212a95065902ce971413aa31c8a8d5b84ce72779cf65bc5",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        1636,
+        982
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/contact_sheets/contact_runner_18f.png",
+      "role": "static_contact_sheet",
+      "production_method": "deterministic_multiscale_contact_sheet_builder",
+      "bytes": 112453,
+      "sha256": "9b42b8d76643b770482d4278a797262cbbff4f0fab3f4af1671ed4cd87441cc3",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        1636,
+        982
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/contact_sheets/contact_vfx_and_action_sync.png",
+      "role": "static_contact_sheet",
+      "production_method": "deterministic_multiscale_contact_sheet_builder",
+      "bytes": 122522,
+      "sha256": "26e80dd2dc792e7f4d8689a3b0344a717979b3cf3d12479667eccb5344df62ca",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        1720,
+        1080
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/all_7_classes_gameplay_showcase_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 1206596,
+      "sha256": "a2d8a74cea2c203ecf7c899d7ac56e166ca687eb396c9d72be3224b26776e124",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        540,
+        960
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/boss_cleaveslam_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 110980,
+      "sha256": "ba46ae53adb1a42d813a1e7b06bd383dab850e9a8a81396fcb3d7ed5ef68c48d",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/boss_hit_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 81609,
+      "sha256": "6c350019a4cccb493583e5a2de4808228f151ea05e8050befaf319132ec7b575",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/boss_idlemarch_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 84083,
+      "sha256": "5050ce6e8c098ea23e62a0af13bcfd0981adae853cc9869d8c03ad9ad1b5a296",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/brute_gauntletcrush_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 79371,
+      "sha256": "5c49913694ff383ad0249c2d4fcb1ab7ce12dafb4ee13164a2298c17eb7966a5",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/brute_hit_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 77726,
+      "sha256": "b86a9395d1baa11ebf490ffab17e76b5538ad035cad914497023996f284e84ca",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/brute_idle_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 52596,
+      "sha256": "f542daab07ac4fa4e19696788ed7b5bb0284e76459f0b37b2270969c2c28e309",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/brute_march_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 79406,
+      "sha256": "17c375bca81f873eb0e9b19d15eaec805138bf4a128f213036d4ac4007d72993",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/fighter_hit_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 65713,
+      "sha256": "46ef5717dcb280fa019406928a47fd0fbd7e6925f5947c47fa0b3874c8b6be50",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/fighter_idle_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 43882,
+      "sha256": "fc7ce4460e5eee31e2d0851e2b4c3d53ea09a98e66a8cf24e7546fb5962a41c8",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/fighter_swordslash_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 68398,
+      "sha256": "db2334c76a3255f02cb7b75ebe951cfe29850c87b80111b874fc1134913f7590",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/fighter_walk_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 66661,
+      "sha256": "1cbe286631c64308e7eb7c7dda4c27ad060b115e3f2ea86e0b3113b91205252e",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/guard_hit_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 64037,
+      "sha256": "bbf6020ae80f2b659f336d05277af451cd7c99adf3f42b97a130b5bef92a4496",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/guard_idle_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 42101,
+      "sha256": "89691b7cc33c441e48c9c237019c6593158a20abe6e50d1827a9749615108bcc",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/guard_shieldbrace_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 66728,
+      "sha256": "bedb07b09755997c4cd344ec83cb4225d64bf23ccd9bf6ea8978d086a25aee0f",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/guard_walk_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 64173,
+      "sha256": "62ae80c6a5cdf3d20ccab1693e40f4fbe877f45af647b9a64d78cf1b68d121f5",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/runner_daggerlunge_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 58296,
+      "sha256": "d6d1279bdba81f039235e5ae5421e674b4c5c83c5e35bb30df05cf147e44552b",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/runner_hit_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 56572,
+      "sha256": "b241135578e7749b3b98f579094799ad8cde15494b3325ec8c54f545508ebfc9",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/runner_idle_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 37480,
+      "sha256": "f222a56f2bc052171669cfd48fb813acbec8b1afa290fe77dbca78004abf90f6",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/runner_run_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 55971,
+      "sha256": "639ea77f5a2791960264c08931758cc4dbc81eebd78804111f3b8f0ddef804c8",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/sync_boss_cleaveslam_telegraph_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 146269,
+      "sha256": "08dc7f630f49cb6d9f6732ad9870f1fb7225e4c3ad327cc2715381da72db39f0",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/sync_fighter_slash_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 65225,
+      "sha256": "314cb0b81ead06cd1af7c21442b39ca4cb4ad0de75dfe3e52ae603912e38be1e",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/sync_guard_shieldblock_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 66521,
+      "sha256": "2642994414504a17348b9b6d30b8c3b9a76d531b658857ff9bbe2161bd51beef",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/sync_runner_hitpuff_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 59410,
+      "sha256": "d15a5b932d0dd0f1528cc4460031a47975201591d352042c0744168a15572af5",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/vfx_boss_slam_telegraph_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 98063,
+      "sha256": "48317b98a56d98873ddd8ca0ccb757113f6ceb8f3bafa63fc53a44a8d356dae8",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/vfx_fighter_slash_arc_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 32621,
+      "sha256": "c889d7ad819783147ec848814841efa0d7bbad3d50352c92f55115425b9c26f3",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/vfx_guard_shield_block_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 34805,
+      "sha256": "ca682aa7cbab716c7a18675c4e9b8c1119c53cd55d0d8fc2241e0206a9e6eea8",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/gifs/vfx_unit_hit_puff_12fps.gif",
+      "role": "animated_gif_preview_12fps",
+      "production_method": "deterministic_12fps_gif_preview_builder",
+      "bytes": 47878,
+      "sha256": "d2cdeff024938d7b4d010eb5ccbd76a812c664020c6bd4249ca8c27eccf0c4be",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        440,
+        320
+      ]
+    },
+    {
+      "path": "art/production/ART-004/previews/mp4/art004_all_7_classes_showcase_1280x720_12fps.mp4",
+      "role": "stream_mp4_preview_h264_12fps",
+      "production_method": "ffmpeg_libx264_yuv420p_12fps_stream_encoder",
+      "bytes": 1144607,
+      "sha256": "fb9c0f8a538ed031c3c4d664b8ff81abf776fc91d247579290de28dad6c2329f",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/previews/mp4/art004_gameplay_1080x1920_12fps.mp4",
+      "role": "stream_mp4_preview_h264_12fps",
+      "production_method": "ffmpeg_libx264_yuv420p_12fps_stream_encoder",
+      "bytes": 597131,
+      "sha256": "8aa8957cd3f9f4bab100ed6cdee34e0b5586e0e9b4dd6589a8cdbd9ec70214a9",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/previews/mp4/art004_gameplay_360x640_12fps.mp4",
+      "role": "stream_mp4_preview_h264_12fps",
+      "production_method": "ffmpeg_libx264_yuv420p_12fps_stream_encoder",
+      "bytes": 58683,
+      "sha256": "f99e967b6675e37568031bd198b5932c0c8025712208058566a8407725164005",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/previews/mp4/art004_gameplay_720x1280_12fps.mp4",
+      "role": "stream_mp4_preview_h264_12fps",
+      "production_method": "ffmpeg_libx264_yuv420p_12fps_stream_encoder",
+      "bytes": 250530,
+      "sha256": "3047bd28966c6409eeb9492bdeaf78e9a3a3a194c876b838067bf98437ec398c",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/qa/adversarial_validator_results.json",
+      "role": "qa_evidence_and_metrics",
+      "production_method": "independent_mechanical_adversarial_and_unity_validator",
+      "bytes": 3565,
+      "sha256": "340dc71510242dde6fd573aef2e8c44090e5d86dc9df81af09155321bee8c086",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/qa/qa_360x640_and_grayscale_proof.png",
+      "role": "qa_evidence_and_metrics",
+      "production_method": "independent_mechanical_adversarial_and_unity_validator",
+      "bytes": 280843,
+      "sha256": "6efcd4413321bb23b53e25d0a112fe4f4c480674953e297bd964dd0c9e700d5e",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        1620,
+        860
+      ]
+    },
+    {
+      "path": "art/production/ART-004/qa/qa_at_scale_gameplay_board.png",
+      "role": "qa_evidence_and_metrics",
+      "production_method": "independent_mechanical_adversarial_and_unity_validator",
+      "bytes": 418986,
+      "sha256": "55528b10e1604f17e7b8628019c6f2ad99ba7b7c1be45d82b8300b59a7da3261",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        1660,
+        980
+      ]
+    },
+    {
+      "path": "art/production/ART-004/qa/qa_foot_pivot_and_alpha_audit.png",
+      "role": "qa_evidence_and_metrics",
+      "production_method": "independent_mechanical_adversarial_and_unity_validator",
+      "bytes": 35217,
+      "sha256": "70ad1f2761f66a633a0ad597f5c49935971b2ee82e27c5647d8a7a907781f01d",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        1620,
+        660
+      ]
+    },
+    {
+      "path": "art/production/ART-004/qa/qa_h264_compression_proof.png",
+      "role": "qa_evidence_and_metrics",
+      "production_method": "independent_mechanical_adversarial_and_unity_validator",
+      "bytes": 240067,
+      "sha256": "d5118968fcb2143870523d3a1d247e5308b4954175ba6abb2ede0f440fe1542b",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        1520,
+        620
+      ]
+    },
+    {
+      "path": "art/production/ART-004/qa/qa_metrics.json",
+      "role": "qa_evidence_and_metrics",
+      "production_method": "independent_mechanical_adversarial_and_unity_validator",
+      "bytes": 5971,
+      "sha256": "d4b9dabd5caa013912c0905cdfa3f25184e23cf4f6a9f19d7237d4f9b2ec2854",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/qa/qa_report.md",
+      "role": "qa_evidence_and_metrics",
+      "production_method": "independent_mechanical_adversarial_and_unity_validator",
+      "bytes": 11922,
+      "sha256": "81f0903efe145aac71335c52be1bad16bc070ec8f6cb05957061c34bc8b574c5",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/qa/qa_temporal_flicker_and_onion_skin.png",
+      "role": "qa_evidence_and_metrics",
+      "production_method": "independent_mechanical_adversarial_and_unity_validator",
+      "bytes": 50095,
+      "sha256": "0ae3fe43ed94ca4745919c0b44047b54f35c274616739413eaf2c7d77ae3c33e",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        1620,
+        740
+      ]
+    },
+    {
+      "path": "art/production/ART-004/qa/unity_isolated_verification.json",
+      "role": "qa_evidence_and_metrics",
+      "production_method": "independent_mechanical_adversarial_and_unity_validator",
+      "bytes": 4238,
+      "sha256": "53e2620d454df68ea9153119b9db0871839ccac47862bd232b078913af5f073d",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/tools/art004_rig_lib.py",
+      "role": "reproducible_pipeline_tool",
+      "production_method": "authored_python_production_and_qa_pipeline",
+      "bytes": 44954,
+      "sha256": "843aecf6c89c177e38f952d4aa7ab80e1410dbc6d17425d773548ea55a9f62f8",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/tools/build_art004_atlas_and_previews.py",
+      "role": "reproducible_pipeline_tool",
+      "production_method": "authored_python_production_and_qa_pipeline",
+      "bytes": 55919,
+      "sha256": "383341cde0c5f40e3fd9be9ca1e8b4dc5cdaabaac943faeb489364c046bcc583",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/tools/build_art004_characters_and_vfx.py",
+      "role": "reproducible_pipeline_tool",
+      "production_method": "authored_python_production_and_qa_pipeline",
+      "bytes": 71295,
+      "sha256": "4a9928e4bebb56685b34a1b826c1082ca0866a2266baee6f9091a591bd976393",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/tools/validate_art004_qa_and_manifest.py",
+      "role": "reproducible_pipeline_tool",
+      "production_method": "authored_python_production_and_qa_pipeline",
+      "bytes": 48892,
+      "sha256": "1880a191a0b43f29924a83cad9aa863259c63f338f2186a7d4902126681efb46",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f00.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 3472,
+      "sha256": "06af0820fe8dec6e1d6e50e4fb62a7fbe2729feec7dbeb6b53c8cff0acda9375",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f01.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 3567,
+      "sha256": "96ddd298f3dda25fb40fd76a01d514aec508383acb45c52b59277e5b12df33cc",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f02.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 3608,
+      "sha256": "b9f0beb208fade8518fdb56e00a98f35c3e0f7b0be06b09c38057c08942fb208",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f03.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 3460,
+      "sha256": "175eb624e90d2364fdf1f36fd0da405abe03c21f6a771878a0cb6638d3c1ffdf",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f04.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 3386,
+      "sha256": "236489eb14cad215576886d9e1d5a19d07454880c6408b0abeab753e7822020c",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f05.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 4002,
+      "sha256": "7ac22256381cabe6af6c91cbc472cca9e453c1f8a07344d82b51d700768f3af8",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f06.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 4180,
+      "sha256": "2fc4c22e6c441c9ec9195221c01998dee2bb72d0c17a7d4e9526ec8bcbfbd61b",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f07.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 2632,
+      "sha256": "390af19021111b1f5b79e43573c0538c70b2f9d4c269c539ba6808cb030584a1",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f08.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 1325,
+      "sha256": "8da2ce388c509e2c3106c6bbb1538cad6b099f2125f4d99b06b6aa7578a47322",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/boss_slam_telegraph/frames/vfx_boss_slam_telegraph_f09.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 875,
+      "sha256": "8d6186f9686a2b2f9ad3263a731b4aba0d4b65985993febb6a95c31f276971f8",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        256,
+        256
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/boss_slam_telegraph/vfx_boss_slam_telegraph_sheet.png",
+      "role": "combat_vfx_sprite_sheet",
+      "production_method": "deterministic_grid_pack_from_art004_vfx_frames",
+      "bytes": 25996,
+      "sha256": "b0a437e4ccc9e335e925ff20071340e7ec425b5bdec61f1a806f25fbe27a2590",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        1280,
+        512
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/fighter_slash_arc/frames/vfx_fighter_slash_arc_f00.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 753,
+      "sha256": "60a2256965e7ab5656c47f1e6529b7ffdbafa68938e9286ee1810f3ad5ea9016",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/fighter_slash_arc/frames/vfx_fighter_slash_arc_f01.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 1463,
+      "sha256": "9b6e346681e87f63d645628d2003a00c2a97d0807c85491bb1485888ccf04b6f",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/fighter_slash_arc/frames/vfx_fighter_slash_arc_f02.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 941,
+      "sha256": "1c04f84b1572ebec46e09b2c9bcf11fdfe39a3b2da21700745cc3f7d6c7aa233",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/fighter_slash_arc/frames/vfx_fighter_slash_arc_f03.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 535,
+      "sha256": "dd06b878ec2d4a51df89035d2df2a255dd3a45a99275f7f9a1613bfa08f2b6fe",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/fighter_slash_arc/vfx_fighter_slash_arc_sheet.png",
+      "role": "combat_vfx_sprite_sheet",
+      "production_method": "deterministic_grid_pack_from_art004_vfx_frames",
+      "bytes": 3098,
+      "sha256": "bde1723afcd00693bd023c99847dbb8716bb55c839ebf795ca0be1b59eb65238",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        512,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/guard_shield_block/frames/vfx_guard_shield_block_f00.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 1213,
+      "sha256": "57bd6328b49c8f9b48d138daf70f601dd797ea5e3754068bdc9c81ff27e02404",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/guard_shield_block/frames/vfx_guard_shield_block_f01.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 1749,
+      "sha256": "773e36383c75594a0dc078e99b5691aa76742e2d670d555f800454adefd32a72",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/guard_shield_block/frames/vfx_guard_shield_block_f02.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 1184,
+      "sha256": "29773bc88648ce690344f310c0ab79621f25d88a979f05ce64d89e7c3a1f91d6",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/guard_shield_block/frames/vfx_guard_shield_block_f03.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 624,
+      "sha256": "421b59d7933f38fa110ad09a07e23b43c2e06330db2f582ab00c9327a28828c6",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/guard_shield_block/vfx_guard_shield_block_sheet.png",
+      "role": "combat_vfx_sprite_sheet",
+      "production_method": "deterministic_grid_pack_from_art004_vfx_frames",
+      "bytes": 4213,
+      "sha256": "2e664f3d2b0eed004e24f63fdcf677542b8a90b455591deaf3285b3cd2dd1893",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        512,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f00.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 870,
+      "sha256": "b613107122a0f5b555e1de9d970eecda8023f646e8d84fc7b5e2e74621e3c1e1",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f01.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 1513,
+      "sha256": "4be5b383d45921c4adb42af042582082e4d0c86d4251254f4dd2b1732dd0ed93",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f02.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 1486,
+      "sha256": "76e1cb81ac644b21b57a61bc98b85cfaa12821f61984fcb09e15dcd6977c72be",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f03.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 1015,
+      "sha256": "3b2851b78f3fb7b035382c8021387b3487d77cf470493fd90cb10adc0b06a288",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f04.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 761,
+      "sha256": "41dd1ccfef1071a372d550ac5847decf0a379cfdd9bace8592d149c6a0ddfa42",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/unit_hit_puff/frames/vfx_unit_hit_puff_f05.png",
+      "role": "combat_vfx_frame",
+      "production_method": "deterministic_procedural_cel_vfx_generator",
+      "bytes": 327,
+      "sha256": "7d965bf7d73c60a66a3e1b0fc89c062ada80dfaeacdc108e94c5e0a82c6b4669",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        128,
+        128
+      ]
+    },
+    {
+      "path": "art/production/ART-004/vfx/unit_hit_puff/vfx_unit_hit_puff_sheet.png",
+      "role": "combat_vfx_sprite_sheet",
+      "production_method": "deterministic_grid_pack_from_art004_vfx_frames",
+      "bytes": 5184,
+      "sha256": "6b1615170fbb538599ce88308b905fec54bdc5e3b406a593ba2d4e00a373bfe3",
+      "rights_status": "PENDING_REVIEW",
+      "dimensions": [
+        768,
+        128
+      ]
+    }
+  ]
+}

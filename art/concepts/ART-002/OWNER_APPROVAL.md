@@ -81,7 +81,7 @@ You can inspect the entire visual design at a glance without reading any source 
 - **Approver:** Repository Owner (`hungdev98`) via explicit interactive approval gate prior to `ART-003` execution
 - **Recorded Timestamp:** `2026-11-05T15:15:37+07:00` (`2026-11-05T08:15:37Z`)
 - **Inspected Base Commit:** `32b963e47ee490979c3ff370cf6a5d3cddcdcc1e`
-- **Scope & Governance Note:** Approves all 8 visual/technical blueprint items below (locking `Bastion Dawn v1`, `256 × 256` Boss cell at `PPU = 192`, and 4 cosmetic Townhall level bands) and authorizes `ART-003` (`Builder` + `Grunt` + `vfx_builder_repair_spark` production pilot). Asset commercial/livestream legal clearance (`GATE-LEGAL`, `rights_status = PENDING_REVIEW`), `QA-PSY-01`, `GATE-OBS`, and `GATE-LIVE` remain separate unexecuted gates.
+- **Scope & Governance Note:** Approves all 8 visual/technical blueprint items below (locking `Bastion Dawn v1`, `256 × 256` Boss cell at `PPU = 192`, and 4 cosmetic Townhall level bands), authorizes `ART-003` (`Builder` + `Grunt` + `vfx_builder_repair_spark` production pilot), and via explicit follow-up sign-off on `2026-11-05T16:51:17+07:00` (`2026-11-05T09:51:17Z`, inspected HEAD `24966d6a99dd868729ea5ee1ad99c4b7b1e89675`) authorizes `ART-004` (`Guard`, `Fighter` with crimson cloth shoulders / no steel pauldrons, `Runner`, `Brute`, `Boss`, and 4 remaining combat VFX = `112` frames) plus narrow `ART-003` `Idle`/validator hardening. Asset commercial/livestream legal clearance (`GATE-LEGAL`, `rights_status = PENDING_REVIEW`), `QA-PSY-01`, `GATE-OBS`, and `GATE-LIVE` remain separate unexecuted gates.
 
 ```text
 [x] Approve Bastion Dawn visual direction

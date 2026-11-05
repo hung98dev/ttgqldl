@@ -19,7 +19,7 @@ On **`2026-11-05T15:15:37+07:00`**, the repository owner (`hungdev98`) explicitl
 3. `[x]` Environment layout (`44%` central bastion width, unmistakable West/Center/East lanes, low-noise sunlit meadow `#68A347`) approved.
 4. `[x]` Vertical `9:16` HUD (`<= 22%` safe-area budget, single primary CTA `"Bình luận XÂY / THỦ / ĐÁNH"`, safe zones `x > 82%` and `y > 88%`) approved.
 5. `[x]` `Boss` `256×256` source cell size (`PPU = 192`, `96–112 px` displayed gameplay height) approved.
-6. `[x]` `4` cosmetic Townhall damage states (`100–75%`, `74–40%`, `39–1%`, `0%`) approved without altering [02_GAME_RULES.md](../../../docs/plan/02_GAME_RULES.md).
+6. `[x]` `4` cosmetic Townhall level bands (`Lv 1–9`, `10–24`, `25–39`, `40–50`; authoritative `townhall_hp = 500` unchanged) approved without altering [02_GAME_RULES.md](../../../docs/plan/02_GAME_RULES.md).
 7. `[x]` `360×640` mobile downscale (`16 px` unit height), BT.709 grayscale separation, and H.264 stream compression targets approved.
 8. `[x]` Full transition from `ART-002` blueprint to `ART-003` sprite animation vertical slice authorized for execution, commit, and push on `main`.
 

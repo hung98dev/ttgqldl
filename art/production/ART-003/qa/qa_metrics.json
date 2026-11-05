@@ -20,14 +20,23 @@
   "mandatory_failure_tests_10_of_10": {
     "1_builder_hammer_shape_constant": "PASS (rigid FK tool layer from locked builder_ref_q34 cutout, 0% shape mutation)",
     "2_grunt_club_size_constant": "PASS (rigid FK club layer from locked grunt_ref_q34 cutout, constant 68px shaft+head length)",
-    "3_idle_zero_horizontal_sliding": "PASS (Builder X range 67.0..67.0px; Grunt X range 71.0..71.0px)",
-    "4_walk_feet_planted_no_skating": "PASS (alternating stance contacts grounded at y=117..119 around pivot (64,117))",
+    "3_idle_zero_horizontal_sliding": "PASS (Builder front/back drift=0.0/0.0px; Grunt front/back drift=0.0/0.0px)",
+    "4_walk_feet_planted_no_skating": "PASS (Builder stance tread=10.5/7.0px; Grunt stance tread=12.5/9.5px; 0px forward skating)",
     "5_head_scale_constant": "PASS (locked rigid head sprite layer across all 18 frames per character, 0% scale drift)",
     "6_shadow_light_direction_consistent": "PASS (fixed 45-deg top-left sunlit cel bands + unified ground shadow ellipse)",
     "7_action_poses_inside_128x128_cell": "PASS (all 42 frames strictly inside [22..122, 6..123], 0 clipped pixels)",
-    "8_loop_seam_clean_final_to_first": "PASS (all cyclic loops verified with seam_to_mean_ratio 0.42..1.015)",
+    "8_loop_seam_clean_final_to_first": "PASS (all 4 cyclic loops verified strictly inside [0.75, 1.65]: min=0.901, max=1.015)",
     "9_no_repeated_static_frames": "PASS (min adjacent frame change = 206 pixels across all 9 clips)",
     "10_vfx_does_not_obscure_character": "PASS (86.1% of Builder silhouette remains completely unobstructed at peak spark burst)"
+  },
+  "negative_validator_self_tests": {
+    "1_reject_low_loop_seam_below_0_75": "CAUGHT (synthetic ratio=0.043 < 0.75 rejected)",
+    "2_reject_high_loop_seam_above_1_65": "CAUGHT (synthetic ratio=2.346 > 1.65 rejected)",
+    "3_reject_idle_foot_slip": "CAUGHT (Idle foot slip detected in builder.idle: front_dx=2.0, back_dx=0.0, front_dy=0.0, back_dy=0.0)",
+    "4_reject_walk_stance_foot_skating": "CAUGHT (Unverified back foot sole (68.0,118.0) has no opaque pixels in PNG for builder.walk f0)",
+    "5_reject_unanchored_foot_metadata": "CAUGHT (Unverified front foot sole (10.0,10.0) has no opaque pixels in PNG for builder.idle f1)",
+    "6_reject_semi_transparent_alpha_halo": "CAUGHT (semi_transparent_pixels=1 > 0 rejected)",
+    "7_reject_border_weapon_clipping": "CAUGHT (y_min=0 < 1px border margin rejected)"
   },
   "clip_diagnostics": [
     {
@@ -37,14 +46,14 @@
       "fps": 12,
       "is_cyclic_loop": true,
       "adjacent_changed_pixels": [
-        1702,
-        2181,
-        1716
+        1745,
+        1697,
+        1742
       ],
-      "min_adjacent_changed_pixels": 1702,
-      "mean_adjacent_changed_pixels": 1866.3,
-      "loop_seam_changed_pixels": 783,
-      "loop_seam_to_mean_ratio": 0.42,
+      "min_adjacent_changed_pixels": 1697,
+      "mean_adjacent_changed_pixels": 1728.0,
+      "loop_seam_changed_pixels": 1662,
+      "loop_seam_to_mean_ratio": 0.962,
       "foot_contact_y_px": [
         117,
         117,
@@ -56,7 +65,50 @@
         67.0,
         67.0,
         67.0
-      ]
+      ],
+      "per_foot_stance_audit": {
+        "mode": "planted_idle_dual_support",
+        "front_foot_x_drift_px": 0.0,
+        "back_foot_x_drift_px": 0.0,
+        "front_foot_y_drift_px": 0.0,
+        "back_foot_y_drift_px": 0.0,
+        "front_foot_xy": [
+          [
+            52.5,
+            117.0
+          ],
+          [
+            52.5,
+            117.0
+          ],
+          [
+            52.5,
+            117.0
+          ],
+          [
+            52.5,
+            117.0
+          ]
+        ],
+        "back_foot_xy": [
+          [
+            73.0,
+            117.0
+          ],
+          [
+            73.0,
+            117.0
+          ],
+          [
+            73.0,
+            117.0
+          ],
+          [
+            73.0,
+            117.0
+          ]
+        ]
+      }
     },
     {
       "entity": "builder",
@@ -90,7 +142,24 @@
         76.0,
         72.0,
         67.0
-      ]
+      ],
+      "per_foot_stance_audit": {
+        "mode": "alternating_stance_tread_verified",
+        "front_stance_x_tread_px": [
+          60.0,
+          56.0,
+          49.5
+        ],
+        "front_stance_tread_span_px": 10.5,
+        "back_stance_x_tread_px": [
+          79.0,
+          76.0,
+          72.0
+        ],
+        "back_stance_tread_span_px": 7.0,
+        "back_swing_min_y_px": 114.0,
+        "front_swing_min_y_px": 116.0
+      }
     },
     {
       "entity": "builder",
@@ -124,7 +193,8 @@
         74.0,
         77.0,
         70.0
-      ]
+      ],
+      "per_foot_stance_audit": {}
     },
     {
       "entity": "builder",
@@ -146,7 +216,8 @@
       "foot_median_x_px": [
         66.0,
         67.0
-      ]
+      ],
+      "per_foot_stance_audit": {}
     },
     {
       "entity": "grunt",
@@ -155,14 +226,14 @@
       "fps": 12,
       "is_cyclic_loop": true,
       "adjacent_changed_pixels": [
-        2472,
-        2965,
-        2359
+        2360,
+        2060,
+        2384
       ],
-      "min_adjacent_changed_pixels": 2359,
-      "mean_adjacent_changed_pixels": 2598.7,
-      "loop_seam_changed_pixels": 1157,
-      "loop_seam_to_mean_ratio": 0.445,
+      "min_adjacent_changed_pixels": 2060,
+      "mean_adjacent_changed_pixels": 2268.0,
+      "loop_seam_changed_pixels": 2043,
+      "loop_seam_to_mean_ratio": 0.901,
       "foot_contact_y_px": [
         117,
         117,
@@ -174,7 +245,50 @@
         71.0,
         71.0,
         71.0
-      ]
+      ],
+      "per_foot_stance_audit": {
+        "mode": "planted_idle_dual_support",
+        "front_foot_x_drift_px": 0.0,
+        "back_foot_x_drift_px": 0.0,
+        "front_foot_y_drift_px": 0.0,
+        "back_foot_y_drift_px": 0.0,
+        "front_foot_xy": [
+          [
+            47.0,
+            117.0
+          ],
+          [
+            47.0,
+            117.0
+          ],
+          [
+            47.0,
+            117.0
+          ],
+          [
+            47.0,
+            117.0
+          ]
+        ],
+        "back_foot_xy": [
+          [
+            78.0,
+            117.0
+          ],
+          [
+            78.0,
+            117.0
+          ],
+          [
+            78.0,
+            117.0
+          ],
+          [
+            78.0,
+            117.0
+          ]
+        ]
+      }
     },
     {
       "entity": "grunt",
@@ -208,7 +322,24 @@
         83.0,
         78.0,
         70.0
-      ]
+      ],
+      "per_foot_stance_audit": {
+        "mode": "alternating_stance_tread_verified",
+        "front_stance_x_tread_px": [
+          55.5,
+          51.0,
+          43.0
+        ],
+        "front_stance_tread_span_px": 12.5,
+        "back_stance_x_tread_px": [
+          84.5,
+          82.0,
+          75.0
+        ],
+        "back_stance_tread_span_px": 9.5,
+        "back_swing_min_y_px": 114.0,
+        "front_swing_min_y_px": 114.0
+      }
     },
     {
       "entity": "grunt",
@@ -242,7 +373,8 @@
         73.0,
         101.0,
         74.0
-      ]
+      ],
+      "per_foot_stance_audit": {}
     },
     {
       "entity": "grunt",
@@ -264,7 +396,8 @@
       "foot_median_x_px": [
         48.0,
         72.0
-      ]
+      ],
+      "per_foot_stance_audit": {}
     },
     {
       "entity": "vfx_builder_repair_spark",
@@ -298,7 +431,8 @@
         85.0,
         39.0,
         66.5
-      ]
+      ],
+      "per_foot_stance_audit": {}
     }
   ],
   "gif_previews": [
@@ -535,18 +669,18 @@
       "frame_index": 0,
       "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f00.png",
       "bbox": [
-        26,
-        32,
-        86,
+        24,
+        31,
+        84,
         117
       ],
       "margins_ltrb": [
-        26,
-        32,
-        41,
+        24,
+        31,
+        43,
         10
       ],
-      "opaque_pixels": 2786,
+      "opaque_pixels": 2807,
       "semi_transparent_pixels": 0,
       "unique_colors": 14,
       "has_dark_ink_11151c": true
@@ -557,18 +691,18 @@
       "frame_index": 1,
       "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f01.png",
       "bbox": [
-        28,
+        26,
         34,
-        87,
+        86,
         117
       ],
       "margins_ltrb": [
-        28,
+        26,
         34,
-        40,
+        41,
         10
       ],
-      "opaque_pixels": 2741,
+      "opaque_pixels": 2752,
       "semi_transparent_pixels": 0,
       "unique_colors": 14,
       "has_dark_ink_11151c": true
@@ -579,18 +713,18 @@
       "frame_index": 2,
       "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f02.png",
       "bbox": [
-        24,
-        30,
-        84,
+        28,
+        33,
+        87,
         117
       ],
       "margins_ltrb": [
-        24,
-        30,
-        43,
+        28,
+        33,
+        40,
         10
       ],
-      "opaque_pixels": 2840,
+      "opaque_pixels": 2763,
       "semi_transparent_pixels": 0,
       "unique_colors": 14,
       "has_dark_ink_11151c": true
@@ -601,18 +735,18 @@
       "frame_index": 3,
       "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f03.png",
       "bbox": [
-        25,
-        32,
+        26,
+        30,
         85,
         117
       ],
       "margins_ltrb": [
-        25,
-        32,
+        26,
+        30,
         42,
         10
       ],
-      "opaque_pixels": 2784,
+      "opaque_pixels": 2808,
       "semi_transparent_pixels": 0,
       "unique_colors": 14,
       "has_dark_ink_11151c": true
@@ -931,18 +1065,18 @@
       "frame_index": 0,
       "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f00.png",
       "bbox": [
-        28,
-        34,
-        99,
+        26,
+        33,
+        95,
         117
       ],
       "margins_ltrb": [
-        28,
-        34,
-        28,
+        26,
+        33,
+        32,
         10
       ],
-      "opaque_pixels": 3762,
+      "opaque_pixels": 3751,
       "semi_transparent_pixels": 0,
       "unique_colors": 13,
       "has_dark_ink_11151c": true
@@ -953,20 +1087,20 @@
       "frame_index": 1,
       "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f01.png",
       "bbox": [
-        29,
-        37,
-        102,
+        28,
+        35,
+        99,
         117
       ],
       "margins_ltrb": [
-        29,
-        37,
-        25,
+        28,
+        35,
+        28,
         10
       ],
-      "opaque_pixels": 3723,
+      "opaque_pixels": 3731,
       "semi_transparent_pixels": 0,
-      "unique_colors": 14,
+      "unique_colors": 13,
       "has_dark_ink_11151c": true
     },
     {
@@ -975,18 +1109,18 @@
       "frame_index": 2,
       "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f02.png",
       "bbox": [
-        27,
-        32,
-        94,
+        29,
+        35,
+        102,
         117
       ],
       "margins_ltrb": [
-        27,
-        32,
-        33,
+        29,
+        35,
+        25,
         10
       ],
-      "opaque_pixels": 3785,
+      "opaque_pixels": 3767,
       "semi_transparent_pixels": 0,
       "unique_colors": 13,
       "has_dark_ink_11151c": true
@@ -998,19 +1132,19 @@
       "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f03.png",
       "bbox": [
         28,
-        34,
+        32,
         98,
         117
       ],
       "margins_ltrb": [
         28,
-        34,
+        32,
         29,
         10
       ],
-      "opaque_pixels": 3753,
+      "opaque_pixels": 3805,
       "semi_transparent_pixels": 0,
-      "unique_colors": 13,
+      "unique_colors": 14,
       "has_dark_ink_11151c": true
     },
     {
@@ -1455,8 +1589,8 @@
     }
   ],
   "h264_stream_proxy_metrics": {
-    "h264_1080p_crf20_psnr_db": 35.48,
-    "h264_1080p_crf33_psnr_db": 32.81,
-    "h264_360p_crf22_psnr_db": 33.51
+    "h264_1080p_crf20_psnr_db": 35.49,
+    "h264_1080p_crf33_psnr_db": 32.84,
+    "h264_360p_crf22_psnr_db": 33.5
   }
 }

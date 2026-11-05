@@ -1,0 +1,227 @@
+{
+  "package_id": "ART-004",
+  "style_version": "bastion-dawn-v1",
+  "mechanical_validation_15_checks_passed": true,
+  "adversarial_negative_tests_passed": "11/11",
+  "counts": {
+    "character_frames": 88,
+    "vfx_frames": 24,
+    "total_frames": 112,
+    "sprite_sheets": 9,
+    "master_atlas_slices": 112,
+    "gif_previews_12fps": 28,
+    "mp4_previews_12fps": 4
+  },
+  "alpha_and_border_audit": {
+    "total_semi_transparent_halo_pixels": 0,
+    "total_border_clipped_frames": 0,
+    "atlas_gutter_bleed_pixels": 0
+  },
+  "cyclic_loop_seam_metrics": {
+    "guard.idle": {
+      "frames": 4,
+      "mean_step_l1": 5.349,
+      "wrap_l1": 4.185,
+      "seam_ratio": 0.782
+    },
+    "guard.walk": {
+      "frames": 6,
+      "mean_step_l1": 9.905,
+      "wrap_l1": 7.543,
+      "seam_ratio": 0.761
+    },
+    "fighter.idle": {
+      "frames": 4,
+      "mean_step_l1": 6.941,
+      "wrap_l1": 6.641,
+      "seam_ratio": 0.957
+    },
+    "fighter.walk": {
+      "frames": 6,
+      "mean_step_l1": 12.327,
+      "wrap_l1": 10.169,
+      "seam_ratio": 0.825
+    },
+    "runner.idle": {
+      "frames": 4,
+      "mean_step_l1": 3.133,
+      "wrap_l1": 2.986,
+      "seam_ratio": 0.953
+    },
+    "runner.run": {
+      "frames": 6,
+      "mean_step_l1": 10.869,
+      "wrap_l1": 8.554,
+      "seam_ratio": 0.787
+    },
+    "brute.idle": {
+      "frames": 4,
+      "mean_step_l1": 7.199,
+      "wrap_l1": 6.776,
+      "seam_ratio": 0.941
+    },
+    "brute.march": {
+      "frames": 6,
+      "mean_step_l1": 16.009,
+      "wrap_l1": 12.959,
+      "seam_ratio": 0.809
+    },
+    "boss.idlemarch": {
+      "frames": 6,
+      "mean_step_l1": 8.778,
+      "wrap_l1": 6.781,
+      "seam_ratio": 0.773
+    }
+  },
+  "planted_foot_anchoring_metrics": {
+    "guard.idle": {
+      "idle_dx_slip_px": 0.0,
+      "idle_dy_slip_px": 0.0
+    },
+    "guard.walk": {
+      "front_stance_tread_px": 13.5,
+      "back_stance_tread_px": 10.0,
+      "min_swing_y_px": 114.0
+    },
+    "guard.shieldbrace": {
+      "action_grounded": true
+    },
+    "guard.hit": {
+      "action_grounded": true
+    },
+    "fighter.idle": {
+      "idle_dx_slip_px": 0.0,
+      "idle_dy_slip_px": 0.0
+    },
+    "fighter.walk": {
+      "front_stance_tread_px": 11.5,
+      "back_stance_tread_px": 10.5,
+      "min_swing_y_px": 114.0
+    },
+    "fighter.swordslash": {
+      "action_grounded": true
+    },
+    "fighter.hit": {
+      "action_grounded": true
+    },
+    "runner.idle": {
+      "idle_dx_slip_px": 0.0,
+      "idle_dy_slip_px": 0.0
+    },
+    "runner.run": {
+      "front_stance_tread_px": 19.5,
+      "back_stance_tread_px": 14.0,
+      "min_swing_y_px": 112.0
+    },
+    "runner.daggerlunge": {
+      "action_grounded": true
+    },
+    "runner.hit": {
+      "action_grounded": true
+    },
+    "brute.idle": {
+      "idle_dx_slip_px": 0.0,
+      "idle_dy_slip_px": 0.0
+    },
+    "brute.march": {
+      "front_stance_tread_px": 10.5,
+      "back_stance_tread_px": 7.0,
+      "min_swing_y_px": 114.0
+    },
+    "brute.gauntletcrush": {
+      "action_grounded": true
+    },
+    "brute.hit": {
+      "action_grounded": true
+    },
+    "boss.idlemarch": {
+      "front_stance_tread_px": 25.0,
+      "back_stance_tread_px": 12.0,
+      "min_swing_y_px": 229.0
+    },
+    "boss.cleaveslam": {
+      "action_grounded": true
+    },
+    "boss.hit": {
+      "action_grounded": true
+    }
+  },
+  "orientation_consistency": {
+    "guard": {
+      "facing": "+X (3/4 front-right, mirrorable via flipX)",
+      "locomotion_centroid_span_px": 3.35,
+      "anatomical_facing_verified_all_frames": true
+    },
+    "fighter": {
+      "facing": "+X (3/4 front-right, mirrorable via flipX)",
+      "locomotion_centroid_span_px": 3.8,
+      "anatomical_facing_verified_all_frames": true
+    },
+    "runner": {
+      "facing": "+X (3/4 front-right, mirrorable via flipX)",
+      "locomotion_centroid_span_px": 3.61,
+      "anatomical_facing_verified_all_frames": true
+    },
+    "brute": {
+      "facing": "+X (3/4 front-right, mirrorable via flipX)",
+      "locomotion_centroid_span_px": 8.77,
+      "anatomical_facing_verified_all_frames": true
+    },
+    "boss": {
+      "facing": "+X (3/4 front-right, mirrorable via flipX)",
+      "locomotion_centroid_span_px": 11.93,
+      "anatomical_facing_verified_all_frames": true
+    }
+  },
+  "h264_stream_verification": {
+    "psnr_1080p_db": 34.46,
+    "streams": [
+      {
+        "file": "art/production/ART-004/previews/mp4/art004_all_7_classes_showcase_1280x720_12fps.mp4",
+        "codec": "h264",
+        "pix_fmt": "yuv420p",
+        "width": 1280,
+        "height": 720,
+        "r_frame_rate": "12/1",
+        "frames": 60,
+        "duration_s": 5.0
+      },
+      {
+        "file": "art/production/ART-004/previews/mp4/art004_gameplay_1080x1920_12fps.mp4",
+        "codec": "h264",
+        "pix_fmt": "yuv420p",
+        "width": 1080,
+        "height": 1920,
+        "r_frame_rate": "12/1",
+        "frames": 48,
+        "duration_s": 4.0
+      },
+      {
+        "file": "art/production/ART-004/previews/mp4/art004_gameplay_360x640_12fps.mp4",
+        "codec": "h264",
+        "pix_fmt": "yuv420p",
+        "width": 360,
+        "height": 640,
+        "r_frame_rate": "12/1",
+        "frames": 48,
+        "duration_s": 4.0
+      },
+      {
+        "file": "art/production/ART-004/previews/mp4/art004_gameplay_720x1280_12fps.mp4",
+        "codec": "h264",
+        "pix_fmt": "yuv420p",
+        "width": 720,
+        "height": 1280,
+        "r_frame_rate": "12/1",
+        "frames": 48,
+        "duration_s": 4.0
+      }
+    ]
+  },
+  "unity_isolated_batchmode_summary": {
+    "unity_version": "6000.6.7f1",
+    "status": "EXECUTED_ISOLATED_BATCHMODE_PASS",
+    "verified_total_sprites": 154,
+    "master_atlas_runtime_memory_mib": 16.0
+  }
+}

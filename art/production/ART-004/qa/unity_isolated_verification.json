@@ -1,0 +1,110 @@
+{
+  "unity_version": "6000.6.7f1",
+  "verification_scope": "ISOLATED_SCRATCH_PROJECT_BATCHMODE_IMPORT_MULTICLASS_SCENE_AND_ATLAS_PROOF",
+  "production_unity_directory_modified": false,
+  "m06_runtime_integration_status": "NOT_EXECUTED_IN_PRODUCTION_SCENE_GATED_TO_M06",
+  "status": "EXECUTED_ISOLATED_BATCHMODE_PASS",
+  "verified_art004_frame_sprites": 112,
+  "verified_art003_frame_sprites": 42,
+  "total_verified_sprites": 154,
+  "master_atlas_2048_verified": true,
+  "master_atlas_verified_slices": 112,
+  "master_atlas_gutter_bleed_pixels": 0,
+  "master_atlas_runtime_memory_bytes": 16778144,
+  "master_atlas_runtime_memory_mib": 16.0,
+  "ppu": 192,
+  "filter_mode": "Point",
+  "mipmaps_enabled": false,
+  "texture_compression": "Uncompressed",
+  "camera_orthographic_size": 5.0,
+  "mock_multiclass_scene_ysort_and_vfx_ok": true,
+  "mock_scene_pooled_renderers_spawned": 12,
+  "class_measurements": [
+    {
+      "class_key": "builder_art003",
+      "frame_count": 18,
+      "cell_px": 128,
+      "visual_root_scale": 0.558139979839325,
+      "measured_world_cell_size": 0.37209001183509827,
+      "measured_1080p_body_px": 48.0,
+      "measured_360p_body_px": 16.0,
+      "flipx_pivot_drift_world_units": 0.0,
+      "anim_clip_playback_12fps_ok": true
+    },
+    {
+      "class_key": "grunt_art003",
+      "frame_count": 18,
+      "cell_px": 128,
+      "visual_root_scale": 0.558139979839325,
+      "measured_world_cell_size": 0.37209001183509827,
+      "measured_1080p_body_px": 48.0,
+      "measured_360p_body_px": 16.0,
+      "flipx_pivot_drift_world_units": 0.0,
+      "anim_clip_playback_12fps_ok": true
+    },
+    {
+      "class_key": "guard",
+      "frame_count": 18,
+      "cell_px": 128,
+      "visual_root_scale": 0.5517200231552124,
+      "measured_world_cell_size": 0.3678100109100342,
+      "measured_1080p_body_px": 48.0,
+      "measured_360p_body_px": 16.0,
+      "flipx_pivot_drift_world_units": 0.0,
+      "anim_clip_playback_12fps_ok": true
+    },
+    {
+      "class_key": "fighter",
+      "frame_count": 18,
+      "cell_px": 128,
+      "visual_root_scale": 0.558139979839325,
+      "measured_world_cell_size": 0.37209001183509827,
+      "measured_1080p_body_px": 48.0,
+      "measured_360p_body_px": 16.0,
+      "flipx_pivot_drift_world_units": 0.0,
+      "anim_clip_playback_12fps_ok": true
+    },
+    {
+      "class_key": "runner",
+      "frame_count": 18,
+      "cell_px": 128,
+      "visual_root_scale": 0.5432100296020508,
+      "measured_world_cell_size": 0.3621399998664856,
+      "measured_1080p_body_px": 44.0,
+      "measured_360p_body_px": 14.699999809265137,
+      "flipx_pivot_drift_world_units": 0.0,
+      "anim_clip_playback_12fps_ok": true
+    },
+    {
+      "class_key": "brute",
+      "frame_count": 18,
+      "cell_px": 128,
+      "visual_root_scale": 0.666670024394989,
+      "measured_world_cell_size": 0.4444499909877777,
+      "measured_1080p_body_px": 64.0,
+      "measured_360p_body_px": 21.299999237060547,
+      "flipx_pivot_drift_world_units": 0.0,
+      "anim_clip_playback_12fps_ok": true
+    },
+    {
+      "class_key": "boss",
+      "frame_count": 16,
+      "cell_px": 256,
+      "visual_root_scale": 0.57955002784729,
+      "measured_world_cell_size": 0.7727299928665161,
+      "measured_1080p_body_px": 102.0,
+      "measured_360p_body_px": 34.0,
+      "flipx_pivot_drift_world_units": 0.0,
+      "anim_clip_playback_12fps_ok": true
+    }
+  ],
+  "sample_checks": [
+    "chr_role_builder_hit_f00:rect=128x128,pivot=(64.00,10.24),worldCell=0.3721u,1080p=48.0px",
+    "chr_enemy_grunt_clubsmash_f00:rect=128x128,pivot=(64.00,10.24),worldCell=0.3721u,1080p=48.0px",
+    "chr_role_guard_hit_f00:rect=128x128,pivot=(64.00,10.24),worldCell=0.3678u,1080p=48.0px",
+    "chr_role_fighter_hit_f00:rect=128x128,pivot=(64.00,10.24),worldCell=0.3721u,1080p=48.0px",
+    "chr_enemy_runner_daggerlunge_f00:rect=128x128,pivot=(64.00,10.24),worldCell=0.3621u,1080p=44.0px",
+    "chr_enemy_brute_gauntletcrush_f00:rect=128x128,pivot=(64.00,10.24),worldCell=0.4444u,1080p=64.0px",
+    "chr_boss_warlord_cleaveslam_f00:rect=256x256,pivot=(128.00,20.48),worldCell=0.7727u,1080p=102.0px"
+  ]
+}

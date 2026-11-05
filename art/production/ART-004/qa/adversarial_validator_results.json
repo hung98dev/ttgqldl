@@ -1,0 +1,73 @@
+{
+  "package_id": "ART-004",
+  "total_adversarial_tests": 11,
+  "all_defects_detected_and_rejected": true,
+  "results": [
+    {
+      "test_id": "ADV-01_missing_frame",
+      "defect_injected": "Reference a missing PNG frame path",
+      "validator_outcome": "DETECTED_AND_REJECTED",
+      "rejection_reason": "Missing file referenced in manifest: art/production/ART-004/characters/guard/frames/chr_role_guard_idle_f99_MISSING.png"
+    },
+    {
+      "test_id": "ADV-02_repeated_frame",
+      "defect_injected": "Duplicate fighter walk f01 into f02",
+      "validator_outcome": "DETECTED_AND_REJECTED",
+      "rejection_reason": "[fighter.walk] Repeated/duplicate consecutive frames at 1->2 (L1=0.0)"
+    },
+    {
+      "test_id": "ADV-03_malformed_alpha",
+      "defect_injected": "Inject semi-transparent alpha=128 halo pixel",
+      "validator_outcome": "DETECTED_AND_REJECTED",
+      "rejection_reason": "[adv_alpha] Malformed alpha: 1 semi-transparent halo pixels"
+    },
+    {
+      "test_id": "ADV-04_border_weapon_clip",
+      "defect_injected": "Paint sword blade pixel at right border x=127",
+      "validator_outcome": "DETECTED_AND_REJECTED",
+      "rejection_reason": "[adv_border_clip] Border clipping detected: bbox=(43, 23, 127, 117) inside 128x128"
+    },
+    {
+      "test_id": "ADV-05_wrong_sprite_dimension",
+      "defect_injected": "Resize 128x128 sprite to 124x128",
+      "validator_outcome": "DETECTED_AND_REJECTED",
+      "rejection_reason": "[adv_wrong_dim] Wrong sprite dimension (124, 128), expected (128, 128)"
+    },
+    {
+      "test_id": "ADV-06_swapped_frame_index",
+      "defect_injected": "Swap Brute march f00 and f01 against sprite sheet",
+      "validator_outcome": "DETECTED_AND_REJECTED",
+      "rejection_reason": "[adv_swapped_brute] Sheet cell #4 (r=0, c=4) does not match frame #4 (swapped/corrupted!)"
+    },
+    {
+      "test_id": "ADV-07_corrupted_atlas_uv",
+      "defect_injected": "Shift slice #10 uv_rect_unity.x by +0.05",
+      "validator_outcome": "DETECTED_AND_REJECTED",
+      "rejection_reason": "Corrupted atlas UV or pixel mismatch for chr_boss_warlord_cleaveslam_f04"
+    },
+    {
+      "test_id": "ADV-08_mismatched_hash",
+      "defect_injected": "Flip leading nibble of Boss f00 SHA-256 digest",
+      "validator_outcome": "DETECTED_AND_REJECTED",
+      "rejection_reason": "Mismatched SHA-256 for art/production/ART-004/characters/boss/frames/chr_boss_warlord_idlemarch_f00.png: expected f2e70c84f52df9afc2426704e26c1267d18c5f6e5c081f823efb1dbb5ea670ec, got 52e70c84f52df9afc2426704e26c1267d18c5f6e5c081f823efb1dbb5ea670ec"
+    },
+    {
+      "test_id": "ADV-09_broken_loop",
+      "defect_injected": "Construct non-periodic walk sequence with seam discontinuity",
+      "validator_outcome": "DETECTED_AND_REJECTED",
+      "rejection_reason": "[guard.walk] Broken cyclic loop seam: seam_ratio=2.963 outside [0.75, 1.65]"
+    },
+    {
+      "test_id": "ADV-10_incorrect_pivot",
+      "defect_injected": "Supply center pivot [0.5, 0.5] instead of ground pivot [0.5, 0.08]",
+      "validator_outcome": "DETECTED_AND_REJECTED",
+      "rejection_reason": "[adv_wrong_pivot] Incorrect character pivot [0.5, 0.5], expected [0.5, 0.08]"
+    },
+    {
+      "test_id": "ADV-11_incompatible_clip_length",
+      "defect_injected": "Truncate Fighter SwordSlash from 6 frames to 4 frames",
+      "validator_outcome": "DETECTED_AND_REJECTED",
+      "rejection_reason": "[fighter.swordslash] Incompatible clip length 4, expected 6"
+    }
+  ]
+}

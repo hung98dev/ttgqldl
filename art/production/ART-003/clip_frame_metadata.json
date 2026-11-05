@@ -79,16 +79,25 @@
           "clip": "idle",
           "frame_index": 0,
           "loop": true,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            52.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            73.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f00.png",
           "bbox": [
-            26,
-            32,
-            86,
+            24,
+            31,
+            84,
             117
           ],
           "width": 61,
-          "height": 86,
-          "opaque_pixels": 2786,
+          "height": 87,
+          "opaque_pixels": 2807,
           "semi_transparent_pixels": 0,
           "border_clipped": false,
           "foot_contact_y": 117,
@@ -97,8 +106,8 @@
             81
           ],
           "centroid": [
-            60.86,
-            77.89
+            60.15,
+            77.83
           ]
         },
         {
@@ -116,16 +125,25 @@
           "clip": "idle",
           "frame_index": 1,
           "loop": true,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            52.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            73.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f01.png",
           "bbox": [
-            28,
+            26,
             34,
-            87,
+            86,
             117
           ],
-          "width": 60,
+          "width": 61,
           "height": 84,
-          "opaque_pixels": 2741,
+          "opaque_pixels": 2752,
           "semi_transparent_pixels": 0,
           "border_clipped": false,
           "foot_contact_y": 117,
@@ -134,8 +152,8 @@
             81
           ],
           "centroid": [
-            61.6,
-            79.01
+            61.16,
+            78.83
           ]
         },
         {
@@ -153,16 +171,25 @@
           "clip": "idle",
           "frame_index": 2,
           "loop": true,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            52.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            73.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f02.png",
           "bbox": [
-            24,
-            30,
-            84,
+            28,
+            33,
+            87,
             117
           ],
-          "width": 61,
-          "height": 88,
-          "opaque_pixels": 2840,
+          "width": 60,
+          "height": 85,
+          "opaque_pixels": 2763,
           "semi_transparent_pixels": 0,
           "border_clipped": false,
           "foot_contact_y": 117,
@@ -171,8 +198,8 @@
             81
           ],
           "centroid": [
-            59.73,
-            76.92
+            61.3,
+            78.12
           ]
         },
         {
@@ -190,16 +217,25 @@
           "clip": "idle",
           "frame_index": 3,
           "loop": true,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            52.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            73.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_idle_f03.png",
           "bbox": [
-            25,
-            32,
+            26,
+            30,
             85,
             117
           ],
-          "width": 61,
-          "height": 86,
-          "opaque_pixels": 2784,
+          "width": 60,
+          "height": 88,
+          "opaque_pixels": 2808,
           "semi_transparent_pixels": 0,
           "border_clipped": false,
           "foot_contact_y": 117,
@@ -208,8 +244,8 @@
             81
           ],
           "centroid": [
-            60.74,
-            77.97
+            60.39,
+            76.99
           ]
         },
         {
@@ -227,6 +263,15 @@
           "clip": "walk",
           "frame_index": 0,
           "loop": true,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            60.0,
+            118.0
+          ],
+          "back_foot_xy": [
+            68.0,
+            118.0
+          ],
           "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f00.png",
           "bbox": [
             33,
@@ -264,6 +309,15 @@
           "clip": "walk",
           "frame_index": 1,
           "loop": true,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            56.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            72.0,
+            116.0
+          ],
           "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f01.png",
           "bbox": [
             30,
@@ -301,6 +355,15 @@
           "clip": "walk",
           "frame_index": 2,
           "loop": true,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            49.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            77.0,
+            114.0
+          ],
           "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f02.png",
           "bbox": [
             24,
@@ -338,6 +401,15 @@
           "clip": "walk",
           "frame_index": 3,
           "loop": true,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            44.0,
+            116.0
+          ],
+          "back_foot_xy": [
+            79.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f03.png",
           "bbox": [
             22,
@@ -375,6 +447,15 @@
           "clip": "walk",
           "frame_index": 4,
           "loop": true,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            48.0,
+            116.0
+          ],
+          "back_foot_xy": [
+            76.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f04.png",
           "bbox": [
             23,
@@ -412,6 +493,15 @@
           "clip": "walk",
           "frame_index": 5,
           "loop": true,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            58.0,
+            116.0
+          ],
+          "back_foot_xy": [
+            72.0,
+            118.0
+          ],
           "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_walk_f05.png",
           "bbox": [
             29,
@@ -449,6 +539,15 @@
           "clip": "repair",
           "frame_index": 0,
           "loop": false,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            51.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            75.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f00.png",
           "bbox": [
             45,
@@ -486,6 +585,15 @@
           "clip": "repair",
           "frame_index": 1,
           "loop": false,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            49.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            74.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f01.png",
           "bbox": [
             42,
@@ -523,6 +631,15 @@
           "clip": "repair",
           "frame_index": 2,
           "loop": false,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            49.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            75.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f02.png",
           "bbox": [
             43,
@@ -560,6 +677,15 @@
           "clip": "repair",
           "frame_index": 3,
           "loop": false,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            53.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            80.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f03.png",
           "bbox": [
             48,
@@ -597,6 +723,15 @@
           "clip": "repair",
           "frame_index": 4,
           "loop": false,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            53.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            81.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f04.png",
           "bbox": [
             48,
@@ -634,6 +769,15 @@
           "clip": "repair",
           "frame_index": 5,
           "loop": false,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            53.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            76.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_repair_f05.png",
           "bbox": [
             39,
@@ -671,6 +815,15 @@
           "clip": "hit",
           "frame_index": 0,
           "loop": false,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            47.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            73.0,
+            115.0
+          ],
           "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_hit_f00.png",
           "bbox": [
             34,
@@ -708,6 +861,15 @@
           "clip": "hit",
           "frame_index": 1,
           "loop": false,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            50.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            73.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/builder/frames/chr_role_builder_hit_f01.png",
           "bbox": [
             31,
@@ -794,16 +956,25 @@
           "clip": "idle",
           "frame_index": 0,
           "loop": true,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            47.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            78.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f00.png",
           "bbox": [
-            28,
-            34,
-            99,
+            26,
+            33,
+            95,
             117
           ],
-          "width": 72,
-          "height": 84,
-          "opaque_pixels": 3762,
+          "width": 70,
+          "height": 85,
+          "opaque_pixels": 3751,
           "semi_transparent_pixels": 0,
           "border_clipped": false,
           "foot_contact_y": 117,
@@ -812,8 +983,8 @@
             87
           ],
           "centroid": [
-            61.87,
-            76.82
+            60.88,
+            76.28
           ]
         },
         {
@@ -831,16 +1002,25 @@
           "clip": "idle",
           "frame_index": 1,
           "loop": true,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            47.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            78.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f01.png",
           "bbox": [
-            29,
-            37,
-            102,
+            28,
+            35,
+            99,
             117
           ],
-          "width": 74,
-          "height": 81,
-          "opaque_pixels": 3723,
+          "width": 72,
+          "height": 83,
+          "opaque_pixels": 3731,
           "semi_transparent_pixels": 0,
           "border_clipped": false,
           "foot_contact_y": 117,
@@ -849,8 +1029,8 @@
             87
           ],
           "centroid": [
-            62.82,
-            78.54
+            62.1,
+            77.73
           ]
         },
         {
@@ -868,16 +1048,25 @@
           "clip": "idle",
           "frame_index": 2,
           "loop": true,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            47.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            78.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f02.png",
           "bbox": [
-            27,
-            32,
-            94,
+            29,
+            35,
+            102,
             117
           ],
-          "width": 68,
-          "height": 86,
-          "opaque_pixels": 3785,
+          "width": 74,
+          "height": 83,
+          "opaque_pixels": 3767,
           "semi_transparent_pixels": 0,
           "border_clipped": false,
           "foot_contact_y": 117,
@@ -886,8 +1075,8 @@
             87
           ],
           "centroid": [
-            60.84,
-            75.4
+            62.8,
+            77.16
           ]
         },
         {
@@ -905,16 +1094,25 @@
           "clip": "idle",
           "frame_index": 3,
           "loop": true,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            47.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            78.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_idle_f03.png",
           "bbox": [
             28,
-            34,
+            32,
             98,
             117
           ],
           "width": 71,
-          "height": 84,
-          "opaque_pixels": 3753,
+          "height": 86,
+          "opaque_pixels": 3805,
           "semi_transparent_pixels": 0,
           "border_clipped": false,
           "foot_contact_y": 117,
@@ -923,8 +1121,8 @@
             87
           ],
           "centroid": [
-            61.77,
-            76.87
+            61.66,
+            75.87
           ]
         },
         {
@@ -942,6 +1140,15 @@
           "clip": "walk",
           "frame_index": 0,
           "loop": true,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            55.5,
+            119.0
+          ],
+          "back_foot_xy": [
+            71.0,
+            119.0
+          ],
           "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f00.png",
           "bbox": [
             32,
@@ -979,6 +1186,15 @@
           "clip": "walk",
           "frame_index": 1,
           "loop": true,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            51.0,
+            118.0
+          ],
+          "back_foot_xy": [
+            76.5,
+            116.0
+          ],
           "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f01.png",
           "bbox": [
             30,
@@ -1016,6 +1232,15 @@
           "clip": "walk",
           "frame_index": 2,
           "loop": true,
+          "stance_leg": "front",
+          "front_foot_xy": [
+            43.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            82.0,
+            114.0
+          ],
           "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f02.png",
           "bbox": [
             27,
@@ -1053,6 +1278,15 @@
           "clip": "walk",
           "frame_index": 3,
           "loop": true,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            38.0,
+            116.0
+          ],
+          "back_foot_xy": [
+            84.5,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f03.png",
           "bbox": [
             26,
@@ -1090,6 +1324,15 @@
           "clip": "walk",
           "frame_index": 4,
           "loop": true,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            43.0,
+            114.0
+          ],
+          "back_foot_xy": [
+            82.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f04.png",
           "bbox": [
             27,
@@ -1127,6 +1370,15 @@
           "clip": "walk",
           "frame_index": 5,
           "loop": true,
+          "stance_leg": "back",
+          "front_foot_xy": [
+            52.5,
+            115.0
+          ],
+          "back_foot_xy": [
+            75.0,
+            118.0
+          ],
           "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_walk_f05.png",
           "bbox": [
             30,
@@ -1164,6 +1416,15 @@
           "clip": "clubsmash",
           "frame_index": 0,
           "loop": false,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            43.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            79.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f00.png",
           "bbox": [
             32,
@@ -1201,6 +1462,15 @@
           "clip": "clubsmash",
           "frame_index": 1,
           "loop": false,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            43.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            79.5,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f01.png",
           "bbox": [
             31,
@@ -1238,6 +1508,15 @@
           "clip": "clubsmash",
           "frame_index": 2,
           "loop": false,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            43.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            80.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f02.png",
           "bbox": [
             30,
@@ -1275,6 +1554,15 @@
           "clip": "clubsmash",
           "frame_index": 3,
           "loop": false,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            42.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            80.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f03.png",
           "bbox": [
             36,
@@ -1312,6 +1600,15 @@
           "clip": "clubsmash",
           "frame_index": 4,
           "loop": false,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            42.5,
+            117.0
+          ],
+          "back_foot_xy": [
+            80.5,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f04.png",
           "bbox": [
             36,
@@ -1349,6 +1646,15 @@
           "clip": "clubsmash",
           "frame_index": 5,
           "loop": false,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            47.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            81.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_clubsmash_f05.png",
           "bbox": [
             38,
@@ -1386,6 +1692,15 @@
           "clip": "hit",
           "frame_index": 0,
           "loop": false,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            41.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            78.0,
+            115.0
+          ],
           "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_hit_f00.png",
           "bbox": [
             24,
@@ -1423,6 +1738,15 @@
           "clip": "hit",
           "frame_index": 1,
           "loop": false,
+          "stance_leg": "both",
+          "front_foot_xy": [
+            44.0,
+            117.0
+          ],
+          "back_foot_xy": [
+            79.0,
+            117.0
+          ],
           "file": "art/production/ART-003/characters/grunt/frames/chr_enemy_grunt_hit_f01.png",
           "bbox": [
             26,

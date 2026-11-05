@@ -63,9 +63,9 @@
       ],
       "pixels_per_unit": 192,
       "tight_bbox_in_cell_px": [
-        26,
-        32,
-        86,
+        24,
+        31,
+        84,
         117
       ]
     },
@@ -100,9 +100,9 @@
       ],
       "pixels_per_unit": 192,
       "tight_bbox_in_cell_px": [
-        28,
+        26,
         34,
-        87,
+        86,
         117
       ]
     },
@@ -137,9 +137,9 @@
       ],
       "pixels_per_unit": 192,
       "tight_bbox_in_cell_px": [
-        24,
-        30,
-        84,
+        28,
+        33,
+        87,
         117
       ]
     },
@@ -174,8 +174,8 @@
       ],
       "pixels_per_unit": 192,
       "tight_bbox_in_cell_px": [
-        25,
-        32,
+        26,
+        30,
         85,
         117
       ]
@@ -729,9 +729,9 @@
       ],
       "pixels_per_unit": 192,
       "tight_bbox_in_cell_px": [
-        28,
-        34,
-        99,
+        26,
+        33,
+        95,
         117
       ]
     },
@@ -766,9 +766,9 @@
       ],
       "pixels_per_unit": 192,
       "tight_bbox_in_cell_px": [
-        29,
-        37,
-        102,
+        28,
+        35,
+        99,
         117
       ]
     },
@@ -803,9 +803,9 @@
       ],
       "pixels_per_unit": 192,
       "tight_bbox_in_cell_px": [
-        27,
-        32,
-        94,
+        29,
+        35,
+        102,
         117
       ]
     },
@@ -841,7 +841,7 @@
       "pixels_per_unit": 192,
       "tight_bbox_in_cell_px": [
         28,
-        34,
+        32,
         98,
         117
       ]
