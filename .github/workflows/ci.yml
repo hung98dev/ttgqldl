@@ -160,6 +160,15 @@ jobs:
             exit "${status}"
           fi
 
+      - name: fuzz smoke (ingress trust boundaries)
+        timeout-minutes: 5
+        run: |
+          set -euo pipefail
+          go test -run '^$' -fuzz '^FuzzParseComment$' -fuzztime=15s -parallel=2 ./internal/commands
+          go test -run '^$' -fuzz '^FuzzValidateEvent$' -fuzztime=15s -parallel=2 ./internal/source
+          go test -run '^$' -fuzz '^FuzzCrossBoundary$' -fuzztime=15s -parallel=2 ./internal/ingest
+          go test -run '^$' -fuzz '^FuzzDecodeReplayRecord$' -fuzztime=10s -parallel=2 ./internal/source
+
       - name: migration lifecycle on a disposable database
         run: |
           set -euo pipefail

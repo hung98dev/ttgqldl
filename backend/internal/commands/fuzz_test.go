@@ -2,6 +2,7 @@ package commands
 
 import (
 	"errors"
+	"strings"
 	"testing"
 	"unicode/utf8"
 
@@ -21,6 +22,8 @@ func FuzzParseComment(f *testing.F) {
 		"XAY\u034F", "A\uFE0F", "THU\u180B", "XAY\uFE00", "XAY\U000E0100", "XAY\U000E01EF",
 		"XAY" + "\u0301\u0301\u0301\u0301\u0301\u0301\u0301\u0301\u0301",
 		"\xff", "XAY\xff", "\x80", "\xed\xa0\x80",
+		strings.Repeat("X", 500), strings.Repeat("X", 501),
+		"\uFF38\uFF21\uFF39", "XÂY\u0301", "X\u200DY", "XÂY\x00", "XÂY THỦ", "XÂY\nTHỦ",
 	}
 	for _, seed := range seeds {
 		f.Add(seed)
