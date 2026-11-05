@@ -528,7 +528,7 @@ def main() -> None:
             "paired_vfx": "vfx_builder_repair_spark (ART-003)",
         },
     }
-    (ART005_DIR / "environment_state_mapping.json").write_text(json.dumps(state_mapping, indent=2), encoding="utf-8")
+    (ART005_DIR / "environment_state_mapping.json").write_text(json.dumps(state_mapping, indent=2), encoding="utf-8", newline="\n")
 
     # B) environment_layout.json — Exact world & reference screen coordinates
     layout_doc = {
@@ -634,7 +634,7 @@ def main() -> None:
         "canonical_sprites": canonical_sprites,
         "companion_assets": companion_assets,
     }
-    (ART005_DIR / "environment_layout.json").write_text(json.dumps(layout_doc, indent=2), encoding="utf-8")
+    (ART005_DIR / "environment_layout.json").write_text(json.dumps(layout_doc, indent=2), encoding="utf-8", newline="\n")
 
     # C) lighting_palettes.json — Four deterministic environment-only lighting presentations
     lighting_doc = {
@@ -682,7 +682,7 @@ def main() -> None:
             },
         ],
     }
-    (ART005_DIR / "lighting_palettes.json").write_text(json.dumps(lighting_doc, indent=2), encoding="utf-8")
+    (ART005_DIR / "lighting_palettes.json").write_text(json.dumps(lighting_doc, indent=2), encoding="utf-8", newline="\n")
 
     print(
         f"[BUILD ENVIRONMENT PASS] 26 canonical sprites, {len(companion_assets)} companion depth/transition assets, "

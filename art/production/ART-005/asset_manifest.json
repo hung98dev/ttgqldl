@@ -10,8 +10,13 @@
   "companion_sprite_count": 14,
   "atlas_count": 2,
   "gameplay_composite_count": 8,
-  "total_tracked_files": 90,
+  "total_tracked_files": 91,
   "files": [
+    {
+      "path": "art/production/ART-005/.gitattributes",
+      "bytes": 325,
+      "sha256": "e4deb8ae0121a34a23454afbcf8c1f305244345e8e4d8fcdd6e984d7e2f4f472"
+    },
     {
       "path": "art/production/ART-005/APPROVAL_RECORD.md",
       "bytes": 2537,
@@ -29,8 +34,8 @@
     },
     {
       "path": "art/production/ART-005/atlas/environment_atlas_01_fortress.json",
-      "bytes": 16087,
-      "sha256": "0f0e5a3597d06bfcf17f953bbe5d27a435a2fea43fb9a5fa7a95bee16267277a"
+      "bytes": 15366,
+      "sha256": "97100a1bded0342ad79539ed507196168d63874c2c87657bdc8cdd35ae397c80"
     },
     {
       "path": "art/production/ART-005/atlas/environment_atlas_01_fortress.png",
@@ -44,8 +49,8 @@
     },
     {
       "path": "art/production/ART-005/atlas/environment_atlas_02_layers_and_terrain.json",
-      "bytes": 16317,
-      "sha256": "3c193cf5ceaf65602bbc9949384de1a896cf09d3f298b60e91bfca321a0e7efd"
+      "bytes": 15596,
+      "sha256": "609ccbad30de142ce1cb76aa308cd5872f53d630ff12141f3afa1b6d6b04b42d"
     },
     {
       "path": "art/production/ART-005/atlas/environment_atlas_02_layers_and_terrain.png",
@@ -59,23 +64,23 @@
     },
     {
       "path": "art/production/ART-005/atlas/unity_presets/ART005_Environment.spriteatlasv2.yaml",
-      "bytes": 632,
-      "sha256": "36d2112da4e02a49af14236c9e5effe6fdecaa65393e9cfa36ea51d9089875b8"
+      "bytes": 606,
+      "sha256": "cbabae831848e13e6c2dd246ed2cf05b9d991fc4f2a8c2a4e0047122d8c008eb"
     },
     {
       "path": "art/production/ART-005/atlas/unity_presets/ART005EnvironmentVerifier.cs.txt",
-      "bytes": 586,
-      "sha256": "bdb00525bcb13ff0a9307e39ed08aa5af8bf240f0f275d64ad88ecb4646abd69"
+      "bytes": 572,
+      "sha256": "dc933b70c970871a4ba9686b43fcf3f6537f482294daa0cb619d1bbf18a5e24f"
     },
     {
       "path": "art/production/ART-005/atlas/unity_presets/TTG_ART005_Environment_Point192.preset.yaml",
-      "bytes": 1406,
-      "sha256": "af0c7d62146fba6e01c9915ae3d3ee9138abac528369da90f5ed336cc36e6a80"
+      "bytes": 1356,
+      "sha256": "694ef0a53ccf25635203a797c67645a4314779c80e91f001e50dada9f77a9626"
     },
     {
       "path": "art/production/ART-005/atlas/unity_presets/TTG_ART005_SeamlessTile_Repeat192.preset.yaml",
-      "bytes": 1189,
-      "sha256": "49901f0c07fff132392498c7e92e09562c6fdf49d4ded3dff915deb7e92ec3fa"
+      "bytes": 1147,
+      "sha256": "39cebf8c2d7136ceadb10f4996a68d18e29205c4cdf8f939c478bcb722cd23ec"
     },
     {
       "path": "art/production/ART-005/buildings/buildings_and_props_sheet.png",
@@ -239,8 +244,8 @@
     },
     {
       "path": "art/production/ART-005/environment_layout.json",
-      "bytes": 31835,
-      "sha256": "2a179a298d9b14408f9f0b3505d67ed0108f5bba523b90c8a93c4e04be542bb1"
+      "bytes": 30400,
+      "sha256": "d10ff41ce0848678457670ecb93711ce5cfc288f1fb1ad1195de08ef632de6bd"
     },
     {
       "path": "art/production/ART-005/ENVIRONMENT_PIPELINE.md",
@@ -249,13 +254,13 @@
     },
     {
       "path": "art/production/ART-005/environment_state_mapping.json",
-      "bytes": 3287,
-      "sha256": "cae6a4d31879b12bbf7e62b30e2e4b6b52be05bfb70e40f689eedde71a4f263a"
+      "bytes": 3186,
+      "sha256": "da38b0f88eb740ce9b560ae915e0d2e0c43a5ed20ab84acc22684179d7f4a27b"
     },
     {
       "path": "art/production/ART-005/lighting_palettes.json",
-      "bytes": 1847,
-      "sha256": "e26c33ff561325e96731fc31a485dcf841cbf44dcb22430e6dc689e6fbafd620"
+      "bytes": 1771,
+      "sha256": "8782d5ed24f51e9cfa98b459df7e6052d42233091634e193549da9b2cf079a43"
     },
     {
       "path": "art/production/ART-005/previews/comparison/art002_vs_art005_blueprint_comparison.png",
@@ -349,8 +354,8 @@
     },
     {
       "path": "art/production/ART-005/previews/gameplay_composites/composite_scene_telemetry.json",
-      "bytes": 60139,
-      "sha256": "ab5ef0ff1c433f6e21058657a69c1b17072e04353ee99eb1397db4507bf0cd38"
+      "bytes": 57340,
+      "sha256": "0b184b4a97dc2ef5b3285a32ef2d190e3fefcf31749d2ff0ac734268825642f4"
     },
     {
       "path": "art/production/ART-005/previews/mobile/h264_mobile_stream_proof.png",
@@ -469,13 +474,13 @@
     },
     {
       "path": "art/production/ART-005/qa/adversarial_validator_results.json",
-      "bytes": 2707,
-      "sha256": "a28ee81fc63449753aaf19d87a7106a812ad63b0220917450be926c5f1b44974"
+      "bytes": 2637,
+      "sha256": "1acd257227dddadfed53bdc7f96db984c839c239edb4b74e8704ac1492bb14dd"
     },
     {
       "path": "art/production/ART-005/qa/qa_metrics.json",
-      "bytes": 1826,
-      "sha256": "6fbf5dc62d55df86b5d11be397b2399ea3de439ca706e4f0c12f64040d0d2d65"
+      "bytes": 1763,
+      "sha256": "e270848a34f5d8b365520dae0f519ebea04db141f519dd21b9c38eaaab311062"
     },
     {
       "path": "art/production/ART-005/qa/qa_report.md",
@@ -484,8 +489,8 @@
     },
     {
       "path": "art/production/ART-005/qa/unity_isolated_verification.json",
-      "bytes": 1421,
-      "sha256": "65336b28c2059c5c8c6015c4bd241cb89d23a42d410961a0146b03833dbf9181"
+      "bytes": 1382,
+      "sha256": "a5bb0693419f393db04cd8ce3df30633e71683c5eddaaedfbbf455c74f7624b3"
     },
     {
       "path": "art/production/ART-005/README.md",
@@ -609,18 +614,18 @@
     },
     {
       "path": "art/production/ART-005/tools/build_atlas_and_previews.py",
-      "bytes": 70737,
-      "sha256": "4c9f12c6b8e90940f299eece13522a185541ff6a4d096cab691992db4a2d94ec"
+      "bytes": 70853,
+      "sha256": "2a33b4eb482129814e14a3846e54d95db79c866046aed62289fe774b07c02e20"
     },
     {
       "path": "art/production/ART-005/tools/build_environment.py",
-      "bytes": 34423,
-      "sha256": "215927229096457b98e995f02165f0b55a0dcd59b21f5dfce62dae17627bd293"
+      "bytes": 34465,
+      "sha256": "9989241d3719c5f0071f993aa57b6ea2866e428769edde49e200156df4dd024e"
     },
     {
       "path": "art/production/ART-005/tools/validate_art005.py",
-      "bytes": 32081,
-      "sha256": "a065b53498ea0d7a31b45ae6d5896296e8a175a57eaf943a7487b3f9fe765f4b"
+      "bytes": 32149,
+      "sha256": "61ecd113c75fc5741335ac0e9c4f0074502e14e333347db882db46bcda745921"
     },
     {
       "path": "art/production/ART-005/UNITY_INTEGRATION_GUIDE.md",

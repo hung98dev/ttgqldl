@@ -46,7 +46,7 @@
     {
       "test_id": "09_incorrect_sha256_hash",
       "rejected_as_expected": true,
-      "rejection_reason": "SHA-256 mismatch for art/production/ART-005/APPROVAL_RECORD.md: 77e264d650319b6d34d49637db1e9139ec46f1d123fe7ced3926a78b5db5d034 != 07e264d650319b6d34d49637db1e9139ec46f1d123fe7ced3926a78b5db5d034"
+      "rejection_reason": "SHA-256 mismatch for art/production/ART-005/.gitattributes: e4deb8ae0121a34a23454afbcf8c1f305244345e8e4d8fcdd6e984d7e2f4f472 != 04deb8ae0121a34a23454afbcf8c1f305244345e8e4d8fcdd6e984d7e2f4f472"
     },
     {
       "test_id": "10_sorting_layer_hides_boss",

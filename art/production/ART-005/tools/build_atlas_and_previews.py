@@ -139,7 +139,7 @@ def pack_shelf_atlas(
         "slice_count": len(slices),
         "slices": slices,
     }
-    out_json.write_text(json.dumps(meta, indent=2), encoding="utf-8")
+    out_json.write_text(json.dumps(meta, indent=2), encoding="utf-8", newline="\n")
     return meta
 
 
@@ -199,6 +199,7 @@ Preset:
     objectReference: {fileID: 0}
 """,
         encoding="utf-8",
+        newline="\n",
     )
 
     (presets_dir / "TTG_ART005_SeamlessTile_Repeat192.preset.yaml").write_text(
@@ -246,6 +247,7 @@ Preset:
     objectReference: {fileID: 0}
 """,
         encoding="utf-8",
+        newline="\n",
     )
 
     (presets_dir / "ART005_Environment.spriteatlasv2.yaml").write_text(
@@ -277,6 +279,7 @@ SpriteAtlas:
     bindAsDefault: 1
 """,
         encoding="utf-8",
+        newline="\n",
     )
 
     (presets_dir / "ART005EnvironmentVerifier.cs.txt").write_text(
@@ -296,6 +299,7 @@ public static class ART005EnvironmentVerifier
 }
 """,
         encoding="utf-8",
+        newline="\n",
     )
 
 
@@ -892,7 +896,7 @@ def build_all_scenes_and_previews(composer: ModularBattlefieldComposer, m1: Dict
         telem["path"] = out_p.relative_to(REPO_ROOT).as_posix()
         all_telemetry[stem] = telem
 
-    (comp_dir / "composite_scene_telemetry.json").write_text(json.dumps(all_telemetry, indent=2), encoding="utf-8")
+    (comp_dir / "composite_scene_telemetry.json").write_text(json.dumps(all_telemetry, indent=2), encoding="utf-8", newline="\n")
 
     # ------------------------------------------------------------------------
     # STATIC PROOF 1: Atlas Inspection Board

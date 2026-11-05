@@ -577,21 +577,22 @@ def main() -> None:
     if args.write_manifest:
         # First pass without manifest check, write qa_metrics + adversarial results, then freeze manifest!
         metrics = validate_bundle(ART005_DIR, REPO_ROOT, check_manifest=False)
-        (qa_dir / "qa_metrics.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")
+        (qa_dir / "qa_metrics.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8", newline="\n")
 
         # Write preliminary manifest so adversarial test #9 has real SHA-256 manifest to mutate
         man_pre = build_asset_manifest(ART005_DIR, REPO_ROOT)
-        (ART005_DIR / "asset_manifest.json").write_text(json.dumps(man_pre, indent=2), encoding="utf-8")
+        (ART005_DIR / "asset_manifest.json").write_text(json.dumps(man_pre, indent=2), encoding="utf-8", newline="\n")
 
         adv = run_12_adversarial_tests(ART005_DIR, REPO_ROOT)
         (qa_dir / "adversarial_validator_results.json").write_text(
             json.dumps({"package_id": "ART-005", "total_negative_tests": len(adv), "all_rejected": True, "cases": adv}, indent=2),
             encoding="utf-8",
+            newline="\n",
         )
 
         # Refresh final manifest including qa_metrics.json & adversarial_validator_results.json
         man_final = build_asset_manifest(ART005_DIR, REPO_ROOT)
-        (ART005_DIR / "asset_manifest.json").write_text(json.dumps(man_final, indent=2), encoding="utf-8")
+        (ART005_DIR / "asset_manifest.json").write_text(json.dumps(man_final, indent=2), encoding="utf-8", newline="\n")
 
     # Full end-to-end strict check including SHA-256 manifest + all 12 negative tests!
     final_metrics = validate_bundle(ART005_DIR, REPO_ROOT, check_manifest=True)
