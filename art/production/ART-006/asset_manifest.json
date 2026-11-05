@@ -5,12 +5,18 @@
   "target_unity_art_root": "unity/Assets/_TTGQLDL/Art/UI/",
   "m06_milestone_status": "NOT_STARTED",
   "rights_status": "PENDING_REVIEW",
-  "total_tracked_files": 173,
+  "total_tracked_files": 174,
   "files": [
     {
       "path": "art/production/ART-006/.gitattributes",
       "bytes": 325,
       "sha256": "6b8c91d13fa274ab859ee250e6ebc73bbe18ded1e1d9b975c4b49c03a403206d",
+      "rights_status": "PENDING_REVIEW"
+    },
+    {
+      "path": "art/production/ART-006/.gitignore",
+      "bytes": 19,
+      "sha256": "862263fa1f46c20f0d1e4dac5ffcc75abd55c08211b2c3864c5f8764b9d87793",
       "rights_status": "PENDING_REVIEW"
     },
     {
