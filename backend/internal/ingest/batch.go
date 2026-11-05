@@ -26,6 +26,10 @@ type BatcherConfig struct {
 	// After supplies the flush timer; nil uses time.After. Tests inject a controlled
 	// channel to prove deadline behavior without sleeping.
 	After func(time.Duration) <-chan time.Time
+	// Now supplies the receive-to-commit latency clock; nil uses time.Now.
+	Now func() time.Time
+	// Metrics optionally records W0306 queue and durable stages.
+	Metrics *Metrics
 }
 
 // DefaultBatcherConfig returns the reviewed W0305 limits.
@@ -35,6 +39,7 @@ func DefaultBatcherConfig() BatcherConfig {
 		MaxBatch:      256,
 		FlushInterval: 50 * time.Millisecond,
 		After:         time.After,
+		Now:           time.Now,
 	}
 }
 
@@ -50,6 +55,9 @@ func (c BatcherConfig) normalized() BatcherConfig {
 	}
 	if c.After == nil {
 		c.After = time.After
+	}
+	if c.Now == nil {
+		c.Now = time.Now
 	}
 	return c
 }
@@ -70,6 +78,7 @@ func (c BatcherConfig) validate() error {
 type submitRequest struct {
 	candidate   DurableCandidate
 	reservation *Reservation
+	enqueuedAt  time.Time
 	result      chan submitResponse
 }
 
@@ -101,6 +110,7 @@ type BatcherStats struct {
 type Batcher struct {
 	appender  SessionAppender
 	cfg       BatcherConfig
+	metrics   *Metrics
 	queue     chan submitRequest
 	done      chan struct{}
 	closed    atomic.Bool
@@ -134,8 +144,12 @@ func NewBatcher(appender SessionAppender, config BatcherConfig) (*Batcher, error
 	batcher := &Batcher{
 		appender: appender,
 		cfg:      config,
+		metrics:  config.Metrics,
 		queue:    make(chan submitRequest, config.QueueCapacity),
 		done:     make(chan struct{}),
+	}
+	if batcher.metrics != nil {
+		batcher.metrics.ObserveQueue(0, config.QueueCapacity, config.Now())
 	}
 	go batcher.run()
 	return batcher, nil
@@ -147,7 +161,10 @@ func (b *Batcher) Submit(ctx context.Context, candidate DurableCandidate, reserv
 	if b == nil {
 		return DurableResult{}, ErrBatcherClosed
 	}
-	request := submitRequest{candidate: candidate, reservation: reservation, result: make(chan submitResponse, 1)}
+	request := submitRequest{
+		candidate: candidate, reservation: reservation,
+		enqueuedAt: b.cfg.Now(), result: make(chan submitResponse, 1),
+	}
 	b.mu.RLock()
 	if b.closed.Load() {
 		b.mu.RUnlock()
@@ -164,9 +181,16 @@ func (b *Batcher) Submit(ctx context.Context, candidate DurableCandidate, reserv
 				break
 			}
 		}
+		if b.metrics != nil {
+			b.metrics.ObserveEnqueued()
+			b.metrics.ObserveQueue(len(b.queue), cap(b.queue), b.cfg.Now())
+		}
 	default:
 		b.mu.RUnlock()
 		b.rejectedQueue.Add(1)
+		if b.metrics != nil {
+			b.metrics.ObserveQueueRejected()
+		}
 		return DurableResult{}, ErrQueueFull
 	}
 	select {
@@ -175,6 +199,9 @@ func (b *Batcher) Submit(ctx context.Context, candidate DurableCandidate, reserv
 	case <-ctx.Done():
 		// The worker still owns the request; a durable commit may occur. The source
 		// cursor will not advance and a retry is deduplicated by the receipt.
+		if b.metrics != nil {
+			b.metrics.ObserveCallerCancelled()
+		}
 		return DurableResult{}, ctx.Err()
 	}
 }
@@ -244,7 +271,16 @@ func (b *Batcher) run() {
 				break collect
 			}
 		}
+		if b.metrics != nil {
+			b.metrics.ObserveBatch(len(batch))
+			b.metrics.ObserveInFlight(len(batch))
+			b.metrics.ObserveQueue(len(b.queue), cap(b.queue), b.cfg.Now())
+		}
 		b.flush(batch)
+		if b.metrics != nil {
+			b.metrics.ObserveInFlight(0)
+			b.metrics.ObserveQueue(len(b.queue), cap(b.queue), b.cfg.Now())
+		}
 		if closed {
 			return
 		}
@@ -273,23 +309,52 @@ func (b *Batcher) flush(batch []submitRequest) {
 			candidates[position] = batch[index].candidate
 		}
 		b.transactions.Add(1)
+		if b.metrics != nil {
+			b.metrics.ObserveTransaction()
+		}
 		results, err := b.appender.AppendSession(context.Background(), session, candidates)
 		if err != nil {
-			if errors.Is(err, ErrCommitUnknown) {
+			unknown := errors.Is(err, ErrCommitUnknown)
+			if unknown {
 				b.commitUnknown.Add(1)
+				if b.metrics != nil {
+					b.metrics.ObserveCommitUnknown()
+				}
 				if reconciled, ok := b.reconcileBatch(session, candidates); ok {
 					results = reconciled
 					err = nil
+					if b.metrics != nil {
+						b.metrics.ObserveReconciled()
+					}
 				}
 			}
 			if err != nil {
 				b.errors.Add(1)
+				if b.metrics != nil {
+					if unknown {
+						// Ambiguous outcome: do not count as a definitive failure and do
+						// not release the reservation; the durable state is unknown.
+					} else {
+						b.metrics.ObserveBatchFailure()
+					}
+					if errors.Is(err, ErrStorageUnavailable) {
+						b.metrics.ObserveStorageUnavailable()
+					}
+					if errors.Is(err, ErrRetryExhausted) {
+						b.metrics.ObserveRetryExhausted()
+					}
+				}
 				for _, index := range indexes {
-					b.releaseReservation(batch[index].reservation)
+					if !unknown {
+						b.releaseReservation(batch[index].reservation)
+					}
 					b.respond(batch[index], DurableResult{}, err)
 				}
 				continue
 			}
+		}
+		if b.metrics != nil {
+			b.metrics.ObserveStorageRecovered()
 		}
 		for position, index := range indexes {
 			request := batch[index]
@@ -298,13 +363,26 @@ func (b *Batcher) flush(batch []submitRequest) {
 			case result.Conflict:
 				b.conflicts.Add(1)
 				b.releaseReservation(request.reservation)
+				if b.metrics != nil {
+					b.metrics.ObserveDurableConflict()
+				}
 			case result.Duplicate:
 				b.duplicates.Add(1)
 				b.finalizeReservation(request.reservation)
+				if b.metrics != nil {
+					b.metrics.ObserveDurableDuplicate()
+				}
 			default:
 				b.committed.Add(1)
 				b.inputs.Add(1)
 				b.finalizeReservation(request.reservation)
+				if b.metrics != nil {
+					latency := b.cfg.Now().Sub(request.enqueuedAt)
+					if latency < 0 {
+						latency = 0
+					}
+					b.metrics.ObserveDurableCommitted(latency)
+				}
 			}
 			b.respond(request, result, nil)
 		}

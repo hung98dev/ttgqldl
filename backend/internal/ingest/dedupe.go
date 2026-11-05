@@ -52,6 +52,8 @@ type Config struct {
 	BucketIdleTTL time.Duration
 	// Now is required.
 	Now Clock
+	// Metrics optionally records W0306 admission stages. It never affects decisions.
+	Metrics *Metrics
 }
 
 // DefaultConfig returns the reviewed defaults with a real clock. Tests inject a fixed
@@ -202,6 +204,7 @@ type Deduper struct {
 	buckets map[domain.ActorKey]*bucket
 	heap    expiryHeap
 	seq     uint64
+	metrics *Metrics
 }
 
 // New validates the explicit configuration and constructs an empty deduper.
@@ -215,6 +218,7 @@ func New(config Config) (*Deduper, error) {
 		stable:  make(map[[32]byte]*stableEntry, 64),
 		windows: make(map[[32]byte]*windowEntry, 64),
 		buckets: make(map[domain.ActorKey]*bucket, 64),
+		metrics: config.Metrics,
 	}, nil
 }
 
@@ -234,7 +238,12 @@ func (d *Deduper) Stats() Stats {
 // Admit classifies one validated source event with its resolved private actor key and
 // typed parsed action. On ClassAccepted the returned reservation must be finalized after
 // the downstream operation succeeds, or released on failure/cancellation.
-func (d *Deduper) Admit(event source.Event, actor domain.ActorKey, action commands.Action) (Decision, *Reservation, error) {
+func (d *Deduper) Admit(event source.Event, actor domain.ActorKey, action commands.Action) (decision Decision, reservation *Reservation, err error) {
+	defer func() {
+		if d.metrics != nil {
+			d.metrics.ObserveAdmission(decision, err)
+		}
+	}()
 	if err := validateAdmitInput(event, actor, action); err != nil {
 		return Decision{}, nil, err
 	}

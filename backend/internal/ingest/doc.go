@@ -23,6 +23,17 @@
 // It never mutates reducer state, marks applied_at_tick, or claims exactly-once gameplay;
 // M04 owns reducer application, fencing and recovery.
 //
+// W0306 adds a fixed-size Metrics registry: stage counters (received/validated), the
+// final W0304 classification, queue depth/utilization/high-water, batch/transaction and
+// durable outcomes, bounded commit-latency buckets and explicit lost-game-event
+// accounting. Sustained queue >75% for 30s, sustained internal p95>1s for 5min (with at
+// least 20 samples), storage failure, unresolved commit-unknown and any confirmed loss
+// produce bounded alert codes. Metrics use only atomic counters and a fixed histogram;
+// no labels, identities, comments or event ids are retained. Metrics.Handler is a
+// read-only JSON endpoint intentionally not mounted by the M01 server skeleton: there is
+// no wired ingestion pipeline yet, and exporting fabricated zeros would be dishonest.
+// M04/M07 must mount it only with a real registry.
+//
 // The package is deterministic under an injected clock, race-free, bounded and
 // privacy-conscious: no raw comments, aliases or provider viewer ids are retained, and
 // diagnostics expose counts only.
