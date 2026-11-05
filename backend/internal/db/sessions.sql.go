@@ -15,7 +15,7 @@ const createSession = `-- name: CreateSession :one
 
 INSERT INTO ttg.sessions (id, village_id, mode, lifecycle, rules_version)
 VALUES ($1, $2, $3, $4, $5)
-RETURNING id, village_id, mode, lifecycle, wave_no, wave_tick, privacy_epoch, rules_version, writer_epoch, input_sequence, stream_sequence, last_reduced_tick, last_state_hash, runtime_state, pause_reasons, started_at, stopped_at, last_heartbeat_at
+RETURNING id, village_id, mode, lifecycle, wave_no, wave_tick, privacy_epoch, rules_version, writer_epoch, input_sequence, stream_sequence, last_reduced_tick, last_state_hash, runtime_state, pause_reasons, started_at, stopped_at, last_heartbeat_at, reducer_revision
 `
 
 type CreateSessionParams struct {
@@ -57,12 +57,13 @@ func (q *Queries) CreateSession(ctx context.Context, arg CreateSessionParams) (T
 		&i.StartedAt,
 		&i.StoppedAt,
 		&i.LastHeartbeatAt,
+		&i.ReducerRevision,
 	)
 	return i, err
 }
 
 const getActiveSessionForVillage = `-- name: GetActiveSessionForVillage :one
-SELECT id, village_id, mode, lifecycle, wave_no, wave_tick, privacy_epoch, rules_version, writer_epoch, input_sequence, stream_sequence, last_reduced_tick, last_state_hash, runtime_state, pause_reasons, started_at, stopped_at, last_heartbeat_at FROM ttg.sessions
+SELECT id, village_id, mode, lifecycle, wave_no, wave_tick, privacy_epoch, rules_version, writer_epoch, input_sequence, stream_sequence, last_reduced_tick, last_state_hash, runtime_state, pause_reasons, started_at, stopped_at, last_heartbeat_at, reducer_revision FROM ttg.sessions
 WHERE village_id = $1 AND lifecycle <> 'stopped'
 `
 
@@ -88,12 +89,13 @@ func (q *Queries) GetActiveSessionForVillage(ctx context.Context, villageID pgty
 		&i.StartedAt,
 		&i.StoppedAt,
 		&i.LastHeartbeatAt,
+		&i.ReducerRevision,
 	)
 	return i, err
 }
 
 const getSession = `-- name: GetSession :one
-SELECT id, village_id, mode, lifecycle, wave_no, wave_tick, privacy_epoch, rules_version, writer_epoch, input_sequence, stream_sequence, last_reduced_tick, last_state_hash, runtime_state, pause_reasons, started_at, stopped_at, last_heartbeat_at FROM ttg.sessions WHERE id = $1
+SELECT id, village_id, mode, lifecycle, wave_no, wave_tick, privacy_epoch, rules_version, writer_epoch, input_sequence, stream_sequence, last_reduced_tick, last_state_hash, runtime_state, pause_reasons, started_at, stopped_at, last_heartbeat_at, reducer_revision FROM ttg.sessions WHERE id = $1
 `
 
 func (q *Queries) GetSession(ctx context.Context, id pgtype.UUID) (TtgSession, error) {
@@ -118,12 +120,13 @@ func (q *Queries) GetSession(ctx context.Context, id pgtype.UUID) (TtgSession, e
 		&i.StartedAt,
 		&i.StoppedAt,
 		&i.LastHeartbeatAt,
+		&i.ReducerRevision,
 	)
 	return i, err
 }
 
 const listSessions = `-- name: ListSessions :many
-SELECT id, village_id, mode, lifecycle, wave_no, wave_tick, privacy_epoch, rules_version, writer_epoch, input_sequence, stream_sequence, last_reduced_tick, last_state_hash, runtime_state, pause_reasons, started_at, stopped_at, last_heartbeat_at FROM ttg.sessions
+SELECT id, village_id, mode, lifecycle, wave_no, wave_tick, privacy_epoch, rules_version, writer_epoch, input_sequence, stream_sequence, last_reduced_tick, last_state_hash, runtime_state, pause_reasons, started_at, stopped_at, last_heartbeat_at, reducer_revision FROM ttg.sessions
 ORDER BY COALESCE(started_at, 'epoch'::timestamptz) DESC, id
 LIMIT $1 OFFSET $2
 `
@@ -161,6 +164,7 @@ func (q *Queries) ListSessions(ctx context.Context, arg ListSessionsParams) ([]T
 			&i.StartedAt,
 			&i.StoppedAt,
 			&i.LastHeartbeatAt,
+			&i.ReducerRevision,
 		); err != nil {
 			return nil, err
 		}

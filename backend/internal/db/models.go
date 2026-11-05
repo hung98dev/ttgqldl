@@ -178,6 +178,7 @@ type TtgSession struct {
 	StartedAt       pgtype.Timestamptz
 	StoppedAt       pgtype.Timestamptz
 	LastHeartbeatAt pgtype.Timestamptz
+	ReducerRevision int64
 }
 
 type TtgSessionPlayerProgress struct {

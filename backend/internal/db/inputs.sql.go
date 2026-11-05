@@ -127,7 +127,7 @@ func (q *Queries) InsertInputReceipt(ctx context.Context, arg InsertInputReceipt
 
 const lockSession = `-- name: LockSession :one
 
-SELECT id, village_id, mode, lifecycle, wave_no, wave_tick, privacy_epoch, rules_version, writer_epoch, input_sequence, stream_sequence, last_reduced_tick, last_state_hash, runtime_state, pause_reasons, started_at, stopped_at, last_heartbeat_at FROM ttg.sessions WHERE id = $1 FOR UPDATE
+SELECT id, village_id, mode, lifecycle, wave_no, wave_tick, privacy_epoch, rules_version, writer_epoch, input_sequence, stream_sequence, last_reduced_tick, last_state_hash, runtime_state, pause_reasons, started_at, stopped_at, last_heartbeat_at, reducer_revision FROM ttg.sessions WHERE id = $1 FOR UPDATE
 `
 
 // W0305 durable ingestion queries. All sequence allocation and receipt/input append
@@ -154,6 +154,7 @@ func (q *Queries) LockSession(ctx context.Context, id pgtype.UUID) (TtgSession, 
 		&i.StartedAt,
 		&i.StoppedAt,
 		&i.LastHeartbeatAt,
+		&i.ReducerRevision,
 	)
 	return i, err
 }

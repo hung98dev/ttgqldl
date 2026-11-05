@@ -8,6 +8,7 @@
 -- PostgreSQL database dump
 --
 
+\restrict XpzLHQnjsEf8d3XPEzIw2KRPK3pxcnHsGjJVR4IBxWpv9yAYbqjQbJiJwQfQqW7
 
 -- Dumped from database version 18.6 (Debian 18.6-1.pgdg13+2)
 -- Dumped by pg_dump version 18.6 (Debian 18.6-1.pgdg13+2)
@@ -327,9 +328,11 @@ CREATE TABLE ttg.sessions (
     started_at timestamp with time zone,
     stopped_at timestamp with time zone,
     last_heartbeat_at timestamp with time zone,
+    reducer_revision bigint DEFAULT 0 NOT NULL,
     CONSTRAINT sessions_lifecycle_check CHECK ((lifecycle = ANY (ARRAY['waiting'::text, 'running'::text, 'paused'::text, 'source_disconnected'::text, 'storage_unavailable'::text, 'stopped'::text]))),
     CONSTRAINT sessions_mode_check CHECK ((mode = ANY (ARRAY['mock'::text, 'replay'::text, 'authorized_live'::text]))),
     CONSTRAINT sessions_privacy_epoch_check CHECK ((privacy_epoch >= 0)),
+    CONSTRAINT sessions_reducer_revision_check CHECK ((reducer_revision >= 0)),
     CONSTRAINT sessions_wave_no_check CHECK ((wave_no >= 1)),
     CONSTRAINT sessions_wave_tick_check CHECK (((wave_tick >= '-1'::integer) AND (wave_tick <= 3000)))
 );
@@ -856,4 +859,5 @@ ALTER TABLE ONLY ttg.writer_leases
 -- PostgreSQL database dump complete
 --
 
+\unrestrict XpzLHQnjsEf8d3XPEzIw2KRPK3pxcnHsGjJVR4IBxWpv9yAYbqjQbJiJwQfQqW7
 

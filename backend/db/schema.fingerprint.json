@@ -1167,6 +1167,16 @@
           "udt_name": "timestamptz",
           "nullable": true,
           "default": null
+        },
+        {
+          "name": "reducer_revision",
+          "ordinal": 19,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": "0",
+          "numeric_precision": 64,
+          "numeric_scale": 0
         }
       ]
     },
@@ -2417,6 +2427,18 @@
       "name": "sessions_privacy_epoch_not_null",
       "type": "n",
       "definition": "NOT NULL privacy_epoch"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_reducer_revision_check",
+      "type": "c",
+      "definition": "CHECK ((reducer_revision \u003e= 0))"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_reducer_revision_not_null",
+      "type": "n",
+      "definition": "NOT NULL reducer_revision"
     },
     {
       "table": "sessions",
