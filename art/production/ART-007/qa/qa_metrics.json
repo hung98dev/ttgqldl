@@ -1,0 +1,333 @@
+{
+  "package_id": "ART-007",
+  "requirement_id": "SFX001",
+  "validation_status": "PASS",
+  "automated_checks_summary": {
+    "passed": true,
+    "total_checks": 18,
+    "passed_checks": 18,
+    "failed_checks": 0,
+    "errors": [],
+    "checks": {
+      "01_twelve_canonical_sfx_exist": {
+        "passed": true,
+        "detail": "found=12 WAVs (['sfx_boss_slam.wav', 'sfx_boss_warning.wav', 'sfx_builder_repair.wav', 'sfx_enemy_attack.wav', 'sfx_fighter_slash.wav', 'sfx_guard_block.wav', 'sfx_role_join.wav', 'sfx_vote_closed.wav', 'sfx_wall_breach.wav', 'sfx_wall_damage.wav', 'sfx_wave_defeat.wav', 'sfx_wave_victory.wav'])"
+      },
+      "02_one_ambient_loop_exists": {
+        "passed": true,
+        "detail": "ambient_wavs=['amb_village_dawn_loop.wav']"
+      },
+      "03_two_music_loops_exist": {
+        "passed": true,
+        "detail": "music_wavs=['music_village_assault_loop.wav', 'music_village_prep_loop.wav']"
+      },
+      "04_files_decode_correctly": {
+        "passed": true,
+        "detail": "All 15 WAV + 15 OGG + 2 MID decoded"
+      },
+      "05_sample_rate_48khz_24bit": {
+        "passed": true,
+        "detail": "All 15 masters = 48000 Hz / 24-bit PCM"
+      },
+      "06_channel_count_valid": {
+        "passed": true,
+        "detail": "Mono/Stereo layout matches spec"
+      },
+      "07_no_clipping": {
+        "passed": true,
+        "detail": "0 clipped samples; all True Peaks <= -1.50 dBTP"
+      },
+      "08_no_unexpected_dc_offset": {
+        "passed": true,
+        "detail": "Max |DC| <= 0.0005 across all 15 masters"
+      },
+      "09_no_silent_placeholder": {
+        "passed": true,
+        "detail": "All 15 assets contain active original audio"
+      },
+      "10_no_corrupted_or_zero_byte_audio": {
+        "passed": true,
+        "detail": "Zero corrupt/empty containers"
+      },
+      "11_no_attack_or_tail_truncation": {
+        "passed": true,
+        "detail": "All 12 SFX start & end cleanly at zero crossing"
+      },
+      "12_loop_seam_continuity": {
+        "passed": true,
+        "detail": "All 3 loops seamless (seam step ratio <= 0.11x, zero boundary click)"
+      },
+      "13_asset_hashes_match_manifest": {
+        "passed": true,
+        "detail": "All 30 WAV+OGG SHA-256 hashes match asset_manifest.json"
+      },
+      "14_every_cue_mapped_and_domain_safe": {
+        "passed": true,
+        "detail": "All 15 cues uniquely mapped; Victory & Boss frame invariants verified"
+      },
+      "15_complete_provenance_pending_review": {
+        "passed": true,
+        "detail": "All 15 assets carry complete Phase-11 provenance & PENDING_REVIEW"
+      },
+      "16_music_muted_by_default": {
+        "passed": true,
+        "detail": "Music muted (-80 dB) by default in mixer, cue mapping & manifest"
+      },
+      "17_deterministic_rebuild_reproducibility": {
+        "passed": true,
+        "detail": "Exact bit-identical SHA-256 rebuild verified across all 12 SFX"
+      },
+      "18_no_unlicensed_sources_bundled": {
+        "passed": true,
+        "detail": "Zero third-party sample packs or SoundFonts bundled"
+      }
+    }
+  },
+  "adversarial_summary": {
+    "status": "PASS",
+    "rejected_count": 12,
+    "total_cases": 12
+  },
+  "asset_acoustic_summary": [
+    {
+      "cue_id": "SFX01",
+      "stem": "sfx_role_join",
+      "category": "sfx",
+      "sample_rate_hz": 48000,
+      "bit_depth": 24,
+      "channels": 1,
+      "duration_s": 0.42,
+      "true_peak_dbtp": -5.5,
+      "integrated_lufs": -14.36,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 1.0,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null
+    },
+    {
+      "cue_id": "SFX02",
+      "stem": "sfx_builder_repair",
+      "category": "sfx",
+      "sample_rate_hz": 48000,
+      "bit_depth": 24,
+      "channels": 1,
+      "duration_s": 0.38,
+      "true_peak_dbtp": -3.2,
+      "integrated_lufs": -20.03,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 1.0,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null
+    },
+    {
+      "cue_id": "SFX03",
+      "stem": "sfx_guard_block",
+      "category": "sfx",
+      "sample_rate_hz": 48000,
+      "bit_depth": 24,
+      "channels": 1,
+      "duration_s": 0.45,
+      "true_peak_dbtp": -2.8,
+      "integrated_lufs": -19.49,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 1.0,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null
+    },
+    {
+      "cue_id": "SFX04",
+      "stem": "sfx_fighter_slash",
+      "category": "sfx",
+      "sample_rate_hz": 48000,
+      "bit_depth": 24,
+      "channels": 1,
+      "duration_s": 0.36,
+      "true_peak_dbtp": -3.0,
+      "integrated_lufs": -19.74,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 1.0,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null
+    },
+    {
+      "cue_id": "SFX05",
+      "stem": "sfx_enemy_attack",
+      "category": "sfx",
+      "sample_rate_hz": 48000,
+      "bit_depth": 24,
+      "channels": 1,
+      "duration_s": 0.32,
+      "true_peak_dbtp": -4.8,
+      "integrated_lufs": -21.64,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 1.0,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null
+    },
+    {
+      "cue_id": "SFX06",
+      "stem": "sfx_wall_damage",
+      "category": "sfx",
+      "sample_rate_hz": 48000,
+      "bit_depth": 24,
+      "channels": 1,
+      "duration_s": 0.58,
+      "true_peak_dbtp": -3.5,
+      "integrated_lufs": -22.16,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 1.0,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null
+    },
+    {
+      "cue_id": "SFX07",
+      "stem": "sfx_wall_breach",
+      "category": "sfx",
+      "sample_rate_hz": 48000,
+      "bit_depth": 24,
+      "channels": 2,
+      "duration_s": 1.28,
+      "true_peak_dbtp": -1.8,
+      "integrated_lufs": -17.43,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 0.984,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null
+    },
+    {
+      "cue_id": "SFX08",
+      "stem": "sfx_boss_warning",
+      "category": "sfx",
+      "sample_rate_hz": 48000,
+      "bit_depth": 24,
+      "channels": 2,
+      "duration_s": 1.86,
+      "true_peak_dbtp": -2.8,
+      "integrated_lufs": -12.47,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 0.9872,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null
+    },
+    {
+      "cue_id": "SFX09",
+      "stem": "sfx_boss_slam",
+      "category": "sfx",
+      "sample_rate_hz": 48000,
+      "bit_depth": 24,
+      "channels": 2,
+      "duration_s": 1.16,
+      "true_peak_dbtp": -1.5,
+      "integrated_lufs": -17.38,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 0.9965,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null
+    },
+    {
+      "cue_id": "SFX10",
+      "stem": "sfx_vote_closed",
+      "category": "sfx",
+      "sample_rate_hz": 48000,
+      "bit_depth": 24,
+      "channels": 1,
+      "duration_s": 0.48,
+      "true_peak_dbtp": -5.2,
+      "integrated_lufs": -18.52,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 1.0,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null
+    },
+    {
+      "cue_id": "SFX11",
+      "stem": "sfx_wave_victory",
+      "category": "sfx",
+      "sample_rate_hz": 48000,
+      "bit_depth": 24,
+      "channels": 2,
+      "duration_s": 2.45,
+      "true_peak_dbtp": -2.0,
+      "integrated_lufs": -11.49,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 0.9808,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null
+    },
+    {
+      "cue_id": "SFX12",
+      "stem": "sfx_wave_defeat",
+      "category": "sfx",
+      "sample_rate_hz": 48000,
+      "bit_depth": 24,
+      "channels": 2,
+      "duration_s": 2.35,
+      "true_peak_dbtp": -3.2,
+      "integrated_lufs": -11.98,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 0.9851,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null
+    },
+    {
+      "cue_id": "AMB01",
+      "stem": "amb_village_dawn_loop",
+      "category": "ambient",
+      "sample_rate_hz": 48000,
+      "bit_depth": 24,
+      "channels": 2,
+      "duration_s": 36.0,
+      "true_peak_dbtp": -12.64,
+      "integrated_lufs": -26.0,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 0.9668,
+      "loop_seam_step_ratio": 0.0237,
+      "loop_seam_50ms_rms_jump_db": 1.229
+    },
+    {
+      "cue_id": "MUS01",
+      "stem": "music_village_prep_loop",
+      "category": "music",
+      "sample_rate_hz": 48000,
+      "bit_depth": 24,
+      "channels": 2,
+      "duration_s": 38.4,
+      "true_peak_dbtp": -7.64,
+      "integrated_lufs": -19.5,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 0.9831,
+      "loop_seam_step_ratio": 0.1029,
+      "loop_seam_50ms_rms_jump_db": 10.344
+    },
+    {
+      "cue_id": "MUS02",
+      "stem": "music_village_assault_loop",
+      "category": "music",
+      "sample_rate_hz": 48000,
+      "bit_depth": 24,
+      "channels": 2,
+      "duration_s": 37.5,
+      "true_peak_dbtp": -4.87,
+      "integrated_lufs": -17.5,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 0.9903,
+      "loop_seam_step_ratio": 0.0228,
+      "loop_seam_50ms_rms_jump_db": 10.55
+    }
+  ]
+}

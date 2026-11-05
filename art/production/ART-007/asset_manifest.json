@@ -1,0 +1,803 @@
+{
+  "package_id": "ART-007",
+  "requirement_id": "SFX001",
+  "style": "Bastion Dawn v1",
+  "target_engine": "Unity 6000.6.7f1 (Built-in 2D)",
+  "rights_status": "PENDING_REVIEW",
+  "gate_legal_status": "OPEN — procedural originality documented, formal legal review still required",
+  "gate_obs_status": "OPEN — offline FFmpeg AAC proxy verified, real hardware OBS stream test still required",
+  "music_muted_by_default": true,
+  "total_canonical_audio_assets": 15,
+  "sfx_count": 12,
+  "ambient_count": 1,
+  "music_count": 2,
+  "assets": [
+    {
+      "cue_id": "SFX01",
+      "category": "sfx",
+      "asset_stem": "sfx_role_join",
+      "master_wav_path": "art/production/ART-007/sfx/wav/sfx_role_join.wav",
+      "master_wav_sha256": "2c036cb264bf94aab08d89b8315dfd30b13090d3901d1b0606188f14bf0ca149",
+      "master_wav_bytes": 60524,
+      "bit_depth": 24,
+      "sample_rate_hz": 48000,
+      "channels": 1,
+      "duration_s": 0.42,
+      "true_peak_dbtp": -5.5,
+      "sample_peak_dbfs": -5.51,
+      "integrated_lufs": -14.36,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 1.0,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null,
+      "runtime_encoded_path": "art/production/ART-007/sfx/runtime/sfx_role_join.ogg",
+      "runtime_encoded_sha256": "d0c127561ceffc4d9c479749c8316036e7d7e3b3f6113d47fb4a15557a514ca0",
+      "runtime_encoded_bytes": 8370,
+      "runtime_codec": "vorbis",
+      "editable_sources": [
+        {
+          "path": "art/production/ART-007/source/sfx/sfx_role_join_patch.json",
+          "sha256": "51b07826fec2e6fdf02fa34a954ae230a9bfc10a90b6d01e05176a6de6c00fdd",
+          "bytes": 814
+        }
+      ],
+      "provenance_and_rights": {
+        "exact_source": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_role_join)",
+        "producer": "TTGQLDL First-Party Procedural Audio Pipeline (Antigravity + Gemini 4 Argon)",
+        "production_method": "Deterministic physical-modeling waveguide/modal/periodic-RFFT synthesis from scratch in Python/NumPy/SciPy",
+        "tool_and_version": "Python 3.15.0 + NumPy 2.5.4 + SciPy 1.18.1 + ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "external_samples": "NONE",
+        "original_license": "Repository First-Party Original Asset (Zero Third-Party Samples / Zero SoundFonts / Zero Generative Music Cloud APIs)",
+        "license_evidence": "Full deterministic source code in tools/dsp_engine.py + tools/build_audio.py + source/*",
+        "usage_restrictions": "Presentation-only game SFX/ambience; subject to standard repository GATE-LEGAL sign-off before commercial livestream launch.",
+        "distribution_permission_status": "FIRST_PARTY_REPO_INTERNAL_PENDING_LEGAL_SIGNOFF",
+        "commercial_streaming_permission_status": "PENDING_GATE_LEGAL_REVIEW",
+        "rights_status": "PENDING_REVIEW"
+      }
+    },
+    {
+      "cue_id": "SFX02",
+      "category": "sfx",
+      "asset_stem": "sfx_builder_repair",
+      "master_wav_path": "art/production/ART-007/sfx/wav/sfx_builder_repair.wav",
+      "master_wav_sha256": "1a03947f4e2ceeb7e2b0b036b8f94d8879e062e5bb0efe6bd75045705048e8f1",
+      "master_wav_bytes": 54764,
+      "bit_depth": 24,
+      "sample_rate_hz": 48000,
+      "channels": 1,
+      "duration_s": 0.38,
+      "true_peak_dbtp": -3.2,
+      "sample_peak_dbfs": -3.24,
+      "integrated_lufs": -20.03,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 1.0,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null,
+      "runtime_encoded_path": "art/production/ART-007/sfx/runtime/sfx_builder_repair.ogg",
+      "runtime_encoded_sha256": "bb5733f991a4981635532a417bc0c164589e1b45efc6b84322d0477d3572b86b",
+      "runtime_encoded_bytes": 6003,
+      "runtime_codec": "vorbis",
+      "editable_sources": [
+        {
+          "path": "art/production/ART-007/source/sfx/sfx_builder_repair_patch.json",
+          "sha256": "c59481b111c51b84055dd73f17fe8888e1cc616f78208f8dbf2d531c4300dba9",
+          "bytes": 849
+        }
+      ],
+      "provenance_and_rights": {
+        "exact_source": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_builder_repair)",
+        "producer": "TTGQLDL First-Party Procedural Audio Pipeline (Antigravity + Gemini 4 Argon)",
+        "production_method": "Deterministic physical-modeling waveguide/modal/periodic-RFFT synthesis from scratch in Python/NumPy/SciPy",
+        "tool_and_version": "Python 3.15.0 + NumPy 2.5.4 + SciPy 1.18.1 + ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "external_samples": "NONE",
+        "original_license": "Repository First-Party Original Asset (Zero Third-Party Samples / Zero SoundFonts / Zero Generative Music Cloud APIs)",
+        "license_evidence": "Full deterministic source code in tools/dsp_engine.py + tools/build_audio.py + source/*",
+        "usage_restrictions": "Presentation-only game SFX/ambience; subject to standard repository GATE-LEGAL sign-off before commercial livestream launch.",
+        "distribution_permission_status": "FIRST_PARTY_REPO_INTERNAL_PENDING_LEGAL_SIGNOFF",
+        "commercial_streaming_permission_status": "PENDING_GATE_LEGAL_REVIEW",
+        "rights_status": "PENDING_REVIEW"
+      }
+    },
+    {
+      "cue_id": "SFX03",
+      "category": "sfx",
+      "asset_stem": "sfx_guard_block",
+      "master_wav_path": "art/production/ART-007/sfx/wav/sfx_guard_block.wav",
+      "master_wav_sha256": "00148a0049d503e08582e76e0c7dd382e40fc473cbdaea98707e1c9d4ac74384",
+      "master_wav_bytes": 64844,
+      "bit_depth": 24,
+      "sample_rate_hz": 48000,
+      "channels": 1,
+      "duration_s": 0.45,
+      "true_peak_dbtp": -2.8,
+      "sample_peak_dbfs": -2.82,
+      "integrated_lufs": -19.49,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 1.0,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null,
+      "runtime_encoded_path": "art/production/ART-007/sfx/runtime/sfx_guard_block.ogg",
+      "runtime_encoded_sha256": "2da6b964a2b7e280f5a41bc270bf2e500d73e5bbb3d7c099bd5e5e03d625a22b",
+      "runtime_encoded_bytes": 5923,
+      "runtime_codec": "vorbis",
+      "editable_sources": [
+        {
+          "path": "art/production/ART-007/source/sfx/sfx_guard_block_patch.json",
+          "sha256": "2e6cf893ce3a64b451528d0285d9ba254146a4d11d8d08b4e3a06606f7f70410",
+          "bytes": 852
+        }
+      ],
+      "provenance_and_rights": {
+        "exact_source": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_guard_block)",
+        "producer": "TTGQLDL First-Party Procedural Audio Pipeline (Antigravity + Gemini 4 Argon)",
+        "production_method": "Deterministic physical-modeling waveguide/modal/periodic-RFFT synthesis from scratch in Python/NumPy/SciPy",
+        "tool_and_version": "Python 3.15.0 + NumPy 2.5.4 + SciPy 1.18.1 + ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "external_samples": "NONE",
+        "original_license": "Repository First-Party Original Asset (Zero Third-Party Samples / Zero SoundFonts / Zero Generative Music Cloud APIs)",
+        "license_evidence": "Full deterministic source code in tools/dsp_engine.py + tools/build_audio.py + source/*",
+        "usage_restrictions": "Presentation-only game SFX/ambience; subject to standard repository GATE-LEGAL sign-off before commercial livestream launch.",
+        "distribution_permission_status": "FIRST_PARTY_REPO_INTERNAL_PENDING_LEGAL_SIGNOFF",
+        "commercial_streaming_permission_status": "PENDING_GATE_LEGAL_REVIEW",
+        "rights_status": "PENDING_REVIEW"
+      }
+    },
+    {
+      "cue_id": "SFX04",
+      "category": "sfx",
+      "asset_stem": "sfx_fighter_slash",
+      "master_wav_path": "art/production/ART-007/sfx/wav/sfx_fighter_slash.wav",
+      "master_wav_sha256": "39fd514f292c8f0a6765cac521826351f1e9a7bf2356f30823aa8054681ae5c2",
+      "master_wav_bytes": 51884,
+      "bit_depth": 24,
+      "sample_rate_hz": 48000,
+      "channels": 1,
+      "duration_s": 0.36,
+      "true_peak_dbtp": -3.0,
+      "sample_peak_dbfs": -3.06,
+      "integrated_lufs": -19.74,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 1.0,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null,
+      "runtime_encoded_path": "art/production/ART-007/sfx/runtime/sfx_fighter_slash.ogg",
+      "runtime_encoded_sha256": "2ac848f7add924fed9abdbf539b09ca82c93a3aff203ca1dccc6083758185ebd",
+      "runtime_encoded_bytes": 6261,
+      "runtime_codec": "vorbis",
+      "editable_sources": [
+        {
+          "path": "art/production/ART-007/source/sfx/sfx_fighter_slash_patch.json",
+          "sha256": "e8e56c99924b2816ac4559d2860540effe355991b1b9ed04672585fdff4ceec9",
+          "bytes": 859
+        }
+      ],
+      "provenance_and_rights": {
+        "exact_source": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_fighter_slash)",
+        "producer": "TTGQLDL First-Party Procedural Audio Pipeline (Antigravity + Gemini 4 Argon)",
+        "production_method": "Deterministic physical-modeling waveguide/modal/periodic-RFFT synthesis from scratch in Python/NumPy/SciPy",
+        "tool_and_version": "Python 3.15.0 + NumPy 2.5.4 + SciPy 1.18.1 + ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "external_samples": "NONE",
+        "original_license": "Repository First-Party Original Asset (Zero Third-Party Samples / Zero SoundFonts / Zero Generative Music Cloud APIs)",
+        "license_evidence": "Full deterministic source code in tools/dsp_engine.py + tools/build_audio.py + source/*",
+        "usage_restrictions": "Presentation-only game SFX/ambience; subject to standard repository GATE-LEGAL sign-off before commercial livestream launch.",
+        "distribution_permission_status": "FIRST_PARTY_REPO_INTERNAL_PENDING_LEGAL_SIGNOFF",
+        "commercial_streaming_permission_status": "PENDING_GATE_LEGAL_REVIEW",
+        "rights_status": "PENDING_REVIEW"
+      }
+    },
+    {
+      "cue_id": "SFX05",
+      "category": "sfx",
+      "asset_stem": "sfx_enemy_attack",
+      "master_wav_path": "art/production/ART-007/sfx/wav/sfx_enemy_attack.wav",
+      "master_wav_sha256": "635b7b0805321fd87df04e7e11fa8c398c051eec982783dd59c4e27673456097",
+      "master_wav_bytes": 46124,
+      "bit_depth": 24,
+      "sample_rate_hz": 48000,
+      "channels": 1,
+      "duration_s": 0.32,
+      "true_peak_dbtp": -4.8,
+      "sample_peak_dbfs": -4.81,
+      "integrated_lufs": -21.64,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 1.0,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null,
+      "runtime_encoded_path": "art/production/ART-007/sfx/runtime/sfx_enemy_attack.ogg",
+      "runtime_encoded_sha256": "8ccf8eb411769a014488179b3f9129f3ff990f1a6d6ec6394722dea18cc899e2",
+      "runtime_encoded_bytes": 5209,
+      "runtime_codec": "vorbis",
+      "editable_sources": [
+        {
+          "path": "art/production/ART-007/source/sfx/sfx_enemy_attack_patch.json",
+          "sha256": "b18acbc6bf4471b34da3589d4d0f68f21c0c63d2f4f1a7abec146854094dd2cd",
+          "bytes": 860
+        }
+      ],
+      "provenance_and_rights": {
+        "exact_source": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_enemy_attack)",
+        "producer": "TTGQLDL First-Party Procedural Audio Pipeline (Antigravity + Gemini 4 Argon)",
+        "production_method": "Deterministic physical-modeling waveguide/modal/periodic-RFFT synthesis from scratch in Python/NumPy/SciPy",
+        "tool_and_version": "Python 3.15.0 + NumPy 2.5.4 + SciPy 1.18.1 + ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "external_samples": "NONE",
+        "original_license": "Repository First-Party Original Asset (Zero Third-Party Samples / Zero SoundFonts / Zero Generative Music Cloud APIs)",
+        "license_evidence": "Full deterministic source code in tools/dsp_engine.py + tools/build_audio.py + source/*",
+        "usage_restrictions": "Presentation-only game SFX/ambience; subject to standard repository GATE-LEGAL sign-off before commercial livestream launch.",
+        "distribution_permission_status": "FIRST_PARTY_REPO_INTERNAL_PENDING_LEGAL_SIGNOFF",
+        "commercial_streaming_permission_status": "PENDING_GATE_LEGAL_REVIEW",
+        "rights_status": "PENDING_REVIEW"
+      }
+    },
+    {
+      "cue_id": "SFX06",
+      "category": "sfx",
+      "asset_stem": "sfx_wall_damage",
+      "master_wav_path": "art/production/ART-007/sfx/wav/sfx_wall_damage.wav",
+      "master_wav_sha256": "6a559d2017be61f05797aec7b4573244cd6ce3586252f36976491ab3cff5acd0",
+      "master_wav_bytes": 83564,
+      "bit_depth": 24,
+      "sample_rate_hz": 48000,
+      "channels": 1,
+      "duration_s": 0.58,
+      "true_peak_dbtp": -3.5,
+      "sample_peak_dbfs": -3.51,
+      "integrated_lufs": -22.16,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 1.0,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null,
+      "runtime_encoded_path": "art/production/ART-007/sfx/runtime/sfx_wall_damage.ogg",
+      "runtime_encoded_sha256": "65db3547e4652b8b0623ea686102be964676720053d8fe5a711b01190e58d1f3",
+      "runtime_encoded_bytes": 8756,
+      "runtime_codec": "vorbis",
+      "editable_sources": [
+        {
+          "path": "art/production/ART-007/source/sfx/sfx_wall_damage_patch.json",
+          "sha256": "ba24af712a2a5ad7e71b5b3112aa15c2177698d080f9372486bca17bd8c7fe74",
+          "bytes": 847
+        }
+      ],
+      "provenance_and_rights": {
+        "exact_source": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_wall_damage)",
+        "producer": "TTGQLDL First-Party Procedural Audio Pipeline (Antigravity + Gemini 4 Argon)",
+        "production_method": "Deterministic physical-modeling waveguide/modal/periodic-RFFT synthesis from scratch in Python/NumPy/SciPy",
+        "tool_and_version": "Python 3.15.0 + NumPy 2.5.4 + SciPy 1.18.1 + ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "external_samples": "NONE",
+        "original_license": "Repository First-Party Original Asset (Zero Third-Party Samples / Zero SoundFonts / Zero Generative Music Cloud APIs)",
+        "license_evidence": "Full deterministic source code in tools/dsp_engine.py + tools/build_audio.py + source/*",
+        "usage_restrictions": "Presentation-only game SFX/ambience; subject to standard repository GATE-LEGAL sign-off before commercial livestream launch.",
+        "distribution_permission_status": "FIRST_PARTY_REPO_INTERNAL_PENDING_LEGAL_SIGNOFF",
+        "commercial_streaming_permission_status": "PENDING_GATE_LEGAL_REVIEW",
+        "rights_status": "PENDING_REVIEW"
+      }
+    },
+    {
+      "cue_id": "SFX07",
+      "category": "sfx",
+      "asset_stem": "sfx_wall_breach",
+      "master_wav_path": "art/production/ART-007/sfx/wav/sfx_wall_breach.wav",
+      "master_wav_sha256": "c71874666887169c780eb8fc1f97442991374c50dbc56a167c25c84727be7b15",
+      "master_wav_bytes": 368684,
+      "bit_depth": 24,
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "duration_s": 1.28,
+      "true_peak_dbtp": -1.8,
+      "sample_peak_dbfs": -1.81,
+      "integrated_lufs": -17.43,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 0.984,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null,
+      "runtime_encoded_path": "art/production/ART-007/sfx/runtime/sfx_wall_breach.ogg",
+      "runtime_encoded_sha256": "85fbddb03c2e1ce5a054fe60587858bb27c51fed828e72738db7573e85c6156f",
+      "runtime_encoded_bytes": 21153,
+      "runtime_codec": "vorbis",
+      "editable_sources": [
+        {
+          "path": "art/production/ART-007/source/sfx/sfx_wall_breach_patch.json",
+          "sha256": "069a9a8ea5bae0af9a4c4b67d159997e2849e51a9cc9e61ba11b8a396904ee5e",
+          "bytes": 847
+        }
+      ],
+      "provenance_and_rights": {
+        "exact_source": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_wall_breach)",
+        "producer": "TTGQLDL First-Party Procedural Audio Pipeline (Antigravity + Gemini 4 Argon)",
+        "production_method": "Deterministic physical-modeling waveguide/modal/periodic-RFFT synthesis from scratch in Python/NumPy/SciPy",
+        "tool_and_version": "Python 3.15.0 + NumPy 2.5.4 + SciPy 1.18.1 + ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "external_samples": "NONE",
+        "original_license": "Repository First-Party Original Asset (Zero Third-Party Samples / Zero SoundFonts / Zero Generative Music Cloud APIs)",
+        "license_evidence": "Full deterministic source code in tools/dsp_engine.py + tools/build_audio.py + source/*",
+        "usage_restrictions": "Presentation-only game SFX/ambience; subject to standard repository GATE-LEGAL sign-off before commercial livestream launch.",
+        "distribution_permission_status": "FIRST_PARTY_REPO_INTERNAL_PENDING_LEGAL_SIGNOFF",
+        "commercial_streaming_permission_status": "PENDING_GATE_LEGAL_REVIEW",
+        "rights_status": "PENDING_REVIEW"
+      }
+    },
+    {
+      "cue_id": "SFX08",
+      "category": "sfx",
+      "asset_stem": "sfx_boss_warning",
+      "master_wav_path": "art/production/ART-007/sfx/wav/sfx_boss_warning.wav",
+      "master_wav_sha256": "b1edf126f2bfa970d49b7f5a2252962ce4900fec118bf2a948ebf0dc4d384f21",
+      "master_wav_bytes": 535724,
+      "bit_depth": 24,
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "duration_s": 1.86,
+      "true_peak_dbtp": -2.8,
+      "sample_peak_dbfs": -2.81,
+      "integrated_lufs": -12.47,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 0.9872,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null,
+      "runtime_encoded_path": "art/production/ART-007/sfx/runtime/sfx_boss_warning.ogg",
+      "runtime_encoded_sha256": "61c6179117fb21f6180c70e21d8bc3fe7f06cf6841da7abfcc7482ff43b846f0",
+      "runtime_encoded_bytes": 24748,
+      "runtime_codec": "vorbis",
+      "editable_sources": [
+        {
+          "path": "art/production/ART-007/source/sfx/sfx_boss_warning_patch.json",
+          "sha256": "4aca7db111a1a2efb67b9ad5717022230b5c32037024467fe4973ea8ed1503b1",
+          "bytes": 874
+        }
+      ],
+      "provenance_and_rights": {
+        "exact_source": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_boss_warning)",
+        "producer": "TTGQLDL First-Party Procedural Audio Pipeline (Antigravity + Gemini 4 Argon)",
+        "production_method": "Deterministic physical-modeling waveguide/modal/periodic-RFFT synthesis from scratch in Python/NumPy/SciPy",
+        "tool_and_version": "Python 3.15.0 + NumPy 2.5.4 + SciPy 1.18.1 + ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "external_samples": "NONE",
+        "original_license": "Repository First-Party Original Asset (Zero Third-Party Samples / Zero SoundFonts / Zero Generative Music Cloud APIs)",
+        "license_evidence": "Full deterministic source code in tools/dsp_engine.py + tools/build_audio.py + source/*",
+        "usage_restrictions": "Presentation-only game SFX/ambience; subject to standard repository GATE-LEGAL sign-off before commercial livestream launch.",
+        "distribution_permission_status": "FIRST_PARTY_REPO_INTERNAL_PENDING_LEGAL_SIGNOFF",
+        "commercial_streaming_permission_status": "PENDING_GATE_LEGAL_REVIEW",
+        "rights_status": "PENDING_REVIEW"
+      }
+    },
+    {
+      "cue_id": "SFX09",
+      "category": "sfx",
+      "asset_stem": "sfx_boss_slam",
+      "master_wav_path": "art/production/ART-007/sfx/wav/sfx_boss_slam.wav",
+      "master_wav_sha256": "d09e927c11c742abdb1e7088a71346bf267466ac40ee4259873b746e9ed5e655",
+      "master_wav_bytes": 334124,
+      "bit_depth": 24,
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "duration_s": 1.16,
+      "true_peak_dbtp": -1.5,
+      "sample_peak_dbfs": -1.52,
+      "integrated_lufs": -17.38,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 0.9965,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null,
+      "runtime_encoded_path": "art/production/ART-007/sfx/runtime/sfx_boss_slam.ogg",
+      "runtime_encoded_sha256": "1fdd97d2022e2aa6fc8e579a9f30e116893caee083088922e5a2410dcc9fef05",
+      "runtime_encoded_bytes": 11579,
+      "runtime_codec": "vorbis",
+      "editable_sources": [
+        {
+          "path": "art/production/ART-007/source/sfx/sfx_boss_slam_patch.json",
+          "sha256": "38df7a8764b22e9100b878cac6a20a2e615ab1b6aac2f94ebb10b62c1df128fe",
+          "bytes": 856
+        }
+      ],
+      "provenance_and_rights": {
+        "exact_source": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_boss_slam)",
+        "producer": "TTGQLDL First-Party Procedural Audio Pipeline (Antigravity + Gemini 4 Argon)",
+        "production_method": "Deterministic physical-modeling waveguide/modal/periodic-RFFT synthesis from scratch in Python/NumPy/SciPy",
+        "tool_and_version": "Python 3.15.0 + NumPy 2.5.4 + SciPy 1.18.1 + ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "external_samples": "NONE",
+        "original_license": "Repository First-Party Original Asset (Zero Third-Party Samples / Zero SoundFonts / Zero Generative Music Cloud APIs)",
+        "license_evidence": "Full deterministic source code in tools/dsp_engine.py + tools/build_audio.py + source/*",
+        "usage_restrictions": "Presentation-only game SFX/ambience; subject to standard repository GATE-LEGAL sign-off before commercial livestream launch.",
+        "distribution_permission_status": "FIRST_PARTY_REPO_INTERNAL_PENDING_LEGAL_SIGNOFF",
+        "commercial_streaming_permission_status": "PENDING_GATE_LEGAL_REVIEW",
+        "rights_status": "PENDING_REVIEW"
+      }
+    },
+    {
+      "cue_id": "SFX10",
+      "category": "sfx",
+      "asset_stem": "sfx_vote_closed",
+      "master_wav_path": "art/production/ART-007/sfx/wav/sfx_vote_closed.wav",
+      "master_wav_sha256": "e38f6cdd0405d0c4ed7c20c92b46455a09dc9b6bc777edf620d1bdcc32cc1164",
+      "master_wav_bytes": 69164,
+      "bit_depth": 24,
+      "sample_rate_hz": 48000,
+      "channels": 1,
+      "duration_s": 0.48,
+      "true_peak_dbtp": -5.2,
+      "sample_peak_dbfs": -5.21,
+      "integrated_lufs": -18.52,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 1.0,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null,
+      "runtime_encoded_path": "art/production/ART-007/sfx/runtime/sfx_vote_closed.ogg",
+      "runtime_encoded_sha256": "0324319fa4137aec8ca63f7de9c16c541c37798f2ba9c3c884b6f7b4e93416c7",
+      "runtime_encoded_bytes": 6641,
+      "runtime_codec": "vorbis",
+      "editable_sources": [
+        {
+          "path": "art/production/ART-007/source/sfx/sfx_vote_closed_patch.json",
+          "sha256": "5e29b96795595fdf8c6509aaf188d9e2ce68d6233864a0a59167066b60a7fd74",
+          "bytes": 828
+        }
+      ],
+      "provenance_and_rights": {
+        "exact_source": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_vote_closed)",
+        "producer": "TTGQLDL First-Party Procedural Audio Pipeline (Antigravity + Gemini 4 Argon)",
+        "production_method": "Deterministic physical-modeling waveguide/modal/periodic-RFFT synthesis from scratch in Python/NumPy/SciPy",
+        "tool_and_version": "Python 3.15.0 + NumPy 2.5.4 + SciPy 1.18.1 + ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "external_samples": "NONE",
+        "original_license": "Repository First-Party Original Asset (Zero Third-Party Samples / Zero SoundFonts / Zero Generative Music Cloud APIs)",
+        "license_evidence": "Full deterministic source code in tools/dsp_engine.py + tools/build_audio.py + source/*",
+        "usage_restrictions": "Presentation-only game SFX/ambience; subject to standard repository GATE-LEGAL sign-off before commercial livestream launch.",
+        "distribution_permission_status": "FIRST_PARTY_REPO_INTERNAL_PENDING_LEGAL_SIGNOFF",
+        "commercial_streaming_permission_status": "PENDING_GATE_LEGAL_REVIEW",
+        "rights_status": "PENDING_REVIEW"
+      }
+    },
+    {
+      "cue_id": "SFX11",
+      "category": "sfx",
+      "asset_stem": "sfx_wave_victory",
+      "master_wav_path": "art/production/ART-007/sfx/wav/sfx_wave_victory.wav",
+      "master_wav_sha256": "7270eb5194b23581c86461bbd32a006a8440d292245e1af80fb8ffd36d96cb73",
+      "master_wav_bytes": 705644,
+      "bit_depth": 24,
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "duration_s": 2.45,
+      "true_peak_dbtp": -2.0,
+      "sample_peak_dbfs": -2.01,
+      "integrated_lufs": -11.49,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 0.9808,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null,
+      "runtime_encoded_path": "art/production/ART-007/sfx/runtime/sfx_wave_victory.ogg",
+      "runtime_encoded_sha256": "4cbf63ba3d07cdf1342539d711972c3a0a160904d8efa751a30940d1039ffc0e",
+      "runtime_encoded_bytes": 32509,
+      "runtime_codec": "vorbis",
+      "editable_sources": [
+        {
+          "path": "art/production/ART-007/source/sfx/sfx_wave_victory_patch.json",
+          "sha256": "b98af616b428c72cc239d8ed99e608a09dd54fee71886986da658ed143d88d05",
+          "bytes": 900
+        }
+      ],
+      "provenance_and_rights": {
+        "exact_source": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_wave_victory)",
+        "producer": "TTGQLDL First-Party Procedural Audio Pipeline (Antigravity + Gemini 4 Argon)",
+        "production_method": "Deterministic physical-modeling waveguide/modal/periodic-RFFT synthesis from scratch in Python/NumPy/SciPy",
+        "tool_and_version": "Python 3.15.0 + NumPy 2.5.4 + SciPy 1.18.1 + ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "external_samples": "NONE",
+        "original_license": "Repository First-Party Original Asset (Zero Third-Party Samples / Zero SoundFonts / Zero Generative Music Cloud APIs)",
+        "license_evidence": "Full deterministic source code in tools/dsp_engine.py + tools/build_audio.py + source/*",
+        "usage_restrictions": "Presentation-only game SFX/ambience; subject to standard repository GATE-LEGAL sign-off before commercial livestream launch.",
+        "distribution_permission_status": "FIRST_PARTY_REPO_INTERNAL_PENDING_LEGAL_SIGNOFF",
+        "commercial_streaming_permission_status": "PENDING_GATE_LEGAL_REVIEW",
+        "rights_status": "PENDING_REVIEW"
+      }
+    },
+    {
+      "cue_id": "SFX12",
+      "category": "sfx",
+      "asset_stem": "sfx_wave_defeat",
+      "master_wav_path": "art/production/ART-007/sfx/wav/sfx_wave_defeat.wav",
+      "master_wav_sha256": "24781d466b3936d66146c6a2f1e736c206114ba9dacf398138e3807c068defa8",
+      "master_wav_bytes": 676844,
+      "bit_depth": 24,
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "duration_s": 2.35,
+      "true_peak_dbtp": -3.2,
+      "sample_peak_dbfs": -3.21,
+      "integrated_lufs": -11.98,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 0.9851,
+      "loop_seam_step_ratio": null,
+      "loop_seam_50ms_rms_jump_db": null,
+      "runtime_encoded_path": "art/production/ART-007/sfx/runtime/sfx_wave_defeat.ogg",
+      "runtime_encoded_sha256": "3afdc71cff1283b470fc202d4091c187b68b9eb5abffddd36358c99959ae02a4",
+      "runtime_encoded_bytes": 29222,
+      "runtime_codec": "vorbis",
+      "editable_sources": [
+        {
+          "path": "art/production/ART-007/source/sfx/sfx_wave_defeat_patch.json",
+          "sha256": "647fdffed09b228acd2132a09475c9da311e56811e442d44ac655a37b3016e87",
+          "bytes": 869
+        }
+      ],
+      "provenance_and_rights": {
+        "exact_source": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (sfx_wave_defeat)",
+        "producer": "TTGQLDL First-Party Procedural Audio Pipeline (Antigravity + Gemini 4 Argon)",
+        "production_method": "Deterministic physical-modeling waveguide/modal/periodic-RFFT synthesis from scratch in Python/NumPy/SciPy",
+        "tool_and_version": "Python 3.15.0 + NumPy 2.5.4 + SciPy 1.18.1 + ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "external_samples": "NONE",
+        "original_license": "Repository First-Party Original Asset (Zero Third-Party Samples / Zero SoundFonts / Zero Generative Music Cloud APIs)",
+        "license_evidence": "Full deterministic source code in tools/dsp_engine.py + tools/build_audio.py + source/*",
+        "usage_restrictions": "Presentation-only game SFX/ambience; subject to standard repository GATE-LEGAL sign-off before commercial livestream launch.",
+        "distribution_permission_status": "FIRST_PARTY_REPO_INTERNAL_PENDING_LEGAL_SIGNOFF",
+        "commercial_streaming_permission_status": "PENDING_GATE_LEGAL_REVIEW",
+        "rights_status": "PENDING_REVIEW"
+      }
+    },
+    {
+      "cue_id": "AMB01",
+      "category": "ambient",
+      "asset_stem": "amb_village_dawn_loop",
+      "master_wav_path": "art/production/ART-007/ambient/wav/amb_village_dawn_loop.wav",
+      "master_wav_sha256": "bd8db0edd086c84a6ecba5edb323fb5f5a2718f7895fcf0bca3bf819d500de19",
+      "master_wav_bytes": 10368044,
+      "bit_depth": 24,
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "duration_s": 36.0,
+      "true_peak_dbtp": -12.64,
+      "sample_peak_dbfs": -12.65,
+      "integrated_lufs": -26.0,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 0.9668,
+      "loop_seam_step_ratio": 0.0237,
+      "loop_seam_50ms_rms_jump_db": 1.229,
+      "runtime_encoded_path": "art/production/ART-007/ambient/runtime/amb_village_dawn_loop.ogg",
+      "runtime_encoded_sha256": "5c143be49299fa8553fdc108a49375c9275f56c5f8c695791c35948e1c8aaa39",
+      "runtime_encoded_bytes": 603302,
+      "runtime_codec": "vorbis",
+      "editable_sources": [
+        {
+          "path": "art/production/ART-007/source/ambient/amb_village_dawn_loop_project.json",
+          "sha256": "b9ce792e09500228b68ced3df0dfd8c71a105657ad4ad60f42c139d1e408a9b6",
+          "bytes": 1974
+        }
+      ],
+      "provenance_and_rights": {
+        "exact_source": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (amb_village_dawn_loop)",
+        "producer": "TTGQLDL First-Party Procedural Audio Pipeline (Antigravity + Gemini 4 Argon)",
+        "production_method": "Deterministic physical-modeling waveguide/modal/periodic-RFFT synthesis from scratch in Python/NumPy/SciPy",
+        "tool_and_version": "Python 3.15.0 + NumPy 2.5.4 + SciPy 1.18.1 + ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "external_samples": "NONE",
+        "original_license": "Repository First-Party Original Asset (Zero Third-Party Samples / Zero SoundFonts / Zero Generative Music Cloud APIs)",
+        "license_evidence": "Full deterministic source code in tools/dsp_engine.py + tools/build_audio.py + source/*",
+        "usage_restrictions": "Presentation-only game SFX/ambience; subject to standard repository GATE-LEGAL sign-off before commercial livestream launch.",
+        "distribution_permission_status": "FIRST_PARTY_REPO_INTERNAL_PENDING_LEGAL_SIGNOFF",
+        "commercial_streaming_permission_status": "PENDING_GATE_LEGAL_REVIEW",
+        "rights_status": "PENDING_REVIEW"
+      }
+    },
+    {
+      "cue_id": "MUS01",
+      "category": "music",
+      "asset_stem": "music_village_prep_loop",
+      "master_wav_path": "art/production/ART-007/music/wav/music_village_prep_loop.wav",
+      "master_wav_sha256": "03c6f911a9f7267ec139eb0def34850e8ba8a037e1fd5679ddcef88de66300d0",
+      "master_wav_bytes": 11059244,
+      "bit_depth": 24,
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "duration_s": 38.4,
+      "true_peak_dbtp": -7.64,
+      "sample_peak_dbfs": -7.64,
+      "integrated_lufs": -19.5,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 0.9831,
+      "loop_seam_step_ratio": 0.1029,
+      "loop_seam_50ms_rms_jump_db": 10.344,
+      "runtime_encoded_path": "art/production/ART-007/music/runtime/music_village_prep_loop.ogg",
+      "runtime_encoded_sha256": "f2403ac8d9736954abc98ef3a60b3eb5cba83c206dc0394198a9a6707bf34fb0",
+      "runtime_encoded_bytes": 576720,
+      "runtime_codec": "vorbis",
+      "editable_sources": [
+        {
+          "path": "art/production/ART-007/source/music/music_village_prep_loop.mid",
+          "sha256": "514b90a55ed66930bc665f3eb3d508ed49226d3ae855e1095c6f716698764f07",
+          "bytes": 2133
+        },
+        {
+          "path": "art/production/ART-007/source/music/music_village_prep_loop_score.json",
+          "sha256": "eaf54a857cfe023ff7a95b45f7dde2dd1837234b03a1b77069f75b41c6f0da0d",
+          "bytes": 25444
+        }
+      ],
+      "provenance_and_rights": {
+        "exact_source": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (music_village_prep_loop)",
+        "producer": "TTGQLDL First-Party Procedural Audio Pipeline (Antigravity + Gemini 4 Argon)",
+        "production_method": "Deterministic physical-modeling waveguide/modal/periodic-RFFT synthesis from scratch in Python/NumPy/SciPy",
+        "tool_and_version": "Python 3.15.0 + NumPy 2.5.4 + SciPy 1.18.1 + ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "external_samples": "NONE",
+        "original_license": "Repository First-Party Original Asset (Zero Third-Party Samples / Zero SoundFonts / Zero Generative Music Cloud APIs)",
+        "license_evidence": "Full deterministic source code in tools/dsp_engine.py + tools/build_audio.py + source/*",
+        "usage_restrictions": "MUST remain MUTED by default (-80 dB) in production builds until GATE-LEGAL stream music clearance is formally approved.",
+        "distribution_permission_status": "FIRST_PARTY_REPO_INTERNAL_PENDING_LEGAL_SIGNOFF",
+        "commercial_streaming_permission_status": "MUTED_BY_DEFAULT_PENDING_GATE_LEGAL",
+        "rights_status": "PENDING_REVIEW"
+      }
+    },
+    {
+      "cue_id": "MUS02",
+      "category": "music",
+      "asset_stem": "music_village_assault_loop",
+      "master_wav_path": "art/production/ART-007/music/wav/music_village_assault_loop.wav",
+      "master_wav_sha256": "eb3f211ad449b94023e7d91079199081bd699af06a2184f49fb5c61f35f79945",
+      "master_wav_bytes": 10800044,
+      "bit_depth": 24,
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "duration_s": 37.5,
+      "true_peak_dbtp": -4.87,
+      "sample_peak_dbfs": -4.88,
+      "integrated_lufs": -17.5,
+      "dc_offset": 0.0,
+      "clipped_samples": 0,
+      "stereo_phase_correlation": 0.9903,
+      "loop_seam_step_ratio": 0.0228,
+      "loop_seam_50ms_rms_jump_db": 10.55,
+      "runtime_encoded_path": "art/production/ART-007/music/runtime/music_village_assault_loop.ogg",
+      "runtime_encoded_sha256": "d7db18f3ba52b1abe5e2011a05c278676f19743de515a3d1515622445227192c",
+      "runtime_encoded_bytes": 497199,
+      "runtime_codec": "vorbis",
+      "editable_sources": [
+        {
+          "path": "art/production/ART-007/source/music/music_village_assault_loop.mid",
+          "sha256": "c823b41670f119a6a296d00a23c819a20a04d7d5ba0b59603f48f3378625380f",
+          "bytes": 3518
+        },
+        {
+          "path": "art/production/ART-007/source/music/music_village_assault_loop_score.json",
+          "sha256": "4f4be6e774d39567f69b192d4a6756c0b3c427d68da7480ca80372600c3f61f0",
+          "bytes": 44268
+        }
+      ],
+      "provenance_and_rights": {
+        "exact_source": "100% original deterministic synthesis via art/production/ART-007/tools/build_audio.py & dsp_engine.py (music_village_assault_loop)",
+        "producer": "TTGQLDL First-Party Procedural Audio Pipeline (Antigravity + Gemini 4 Argon)",
+        "production_method": "Deterministic physical-modeling waveguide/modal/periodic-RFFT synthesis from scratch in Python/NumPy/SciPy",
+        "tool_and_version": "Python 3.15.0 + NumPy 2.5.4 + SciPy 1.18.1 + ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "external_samples": "NONE",
+        "original_license": "Repository First-Party Original Asset (Zero Third-Party Samples / Zero SoundFonts / Zero Generative Music Cloud APIs)",
+        "license_evidence": "Full deterministic source code in tools/dsp_engine.py + tools/build_audio.py + source/*",
+        "usage_restrictions": "MUST remain MUTED by default (-80 dB) in production builds until GATE-LEGAL stream music clearance is formally approved.",
+        "distribution_permission_status": "FIRST_PARTY_REPO_INTERNAL_PENDING_LEGAL_SIGNOFF",
+        "commercial_streaming_permission_status": "MUTED_BY_DEFAULT_PENDING_GATE_LEGAL",
+        "rights_status": "PENDING_REVIEW"
+      }
+    }
+  ],
+  "supporting_deliverables": [
+    {
+      "path": "art/production/ART-007/audio_cue_mapping.json",
+      "sha256": "3f6cf04f61bb4a368916b5e33ba19837256da7c25d5b948ff00f3e296b570cd7",
+      "bytes": 14268
+    },
+    {
+      "path": "art/production/ART-007/audio_mixer_config.json",
+      "sha256": "beb0de42b13669d83dc0bb40ccf55b53a927cbdf102e890e69be4194e7b9e778",
+      "bytes": 2732
+    },
+    {
+      "path": "art/production/ART-007/unity_presets/TTG_ART007_SFX_Short_DecompressOnLoad.preset.yaml",
+      "sha256": "b1eb14273b0217f6e6d216a94a7b08ccba55fadda0f4ad4ff12dffc3c8c4d8dc",
+      "bytes": 1191
+    },
+    {
+      "path": "art/production/ART-007/unity_presets/TTG_ART007_Ambient_CompressedInMemory.preset.yaml",
+      "sha256": "b9491836799941b81963db624b827f818786014d64c56cd6ebf42e10e69b3751",
+      "bytes": 1193
+    },
+    {
+      "path": "art/production/ART-007/unity_presets/TTG_ART007_Music_Streaming.preset.yaml",
+      "sha256": "6349e0858e8276af33d1e501ad1e4d400e92972d2e14ec34285ffd5f3bb46262",
+      "bytes": 1182
+    },
+    {
+      "path": "art/production/ART-007/unity_presets/ART007AudioPipelineVerifier.cs.txt",
+      "sha256": "787a0bc0aac62bb98664f708d3965bbaa45940feea8e3a55f6f09a7a56043cea",
+      "bytes": 12178
+    },
+    {
+      "path": "art/production/ART-007/previews/individual/sfx_12_catalog_montage.wav",
+      "sha256": "e28503fab05e3ad14f8cbbb429429004fccb90e8c64c981159f2fc90e5d11805",
+      "bytes": 4691564
+    },
+    {
+      "path": "art/production/ART-007/previews/individual/sfx_12_catalog_montage.ogg",
+      "sha256": "ad7e6b0a043d8a441d6bcc532ed985d76a182c93f4f151a190c75f7a7a9158be",
+      "bytes": 151721
+    },
+    {
+      "path": "art/production/ART-007/previews/individual/sfx_12_waveforms_and_spectra.png",
+      "sha256": "30464b65fca61be00a95eb5babd7fe9283938eedc361f10562418f7b75c8da51",
+      "bytes": 124678
+    },
+    {
+      "path": "art/production/ART-007/previews/loops/amb_village_dawn_x3_seam_check.ogg",
+      "sha256": "829f0b4c72c508bceef8af9162cad752ecf002ab2890b49c11226eacae09539c",
+      "bytes": 1801280
+    },
+    {
+      "path": "art/production/ART-007/previews/loops/amb_seam_window_zoom.wav",
+      "sha256": "1c9d2bc6092deac8db3f7c8d4987845e5c7f22f99bff4d9b1f428da3d8dd946c",
+      "bytes": 1728044
+    },
+    {
+      "path": "art/production/ART-007/previews/loops/music_prep_seam_window_zoom.wav",
+      "sha256": "dc3d05ac699f97d8d8fc4c0e8402f75f6f07ef85a16464dc04924388f4b4b885",
+      "bytes": 1728044
+    },
+    {
+      "path": "art/production/ART-007/previews/loops/music_assault_seam_window_zoom.wav",
+      "sha256": "adef0423e22e896ce63f5a3eb7908e11fb1f3ec72a47bff488b639753f526a4c",
+      "bytes": 1728044
+    },
+    {
+      "path": "art/production/ART-007/previews/loops/loop_seam_and_music_structure_board.png",
+      "sha256": "91cdd6300b9babc55ab1f6b2be06d4a7496415868c4375f76cc47d2fa650a241",
+      "bytes": 161524
+    },
+    {
+      "path": "art/production/ART-007/previews/gameplay_montage/gameplay_montage_prod_default_music_muted.wav",
+      "sha256": "b8672745cceea51e9b48b68ba3c88480d1eaf4023b2dcb7f9ad973b324601b98",
+      "bytes": 6912044
+    },
+    {
+      "path": "art/production/ART-007/previews/gameplay_montage/gameplay_montage_offline_qa_with_music.wav",
+      "sha256": "e4bf9553a06534f100da4f1063d0378e2f1a75e9dea78ca53e94f935b85bb9fa",
+      "bytes": 6912044
+    },
+    {
+      "path": "art/production/ART-007/previews/gameplay_montage/mono_downmix_battle_montage.wav",
+      "sha256": "52b40591f1f47e97384384da5375bb752f6083793b481e0ebdcf12b910ac121b",
+      "bytes": 3456044
+    },
+    {
+      "path": "art/production/ART-007/previews/gameplay_montage/high_activity_10k_antispam_mix_proof.wav",
+      "sha256": "e133d71aadc274bdf46d131d091f56367f7239bb64e81a0b01ec0b999f45130f",
+      "bytes": 2304044
+    },
+    {
+      "path": "art/production/ART-007/previews/gameplay_montage/gameplay_audiovisual_montage_1080p_128k_aac.mp4",
+      "sha256": "7622627b91c9f2a78f4efd272ef91b4e1acabc25d74e1cc56ed832bd72b8d1ea",
+      "bytes": 2490333
+    },
+    {
+      "path": "art/production/ART-007/previews/gameplay_montage/gameplay_audiovisual_montage_360p_96k_aac.mp4",
+      "sha256": "a1d95bdbbf53fa7f5e14624f80a290f33cb9ad9a22b4a88906b0dac0afea1cff",
+      "bytes": 1683928
+    },
+    {
+      "path": "art/production/ART-007/previews/gameplay_montage/mix_loudness_and_aac_proxy_board.png",
+      "sha256": "14cb549b7087c5f2889b1ee0b84fe5e752cdb63a0d87e7b92e799c5e6656f57f",
+      "bytes": 555171
+    },
+    {
+      "path": "art/production/ART-007/qa/stream_encode_metrics.json",
+      "sha256": "538c1e4b954162218048099ce854a18cde3d0061b7b5dcf30d9f1c414a17e374",
+      "bytes": 4039
+    },
+    {
+      "path": "art/production/ART-007/qa/unity_isolated_verification.json",
+      "sha256": "9fabe3399690226339821bc1a3536ee58b54f3d3afa6c34cce1e571a88204377",
+      "bytes": 6390
+    }
+  ]
+}

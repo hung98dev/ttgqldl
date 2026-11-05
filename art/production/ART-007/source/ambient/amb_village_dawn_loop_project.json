@@ -1,0 +1,98 @@
+{
+  "cue_id": "AMB01",
+  "file_stem": "amb_village_dawn_loop",
+  "duration_s": 36.0,
+  "exact_samples": 1728000,
+  "sample_rate_hz": 48000,
+  "channels": 2,
+  "loop_method": "Exact N-point periodic RFFT meadow breeze + modulo-N wrapped stylized village foley (zero crossfade dip)",
+  "layers": [
+    {
+      "id": "meadow_dawn_breeze",
+      "band_hz": [
+        88,
+        365
+      ],
+      "lfo_cycles_per_loop": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "discrete_courtyard_leaf_gusts",
+      "band_hz": [
+        1450,
+        4300
+      ],
+      "lfo_cycles_per_loop": [
+        3
+      ]
+    },
+    {
+      "id": "bastion_dawn_harmonic_air",
+      "notes_hz": [
+        146.83,
+        220.0,
+        329.63,
+        369.99
+      ],
+      "lfo_cycles_per_loop": [
+        1
+      ]
+    },
+    {
+      "id": "passerine_morning_songbirds",
+      "timestamps_s": [
+        2.8,
+        9.6,
+        17.8,
+        25.4,
+        32.6
+      ]
+    },
+    {
+      "id": "courtyard_wooden_windchimes",
+      "timestamps_s": [
+        6.2,
+        21.4
+      ]
+    },
+    {
+      "id": "seasoned_timber_creaks",
+      "timestamps_s": [
+        13.2,
+        28.8
+      ]
+    },
+    {
+      "id": "distant_carpenter_and_well",
+      "timestamps_s": [
+        15.2,
+        15.54,
+        30.8
+      ]
+    }
+  ],
+  "measured_master_metrics": {
+    "sample_rate_hz": 48000,
+    "channels": 2,
+    "samples": 1728000,
+    "duration_s": 36.0,
+    "sample_peak_dbfs": -12.65,
+    "true_peak_dbtp": -12.64,
+    "rms_dbfs": -28.01,
+    "integrated_lufs": -26.0,
+    "momentary_max_lufs": -21.55,
+    "dc_offset": 0.0,
+    "clipped_samples": 0,
+    "onset_ms": 0.0,
+    "first_sample_abs": 0.054266,
+    "last_sample_abs": 0.054112,
+    "stereo_phase_correlation": 0.9668,
+    "mono_downmix_loss_db": -0.07,
+    "loop_seam_step_abs": 0.000528,
+    "loop_interior_p995_step_abs": 0.022275,
+    "loop_seam_step_ratio": 0.0237,
+    "loop_seam_50ms_rms_jump_db": 1.229
+  }
+}

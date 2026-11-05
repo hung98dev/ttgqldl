@@ -1,0 +1,33 @@
+{
+  "cue_id": "SFX12",
+  "file_stem": "sfx_wave_defeat",
+  "channels": 2,
+  "target_peak_dbtp": -3.2,
+  "purpose": "Confirmed tick-2800 wave defeat/loss cue (dignified D-Dorian cello/horn/harp resolve, non-punitive)",
+  "synthesis_recipe": {
+    "layers": [
+      "dignified_cello_lute_F_CE_Dsus2",
+      "mellow_horn_F4_E4_D4",
+      "soft_frame_drum_settle"
+    ],
+    "seed": 300
+  },
+  "measured_master_metrics": {
+    "sample_rate_hz": 48000,
+    "channels": 2,
+    "samples": 112800,
+    "duration_s": 2.35,
+    "sample_peak_dbfs": -3.21,
+    "true_peak_dbtp": -3.2,
+    "rms_dbfs": -14.66,
+    "integrated_lufs": -11.98,
+    "momentary_max_lufs": -9.54,
+    "dc_offset": 0.0,
+    "clipped_samples": 0,
+    "onset_ms": 15.19,
+    "first_sample_abs": 0.0,
+    "last_sample_abs": 0.0,
+    "stereo_phase_correlation": 0.9851,
+    "mono_downmix_loss_db": -0.03
+  }
+}

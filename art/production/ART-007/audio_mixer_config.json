@@ -1,0 +1,83 @@
+{
+  "package_id": "ART-007",
+  "target_engine": "Unity 6000.6.7f1 (Built-in 2D / AudioMixer)",
+  "global_mute_supported": true,
+  "operator_endpoint_alignment": "POST /admin/v1/sessions/{id}/settings {low_vfx: bool, mute_audio: bool}",
+  "music_muted_by_default": true,
+  "music_enabled_default": false,
+  "music_rights_gate": "GATE-LEGAL (PENDING_REVIEW — never silently enable Music in production)",
+  "groups": [
+    {
+      "name": "Master",
+      "parent": null,
+      "exposed_param": "MasterVolumeDb",
+      "default_volume_db": 0.0,
+      "soft_ceiling_dbtp": -1.0
+    },
+    {
+      "name": "Alerts",
+      "parent": "Master",
+      "exposed_param": "AlertsVolumeDb",
+      "default_volume_db": 0.0,
+      "description": "High-priority Boss warning/slam, Wall breach, Vote close, Victory/Defeat stings"
+    },
+    {
+      "name": "SFX",
+      "parent": "Master",
+      "exposed_param": "SfxVolumeDb",
+      "default_volume_db": -1.5,
+      "description": "Pooled tactical combat, repair, block & bounded role-join cues"
+    },
+    {
+      "name": "Ambient",
+      "parent": "Master",
+      "exposed_param": "AmbientVolumeDb",
+      "default_volume_db": -3.0,
+      "description": "Seamless village dawn loop"
+    },
+    {
+      "name": "Music",
+      "parent": "Master",
+      "exposed_param": "MusicVolumeDb",
+      "default_volume_db": -80.0,
+      "muted_by_default": true,
+      "unmuted_target_volume_db": -5.5,
+      "description": "Muted (-80 dB) by default until stream music rights are formally approved"
+    }
+  ],
+  "voice_pool_budget": {
+    "combat_sfx_pool_sources": 8,
+    "high_priority_alerts_sources": 2,
+    "ambient_loop_sources": 1,
+    "music_loop_sources": 1,
+    "total_preallocated_audiosources": 12,
+    "dynamic_audiosource_spawning_allowed": false,
+    "voice_stealing_policy": "Steal lowest-priority (highest numeric priority value) oldest voice in combat_sfx_pool when all 8 slots are active; never steal Alerts, Ambient, or Music."
+  },
+  "ducking_policy": {
+    "trigger_group": "Alerts",
+    "attenuate_music_db": -5.0,
+    "attenuate_ambient_db": -3.0,
+    "attack_ms": 35,
+    "hold_ms": 250,
+    "release_ms": 420
+  },
+  "mastering_targets_internal_engineering": {
+    "note": "Internal engineering targets for mobile speaker clarity and zero clipping; NOT claimed as official TikTok platform specs.",
+    "individual_sfx_true_peak_max_dbtp": -1.0,
+    "ambient_loop_integrated_lufs_range": [
+      -28.0,
+      -24.0
+    ],
+    "music_loops_integrated_lufs_range": [
+      -21.0,
+      -16.5
+    ],
+    "combined_battle_mix_integrated_lufs_range": [
+      -18.5,
+      -14.0
+    ],
+    "combined_battle_mix_true_peak_max_dbtp": -1.0,
+    "minimum_stereo_phase_correlation": 0.8
+  }
+}

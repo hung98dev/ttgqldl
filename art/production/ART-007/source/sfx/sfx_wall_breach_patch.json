@@ -1,0 +1,33 @@
+{
+  "cue_id": "SFX07",
+  "file_stem": "sfx_wall_breach",
+  "channels": 2,
+  "target_peak_dbtp": -1.8,
+  "purpose": "Decisive structural masonry & gate-beam fracture when wall_hp transitions >0 -> 0",
+  "synthesis_recipe": {
+    "layers": [
+      "keystone_shear_92Hz",
+      "oak_gate_beam_splinter_105ms",
+      "5_masonry_collapse_blocks"
+    ],
+    "seed": 77
+  },
+  "measured_master_metrics": {
+    "sample_rate_hz": 48000,
+    "channels": 2,
+    "samples": 61440,
+    "duration_s": 1.28,
+    "sample_peak_dbfs": -1.81,
+    "true_peak_dbtp": -1.8,
+    "rms_dbfs": -19.52,
+    "integrated_lufs": -17.43,
+    "momentary_max_lufs": -12.25,
+    "dc_offset": 0.0,
+    "clipped_samples": 0,
+    "onset_ms": 5.02,
+    "first_sample_abs": 0.0,
+    "last_sample_abs": 0.0,
+    "stereo_phase_correlation": 0.984,
+    "mono_downmix_loss_db": -0.04
+  }
+}

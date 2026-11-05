@@ -1,0 +1,34 @@
+{
+  "cue_id": "SFX11",
+  "file_stem": "sfx_wave_victory",
+  "channels": 2,
+  "target_peak_dbtp": -2.0,
+  "purpose": "Confirmed tick-2800 wave victory fanfare sting (original Bastion Dawn D-major horn/strings/harp motif)",
+  "synthesis_recipe": {
+    "layers": [
+      "mellow_horn_fanfare_D4_Fs4_A4_D5",
+      "celtic_harp_strum_bloom",
+      "warm_strings_Dmaj",
+      "frame_drum_cadence"
+    ],
+    "seed": 200
+  },
+  "measured_master_metrics": {
+    "sample_rate_hz": 48000,
+    "channels": 2,
+    "samples": 117600,
+    "duration_s": 2.45,
+    "sample_peak_dbfs": -2.01,
+    "true_peak_dbtp": -2.0,
+    "rms_dbfs": -14.63,
+    "integrated_lufs": -11.49,
+    "momentary_max_lufs": -8.41,
+    "dc_offset": 0.0,
+    "clipped_samples": 0,
+    "onset_ms": 10.12,
+    "first_sample_abs": 0.0,
+    "last_sample_abs": 0.0,
+    "stereo_phase_correlation": 0.9808,
+    "mono_downmix_loss_db": -0.04
+  }
+}

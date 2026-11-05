@@ -1,0 +1,33 @@
+{
+  "cue_id": "SFX04",
+  "file_stem": "sfx_fighter_slash",
+  "channels": 1,
+  "target_peak_dbtp": -3.0,
+  "purpose": "Compact broadsword blade movement & impact accent (Fighter.swordslash clip f03 @ 250ms)",
+  "synthesis_recipe": {
+    "layers": [
+      "26ms_blade_air_slice",
+      "tempered_steel_cleave_1790_2960_4180Hz",
+      "leather_bite_transient"
+    ],
+    "seed": 44
+  },
+  "measured_master_metrics": {
+    "sample_rate_hz": 48000,
+    "channels": 1,
+    "samples": 17280,
+    "duration_s": 0.36,
+    "sample_peak_dbfs": -3.06,
+    "true_peak_dbtp": -3.0,
+    "rms_dbfs": -20.75,
+    "integrated_lufs": -19.74,
+    "momentary_max_lufs": -19.74,
+    "dc_offset": 0.0,
+    "clipped_samples": 0,
+    "onset_ms": 1.98,
+    "first_sample_abs": 0.0,
+    "last_sample_abs": 0.0,
+    "stereo_phase_correlation": 1.0,
+    "mono_downmix_loss_db": 0.0
+  }
+}

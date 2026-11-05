@@ -1,0 +1,33 @@
+{
+  "cue_id": "SFX02",
+  "file_stem": "sfx_builder_repair",
+  "channels": 1,
+  "target_peak_dbtp": -3.2,
+  "purpose": "Builder T-hammer strike on seasoned oak & limestone (Builder.repair clip f03 @ 250ms)",
+  "synthesis_recipe": {
+    "layers": [
+      "iron_mallet_transient",
+      "oak_beam_modes_276_642_1285Hz",
+      "wood_stone_chip_settle"
+    ],
+    "seed": 22
+  },
+  "measured_master_metrics": {
+    "sample_rate_hz": 48000,
+    "channels": 1,
+    "samples": 18240,
+    "duration_s": 0.38,
+    "sample_peak_dbfs": -3.24,
+    "true_peak_dbtp": -3.2,
+    "rms_dbfs": -19.51,
+    "integrated_lufs": -20.03,
+    "momentary_max_lufs": -20.03,
+    "dc_offset": 0.0,
+    "clipped_samples": 0,
+    "onset_ms": 3.0,
+    "first_sample_abs": 0.0,
+    "last_sample_abs": 0.0,
+    "stereo_phase_correlation": 1.0,
+    "mono_downmix_loss_db": 0.0
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "cue_id": "SFX09",
+  "file_stem": "sfx_boss_slam",
+  "channels": 2,
+  "target_peak_dbtp": -1.5,
+  "purpose": "Boss heavy runic war-cleaver slam + short magenta resonance (Boss.cleaveslam f05 @ 416.7ms)",
+  "synthesis_recipe": {
+    "layers": [
+      "42ms_cleaver_descent",
+      "earth_iron_slam_78_156_366Hz",
+      "arcane_chord_tail_D3_A3"
+    ],
+    "seed": 99
+  },
+  "measured_master_metrics": {
+    "sample_rate_hz": 48000,
+    "channels": 2,
+    "samples": 55680,
+    "duration_s": 1.16,
+    "sample_peak_dbfs": -1.52,
+    "true_peak_dbtp": -1.5,
+    "rms_dbfs": -19.01,
+    "integrated_lufs": -17.38,
+    "momentary_max_lufs": -12.73,
+    "dc_offset": 0.0,
+    "clipped_samples": 0,
+    "onset_ms": 10.02,
+    "first_sample_abs": 0.0,
+    "last_sample_abs": 0.0,
+    "stereo_phase_correlation": 0.9965,
+    "mono_downmix_loss_db": -0.01
+  }
+}

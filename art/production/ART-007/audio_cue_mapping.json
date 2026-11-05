@@ -1,0 +1,414 @@
+{
+  "package_id": "ART-007",
+  "requirement_id": "SFX001",
+  "rules_version_compatibility": "ttg-rules-v1",
+  "presentation_only_invariants": {
+    "audio_never_advances_ticks": true,
+    "audio_never_mutates_reducer_state": true,
+    "audio_never_creates_durable_ack": true,
+    "audio_never_invents_viewer_activity": true,
+    "audio_never_triggers_on_uncommitted_speculative_state": true,
+    "music_muted_by_default": true,
+    "music_default_volume_db": -80.0,
+    "cosmetic_pitch_variation_formula": "uint64_le(first8(SHA256(session_id + ':' + wave_no + ':' + visual_event_seq))) % variant_count"
+  },
+  "deduplication_and_replay_safety": {
+    "ring_buffer_capacity": 256,
+    "session_scoped_monotonic_cursor": "last_audio_stream_seq",
+    "one_shot_milestone_key_format": "{session_id}:{wave_no}:{canonical_event_type}",
+    "redelivered_outbox_events_suppressed": [
+      "vote_closed",
+      "boss_incoming",
+      "boss_spawned",
+      "wall_breached_once_per_breach",
+      "wave_result"
+    ],
+    "resync_snapshot_policy": "On full public_snapshot resync after gap, update ambient/HUD loop state without re-firing past one-shot stings unless wave_result arrived within <=1500ms and key is unseen."
+  },
+  "cues": [
+    {
+      "cue_id": "SFX01",
+      "asset_stem": "sfx_role_join",
+      "wav_path": "art/production/ART-007/sfx/wav/sfx_role_join.wav",
+      "runtime_path": "art/production/ART-007/sfx/runtime/sfx_role_join.ogg",
+      "mixer_group": "SFX",
+      "priority_0_highest": 96,
+      "cooldown_ms": 2000,
+      "assault_phase_cooldown_ms": 3500,
+      "assault_phase_attenuation_db": -5.5,
+      "max_concurrent_instances": 1,
+      "canonical_domain_events": [
+        "role_accepted",
+        "role_changed",
+        "next_wave_queued"
+      ],
+      "forbidden_triggers": [
+        "duplicate_same_role_comment",
+        "role_rejected_cooldown",
+        "invalid_comment",
+        "uncommitted_local_input"
+      ],
+      "hud_and_animation_sync": {
+        "art006_slot": "join_toast (ui_comp_toast_join, 2.0s hold, burst-aggregated)",
+        "anti_spam_rule": "Burst-aggregated to match ART-006 2.0s join_toast window in PREP (3.5s at -5.5 dB during ASSAULT; suppressed during Boss/Alert stings) so 10,000+ comment bursts never cause repetitive chime fatigue."
+      }
+    },
+    {
+      "cue_id": "SFX02",
+      "asset_stem": "sfx_builder_repair",
+      "wav_path": "art/production/ART-007/sfx/wav/sfx_builder_repair.wav",
+      "runtime_path": "art/production/ART-007/sfx/runtime/sfx_builder_repair.ogg",
+      "mixer_group": "SFX",
+      "priority_0_highest": 110,
+      "cooldown_ms": 220,
+      "max_concurrent_instances": 2,
+      "canonical_domain_events": [
+        "phase_changed",
+        "wall_upgraded",
+        "attack_resolved"
+      ],
+      "forbidden_triggers": [
+        "waiting_zero_builders",
+        "defeated_wave_post_settlement"
+      ],
+      "hud_and_animation_sync": {
+        "art003_entity": "builder (chr_role_builder)",
+        "clip_name": "repair",
+        "fps": 12,
+        "clip_frame_index": 3,
+        "sheet_frame_index": 13,
+        "frame_time_offset_ms": 250.0,
+        "paired_vfx": "vfx_builder_repair_spark[f00] at (+0.177, -0.135) world units"
+      }
+    },
+    {
+      "cue_id": "SFX03",
+      "asset_stem": "sfx_guard_block",
+      "wav_path": "art/production/ART-007/sfx/wav/sfx_guard_block.wav",
+      "runtime_path": "art/production/ART-007/sfx/runtime/sfx_guard_block.ogg",
+      "mixer_group": "SFX",
+      "priority_0_highest": 84,
+      "cooldown_ms": 180,
+      "max_concurrent_instances": 2,
+      "canonical_domain_events": [
+        "attack_resolved",
+        "damage_applied"
+      ],
+      "forbidden_triggers": [
+        "prep_phase_before_tick_1600",
+        "guards_count_zero"
+      ],
+      "hud_and_animation_sync": {
+        "art004_entity": "guard (chr_role_guard)",
+        "clip_name": "shieldbrace",
+        "fps": 12,
+        "clip_frame_index": 2,
+        "impact_compression_frame_index": 3,
+        "sheet_frame_index": 12,
+        "frame_time_offset_ms": 166.7,
+        "paired_vfx": "vfx_guard_shield_block[f00..f01]"
+      }
+    },
+    {
+      "cue_id": "SFX04",
+      "asset_stem": "sfx_fighter_slash",
+      "wav_path": "art/production/ART-007/sfx/wav/sfx_fighter_slash.wav",
+      "runtime_path": "art/production/ART-007/sfx/runtime/sfx_fighter_slash.ogg",
+      "mixer_group": "SFX",
+      "priority_0_highest": 82,
+      "cooldown_ms": 160,
+      "max_concurrent_instances": 3,
+      "canonical_domain_events": [
+        "attack_resolved"
+      ],
+      "forbidden_triggers": [
+        "prep_phase_before_tick_1600",
+        "fighters_and_militia_zero"
+      ],
+      "hud_and_animation_sync": {
+        "art004_entity": "fighter (chr_role_fighter)",
+        "clip_name": "swordslash",
+        "fps": 12,
+        "clip_frame_index": 3,
+        "sheet_frame_index": 13,
+        "frame_time_offset_ms": 250.0,
+        "paired_vfx": "vfx_fighter_slash_arc[f01] + target vfx_unit_hit_puff[f00]"
+      }
+    },
+    {
+      "cue_id": "SFX05",
+      "asset_stem": "sfx_enemy_attack",
+      "wav_path": "art/production/ART-007/sfx/wav/sfx_enemy_attack.wav",
+      "runtime_path": "art/production/ART-007/sfx/runtime/sfx_enemy_attack.ogg",
+      "mixer_group": "SFX",
+      "priority_0_highest": 120,
+      "cooldown_ms": 150,
+      "max_concurrent_instances": 3,
+      "canonical_domain_events": [
+        "damage_applied",
+        "attack_resolved"
+      ],
+      "forbidden_triggers": [
+        "prep_phase_before_tick_1600",
+        "all_ordinary_pools_zero"
+      ],
+      "pitch_and_gain_variants_single_asset": {
+        "grunt_clubsmash": {
+          "entity": "grunt",
+          "clip": "clubsmash",
+          "clip_frame_index": 3,
+          "sheet_frame_index": 13,
+          "offset_ms": 250.0,
+          "pitch_semitones": 0.0,
+          "gain_offset_db": 0.0
+        },
+        "runner_daggerlunge": {
+          "entity": "runner",
+          "clip": "daggerlunge",
+          "clip_frame_index": 2,
+          "sheet_frame_index": 12,
+          "offset_ms": 166.7,
+          "pitch_semitones": 2.0,
+          "gain_offset_db": -1.5
+        },
+        "brute_gauntletcrush": {
+          "entity": "brute",
+          "clip": "gauntletcrush",
+          "clip_frame_index": 3,
+          "sheet_frame_index": 13,
+          "offset_ms": 250.0,
+          "pitch_semitones": -3.0,
+          "gain_offset_db": 1.0
+        },
+        "micro_jitter_semitones": [
+          -0.5,
+          -0.25,
+          0.0,
+          0.25,
+          0.5
+        ]
+      }
+    },
+    {
+      "cue_id": "SFX06",
+      "asset_stem": "sfx_wall_damage",
+      "wav_path": "art/production/ART-007/sfx/wav/sfx_wall_damage.wav",
+      "runtime_path": "art/production/ART-007/sfx/runtime/sfx_wall_damage.ogg",
+      "mixer_group": "SFX",
+      "priority_0_highest": 64,
+      "cooldown_ms": 350,
+      "max_concurrent_instances": 1,
+      "canonical_domain_events": [
+        "damage_applied"
+      ],
+      "condition": "wall_loss > 0 && new_wall_hp > 0",
+      "forbidden_triggers": [
+        "zero_net_damage_blocked_by_guards",
+        "wall_breach_transition_uses_SFX07"
+      ],
+      "hud_and_animation_sync": {
+        "art005_wall_states": [
+          "env_wall_state2_damaged",
+          "env_wall_state3_critical"
+        ],
+        "art006_slot": "WallHpBar shrink"
+      }
+    },
+    {
+      "cue_id": "SFX07",
+      "asset_stem": "sfx_wall_breach",
+      "wav_path": "art/production/ART-007/sfx/wav/sfx_wall_breach.wav",
+      "runtime_path": "art/production/ART-007/sfx/runtime/sfx_wall_breach.ogg",
+      "mixer_group": "Alerts",
+      "priority_0_highest": 24,
+      "cooldown_ms": 2000,
+      "max_concurrent_instances": 1,
+      "canonical_domain_events": [
+        "damage_applied"
+      ],
+      "condition": "prev_wall_hp > 0 && new_wall_hp == 0",
+      "forbidden_triggers": [
+        "ordinary_non_zero_wall_damage"
+      ],
+      "hud_and_animation_sync": {
+        "art005_wall_state": "env_wall_state4_breached",
+        "ducks_music_db": -4.5
+      }
+    },
+    {
+      "cue_id": "SFX08",
+      "asset_stem": "sfx_boss_warning",
+      "wav_path": "art/production/ART-007/sfx/wav/sfx_boss_warning.wav",
+      "runtime_path": "art/production/ART-007/sfx/runtime/sfx_boss_warning.ogg",
+      "mixer_group": "Alerts",
+      "priority_0_highest": 16,
+      "cooldown_ms": 5000,
+      "max_concurrent_instances": 1,
+      "dedupe_once_per_wave": true,
+      "canonical_domain_events": [
+        "boss_incoming"
+      ],
+      "condition": "wave_no % 5 == 0 && wave_tick < 2600 && boss_incoming == true",
+      "forbidden_triggers": [
+        "non_boss_waves",
+        "after_boss_already_spawned_tick_2600"
+      ],
+      "hud_and_animation_sync": {
+        "art006_state": "BOSS_INCOMING (precedes tick 2600 boss_spawned; CLEAR banner forbidden)",
+        "art004_vfx": "vfx_boss_slam_telegraph[f00..f04] rune warning",
+        "ducks_music_db": -5.0
+      }
+    },
+    {
+      "cue_id": "SFX09",
+      "asset_stem": "sfx_boss_slam",
+      "wav_path": "art/production/ART-007/sfx/wav/sfx_boss_slam.wav",
+      "runtime_path": "art/production/ART-007/sfx/runtime/sfx_boss_slam.ogg",
+      "mixer_group": "Alerts",
+      "priority_0_highest": 20,
+      "cooldown_ms": 800,
+      "max_concurrent_instances": 1,
+      "canonical_domain_events": [
+        "boss_spawned",
+        "attack_resolved",
+        "damage_applied"
+      ],
+      "condition": "wave_no % 5 == 0 && wave_tick >= 2600 && boss_combat_committed == true",
+      "forbidden_triggers": [
+        "before_tick_2600",
+        "uncommitted_speculative_boss_attack"
+      ],
+      "hud_and_animation_sync": {
+        "art004_entity": "boss (chr_boss_warlord)",
+        "clip_name": "cleaveslam",
+        "fps": 12,
+        "clip_frame_index": 5,
+        "sheet_frame_index": 11,
+        "frame_time_offset_ms": 416.7,
+        "paired_vfx": "vfx_boss_slam_telegraph[f05] shockwave eruption",
+        "ducks_music_db": -5.0
+      }
+    },
+    {
+      "cue_id": "SFX10",
+      "asset_stem": "sfx_vote_closed",
+      "wav_path": "art/production/ART-007/sfx/wav/sfx_vote_closed.wav",
+      "runtime_path": "art/production/ART-007/sfx/runtime/sfx_vote_closed.ogg",
+      "mixer_group": "Alerts",
+      "priority_0_highest": 40,
+      "cooldown_ms": 5000,
+      "max_concurrent_instances": 1,
+      "dedupe_once_per_wave": true,
+      "canonical_domain_events": [
+        "vote_closed"
+      ],
+      "condition": "wave_no % 2 == 0 && wave_tick == 1200 && authoritative_selected_option_present",
+      "forbidden_triggers": [
+        "odd_waves",
+        "before_tick_1200",
+        "client_local_timer_guess"
+      ],
+      "hud_and_animation_sync": {
+        "art006_slot": "VOTE_OPEN -> VOTE_LOCKED transition at tick 1200"
+      }
+    },
+    {
+      "cue_id": "SFX11",
+      "asset_stem": "sfx_wave_victory",
+      "wav_path": "art/production/ART-007/sfx/wav/sfx_wave_victory.wav",
+      "runtime_path": "art/production/ART-007/sfx/runtime/sfx_wave_victory.ogg",
+      "mixer_group": "Alerts",
+      "priority_0_highest": 8,
+      "cooldown_ms": 10000,
+      "max_concurrent_instances": 1,
+      "dedupe_once_per_wave": true,
+      "canonical_domain_events": [
+        "wave_result"
+      ],
+      "condition": "wave_tick >= 2800 && phase == 'results' && wave_result == 'victory'",
+      "forbidden_triggers": [
+        "ordinary_lanes_empty_before_tick_2600_boss_wave",
+        "client_hp_interpolation_before_authoritative_wave_result",
+        "wave_result_loss_or_defeat",
+        "duplicate_outbox_reconnect_replay"
+      ],
+      "hud_and_animation_sync": {
+        "art006_state": "RESULTS_WIN (state_10_results_win)",
+        "ducks_music_db": -6.0
+      }
+    },
+    {
+      "cue_id": "SFX12",
+      "asset_stem": "sfx_wave_defeat",
+      "wav_path": "art/production/ART-007/sfx/wav/sfx_wave_defeat.wav",
+      "runtime_path": "art/production/ART-007/sfx/runtime/sfx_wave_defeat.ogg",
+      "mixer_group": "Alerts",
+      "priority_0_highest": 8,
+      "cooldown_ms": 10000,
+      "max_concurrent_instances": 1,
+      "dedupe_once_per_wave": true,
+      "canonical_domain_events": [
+        "wave_result"
+      ],
+      "condition": "wave_tick >= 2800 && phase == 'results' && wave_result in ['loss', 'defeat']",
+      "forbidden_triggers": [
+        "wall_breach_while_townhall_still_standing_before_tick_2800",
+        "wave_result_victory",
+        "duplicate_outbox_reconnect_replay"
+      ],
+      "hud_and_animation_sync": {
+        "art006_state": "RESULTS_LOSS (state_11_results_loss)",
+        "ducks_music_db": -6.0
+      }
+    },
+    {
+      "cue_id": "AMB01",
+      "asset_stem": "amb_village_dawn_loop",
+      "wav_path": "art/production/ART-007/ambient/wav/amb_village_dawn_loop.wav",
+      "runtime_path": "art/production/ART-007/ambient/runtime/amb_village_dawn_loop.ogg",
+      "mixer_group": "Ambient",
+      "priority_0_highest": 140,
+      "loop": true,
+      "active_states": [
+        "ATTRACT",
+        "WAITING_FOR_VIEWER",
+        "PREP",
+        "ASSAULT",
+        "FINALE",
+        "RESULTS_WIN",
+        "RESULTS_LOSS"
+      ],
+      "paused_attenuation_db": -6.0,
+      "stopped_maintenance_behavior": "Fade out over 400ms on lifecycle == 'stopped'"
+    },
+    {
+      "cue_id": "MUS01",
+      "asset_stem": "music_village_prep_loop",
+      "wav_path": "art/production/ART-007/music/wav/music_village_prep_loop.wav",
+      "runtime_path": "art/production/ART-007/music/runtime/music_village_prep_loop.ogg",
+      "mixer_group": "Music",
+      "priority_0_highest": 160,
+      "loop": true,
+      "muted_by_default": true,
+      "active_phases_when_operator_unmutes_after_rights_clearance": [
+        "WAITING",
+        "PREP",
+        "RESULTS"
+      ]
+    },
+    {
+      "cue_id": "MUS02",
+      "asset_stem": "music_village_assault_loop",
+      "wav_path": "art/production/ART-007/music/wav/music_village_assault_loop.wav",
+      "runtime_path": "art/production/ART-007/music/runtime/music_village_assault_loop.ogg",
+      "mixer_group": "Music",
+      "priority_0_highest": 160,
+      "loop": true,
+      "muted_by_default": true,
+      "active_phases_when_operator_unmutes_after_rights_clearance": [
+        "ASSAULT",
+        "FINALE"
+      ]
+    }
+  ]
+}

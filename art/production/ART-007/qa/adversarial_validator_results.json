@@ -1,0 +1,127 @@
+{
+  "package_id": "ART-007",
+  "total_adversarial_cases": 12,
+  "rejected_as_expected_count": 12,
+  "false_positives_or_escapes": 0,
+  "status": "PASS",
+  "cases": [
+    {
+      "case_id": "adv_01_missing_sfx",
+      "description": "Delete sfx/wav/sfx_guard_block.wav",
+      "validator_rejected_as_expected": true,
+      "triggered_errors": [
+        "01_twelve_canonical_sfx_exist: found=11 WAVs (['sfx_boss_slam.wav', 'sfx_boss_warning.wav', 'sfx_builder_repair.wav', 'sfx_enemy_attack.wav', 'sfx_fighter_slash.wav', 'sfx_role_join.wav', 'sfx_vote_closed.wav', 'sfx_wall_breach.wav', 'sfx_wall_damage.wav', 'sfx_wave_defeat.wav', 'sfx_wave_victory.wav'])",
+        "04_files_decode_correctly: sfx_guard_block.wav: missing",
+        "05_sample_rate_48khz_24bit: All 15 masters = 48000 Hz / 24-bit PCM",
+        "06_channel_count_valid: Mono/Stereo layout matches spec",
+        "07_no_clipping: 0 clipped samples; all True Peaks <= -1.50 dBTP",
+        "08_no_unexpected_dc_offset: Max |DC| <= 0.0005 across all 15 masters",
+        "09_no_silent_placeholder: All 15 assets contain active original audio",
+        "10_no_corrupted_or_zero_byte_audio: sfx_guard_block.wav: missing or <256 bytes",
+        "11_no_attack_or_tail_truncation: All 12 SFX start & end cleanly at zero crossing",
+        "13_asset_hashes_match_manifest: WAV hash mismatch: sfx/wav/sfx_guard_block.wav"
+      ]
+    },
+    {
+      "case_id": "adv_02_corrupted_wav_header",
+      "description": "Corrupt RIFF magic header on sfx_role_join.wav",
+      "validator_rejected_as_expected": true,
+      "triggered_errors": [
+        "04_files_decode_correctly: sfx_role_join.wav: corrupt WAV header",
+        "05_sample_rate_48khz_24bit: All 15 masters = 48000 Hz / 24-bit PCM",
+        "06_channel_count_valid: Mono/Stereo layout matches spec",
+        "07_no_clipping: 0 clipped samples; all True Peaks <= -1.50 dBTP",
+        "08_no_unexpected_dc_offset: Max |DC| <= 0.0005 across all 15 masters",
+        "09_no_silent_placeholder: All 15 assets contain active original audio",
+        "10_no_corrupted_or_zero_byte_audio: sfx_role_join.wav: invalid RIFF/WAVE magic",
+        "11_no_attack_or_tail_truncation: All 12 SFX start & end cleanly at zero crossing",
+        "13_asset_hashes_match_manifest: WAV hash mismatch: sfx/wav/sfx_role_join.wav"
+      ]
+    },
+    {
+      "case_id": "adv_03_wrong_sample_rate",
+      "description": "Overwrite sfx_vote_closed.wav at 44,100 Hz instead of 48,000 Hz",
+      "validator_rejected_as_expected": true,
+      "triggered_errors": [
+        "05_sample_rate_48khz_24bit: SFX10: sr=44100 bd=24",
+        "13_asset_hashes_match_manifest: WAV hash mismatch: sfx/wav/sfx_vote_closed.wav"
+      ]
+    },
+    {
+      "case_id": "adv_04_clipped_pcm_samples",
+      "description": "Inject hard full-scale 0.0 dBFS clipped samples into sfx_boss_slam.wav",
+      "validator_rejected_as_expected": true,
+      "triggered_errors": [
+        "07_no_clipping: SFX09: clipped=47996 TP=1.09dBTP",
+        "08_no_unexpected_dc_offset: SFX09: dc=0.9999065",
+        "13_asset_hashes_match_manifest: WAV hash mismatch: sfx/wav/sfx_boss_slam.wav"
+      ]
+    },
+    {
+      "case_id": "adv_05_silent_placeholder",
+      "description": "Replace sfx_fighter_slash.wav with digital silence",
+      "validator_rejected_as_expected": true,
+      "triggered_errors": [
+        "09_no_silent_placeholder: SFX04: rms=-240.0dBFS peak=-240.0dBFS",
+        "13_asset_hashes_match_manifest: WAV hash mismatch: sfx/wav/sfx_fighter_slash.wav"
+      ]
+    },
+    {
+      "case_id": "adv_06_incorrect_asset_hash",
+      "description": "Tamper SHA-256 digest in asset_manifest.json",
+      "validator_rejected_as_expected": true,
+      "triggered_errors": [
+        "13_asset_hashes_match_manifest: WAV hash mismatch: sfx/wav/sfx_role_join.wav"
+      ]
+    },
+    {
+      "case_id": "adv_07_missing_cue_mapping",
+      "description": "Remove SFX09 from audio_cue_mapping.json",
+      "validator_rejected_as_expected": true,
+      "triggered_errors": [
+        "14_every_cue_mapped_and_domain_safe: Missing cue mappings: ['SFX09']; SFX09 Boss.cleaveslam sheet_frame_index mismatch vs ART-004"
+      ]
+    },
+    {
+      "case_id": "adv_08_duplicate_cue_id",
+      "description": "Duplicate SFX01 entry in audio_cue_mapping.json",
+      "validator_rejected_as_expected": true,
+      "triggered_errors": [
+        "14_every_cue_mapped_and_domain_safe: Duplicate cue_id detected in audio_cue_mapping.json: ['SFX01', 'SFX02', 'SFX03', 'SFX04', 'SFX05', 'SFX06', 'SFX07', 'SFX08', 'SFX09', 'SFX10', 'SFX11', 'SFX12', 'AMB01', 'MUS01', 'MUS02', 'SFX01']"
+      ]
+    },
+    {
+      "case_id": "adv_09_broken_loop_seam",
+      "description": "Inject boundary click & RMS step at sample 0 of amb_village_dawn_loop.wav",
+      "validator_rejected_as_expected": true,
+      "triggered_errors": [
+        "12_loop_seam_continuity: AMB01: seam_step=0.350528 ratio=15.7364; AMB01: ambient seam_50ms_rms_jump=17.139 dB; AMB01: seam_vs_interior_p99_jump_ratio=4.4921",
+        "13_asset_hashes_match_manifest: WAV hash mismatch: ambient/wav/amb_village_dawn_loop.wav"
+      ]
+    },
+    {
+      "case_id": "adv_10_missing_rights_metadata",
+      "description": "Strip tool_and_version & falsify rights_status in asset_manifest.json",
+      "validator_rejected_as_expected": true,
+      "triggered_errors": [
+        "15_complete_provenance_pending_review: SFX03: missing provenance field 'tool_and_version'; SFX03: rights_status=APPROVED_WITHOUT_LEGAL != PENDING_REVIEW"
+      ]
+    },
+    {
+      "case_id": "adv_11_music_enabled_by_default",
+      "description": "Enable Music (-6 dB unmuted) by default in audio_mixer_config.json",
+      "validator_rejected_as_expected": true,
+      "triggered_errors": [
+        "16_music_muted_by_default: mixer top-level music_muted_by_default/music_enabled_default invalid; Music group not muted (-80 dB) by default: [{'name': 'Music', 'parent': 'Master', 'exposed_param': 'MusicVolumeDb', 'default_volume_db': -6.0, 'muted_by_default': False, 'unmuted_target_volume_db': -5.5, 'description': 'Muted (-80 dB) by default until stream music rights are formally approved'}]"
+      ]
+    },
+    {
+      "case_id": "adv_12_invalid_event_generating_victory_sound",
+      "description": "Bind SFX11 Victory sting to premature pre-2600 lane clear instead of authoritative tick-2800 wave_result",
+      "validator_rejected_as_expected": true,
+      "triggered_errors": [
+        "14_every_cue_mapped_and_domain_safe: Invalid victory trigger on SFX11: events=['attack_resolved', 'lanes_empty_pre_2600'] cond='ordinary_enemies_zero_before_boss'"
+      ]
+    }
+  ]
+}

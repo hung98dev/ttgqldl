@@ -1,0 +1,33 @@
+{
+  "cue_id": "SFX03",
+  "file_stem": "sfx_guard_block",
+  "channels": 1,
+  "target_peak_dbtp": -2.8,
+  "purpose": "Compact steel-rimmed tower shield block impact (Guard.shieldbrace clip f02..f03)",
+  "synthesis_recipe": {
+    "layers": [
+      "oak_shield_boss_thud_118Hz",
+      "damped_steel_rim_modes_418_2980Hz",
+      "gauntlet_brace_transient"
+    ],
+    "seed": 33
+  },
+  "measured_master_metrics": {
+    "sample_rate_hz": 48000,
+    "channels": 1,
+    "samples": 21600,
+    "duration_s": 0.45,
+    "sample_peak_dbfs": -2.82,
+    "true_peak_dbtp": -2.8,
+    "rms_dbfs": -19.25,
+    "integrated_lufs": -19.49,
+    "momentary_max_lufs": -19.49,
+    "dc_offset": 0.0,
+    "clipped_samples": 0,
+    "onset_ms": 3.0,
+    "first_sample_abs": 0.0,
+    "last_sample_abs": 0.0,
+    "stereo_phase_correlation": 1.0,
+    "mono_downmix_loss_db": 0.0
+  }
+}

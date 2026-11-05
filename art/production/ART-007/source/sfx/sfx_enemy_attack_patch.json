@@ -1,0 +1,33 @@
+{
+  "cue_id": "SFX05",
+  "file_stem": "sfx_enemy_attack",
+  "channels": 1,
+  "target_peak_dbtp": -4.8,
+  "purpose": "Reusable compact physical enemy attack cue with bounded pitch/gain variation (Grunt/Runner/Brute)",
+  "synthesis_recipe": {
+    "layers": [
+      "physical_body_thump_138Hz",
+      "gnarled_club_knock_490_1140Hz",
+      "hide_claw_transient"
+    ],
+    "seed": 55
+  },
+  "measured_master_metrics": {
+    "sample_rate_hz": 48000,
+    "channels": 1,
+    "samples": 15360,
+    "duration_s": 0.32,
+    "sample_peak_dbfs": -4.81,
+    "true_peak_dbtp": -4.8,
+    "rms_dbfs": -20.81,
+    "integrated_lufs": -21.64,
+    "momentary_max_lufs": -21.64,
+    "dc_offset": 0.0,
+    "clipped_samples": 0,
+    "onset_ms": 3.0,
+    "first_sample_abs": 0.0,
+    "last_sample_abs": 0.0,
+    "stereo_phase_correlation": 1.0,
+    "mono_downmix_loss_db": 0.0
+  }
+}

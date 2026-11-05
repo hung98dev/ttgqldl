@@ -1,0 +1,32 @@
+{
+  "cue_id": "SFX10",
+  "file_stem": "sfx_vote_closed",
+  "channels": 1,
+  "target_peak_dbtp": -5.2,
+  "purpose": "Neutral authoritative vote-close seal at tick 1200 (never implies A/B/C before server result)",
+  "synthesis_recipe": {
+    "layers": [
+      "council_wood_seal_G4_392Hz",
+      "neutral_latch_fifth_D5_587Hz"
+    ],
+    "seed": 100
+  },
+  "measured_master_metrics": {
+    "sample_rate_hz": 48000,
+    "channels": 1,
+    "samples": 23040,
+    "duration_s": 0.48,
+    "sample_peak_dbfs": -5.21,
+    "true_peak_dbtp": -5.2,
+    "rms_dbfs": -18.81,
+    "integrated_lufs": -18.52,
+    "momentary_max_lufs": -18.52,
+    "dc_offset": 0.0,
+    "clipped_samples": 0,
+    "onset_ms": 4.04,
+    "first_sample_abs": 0.0,
+    "last_sample_abs": 0.0,
+    "stereo_phase_correlation": 1.0,
+    "mono_downmix_loss_db": 0.0
+  }
+}

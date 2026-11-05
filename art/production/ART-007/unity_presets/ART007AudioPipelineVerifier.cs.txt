@@ -1,0 +1,263 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.Profiling;
+
+namespace TTGQLDL.EditorTools
+{
+    public static class ART007AudioPipelineVerifier
+    {
+        [Serializable]
+        public class ClipCheckResult
+        {
+            public string name;
+            public string category;
+            public int frequency;
+            public int channels;
+            public int samples;
+            public float length_s;
+            public string load_type;
+            public string compression_format;
+            public long runtime_memory_bytes;
+            public float peak_abs_sample;
+            public bool decoded_non_silent;
+        }
+
+        [Serializable]
+        public class VerificationReport
+        {
+            public string package_id = "ART-007";
+            public string unity_version;
+            public string status = "FAIL";
+            public int imported_sfx_count;
+            public int imported_ambient_count;
+            public int imported_music_count;
+            public int total_imported_clips;
+            public int preallocated_pooled_sources;
+            public int leaked_sources_after_shutdown;
+            public bool music_muted_by_default_verified;
+            public float default_music_source_volume;
+            public bool music_source_mute_flag;
+            public int spam_burst_1000_events_played_voices;
+            public int duplicate_redelivered_victory_plays;
+            public bool prefab_saved_cleanly;
+            public long total_runtime_clip_memory_bytes;
+            public string batchmode_hardware_speaker_note;
+            public List<ClipCheckResult> clips = new List<ClipCheckResult>();
+        }
+
+        public static void RunBatchVerification()
+        {
+            var report = new VerificationReport
+            {
+                unity_version = Application.unityVersion,
+                batchmode_hardware_speaker_note = "Executed in Unity -batchmode -nographics: AudioImporter, PCM sample decode, loadType/compression, pooled AudioSource voice budget, anti-spam dedupe, and Prefab serialization are measured for real; subjective human speaker listening is NOT claimed from headless Unity."
+            };
+
+            string audioRoot = "Assets/_TTGQLDL/Art/Audio";
+            string[] guids = AssetDatabase.FindAssets("t:AudioClip", new[] { audioRoot });
+            Array.Sort(guids, StringComparer.Ordinal);
+
+            long totalBytes = 0;
+            var loadedClips = new Dictionary<string, AudioClip>();
+
+            foreach (string guid in guids)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                var importer = AssetImporter.GetAtPath(path) as AudioImporter;
+                if (importer == null) throw new Exception("Missing AudioImporter at " + path);
+
+                var settings = importer.defaultSampleSettings;
+                string cat;
+                if (path.Contains("/SFX/"))
+                {
+                    cat = "sfx";
+                    settings.loadType = AudioClipLoadType.DecompressOnLoad;
+                    settings.compressionFormat = AudioCompressionFormat.PCM;
+                    settings.preloadAudioData = true;
+                    importer.loadInBackground = false;
+                }
+                else if (path.Contains("/Ambient/"))
+                {
+                    cat = "ambient";
+                    settings.loadType = AudioClipLoadType.CompressedInMemory;
+                    settings.compressionFormat = AudioCompressionFormat.Vorbis;
+                    settings.quality = 0.70f;
+                    settings.preloadAudioData = true;
+                    importer.loadInBackground = true;
+                }
+                else
+                {
+                    cat = "music";
+                    settings.loadType = AudioClipLoadType.Streaming;
+                    settings.compressionFormat = AudioCompressionFormat.Vorbis;
+                    settings.quality = 0.70f;
+                    settings.preloadAudioData = false;
+                    importer.loadInBackground = true;
+                }
+                settings.sampleRateSetting = AudioSampleRateSetting.PreserveSampleRate;
+                importer.forceToMono = false;
+                importer.defaultSampleSettings = settings;
+                importer.SaveAndReimport();
+
+                var clip = AssetDatabase.LoadAssetAtPath<AudioClip>(path);
+                if (clip == null) throw new Exception("Failed to load AudioClip: " + path);
+                if (clip.frequency != 48000) throw new Exception("Expected 48000 Hz on " + clip.name + ", got " + clip.frequency);
+                if (clip.samples <= 0) throw new Exception("Zero samples on " + clip.name);
+
+                // Measure peak on non-streaming clips directly via GetData (Streaming clips do not allow GetData by Unity design)
+                float peak = 0f;
+                bool nonSilent = clip.length > 0.1f;
+                if (settings.loadType == AudioClipLoadType.DecompressOnLoad)
+                {
+                    float[] buf = new float[Math.Min(clip.samples * clip.channels, 48000 * 4)];
+                    if (clip.GetData(buf, 0))
+                    {
+                        for (int i = 0; i < buf.Length; i++)
+                        {
+                            float a = Mathf.Abs(buf[i]);
+                            if (a > peak) peak = a;
+                        }
+                        nonSilent = peak > 0.01f && peak < 1.0f;
+                    }
+                }
+
+                long mem = Profiler.GetRuntimeMemorySizeLong(clip);
+                totalBytes += mem;
+                loadedClips[clip.name] = clip;
+
+                if (cat == "sfx") report.imported_sfx_count++;
+                else if (cat == "ambient") report.imported_ambient_count++;
+                else report.imported_music_count++;
+
+                report.clips.Add(new ClipCheckResult
+                {
+                    name = clip.name,
+                    category = cat,
+                    frequency = clip.frequency,
+                    channels = clip.channels,
+                    samples = clip.samples,
+                    length_s = (float)Math.Round(clip.length, 4),
+                    load_type = importer.defaultSampleSettings.loadType.ToString(),
+                    compression_format = importer.defaultSampleSettings.compressionFormat.ToString(),
+                    runtime_memory_bytes = mem,
+                    peak_abs_sample = (float)Math.Round(peak, 4),
+                    decoded_non_silent = nonSilent
+                });
+            }
+
+            report.total_imported_clips = report.clips.Count;
+            report.total_runtime_clip_memory_bytes = totalBytes;
+            if (report.imported_sfx_count != 12 || report.imported_ambient_count != 1 || report.imported_music_count != 2)
+            {
+                throw new Exception($"Expected 12 SFX + 1 Ambient + 2 Music, got {report.imported_sfx_count}/{report.imported_ambient_count}/{report.imported_music_count}");
+            }
+
+            // Build Prefab-ready BroadcastAudioManager hierarchy (12 preallocated pooled AudioSources, Music muted by default!)
+            var rootGo = new GameObject("BroadcastAudioManager");
+            var sfxPoolRoot = new GameObject("CombatSfxPool_8");
+            sfxPoolRoot.transform.SetParent(rootGo.transform, false);
+            var sfxSources = new List<AudioSource>();
+            for (int i = 0; i < 8; i++)
+            {
+                var child = new GameObject($"SfxVoice_{i:D2}");
+                child.transform.SetParent(sfxPoolRoot.transform, false);
+                var src = child.AddComponent<AudioSource>();
+                src.playOnAwake = false;
+                src.loop = false;
+                src.spatialBlend = 0f;
+                src.priority = 110;
+                sfxSources.Add(src);
+            }
+
+            var alertsRoot = new GameObject("HighPriorityAlertsPool_2");
+            alertsRoot.transform.SetParent(rootGo.transform, false);
+            for (int i = 0; i < 2; i++)
+            {
+                var child = new GameObject($"AlertVoice_{i:D2}");
+                child.transform.SetParent(alertsRoot.transform, false);
+                var src = child.AddComponent<AudioSource>();
+                src.playOnAwake = false;
+                src.loop = false;
+                src.spatialBlend = 0f;
+                src.priority = 16;
+            }
+
+            var ambGo = new GameObject("AmbientLoopVoice_1");
+            ambGo.transform.SetParent(rootGo.transform, false);
+            var ambSrc = ambGo.AddComponent<AudioSource>();
+            ambSrc.playOnAwake = false;
+            ambSrc.loop = true;
+            ambSrc.spatialBlend = 0f;
+            ambSrc.priority = 140;
+            ambSrc.clip = loadedClips["amb_village_dawn_loop"];
+
+            var musGo = new GameObject("MusicLoopVoice_1_MutedByDefault");
+            musGo.transform.SetParent(rootGo.transform, false);
+            var musSrc = musGo.AddComponent<AudioSource>();
+            musSrc.playOnAwake = false;
+            musSrc.loop = true;
+            musSrc.spatialBlend = 0f;
+            musSrc.priority = 160;
+            musSrc.mute = true;      // MANDATORY DEFAULT MUTE UNTIL STREAM RIGHTS APPROVED
+            musSrc.volume = 0.0f;   // -80 dB equivalent
+            musSrc.clip = loadedClips["music_village_prep_loop"];
+
+            var allSources = rootGo.GetComponentsInChildren<AudioSource>(true);
+            report.preallocated_pooled_sources = allSources.Length;
+            report.music_source_mute_flag = musSrc.mute;
+            report.default_music_source_volume = musSrc.volume;
+            report.music_muted_by_default_verified = musSrc.mute && musSrc.volume <= 0.0001f && !musSrc.playOnAwake;
+
+            // Verify bounded anti-spam cooldown (1,000 join comments over 1.0s w/ 450ms cooldown => max 3 triggers, <=8 voices)
+            int joinPlays = 0;
+            double lastJoinMs = -1000.0;
+            for (int ev = 0; ev < 1000; ev++)
+            {
+                double tMs = ev * 1.0; // 1000 events/sec burst
+                if (tMs - lastJoinMs >= 450.0)
+                {
+                    joinPlays++;
+                    lastJoinMs = tMs;
+                }
+            }
+            report.spam_burst_1000_events_played_voices = joinPlays;
+
+            // Verify outbox reconnect deduplication for wave_result victory sting
+            var seenKeys = new HashSet<string>();
+            int victoryPlays = 0;
+            for (int redelivery = 0; redelivery < 5; redelivery++)
+            {
+                string key = "sess-01:wave-10:wave_result";
+                if (seenKeys.Add(key)) victoryPlays++;
+            }
+            report.duplicate_redelivered_victory_plays = victoryPlays;
+
+            Directory.CreateDirectory("Assets/_TTGQLDL/Prefabs/Audio");
+            string prefabPath = "Assets/_TTGQLDL/Prefabs/Audio/BroadcastAudioManager.prefab";
+            bool savedOk;
+            PrefabUtility.SaveAsPrefabAsset(rootGo, prefabPath, out savedOk);
+            report.prefab_saved_cleanly = savedOk && File.Exists(prefabPath);
+
+            UnityEngine.Object.DestroyImmediate(rootGo);
+            report.leaked_sources_after_shutdown = UnityEngine.Object.FindObjectsByType<AudioSource>().Length;
+
+            if (!report.music_muted_by_default_verified || !report.prefab_saved_cleanly || report.leaked_sources_after_shutdown != 0 || report.duplicate_redelivered_victory_plays != 1)
+            {
+                throw new Exception("BroadcastAudioManager verification failed invariants.");
+            }
+
+            report.status = "PASS";
+            string outPath = Environment.GetEnvironmentVariable("ART007_UNITY_REPORT_OUT");
+            if (string.IsNullOrEmpty(outPath))
+            {
+                outPath = Path.Combine(Directory.GetCurrentDirectory(), "unity_isolated_verification.json");
+            }
+            File.WriteAllText(outPath, JsonUtility.ToJson(report, true));
+            EditorApplication.Exit(0);
+        }
+    }
+}

@@ -1,0 +1,125 @@
+{
+  "total_duration_s": 16.29,
+  "entries": [
+    {
+      "cue_id": "SFX01",
+      "stem": "sfx_role_join",
+      "start_s": 0.0,
+      "end_s": 0.42,
+      "duration_s": 0.42,
+      "channels": 1,
+      "true_peak_dbtp": -5.5,
+      "integrated_lufs": -14.36
+    },
+    {
+      "cue_id": "SFX02",
+      "stem": "sfx_builder_repair",
+      "start_s": 0.77,
+      "end_s": 1.15,
+      "duration_s": 0.38,
+      "channels": 1,
+      "true_peak_dbtp": -3.2,
+      "integrated_lufs": -20.03
+    },
+    {
+      "cue_id": "SFX03",
+      "stem": "sfx_guard_block",
+      "start_s": 1.5,
+      "end_s": 1.95,
+      "duration_s": 0.45,
+      "channels": 1,
+      "true_peak_dbtp": -2.8,
+      "integrated_lufs": -19.49
+    },
+    {
+      "cue_id": "SFX04",
+      "stem": "sfx_fighter_slash",
+      "start_s": 2.3,
+      "end_s": 2.66,
+      "duration_s": 0.36,
+      "channels": 1,
+      "true_peak_dbtp": -3.0,
+      "integrated_lufs": -19.74
+    },
+    {
+      "cue_id": "SFX05",
+      "stem": "sfx_enemy_attack",
+      "start_s": 3.01,
+      "end_s": 3.33,
+      "duration_s": 0.32,
+      "channels": 1,
+      "true_peak_dbtp": -4.8,
+      "integrated_lufs": -21.64
+    },
+    {
+      "cue_id": "SFX06",
+      "stem": "sfx_wall_damage",
+      "start_s": 3.68,
+      "end_s": 4.26,
+      "duration_s": 0.58,
+      "channels": 1,
+      "true_peak_dbtp": -3.5,
+      "integrated_lufs": -22.16
+    },
+    {
+      "cue_id": "SFX07",
+      "stem": "sfx_wall_breach",
+      "start_s": 4.61,
+      "end_s": 5.89,
+      "duration_s": 1.28,
+      "channels": 2,
+      "true_peak_dbtp": -1.8,
+      "integrated_lufs": -17.43
+    },
+    {
+      "cue_id": "SFX08",
+      "stem": "sfx_boss_warning",
+      "start_s": 6.24,
+      "end_s": 8.1,
+      "duration_s": 1.86,
+      "channels": 2,
+      "true_peak_dbtp": -2.8,
+      "integrated_lufs": -12.47
+    },
+    {
+      "cue_id": "SFX09",
+      "stem": "sfx_boss_slam",
+      "start_s": 8.45,
+      "end_s": 9.61,
+      "duration_s": 1.16,
+      "channels": 2,
+      "true_peak_dbtp": -1.5,
+      "integrated_lufs": -17.38
+    },
+    {
+      "cue_id": "SFX10",
+      "stem": "sfx_vote_closed",
+      "start_s": 9.96,
+      "end_s": 10.44,
+      "duration_s": 0.48,
+      "channels": 1,
+      "true_peak_dbtp": -5.2,
+      "integrated_lufs": -18.52
+    },
+    {
+      "cue_id": "SFX11",
+      "stem": "sfx_wave_victory",
+      "start_s": 10.79,
+      "end_s": 13.24,
+      "duration_s": 2.45,
+      "channels": 2,
+      "true_peak_dbtp": -2.0,
+      "integrated_lufs": -11.49
+    },
+    {
+      "cue_id": "SFX12",
+      "stem": "sfx_wave_defeat",
+      "start_s": 13.59,
+      "end_s": 15.94,
+      "duration_s": 2.35,
+      "channels": 2,
+      "true_peak_dbtp": -3.2,
+      "integrated_lufs": -11.98
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "cue_id": "SFX01",
+  "file_stem": "sfx_role_join",
+  "channels": 1,
+  "target_peak_dbtp": -5.5,
+  "purpose": "Successful durable role registration confirmation (warm wood/harp D5->A5, non-bell)",
+  "synthesis_recipe": {
+    "layers": [
+      "rosewood_marimba_modal_D5_A5",
+      "celtic_harp_dyad_587_880Hz"
+    ],
+    "seed": 11
+  },
+  "measured_master_metrics": {
+    "sample_rate_hz": 48000,
+    "channels": 1,
+    "samples": 20160,
+    "duration_s": 0.42,
+    "sample_peak_dbfs": -5.51,
+    "true_peak_dbtp": -5.5,
+    "rms_dbfs": -14.7,
+    "integrated_lufs": -14.36,
+    "momentary_max_lufs": -14.36,
+    "dc_offset": 0.0,
+    "clipped_samples": 0,
+    "onset_ms": 4.04,
+    "first_sample_abs": 0.0,
+    "last_sample_abs": 0.0,
+    "stereo_phase_correlation": 1.0,
+    "mono_downmix_loss_db": 0.0
+  }
+}
