@@ -73,7 +73,7 @@ func EncryptFile(plaintextPath, ciphertextPath string, key []byte) (Manifest, er
 	if len(key) != 32 {
 		return Manifest{}, ErrDecrypt
 	}
-	plaintext, err := os.ReadFile(plaintextPath)
+	plaintext, err := os.ReadFile(plaintextPath) // #nosec G304 -- caller supplies a validated backup path
 	if err != nil {
 		return Manifest{}, err
 	}
@@ -91,7 +91,7 @@ func EncryptFile(plaintextPath, ciphertextPath string, key []byte) (Manifest, er
 	}
 	sealed := gcm.Seal(nil, nonce, plaintext, nil)
 	out := append(nonce, sealed...)
-	if err := os.WriteFile(ciphertextPath, out, 0o600); err != nil {
+	if err := os.WriteFile(ciphertextPath, out, 0o600); err != nil { // #nosec G703 -- caller supplies a validated backup path
 		return Manifest{}, err
 	}
 	plainSum := sha256.Sum256(plaintext)
@@ -110,7 +110,7 @@ func DecryptFile(ciphertextPath, plaintextPath string, key []byte) ([]byte, erro
 	if len(key) != 32 {
 		return nil, ErrDecrypt
 	}
-	raw, err := os.ReadFile(ciphertextPath)
+	raw, err := os.ReadFile(ciphertextPath) // #nosec G304 -- caller supplies a validated backup path
 	if err != nil {
 		return nil, err
 	}
@@ -129,14 +129,14 @@ func DecryptFile(ciphertextPath, plaintextPath string, key []byte) ([]byte, erro
 	if err != nil {
 		return nil, ErrDecrypt
 	}
-	if err := os.WriteFile(plaintextPath, plaintext, 0o600); err != nil {
+	if err := os.WriteFile(plaintextPath, plaintext, 0o600); err != nil { // #nosec G703 -- caller supplies a validated restore path
 		return nil, err
 	}
 	return plaintext, nil
 }
 
 func VerifyCiphertext(path string, manifest Manifest) error {
-	raw, err := os.ReadFile(path)
+	raw, err := os.ReadFile(path) // #nosec G304 -- caller supplies a validated manifest path
 	if err != nil {
 		return err
 	}
@@ -155,11 +155,11 @@ func WriteManifest(path string, manifest Manifest) error {
 	if err != nil {
 		return err
 	}
-	return os.WriteFile(path, append(encoded, '\n'), 0o600)
+	return os.WriteFile(path, append(encoded, '\n'), 0o600) // #nosec G703 -- caller supplies a validated manifest path
 }
 
 func ReadManifest(path string) (Manifest, error) {
-	raw, err := os.ReadFile(path)
+	raw, err := os.ReadFile(path) // #nosec G304 -- caller supplies a validated manifest path
 	if err != nil {
 		return Manifest{}, err
 	}

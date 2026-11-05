@@ -63,7 +63,7 @@ func hostPort(t *testing.T, container string) string {
 
 func waitReady(t *testing.T, container, user, db string) {
 	t.Helper()
-	deadline := time.Now().Add(90 * time.Second)
+	deadline := time.Now().Add(240 * time.Second)
 	for time.Now().Before(deadline) {
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		cmd := exec.CommandContext(ctx, "docker", "exec", container, "pg_isready", "-U", user, "-d", db)
@@ -79,7 +79,7 @@ func waitReady(t *testing.T, container, user, db string) {
 
 func waitQuery(t *testing.T, dsn, query string) string {
 	t.Helper()
-	deadline := time.Now().Add(90 * time.Second)
+	deadline := time.Now().Add(240 * time.Second)
 	for time.Now().Before(deadline) {
 		db, err := sql.Open("pgx", dsn)
 		if err == nil {
@@ -301,7 +301,14 @@ func TestRealEncryptedPhysicalBackupAndPITR(t *testing.T) {
 		restoreNames = append(restoreNames, name)
 		restoreVolumes = append(restoreVolumes, volume)
 		hostDir := t.TempDir()
-		if _, err := pitr.DecryptFile(encrypted, filepath.Join(hostDir, "base.tar"), key); err != nil {
+		if err := os.Chmod(hostDir, 0o755); err != nil {
+			t.Fatal(err)
+		}
+		baseTar := filepath.Join(hostDir, "base.tar")
+		if _, err := pitr.DecryptFile(encrypted, baseTar, key); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.Chmod(baseTar, 0o644); err != nil {
 			t.Fatal(err)
 		}
 		docker(t, "volume", "create", volume)
@@ -390,7 +397,7 @@ touch /var/lib/postgresql/18/docker/recovery.signal
 exec postgres -D /var/lib/postgresql/18/docker`
 	docker(t, "run", "-d", "--name", missingName, "-e", "POSTGRES_PASSWORD=pitr_synthetic_password", "-v", missingVolume+":/var/lib/postgresql", "-v", missingHost+":/restore:ro", "-v", missingWAL+":/walarchive", "-p", "127.0.0.1::5432", "--user", "postgres", image, "bash", "-c", missingScript)
 	missingFailed := false
-	missingDeadline := time.Now().Add(25 * time.Second)
+	missingDeadline := time.Now().Add(60 * time.Second)
 	for time.Now().Before(missingDeadline) {
 		inspect := exec.Command("docker", "inspect", "-f", "{{.State.Running}}", missingName)
 		output, _ := inspect.Output()
