@@ -264,4 +264,5 @@ var (
 	ErrSchemaUnsupported = errors.New("source: unsupported replay schema version")
 	ErrRecordTooLong     = errors.New("source: replay record exceeds the size limit")
 	ErrRecordEncoding    = errors.New("source: replay record is not valid UTF-8")
+	ErrSnapshotIO        = errors.New("source: verified snapshot I/O failure")
 )

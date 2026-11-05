@@ -24,6 +24,9 @@ const (
 	// maxRecordBytes bounds one NDJSON line so a hostile fixture cannot force
 	// unbounded allocation. Scanner returns bufio.ErrTooLong beyond this.
 	maxRecordBytes = 64 * 1024
+	// DefaultMaxFixtureBytes bounds fixture and snapshot disk use. Operators may set
+	// ReplayConfig.MaxFixtureBytes explicitly; oversized fixtures fail closed.
+	DefaultMaxFixtureBytes int64 = 64 << 20
 )
 
 // replayManifest pins fixture bytes and record counts. The SHA256 digest also
@@ -62,6 +65,9 @@ type ReplayConfig struct {
 	Session   Session
 	Directory string
 	Fixture   string
+	// MaxFixtureBytes bounds the fixture and its verified snapshot. Zero uses
+	// DefaultMaxFixtureBytes. Oversized fixtures fail closed before delivery.
+	MaxFixtureBytes int64
 }
 
 // Replay is a deterministic, network-free NDJSON source. It streams records instead
@@ -73,10 +79,12 @@ type Replay struct {
 	fixture   string
 	sourceID  string
 	records   int
-	// open is overridable in tests to inject reader failures. Production always opens
-	// the verified fixture path.
-	open func() (io.ReadCloser, error)
-	lc   lifecycle
+	maxBytes  int64
+	// open and snapshotTemp are overridable in tests to inject reader/temp failures.
+	// Production always opens the verified fixture path and uses os.CreateTemp.
+	open         func() (io.ReadCloser, error)
+	snapshotTemp func() (*os.File, error)
+	lc           lifecycle
 }
 
 // NewReplay loads the manifest, verifies the fixture digest and record count, and
@@ -111,6 +119,20 @@ func NewReplay(config ReplayConfig) (*Replay, error) {
 	if err != nil {
 		return nil, err
 	}
+	maxBytes := config.MaxFixtureBytes
+	if maxBytes == 0 {
+		maxBytes = DefaultMaxFixtureBytes
+	}
+	if maxBytes < 0 {
+		return nil, fmt.Errorf("%w: negative fixture size limit", ErrInvalidFixture)
+	}
+	info, err := os.Stat(path)
+	if err != nil {
+		return nil, fmt.Errorf("%w: fixture cannot be inspected", ErrInvalidFixture)
+	}
+	if info.Size() > maxBytes {
+		return nil, fmt.Errorf("%w: fixture exceeds the configured maximum size", ErrInvalidFixture)
+	}
 	digest, records, err := inspectFixture(path)
 	if err != nil {
 		return nil, err
@@ -127,10 +149,14 @@ func NewReplay(config ReplayConfig) (*Replay, error) {
 		fixture:   entry.Name,
 		sourceID:  digest,
 		records:   records,
+		maxBytes:  maxBytes,
 	}
 	// #nosec G304 -- path is resolved and confined to the operator-configured fixture
 	// directory; entry.Name is a plain manifest-declared base name.
 	replay.open = func() (io.ReadCloser, error) { return os.Open(path) }
+	replay.snapshotTemp = func() (*os.File, error) {
+		return os.CreateTemp("", "ttg-replay-snapshot-*")
+	}
 	return replay, nil
 }
 
@@ -303,17 +329,22 @@ func (s *replaySnapshot) Close() {
 
 // snapshot copies the fixture through a hash and a record counter, verifies the
 // result against the manifest-bound identity, then rewinds the private copy. It is
-// bounded by a 32 KiB copy buffer and a private temporary file, never by the fixture
-// size in RAM.
-func (r *Replay) snapshot() (*replaySnapshot, error) {
+// bounded by a 32 KiB copy buffer, the configured fixture-size limit and a private
+// temporary file, never by the fixture size in RAM. Cancellation, size overflow and
+// temporary-file failures fail closed before any delivery and remove partial files.
+func (r *Replay) snapshot(ctx context.Context) (*replaySnapshot, error) {
 	source, err := r.open()
 	if err != nil {
 		return nil, fmt.Errorf("%w: fixture cannot be opened", ErrInvalidFixture)
 	}
 	defer source.Close()
-	temporary, err := os.CreateTemp("", "ttg-replay-snapshot-")
+	create := r.snapshotTemp
+	if create == nil {
+		create = func() (*os.File, error) { return os.CreateTemp("", "ttg-replay-snapshot-*") }
+	}
+	temporary, err := create()
 	if err != nil {
-		return nil, fmt.Errorf("%w: verified snapshot cannot be created", ErrInvalidFixture)
+		return nil, fmt.Errorf("%w: verified snapshot cannot be created", ErrSnapshotIO)
 	}
 	cleanup := func() {
 		name := temporary.Name()
@@ -322,9 +353,33 @@ func (r *Replay) snapshot() (*replaySnapshot, error) {
 	}
 	hash := sha256.New()
 	counter := &recordCounter{}
-	if _, err := io.CopyBuffer(io.MultiWriter(hash, counter, temporary), source, make([]byte, 32*1024)); err != nil {
-		cleanup()
-		return nil, fmt.Errorf("%w: fixture read failure", ErrInvalidFixture)
+	writer := io.MultiWriter(hash, counter, temporary)
+	buffer := make([]byte, 32*1024)
+	var total int64
+	for {
+		if err := ctx.Err(); err != nil {
+			cleanup()
+			return nil, err
+		}
+		read, readErr := source.Read(buffer)
+		if read > 0 {
+			if total+int64(read) > r.maxBytes {
+				cleanup()
+				return nil, fmt.Errorf("%w: fixture exceeds the configured maximum size", ErrInvalidFixture)
+			}
+			if _, writeErr := writer.Write(buffer[:read]); writeErr != nil {
+				cleanup()
+				return nil, fmt.Errorf("%w: snapshot write failure", ErrSnapshotIO)
+			}
+			total += int64(read)
+		}
+		if errors.Is(readErr, io.EOF) {
+			break
+		}
+		if readErr != nil {
+			cleanup()
+			return nil, fmt.Errorf("%w: fixture read failure", ErrInvalidFixture)
+		}
 	}
 	if hex.EncodeToString(hash.Sum(nil)) != r.sourceID {
 		cleanup()
@@ -336,7 +391,7 @@ func (r *Replay) snapshot() (*replaySnapshot, error) {
 	}
 	if _, err := temporary.Seek(0, io.SeekStart); err != nil {
 		cleanup()
-		return nil, fmt.Errorf("%w: verified snapshot cannot be rewound", ErrInvalidFixture)
+		return nil, fmt.Errorf("%w: verified snapshot cannot be rewound", ErrSnapshotIO)
 	}
 	return &replaySnapshot{file: temporary}, nil
 }
@@ -488,9 +543,17 @@ func (r *Replay) run(ctx context.Context, session Session, cursor Cursor, sink S
 		return err
 	}
 	status, runErr := StatusEOF, error(nil)
-	snapshot, err := r.snapshot()
+	snapshot, err := r.snapshot(runCtx)
 	if err != nil {
-		status, runErr = StatusFailed, err
+		switch {
+		case errors.Is(err, context.Canceled), errors.Is(err, context.DeadlineExceeded), errors.Is(err, ErrSnapshotIO):
+			// Snapshot I/O and cancellation are retryable source interruptions; the
+			// fixture identity itself was not contradicted.
+			status = StatusDisconnected
+		default:
+			status = StatusFailed
+		}
+		runErr = err
 		r.lc.finish(status, runErr)
 		return runErr
 	}

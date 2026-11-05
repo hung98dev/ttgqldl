@@ -44,7 +44,10 @@
 //     snapshot, so replacing or mutating the original file after construction cannot
 //     alter emitted records under the old digest. A reconnect re-verifies and fails
 //     closed if the bytes changed. Symlink-resolved paths must remain inside the
-//     configured fixture directory.
+//     configured fixture directory. ReplayConfig.MaxFixtureBytes (default 64 MiB) bounds
+//     the fixture and snapshot; oversized/growing files, snapshot I/O failures and
+//     cancellation fail closed without delivering a partial snapshot, and snapshot
+//     temporary files are removed on every path.
 //   - Identity is NOT derived here. Source emits validated raw provider metadata for
 //     the identity layer (backend/internal/identity), which is the only approved
 //     ActorKey path.
