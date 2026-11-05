@@ -209,7 +209,7 @@ func TestHundredAbandonedLeaseRecoveryPositions(t *testing.T) {
 	for index := 0; index < 100; index++ {
 		// Each iteration abandons the previous lease without a graceful release, then
 		// waits for PostgreSQL-authoritative expiry and takes over with a new epoch.
-		coordinator := newCoordinator(t, pool, ids, fmt.Sprintf("recovery-%03d", index), writer.MinLeaseDuration)
+		coordinator := newCoordinator(t, pool, ids, fmt.Sprintf("recovery-%03d", index), 500*time.Millisecond)
 		if _, err := coordinator.Recover(context.Background()); err != nil {
 			t.Fatalf("recovery %d: %v", index, err)
 		}
