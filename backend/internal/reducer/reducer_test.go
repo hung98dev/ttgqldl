@@ -73,6 +73,7 @@ func newTestSession(t *testing.T, pool *storage.Pool, lifecycle string, leaseDur
 		_, _ = tx.Exec(cleanupCtx, `DELETE FROM ttg.writer_leases WHERE village_id = $1`, villageID)
 		_, _ = tx.Exec(cleanupCtx, `DELETE FROM ttg.stream_outbox WHERE session_id = $1`, sessionID)
 		_, _ = tx.Exec(cleanupCtx, `DELETE FROM ttg.domain_events WHERE session_id = $1`, sessionID)
+		_, _ = tx.Exec(cleanupCtx, `DELETE FROM ttg.input_receipts WHERE session_id = $1`, sessionID)
 		_, _ = tx.Exec(cleanupCtx, `DELETE FROM ttg.input_events WHERE session_id = $1`, sessionID)
 		_, _ = tx.Exec(cleanupCtx, `DELETE FROM ttg.wave_members WHERE session_id = $1`, sessionID)
 		_, _ = tx.Exec(cleanupCtx, `DELETE FROM ttg.ballots WHERE session_id = $1`, sessionID)
