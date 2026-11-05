@@ -1,0 +1,275 @@
+{
+  "resolutions_verified": [
+    "1080x1920",
+    "720x1280",
+    "360x640"
+  ],
+  "font_thresholds_360x640": {
+    "primary_cta_px": {
+      "1080p": 48,
+      "360p_effective": 16.0,
+      "required_min": 16.0,
+      "status": "PASS"
+    },
+    "timer_px": {
+      "1080p": 43,
+      "360p_effective": 14.33,
+      "required_min": 14.0,
+      "status": "PASS"
+    },
+    "hp_bars_px": {
+      "1080p": 42,
+      "360p_effective": 14.0,
+      "required_min": 14.0,
+      "status": "PASS"
+    },
+    "role_counters_px": {
+      "1080p": 38,
+      "360p_effective": 12.67,
+      "required_min": 12.0,
+      "status": "PASS"
+    },
+    "secondary_labels_px": {
+      "1080p": 36,
+      "360p_effective": 12.0,
+      "required_min": 12.0,
+      "status": "PASS"
+    }
+  },
+  "wcag_contrast": {
+    "required_min": 4.5,
+    "measured_min": 11.74,
+    "measured_max": 17.91,
+    "pairs": [
+      {
+        "element": "Primary CTA (#FFFFFF on #0F172A)",
+        "fg": [
+          255,
+          255,
+          255
+        ],
+        "bg": [
+          15,
+          23,
+          42
+        ],
+        "contrast_ratio": 17.85,
+        "status": "PASS"
+      },
+      {
+        "element": "Wall & Castle HP (#FFFFFF on #101726)",
+        "fg": [
+          255,
+          255,
+          255
+        ],
+        "bg": [
+          16,
+          23,
+          38
+        ],
+        "contrast_ratio": 17.91,
+        "status": "PASS"
+      },
+      {
+        "element": "Wave & Timer (#FEF08A on #1E293B)",
+        "fg": [
+          254,
+          240,
+          138
+        ],
+        "bg": [
+          30,
+          41,
+          59
+        ],
+        "contrast_ratio": 12.57,
+        "status": "PASS"
+      },
+      {
+        "element": "Resources (#F1F5F9 on #101726)",
+        "fg": [
+          241,
+          245,
+          249
+        ],
+        "bg": [
+          16,
+          23,
+          38
+        ],
+        "contrast_ratio": 16.35,
+        "status": "PASS"
+      },
+      {
+        "element": "Boss Threat Banner (#FFFFFF on #260C31)",
+        "fg": [
+          255,
+          255,
+          255
+        ],
+        "bg": [
+          38,
+          12,
+          49
+        ],
+        "contrast_ratio": 17.81,
+        "status": "PASS"
+      },
+      {
+        "element": "Prep Banner (#FFFFFF on #102230)",
+        "fg": [
+          255,
+          255,
+          255
+        ],
+        "bg": [
+          16,
+          34,
+          48
+        ],
+        "contrast_ratio": 16.23,
+        "status": "PASS"
+      },
+      {
+        "element": "Storage Error Banner (#FFFFFF on #3A0C12)",
+        "fg": [
+          255,
+          255,
+          255
+        ],
+        "bg": [
+          58,
+          12,
+          18
+        ],
+        "contrast_ratio": 16.92,
+        "status": "PASS"
+      },
+      {
+        "element": "Locked Vote Strip (#FEF08A on #1C170C)",
+        "fg": [
+          254,
+          240,
+          138
+        ],
+        "bg": [
+          28,
+          23,
+          12
+        ],
+        "contrast_ratio": 15.33,
+        "status": "PASS"
+      },
+      {
+        "element": "Role Counter Text (#FFFFFF on #121A2B)",
+        "fg": [
+          255,
+          255,
+          255
+        ],
+        "bg": [
+          18,
+          26,
+          43
+        ],
+        "contrast_ratio": 17.38,
+        "status": "PASS"
+      },
+      {
+        "element": "Mock Watermark (#FACC15 on #1C160A)",
+        "fg": [
+          250,
+          204,
+          21
+        ],
+        "bg": [
+          28,
+          22,
+          10
+        ],
+        "contrast_ratio": 11.74,
+        "status": "PASS"
+      },
+      {
+        "element": "Source OK Pill (#DCFCE7 on #0E2A1C)",
+        "fg": [
+          220,
+          252,
+          231
+        ],
+        "bg": [
+          14,
+          42,
+          28
+        ],
+        "contrast_ratio": 13.99,
+        "status": "PASS"
+      },
+      {
+        "element": "Source STALE Pill (#FFEDD5 on #3A1C0C)",
+        "fg": [
+          255,
+          237,
+          213
+        ],
+        "bg": [
+          58,
+          28,
+          12
+        ],
+        "contrast_ratio": 13.56,
+        "status": "PASS"
+      }
+    ],
+    "status": "PASS"
+  },
+  "safe_area_bounds": {
+    "hud_active_x_px": [
+      36,
+      876
+    ],
+    "hud_active_x_pct": [
+      3.33,
+      81.11
+    ],
+    "right_safe_limit_pct": 82.0,
+    "hud_active_y_px": [
+      22,
+      1686
+    ],
+    "hud_active_y_pct": [
+      1.15,
+      87.81
+    ],
+    "bottom_safe_limit_pct": 88.0,
+    "right_safe_max_gradient": 0.0,
+    "bottom_safe_max_gradient": 0.0,
+    "status": "PASS"
+  },
+  "h264_simulation": {
+    "1080p_q32_psnr_db": 27.69,
+    "1080p_q18_psnr_db": 26.22,
+    "720p_q26_psnr_db": 26.21,
+    "360p_q26_psnr_db": 24.52,
+    "48px_matrix_q24_psnr_db": 28.95,
+    "status": "PASS"
+  },
+  "environment_noise": {
+    "art001_turf_laplacian_sd": 21.76,
+    "art002_turf_laplacian_sd": 10.87,
+    "reduction_pct": 50.0,
+    "status": "PASS"
+  },
+  "runtime_budgets": {
+    "max_pooled_entities": 150,
+    "max_simultaneous_vfx": 20,
+    "character_min_height_px": 48,
+    "boss_height_px": 102
+  },
+  "verification_boundaries": {
+    "automated_checks": "Executed via Python Pillow/NumPy (resolutions, font effective px, WCAG 2.1 luminance ratios, pixel safe-zone bounds, YUV 4:2:0 + 8x8 DCT PSNR, Laplacian terrain noise).",
+    "visual_inspection": "Executed by Lead Art Director across all generated turnarounds, detail sheets, 48px color/grayscale strips, environment boards, and 16 HUD states.",
+    "human_usability_testing": "NOT_PERFORMED (QA-PSY-01 3-second cold-viewer comprehension protocol requires >=5 real external participants and remains gated)."
+  }
+}
