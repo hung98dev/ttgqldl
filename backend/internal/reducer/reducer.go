@@ -63,6 +63,7 @@ func (r *Reducer) Step(ctx context.Context, lease writer.Lease, sessionID string
 	var result Result
 	var expectedRevision int64
 	var expectedHash string
+	var expectedCheckpoint bool
 	err := r.fence.WithFence(ctx, lease, sessionID, func(ctx context.Context, tx writer.FencedTx) error {
 		session, err := loadSession(ctx, tx, sessionID)
 		if err != nil {
@@ -90,111 +91,35 @@ func (r *Reducer) Step(ctx context.Context, lease writer.Lease, sessionID string
 		}
 
 		oldState := state.Clone()
-		var next domain.SessionState
-		var nextQueue simulation.RoleQueue
-		var events []simulation.Event
-		var applied []int64
-		if state.Tick() == domain.RolloverTick {
-			next, nextQueue, events, _, err = simulation.AdvanceWithRoles(state, queue, simulation.Input{Kind: simulation.KindRollover})
-			if err != nil {
-				return fmt.Errorf("%w: rollover: %v", ErrInconsistentState, err)
-			}
-			applied = append(applied, queuedNext...)
-			queuedNext = nil
-			// Any current-wave queue entries that became due at the control boundary are
-			// consumed as well; the normal W0305 schedule does not produce them.
-			applied = append(applied, queueSequences(queue)...)
-			applied = normalizeSequences(applied)
-			_ = oldState
-		} else {
-			if state.Lifecycle != domain.LifecycleWaiting && state.Lifecycle != domain.LifecycleRunning {
-				return ErrNoWork
-			}
-			if err := r.check("before_select"); err != nil {
-				return err
-			}
-			inputs, err := loadEligibleInputs(ctx, tx, session.ID, state.Tick())
-			if err != nil {
-				return err
-			}
-			if err := verifyPendingRepresented(ctx, tx, session.ID, state.Tick(), queue, queuedNext); err != nil {
-				return err
-			}
-			if err := r.check("after_select"); err != nil {
-				return err
-			}
-			roles, votes, nextWaveSeqs, err := decodeInputs(inputs, state)
-			if err != nil {
-				return err
-			}
-			queueBefore := queue.Clone()
-			if state.Lifecycle == domain.LifecycleWaiting {
-				if len(votes) > 0 {
-					return fmt.Errorf("%w: votes cannot start a waiting session", ErrInvalidInput)
-				}
-				if len(roles) == 0 {
-					return ErrNoWork
-				}
-				state, queue, _, err = simulation.AcceptRoleCommands(state, queue, roles)
-				if err != nil {
-					return fmt.Errorf("%w: accept roles: %v", ErrInvalidInput, err)
-				}
-				if len(queue.Entries) == 0 {
-					return ErrNoWork
-				}
-				head := queue.Entries[0]
-				next, nextQueue, events, _, err = simulation.AdvanceWithRoles(state, queue, simulation.Input{
-					Kind:         simulation.KindStartWave,
-					Registration: &simulation.Registration{ActorKey: head.ActorKey, Role: head.Role},
-				})
-				if err != nil {
-					return fmt.Errorf("%w: start wave: %v", ErrInconsistentState, err)
-				}
-			} else {
-				if len(roles) > 0 {
-					state, queue, _, err = simulation.AcceptRoleCommands(state, queue, roles)
-					if err != nil {
-						return fmt.Errorf("%w: accept roles: %v", ErrInvalidInput, err)
-					}
-				}
-				if len(votes) > 0 {
-					state, queue, _, err = simulation.AcceptVoteCommands(state, queue, votes)
-					if err != nil {
-						return fmt.Errorf("%w: accept votes: %v", ErrInvalidInput, err)
-					}
-				}
-				next, nextQueue, events, _, err = simulation.AdvanceWithRoles(state, queue, simulation.Input{Kind: simulation.KindAdvanceTick})
-				if err != nil {
-					return fmt.Errorf("%w: advance: %v", ErrInconsistentState, err)
-				}
-			}
-			queuedNext = normalizeSequences(append(queuedNext, nextWaveSeqs...))
-			consumed := queueSequences(queueBefore)
-			after := sequenceSet(queueSequences(nextQueue))
-			for _, seq := range queueSequences(queue) {
-				if _, exists := after[seq]; !exists {
-					consumed = append(consumed, seq)
-				}
-			}
-			consumedSet := sequenceSet(consumed)
-			for _, seq := range queueSequences(queue) {
-				if _, exists := consumedSet[seq]; !exists {
-					continue
-				}
-				if !contains(queueSequences(nextQueue), seq) {
-					applied = append(applied, seq)
-				}
-			}
-			// Every selected current-tick input must be consumed, queued, or explicitly
-			// queued for the next wave. This is the anti-silent-drop guard.
-			handled := sequenceSet(append(append(queueSequences(nextQueue), queuedNext...), applied...))
-			for _, input := range inputs {
-				if _, ok := handled[input.InputSeq]; !ok {
-					return fmt.Errorf("%w: input %d was neither applied nor queued", ErrInconsistentState, input.InputSeq)
-				}
-			}
-			applied = normalizeSequences(applied)
+		if state.Tick() != domain.RolloverTick && state.Lifecycle != domain.LifecycleWaiting && state.Lifecycle != domain.LifecycleRunning {
+			return ErrNoWork
 		}
+		if err := r.check("before_select"); err != nil {
+			return err
+		}
+		var inputs []inputRow
+		if state.Tick() != domain.RolloverTick {
+			inputs, err = loadEligibleInputs(ctx, tx, session.ID, state.Tick())
+			if err != nil {
+				return err
+			}
+		}
+		if err := verifyPendingRepresented(ctx, tx, session.ID, state.Tick(), queue, queuedNext); err != nil {
+			return err
+		}
+		if err := r.check("after_select"); err != nil {
+			return err
+		}
+		transition, err := computeTransition(state, queue, queuedNext, inputs)
+		if err != nil {
+			return err
+		}
+		next := transition.State
+		nextQueue := transition.Queue
+		events := transition.Events
+		applied := transition.Applied
+		queuedNext = transition.QueuedNext
+		operation := transition.Operation
 		if err := r.check("after_apply"); err != nil {
 			return err
 		}
@@ -207,6 +132,7 @@ func (r *Reducer) Step(ctx context.Context, lease writer.Lease, sessionID string
 		if err != nil {
 			return err
 		}
+		_, expectedCheckpoint = checkpointReason(next, operation)
 		revision, err := nextRevision(session.Revision)
 		if err != nil {
 			return err
@@ -229,6 +155,12 @@ func (r *Reducer) Step(ctx context.Context, lease writer.Lease, sessionID string
 		if err := r.persist(ctx, tx, session, village, oldState, next, nextQueue, runtimeJSON, events, applied, revision, streamSequence, stateHash, appliedTick); err != nil {
 			return err
 		}
+		if err := r.recordRevision(ctx, tx, session, revision, operation, stateHash, runtimeJSON, next, streamSequence); err != nil {
+			return err
+		}
+		if err := r.check("after_checkpoint"); err != nil {
+			return err
+		}
 		if err := r.check("before_commit"); err != nil {
 			return err
 		}
@@ -243,14 +175,14 @@ func (r *Reducer) Step(ctx context.Context, lease writer.Lease, sessionID string
 	})
 	if err != nil {
 		if errors.Is(err, writer.ErrCommitUnknown) {
-			return r.reconcile(ctx, sessionID, expectedRevision, expectedHash, result)
+			return r.reconcile(ctx, sessionID, expectedRevision, expectedHash, expectedCheckpoint, result)
 		}
 		return Result{}, err
 	}
 	return result, nil
 }
 
-func (r *Reducer) reconcile(ctx context.Context, sessionID string, revision int64, hash string, result Result) (Result, error) {
+func (r *Reducer) reconcile(ctx context.Context, sessionID string, revision int64, hash string, checkpointExpected bool, result Result) (Result, error) {
 	if revision == 0 || hash == "" {
 		return Result{}, writer.ErrCommitUnknown
 	}
@@ -268,6 +200,16 @@ func (r *Reducer) reconcile(ctx context.Context, sessionID string, revision int6
 	}
 	if gotRevision != revision || gotHash == nil || *gotHash != hash {
 		return Result{}, writer.ErrCommitUnknown
+	}
+	var journalCount int64
+	if err := tx.QueryRow(ctx, `SELECT count(*) FROM ttg.reducer_transitions WHERE session_id = $1 AND revision = $2`, sessionID, revision).Scan(&journalCount); err != nil || journalCount != 1 {
+		return Result{}, writer.ErrCommitUnknown
+	}
+	if checkpointExpected {
+		var checkpointHash string
+		if err := tx.QueryRow(ctx, `SELECT state_hash FROM ttg.checkpoints WHERE session_id = $1 AND revision = $2`, sessionID, revision).Scan(&checkpointHash); err != nil || checkpointHash != hash {
+			return Result{}, writer.ErrCommitUnknown
+		}
 	}
 	result.Reconciled = true
 	result.WaveNo = waveNo

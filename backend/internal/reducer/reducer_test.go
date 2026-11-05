@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"os"
 	"strings"
 	"testing"
@@ -73,6 +74,8 @@ func newTestSession(t *testing.T, pool *storage.Pool, lifecycle string, leaseDur
 		_, _ = tx.Exec(cleanupCtx, `DELETE FROM ttg.writer_leases WHERE village_id = $1`, villageID)
 		_, _ = tx.Exec(cleanupCtx, `DELETE FROM ttg.stream_outbox WHERE session_id = $1`, sessionID)
 		_, _ = tx.Exec(cleanupCtx, `DELETE FROM ttg.domain_events WHERE session_id = $1`, sessionID)
+		_, _ = tx.Exec(cleanupCtx, `DELETE FROM ttg.checkpoints WHERE session_id = $1`, sessionID)
+		_, _ = tx.Exec(cleanupCtx, `DELETE FROM ttg.reducer_transitions WHERE session_id = $1`, sessionID)
 		_, _ = tx.Exec(cleanupCtx, `DELETE FROM ttg.input_receipts WHERE session_id = $1`, sessionID)
 		_, _ = tx.Exec(cleanupCtx, `DELETE FROM ttg.input_events WHERE session_id = $1`, sessionID)
 		_, _ = tx.Exec(cleanupCtx, `DELETE FROM ttg.wave_members WHERE session_id = $1`, sessionID)
@@ -511,10 +514,20 @@ func TestFutureWaveInput50WaitsWhileInput51Applies(t *testing.T) {
 	if got := countRows(t, pool, `SELECT count(*) FROM ttg.wave_members WHERE session_id = $1 AND wave_no = 2 AND actor_key = $2`, session.SessionID, actorB); got != 1 {
 		t.Fatalf("promoted member = %d", got)
 	}
+	if got := countRows(t, pool, `SELECT count(*) FROM ttg.checkpoints WHERE session_id = $1 AND wave_no = 2 AND wave_tick = 0`, session.SessionID); got != 1 {
+		t.Fatalf("wave-start checkpoint = %d", got)
+	}
+	replay, err := reducer.VerifyReplay(context.Background(), session.SessionID, 0)
+	if err != nil {
+		t.Fatalf("replay across pending input/rollover: %v", err)
+	}
+	if replay.ToRevision == 0 || replay.StateHash == "" {
+		t.Fatalf("replay result = %+v", replay)
+	}
 }
 
 func TestFailureInjectionRollsBackEveryStage(t *testing.T) {
-	stages := []string{"after_load", "before_select", "after_select", "after_apply", "after_session", "after_village", "after_members", "after_xp", "after_ballots", "after_domain_events", "after_outbox", "after_applied", "before_commit"}
+	stages := []string{"after_load", "before_select", "after_select", "after_apply", "after_session", "after_village", "after_members", "after_xp", "after_ballots", "after_domain_events", "after_outbox", "after_applied", "after_checkpoint", "before_commit"}
 	pool := testPool(t)
 	for _, stage := range stages {
 		t.Run(stage, func(t *testing.T) {
@@ -707,6 +720,9 @@ func TestSettlementBoundaryPersistsStateAndEvents(t *testing.T) {
 	}
 	if got := countRows(t, pool, `SELECT count(*) FROM ttg.stream_outbox WHERE session_id = $1 AND revision = 1 AND type = 'wave_result'`, session.SessionID); got == 0 {
 		t.Fatal("no wave_result outbox row")
+	}
+	if got := countRows(t, pool, `SELECT count(*) FROM ttg.checkpoints WHERE session_id = $1 AND revision = 1 AND wave_tick = 2800`, session.SessionID); got != 1 {
+		t.Fatalf("settlement checkpoint = %d", got)
 	}
 }
 
@@ -951,5 +967,351 @@ func TestPausedRuntimeDoesNotAdvanceOrCatchUp(t *testing.T) {
 	}
 	if got := countRows(t, pool, `SELECT count(*) FROM ttg.stream_outbox WHERE session_id = $1`, session.SessionID); got != 0 {
 		t.Fatalf("paused step emitted outbox rows: %d", got)
+	}
+}
+
+func TestCheckpointAtWaveStartAndReplayMatches(t *testing.T) {
+	pool := testPool(t)
+	session := newTestSession(t, pool, "waiting", 2*time.Second)
+	insertRoleInput(t, pool, session.SessionID, 1, -1, 0, 1, actorKey("a"), domain.RoleBuilder)
+	reducer, err := New(session.Manager, pool)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+		t.Fatal(err)
+	}
+	if got := countRows(t, pool, `SELECT count(*) FROM ttg.checkpoints WHERE session_id = $1 AND revision = 1`, session.SessionID); got != 1 {
+		t.Fatalf("initial checkpoint rows = %d", got)
+	}
+	if got := countRows(t, pool, `SELECT count(*) FROM ttg.reducer_transitions WHERE session_id = $1`, session.SessionID); got != 2 {
+		t.Fatalf("journal rows = %d", got)
+	}
+	revisionBefore := sessionValue[int64](t, pool, `SELECT reducer_revision FROM ttg.sessions WHERE id = $1`, session.SessionID)
+	outboxBefore := countRows(t, pool, `SELECT count(*) FROM ttg.stream_outbox WHERE session_id = $1`, session.SessionID)
+	replay, err := reducer.VerifyReplay(context.Background(), session.SessionID, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if replay.CheckpointRevision != 1 || replay.ToRevision != 2 || replay.Transitions != 1 {
+		t.Fatalf("replay = %+v", replay)
+	}
+	hash := sessionValue[string](t, pool, `SELECT last_state_hash FROM ttg.sessions WHERE id = $1`, session.SessionID)
+	if replay.StateHash != hash {
+		t.Fatalf("replay hash = %s, session = %s", replay.StateHash, hash)
+	}
+	if got := sessionValue[int64](t, pool, `SELECT reducer_revision FROM ttg.sessions WHERE id = $1`, session.SessionID); got != revisionBefore {
+		t.Fatal("replay mutated revision")
+	}
+	if got := countRows(t, pool, `SELECT count(*) FROM ttg.stream_outbox WHERE session_id = $1`, session.SessionID); got != outboxBefore {
+		t.Fatal("replay mutated outbox")
+	}
+}
+
+func TestPeriodicCheckpointAt600AndReplay(t *testing.T) {
+	pool := testPool(t)
+	session := newTestSession(t, pool, "running", 30*time.Second)
+	actor := actorKey("a")
+	state, queue := startedState(t, session.VillageID, session.SessionID, actor)
+	state, queue = advanceState(t, state, queue, 599)
+	seedRuntime(t, pool, session.SessionID, state, queue, nil, 0)
+	reducer, err := New(session.Manager, pool)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+		t.Fatal(err)
+	}
+	if got := countRows(t, pool, `SELECT count(*) FROM ttg.checkpoints WHERE session_id = $1 AND revision = 1 AND wave_tick = 600`, session.SessionID); got != 1 {
+		t.Fatalf("periodic checkpoint = %d", got)
+	}
+	if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+		t.Fatal(err)
+	}
+	replay, err := reducer.VerifyReplay(context.Background(), session.SessionID, 2)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if replay.CheckpointRevision != 1 || replay.Transitions != 1 || replay.ToRevision != 2 {
+		t.Fatalf("periodic replay = %+v", replay)
+	}
+}
+
+func TestHundredDistinctReplayPositions(t *testing.T) {
+	pool := testPool(t)
+	session := newTestSession(t, pool, "running", 60*time.Second)
+	actor := actorKey("a")
+	state, queue := startedState(t, session.VillageID, session.SessionID, actor)
+	state, queue = advanceState(t, state, queue, 599)
+	seedRuntime(t, pool, session.SessionID, state, queue, nil, 0)
+	reducer, err := New(session.Manager, pool)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for index := 0; index < 100; index++ {
+		if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+			t.Fatalf("step %d: %v", index, err)
+		}
+	}
+	revisionBefore := sessionValue[int64](t, pool, `SELECT reducer_revision FROM ttg.sessions WHERE id = $1`, session.SessionID)
+	verified := 0
+	for target := int64(1); target <= revisionBefore; target++ {
+		result, err := reducer.VerifyReplay(context.Background(), session.SessionID, target)
+		if err != nil {
+			t.Fatalf("target %d: %v", target, err)
+		}
+		if result.ToRevision != target {
+			t.Fatalf("target %d result %+v", target, result)
+		}
+		verified++
+	}
+	if verified != 100 {
+		t.Fatalf("verified positions = %d", verified)
+	}
+	if got := sessionValue[int64](t, pool, `SELECT reducer_revision FROM ttg.sessions WHERE id = $1`, session.SessionID); got != revisionBefore {
+		t.Fatal("100-position verification mutated revision")
+	}
+}
+
+func TestCheckpointScheduleReasonTable(t *testing.T) {
+	state := domain.SessionState{Wave: domain.WaveState{Number: 1, Tick: 0}}
+	cases := []struct {
+		tick            int
+		operation, want string
+		ok              bool
+	}{
+		{0, OperationStart, "initial", true},
+		{0, OperationRollover, "wave_start", true},
+		{600, OperationAdvance, "periodic", true},
+		{1200, OperationAdvance, "periodic", true},
+		{1800, OperationAdvance, "periodic", true},
+		{2400, OperationAdvance, "periodic", true},
+		{2800, OperationAdvance, "settlement", true},
+		{3000, OperationAdvance, "control", true},
+		{1, OperationAdvance, "", false},
+	}
+	for _, test := range cases {
+		state.Wave.Tick = test.tick
+		reason, ok := checkpointReason(state, test.operation)
+		if ok != test.ok || reason != test.want {
+			t.Fatalf("tick %d op %s = %q/%v, want %q/%v", test.tick, test.operation, reason, ok, test.want, test.ok)
+		}
+	}
+}
+
+func dbExec(t *testing.T, pool *storage.Pool, statement string, args ...any) {
+	t.Helper()
+	ctx := context.Background()
+	tx, err := pool.Begin(ctx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer func() { _ = tx.Rollback(ctx) }()
+	if _, err := tx.Exec(ctx, statement, args...); err != nil {
+		t.Fatal(err)
+	}
+	if err := tx.Commit(ctx); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func checkpointedSession(t *testing.T, pool *storage.Pool, withInput bool) testSession {
+	t.Helper()
+	session := newTestSession(t, pool, "running", 30*time.Second)
+	actor := actorKey("a")
+	state, queue := startedState(t, session.VillageID, session.SessionID, actor)
+	state, queue = advanceState(t, state, queue, 599)
+	seedRuntime(t, pool, session.SessionID, state, queue, nil, 0)
+	reducer, err := New(session.Manager, pool)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+		t.Fatal(err)
+	}
+	if withInput {
+		insertRoleInput(t, pool, session.SessionID, 2, 600, 601, 1, actor, domain.RoleGuard)
+	}
+	if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+		t.Fatal(err)
+	}
+	return session
+}
+
+func TestCheckpointCorruptionFailsClosed(t *testing.T) {
+	pool := testPool(t)
+	cases := []struct {
+		name   string
+		mutate func(t *testing.T, session testSession)
+	}{
+		{"state_hash", func(t *testing.T, session testSession) {
+			dbExec(t, pool, `UPDATE ttg.checkpoints SET state_hash = repeat('0', 64) WHERE session_id = $1 AND revision = 1`, session.SessionID)
+		}},
+		{"checkpoint_cursor", func(t *testing.T, session testSession) {
+			dbExec(t, pool, `UPDATE ttg.checkpoints SET state_json = jsonb_set(state_json, '{cursor,input_seq}', '999') WHERE session_id = $1 AND revision = 1`, session.SessionID)
+		}},
+		{"checkpoint_format", func(t *testing.T, session testSession) {
+			dbExec(t, pool, `UPDATE ttg.checkpoints SET state_json = jsonb_set(state_json, '{format}', '99') WHERE session_id = $1 AND revision = 1`, session.SessionID)
+		}},
+		{"checkpoint_rules", func(t *testing.T, session testSession) {
+			dbExec(t, pool, `UPDATE ttg.checkpoints SET rules_version = 'bad-rules' WHERE session_id = $1 AND revision = 1`, session.SessionID)
+		}},
+		{"checkpoint_json", func(t *testing.T, session testSession) {
+			dbExec(t, pool, `UPDATE ttg.checkpoints SET state_json = '{}'::jsonb WHERE session_id = $1 AND revision = 1`, session.SessionID)
+		}},
+		{"missing_journal", func(t *testing.T, session testSession) {
+			dbExec(t, pool, `DELETE FROM ttg.reducer_transitions WHERE session_id = $1 AND revision = 2`, session.SessionID)
+		}},
+		{"journal_hash", func(t *testing.T, session testSession) {
+			dbExec(t, pool, `UPDATE ttg.reducer_transitions SET state_hash = repeat('0', 64) WHERE session_id = $1 AND revision = 2`, session.SessionID)
+		}},
+		{"missing_checkpoint", func(t *testing.T, session testSession) {
+			dbExec(t, pool, `DELETE FROM ttg.checkpoints WHERE session_id = $1`, session.SessionID)
+		}},
+	}
+	for _, test := range cases {
+		t.Run(test.name, func(t *testing.T) {
+			session := checkpointedSession(t, pool, false)
+			test.mutate(t, session)
+			reducer, err := New(session.Manager, pool)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if _, err := reducer.VerifyReplay(context.Background(), session.SessionID, 2); err == nil {
+				t.Fatalf("corruption %s was accepted", test.name)
+			}
+		})
+	}
+}
+
+func TestReplayRejectsMissingOrMutatedInput(t *testing.T) {
+	pool := testPool(t)
+	for _, mutate := range []string{"delete", "payload"} {
+		t.Run(mutate, func(t *testing.T) {
+			session := checkpointedSession(t, pool, true)
+			if mutate == "delete" {
+				dbExec(t, pool, `DELETE FROM ttg.input_events WHERE session_id = $1 AND input_seq = 2`, session.SessionID)
+			} else {
+				dbExec(t, pool, `UPDATE ttg.input_events SET canonical_payload = '{"kind":"role","role":"fighter"}'::jsonb WHERE session_id = $1 AND input_seq = 2`, session.SessionID)
+			}
+			reducer, err := New(session.Manager, pool)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if _, err := reducer.VerifyReplay(context.Background(), session.SessionID, 2); err == nil {
+				t.Fatal("inconsistent input history was accepted")
+			}
+		})
+	}
+}
+
+func TestReplayFailsWithoutCheckpointOrDatabase(t *testing.T) {
+	pool := testPool(t)
+	session := newTestSession(t, pool, "waiting", 2*time.Second)
+	insertRoleInput(t, pool, session.SessionID, 1, -1, 0, 1, actorKey("a"), domain.RoleBuilder)
+	reducer, err := New(session.Manager, pool)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+		t.Fatal(err)
+	}
+	dbExec(t, pool, `DELETE FROM ttg.checkpoints WHERE session_id = $1`, session.SessionID)
+	if _, err := reducer.VerifyReplay(context.Background(), session.SessionID, 1); !errors.Is(err, ErrReplayNoCheckpoint) {
+		t.Fatalf("no checkpoint error = %v", err)
+	}
+}
+
+func TestCheckpointSizeAndReplayTiming(t *testing.T) {
+	pool := testPool(t)
+	session := newTestSession(t, pool, "running", 30*time.Second)
+	actor := actorKey("a")
+	state, queue := startedState(t, session.VillageID, session.SessionID, actor)
+	state, queue = advanceState(t, state, queue, 599)
+	seedRuntime(t, pool, session.SessionID, state, queue, nil, 0)
+	reducer, err := New(session.Manager, pool)
+	if err != nil {
+		t.Fatal(err)
+	}
+	started := time.Now()
+	if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+		t.Fatal(err)
+	}
+	stepDuration := time.Since(started)
+	size := sessionValue[int64](t, pool, `SELECT octet_length(state_json::text) FROM ttg.checkpoints WHERE session_id = $1 AND revision = 1`, session.SessionID)
+	started = time.Now()
+	if _, err := reducer.VerifyReplay(context.Background(), session.SessionID, 1); err != nil {
+		t.Fatal(err)
+	}
+	replayDuration := time.Since(started)
+	t.Logf("checkpoint revision1 tick600: step=%s replay=%s jsonb_text_bytes=%d", stepDuration.Round(time.Microsecond), replayDuration.Round(time.Microsecond), size)
+}
+
+func TestPeriodicCheckpointBoundaries(t *testing.T) {
+	pool := testPool(t)
+	for _, boundary := range []int{600, 1200, 1800, 2400} {
+		t.Run(fmt.Sprintf("tick-%d", boundary), func(t *testing.T) {
+			session := newTestSession(t, pool, "running", 30*time.Second)
+			actor := actorKey("a")
+			state, queue := startedState(t, session.VillageID, session.SessionID, actor)
+			state, queue = advanceState(t, state, queue, boundary-1)
+			seedRuntime(t, pool, session.SessionID, state, queue, nil, 0)
+			reducer, err := New(session.Manager, pool)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+				t.Fatal(err)
+			}
+			if got := countRows(t, pool, `SELECT count(*) FROM ttg.checkpoints WHERE session_id = $1 AND revision = 1 AND wave_tick = $2`, session.SessionID, boundary); got != 1 {
+				t.Fatalf("checkpoint at %d = %d", boundary, got)
+			}
+		})
+	}
+}
+
+func TestReplayAcrossBossAndSettlement(t *testing.T) {
+	pool := testPool(t)
+	session := newTestSession(t, pool, "running", 60*time.Second)
+	actor := actorKey("a")
+	state, queue := startedState(t, session.VillageID, session.SessionID, actor)
+	state, queue = advanceToWave(t, state, queue, 5)
+	state, queue = advanceState(t, state, queue, 2399)
+	seedRuntime(t, pool, session.SessionID, state, queue, nil, 0)
+	reducer, err := New(session.Manager, pool)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+		t.Fatal(err)
+	}
+	if got := countRows(t, pool, `SELECT count(*) FROM ttg.checkpoints WHERE session_id = $1 AND revision = 1 AND wave_tick = 2400`, session.SessionID); got != 1 {
+		t.Fatalf("checkpoint2400 = %d", got)
+	}
+	for tick := 2400; tick < 2600; tick++ {
+		if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+			t.Fatalf("step %d: %v", tick, err)
+		}
+	}
+	if got := countRows(t, pool, `SELECT count(*) FROM ttg.domain_events WHERE session_id = $1 AND event_type = 'boss_spawned'`, session.SessionID); got == 0 {
+		t.Fatal("boss_spawned missing before replay")
+	}
+	for tick := 2600; tick < 2800; tick++ {
+		if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+			t.Fatalf("step %d: %v", tick, err)
+		}
+	}
+	if got := countRows(t, pool, `SELECT count(*) FROM ttg.domain_events WHERE session_id = $1 AND event_type = 'wave_result'`, session.SessionID); got == 0 {
+		t.Fatal("wave_result missing before replay")
+	}
+	replay, err := reducer.VerifyReplayFrom(context.Background(), session.SessionID, 1, 0)
+	if err != nil {
+		t.Fatalf("boss/settlement replay: %v", err)
+	}
+	if replay.CheckpointRevision != 1 || replay.Transitions != 400 {
+		t.Fatalf("boss replay = %+v", replay)
 	}
 }

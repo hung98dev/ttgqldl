@@ -8,7 +8,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict XpzLHQnjsEf8d3XPEzIw2KRPK3pxcnHsGjJVR4IBxWpv9yAYbqjQbJiJwQfQqW7
+\restrict 2Q0WTKVxtENzYsqjj5DpJ8HvbYT1L8tgFdUna4Is9ltBZn14kIY660rWra1euMW
 
 -- Dumped from database version 18.6 (Debian 18.6-1.pgdg13+2)
 -- Dumped by pg_dump version 18.6 (Debian 18.6-1.pgdg13+2)
@@ -294,6 +294,23 @@ CREATE TABLE ttg.privacy_tombstones (
 
 
 --
+-- Name: reducer_transitions; Type: TABLE; Schema: ttg; Owner: -
+--
+
+CREATE TABLE ttg.reducer_transitions (
+    session_id uuid NOT NULL,
+    revision bigint NOT NULL,
+    operation text NOT NULL,
+    wave_no bigint NOT NULL,
+    wave_tick integer NOT NULL,
+    state_hash character(64) NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT reducer_transitions_operation_check CHECK ((operation = ANY (ARRAY['start'::text, 'advance'::text, 'rollover'::text]))),
+    CONSTRAINT reducer_transitions_revision_check CHECK ((revision > 0))
+);
+
+
+--
 -- Name: session_player_progress; Type: TABLE; Schema: ttg; Owner: -
 --
 
@@ -565,6 +582,14 @@ ALTER TABLE ONLY ttg.privacy_tombstones
 
 
 --
+-- Name: reducer_transitions reducer_transitions_pkey; Type: CONSTRAINT; Schema: ttg; Owner: -
+--
+
+ALTER TABLE ONLY ttg.reducer_transitions
+    ADD CONSTRAINT reducer_transitions_pkey PRIMARY KEY (session_id, revision);
+
+
+--
 -- Name: session_player_progress session_player_progress_pkey; Type: CONSTRAINT; Schema: ttg; Owner: -
 --
 
@@ -816,6 +841,14 @@ ALTER TABLE ONLY ttg.privacy_ledger_outbox
 
 
 --
+-- Name: reducer_transitions reducer_transitions_session_id_fkey; Type: FK CONSTRAINT; Schema: ttg; Owner: -
+--
+
+ALTER TABLE ONLY ttg.reducer_transitions
+    ADD CONSTRAINT reducer_transitions_session_id_fkey FOREIGN KEY (session_id) REFERENCES ttg.sessions(id) ON DELETE RESTRICT;
+
+
+--
 -- Name: session_player_progress session_player_progress_session_id_fkey; Type: FK CONSTRAINT; Schema: ttg; Owner: -
 --
 
@@ -859,5 +892,5 @@ ALTER TABLE ONLY ttg.writer_leases
 -- PostgreSQL database dump complete
 --
 
-\unrestrict XpzLHQnjsEf8d3XPEzIw2KRPK3pxcnHsGjJVR4IBxWpv9yAYbqjQbJiJwQfQqW7
+\unrestrict 2Q0WTKVxtENzYsqjj5DpJ8HvbYT1L8tgFdUna4Is9ltBZn14kIY660rWra1euMW
 

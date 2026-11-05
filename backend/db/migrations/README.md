@@ -10,6 +10,7 @@ Canonical, forward-only schema migrations, executed by `cmd/migrate` via goose.
 | `00004_identity_aliases.sql` | `actor_identity_aliases`, `privacy_ledger_outbox` |
 | `00005_input_receipt_integrity.sql` | durable receipt `payload_fingerprint`/`input_seq`, FK to `input_events`, historical NULL associations |
 | `00006_reducer_revision.sql` | monotonic `sessions.reducer_revision` for W0402 domain-event/outbox revisions and rollover-safe durable transitions |
+| `00007_reducer_transitions.sql` | immutable per-revision reducer operation/hash journal for W0403 checkpoint replay continuity |
 
 The migrations implement the contract in `docs/plan/04_DATABASE.md`: every CHECK,
 unique constraint, partial index and FK cascade policy is written there, and
@@ -45,5 +46,6 @@ changing a migration:
 
 `sqlc generate` must never be pointed at the goose files directly: they contain
 down migrations and goose markers.
+
 
 

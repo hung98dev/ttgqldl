@@ -159,6 +159,16 @@ type TtgPrivacyTombstone struct {
 	RestoreAppliedAt  pgtype.Timestamptz
 }
 
+type TtgReducerTransition struct {
+	SessionID pgtype.UUID
+	Revision  int64
+	Operation string
+	WaveNo    int64
+	WaveTick  int32
+	StateHash string
+	CreatedAt pgtype.Timestamptz
+}
+
 type TtgSession struct {
 	ID              pgtype.UUID
 	VillageID       pgtype.UUID

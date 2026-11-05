@@ -975,6 +975,74 @@
       ]
     },
     {
+      "name": "reducer_transitions",
+      "columns": [
+        {
+          "name": "session_id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "revision",
+          "ordinal": 2,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "operation",
+          "ordinal": 3,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "wave_no",
+          "ordinal": 4,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "wave_tick",
+          "ordinal": 5,
+          "data_type": "integer",
+          "udt_name": "int4",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 32,
+          "numeric_scale": 0
+        },
+        {
+          "name": "state_hash",
+          "ordinal": 6,
+          "data_type": "character",
+          "udt_name": "bpchar",
+          "nullable": false,
+          "default": null,
+          "max_length": 64
+        },
+        {
+          "name": "created_at",
+          "ordinal": 7,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        }
+      ]
+    },
+    {
       "name": "session_player_progress",
       "columns": [
         {
@@ -2327,6 +2395,72 @@
       "definition": "NOT NULL scope"
     },
     {
+      "table": "reducer_transitions",
+      "name": "reducer_transitions_created_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table": "reducer_transitions",
+      "name": "reducer_transitions_operation_check",
+      "type": "c",
+      "definition": "CHECK ((operation = ANY (ARRAY['start'::text, 'advance'::text, 'rollover'::text])))"
+    },
+    {
+      "table": "reducer_transitions",
+      "name": "reducer_transitions_operation_not_null",
+      "type": "n",
+      "definition": "NOT NULL operation"
+    },
+    {
+      "table": "reducer_transitions",
+      "name": "reducer_transitions_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (session_id, revision)"
+    },
+    {
+      "table": "reducer_transitions",
+      "name": "reducer_transitions_revision_check",
+      "type": "c",
+      "definition": "CHECK ((revision \u003e 0))"
+    },
+    {
+      "table": "reducer_transitions",
+      "name": "reducer_transitions_revision_not_null",
+      "type": "n",
+      "definition": "NOT NULL revision"
+    },
+    {
+      "table": "reducer_transitions",
+      "name": "reducer_transitions_session_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "reducer_transitions",
+      "name": "reducer_transitions_session_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL session_id"
+    },
+    {
+      "table": "reducer_transitions",
+      "name": "reducer_transitions_state_hash_not_null",
+      "type": "n",
+      "definition": "NOT NULL state_hash"
+    },
+    {
+      "table": "reducer_transitions",
+      "name": "reducer_transitions_wave_no_not_null",
+      "type": "n",
+      "definition": "NOT NULL wave_no"
+    },
+    {
+      "table": "reducer_transitions",
+      "name": "reducer_transitions_wave_tick_not_null",
+      "type": "n",
+      "definition": "NOT NULL wave_tick"
+    },
+    {
       "table": "session_player_progress",
       "name": "session_player_progress_actor_key_not_null",
       "type": "n",
@@ -2963,6 +3097,11 @@
       "table": "privacy_tombstones",
       "name": "privacy_tombstones_pkey",
       "definition": "CREATE UNIQUE INDEX privacy_tombstones_pkey ON ttg.privacy_tombstones USING btree (id)"
+    },
+    {
+      "table": "reducer_transitions",
+      "name": "reducer_transitions_pkey",
+      "definition": "CREATE UNIQUE INDEX reducer_transitions_pkey ON ttg.reducer_transitions USING btree (session_id, revision)"
     },
     {
       "table": "session_player_progress",
