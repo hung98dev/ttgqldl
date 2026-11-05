@@ -13,6 +13,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 	_ "github.com/jackc/pgx/v5/stdlib" // registers the "pgx" database/sql driver
 )
@@ -105,6 +106,19 @@ func (p *Pool) ServerVersion(ctx context.Context) (string, error) {
 		return "", fmt.Errorf("postgres: server version: %w", err)
 	}
 	return version, nil
+}
+
+// Begin starts one PostgreSQL transaction for the durable ingestion boundary. Domain
+// packages never receive the pool; ingestion owns the narrow transactional usage.
+func (p *Pool) Begin(ctx context.Context) (pgx.Tx, error) {
+	if p == nil || p.pool == nil {
+		return nil, errors.New("postgres: pool is not initialised")
+	}
+	tx, err := p.pool.Begin(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("postgres: begin: %w", err)
+	}
+	return tx, nil
 }
 
 // Close releases every pooled connection. It is safe to call on a nil pool.

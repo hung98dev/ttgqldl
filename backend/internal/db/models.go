@@ -79,10 +79,12 @@ type TtgInputEvent struct {
 }
 
 type TtgInputReceipt struct {
-	SessionID       pgtype.UUID
-	ProviderSource  string
-	ProviderEventID string
-	InsertedAt      pgtype.Timestamptz
+	SessionID          pgtype.UUID
+	ProviderSource     string
+	ProviderEventID    string
+	InsertedAt         pgtype.Timestamptz
+	PayloadFingerprint pgtype.Text
+	InputSeq           pgtype.Int8
 }
 
 type TtgOperatorAccount struct {

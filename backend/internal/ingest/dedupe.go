@@ -2,6 +2,7 @@ package ingest
 
 import (
 	"fmt"
+	"math"
 	"sync"
 	"time"
 	"unicode/utf8"
@@ -111,6 +112,10 @@ func (c Config) validate() error {
 		return fmt.Errorf("%w: TTL values must be positive", ErrInvalidInput)
 	case c.WindowSamples < 1:
 		return fmt.Errorf("%w: WindowSamples must be positive", ErrInvalidInput)
+	case math.IsNaN(c.RateCapacity) || math.IsInf(c.RateCapacity, 0):
+		return fmt.Errorf("%w: rate capacity must be finite", ErrInvalidInput)
+	case math.IsNaN(c.RateRefillPerSecond) || math.IsInf(c.RateRefillPerSecond, 0):
+		return fmt.Errorf("%w: rate refill must be finite", ErrInvalidInput)
 	case c.RateCapacity <= 0, c.RateRefillPerSecond <= 0:
 		return fmt.Errorf("%w: rate parameters must be positive", ErrInvalidInput)
 	case c.Now == nil:
@@ -182,6 +187,9 @@ type Stats struct {
 	WindowEntries int
 	Buckets       int
 	Pending       int
+	// ExpiryNodes is the live expiry-heap length. It is bounded by active state plus
+	// a small compaction allowance, never by total admissions.
+	ExpiryNodes int
 }
 
 // Deduper is the race-safe bounded in-memory ingress filter. A single mutex serializes
@@ -214,7 +222,7 @@ func New(config Config) (*Deduper, error) {
 func (d *Deduper) Stats() Stats {
 	d.mu.Lock()
 	defer d.mu.Unlock()
-	stats := Stats{StableEntries: len(d.stable), WindowEntries: len(d.windows), Buckets: len(d.buckets)}
+	stats := Stats{StableEntries: len(d.stable), WindowEntries: len(d.windows), Buckets: len(d.buckets), ExpiryNodes: len(d.heap)}
 	for _, entry := range d.stable {
 		if entry.pending {
 			stats.Pending++
@@ -233,6 +241,7 @@ func (d *Deduper) Admit(event source.Event, actor domain.ActorKey, action comman
 	now := d.cfg.Now()
 	d.mu.Lock()
 	defer d.mu.Unlock()
+	defer d.maybeCompactLocked()
 	d.purgeLocked(now)
 
 	if event.Kind != source.KindComment {
@@ -287,6 +296,25 @@ func (d *Deduper) admitStableLocked(event source.Event, actor domain.ActorKey, a
 func (d *Deduper) admitWindowLocked(event source.Event, actor domain.ActorKey, action commands.Action, now time.Time) (Decision, *Reservation, error) {
 	key := windowScope(event.SourceSession, actor, event.Kind, action)
 	if existing, ok := d.windows[key]; ok {
+		// A pending best-effort sample whose PendingTTL elapsed is no longer a claim and
+		// must not suppress a retry or keep memory alive.
+		filtered := existing.samples[:0]
+		for _, sample := range existing.samples {
+			if sample.pending && !now.Before(sample.pendingUntil) {
+				continue
+			}
+			filtered = append(filtered, sample)
+		}
+		if len(filtered) == 0 {
+			delete(d.windows, key)
+		} else if len(filtered) != len(existing.samples) {
+			existing.samples = filtered
+			existing.generation++
+			existing.expires = windowExpiry(existing, d.cfg.Window)
+			d.pushWindowExpiry(key, existing)
+		} else {
+			existing.samples = filtered
+		}
 		for _, sample := range existing.samples {
 			if now.Before(sample.at.Add(d.cfg.Window)) {
 				return Decision{Class: ClassRepeatNoop, BestEffort: true}, nil, nil
@@ -312,12 +340,14 @@ func (d *Deduper) admitWindowLocked(event source.Event, actor domain.ActorKey, a
 	} else {
 		entry.generation++
 	}
-	entry.samples = append(entry.samples, windowSample{at: now, id: sampleID})
+	entry.samples = append(entry.samples, windowSample{
+		at: now, id: sampleID, pending: true, pendingUntil: now.Add(d.cfg.PendingTTL),
+	})
 	if len(entry.samples) > d.cfg.WindowSamples {
 		entry.samples = entry.samples[len(entry.samples)-d.cfg.WindowSamples:]
 	}
 	entry.expires = windowExpiry(entry, d.cfg.Window)
-	d.pushExpiry(expiryItem{at: entry.expires, seq: sampleID, kind: expiryWindow, key: key, generation: entry.generation})
+	d.pushWindowExpiry(key, entry)
 	reservation := &Reservation{
 		deduper:    d,
 		id:         sampleID,
@@ -482,8 +512,28 @@ func (r *Reservation) Finalize() error {
 	d := r.deduper
 	d.mu.Lock()
 	defer d.mu.Unlock()
+	defer d.maybeCompactLocked()
 	d.purgeLocked(now)
 	if r.bestEffort {
+		entry, ok := d.windows[r.windowKey]
+		index := -1
+		if ok {
+			for i := range entry.samples {
+				if entry.samples[i].id == r.sampleID {
+					index = i
+					break
+				}
+			}
+		}
+		if !ok || index < 0 || !now.Before(entry.samples[index].pendingUntil) {
+			if ok && index >= 0 {
+				d.removeWindowSampleLocked(r.windowKey, entry, index)
+			}
+			d.refundLocked(r.actor, now)
+			r.state = reservationReleased
+			return ErrReservationExpired
+		}
+		entry.samples[index].pending = false
 		r.state = reservationFinalized
 		return nil
 	}
@@ -519,27 +569,40 @@ func (r *Reservation) Release() error {
 	d := r.deduper
 	d.mu.Lock()
 	defer d.mu.Unlock()
+	defer d.maybeCompactLocked()
+	expired := true
 	if r.bestEffort {
 		if entry, ok := d.windows[r.windowKey]; ok {
-			filtered := entry.samples[:0]
-			for _, sample := range entry.samples {
-				if sample.id != r.sampleID {
-					filtered = append(filtered, sample)
+			for index := range entry.samples {
+				if entry.samples[index].id != r.sampleID {
+					continue
 				}
-			}
-			entry.samples = filtered
-			if len(entry.samples) == 0 {
-				delete(d.windows, r.windowKey)
-			} else {
-				entry.generation++
-				entry.expires = windowExpiry(entry, d.cfg.Window)
-				d.pushExpiry(expiryItem{at: entry.expires, seq: r.sampleID, kind: expiryWindow, key: r.windowKey, generation: entry.generation})
+				expired = !now.Before(entry.samples[index].pendingUntil)
+				d.removeWindowSampleLocked(r.windowKey, entry, index)
+				break
 			}
 		}
 	} else if entry, ok := d.stable[r.stableKey]; ok && entry.reservation == r.id && entry.pending {
 		delete(d.stable, r.stableKey)
+		expired = false
 	}
 	d.refundLocked(r.actor, now)
 	r.state = reservationReleased
+	if expired {
+		return ErrReservationExpired
+	}
 	return nil
+}
+
+// removeWindowSampleLocked removes one sample, deletes an empty window and re-queues the
+// window expiry when samples remain.
+func (d *Deduper) removeWindowSampleLocked(key [32]byte, entry *windowEntry, index int) {
+	entry.samples = append(entry.samples[:index], entry.samples[index+1:]...)
+	if len(entry.samples) == 0 {
+		delete(d.windows, key)
+		return
+	}
+	entry.generation++
+	entry.expires = windowExpiry(entry, d.cfg.Window)
+	d.pushWindowExpiry(key, entry)
 }

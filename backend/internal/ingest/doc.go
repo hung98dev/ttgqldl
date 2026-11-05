@@ -15,6 +15,14 @@
 // a bounded sliding window over (session, scoped actor key, canonical command), never raw
 // comment text, aliases, provider timestamps or per-message randomness.
 //
+// W0305 adds the PostgreSQL-authoritative append boundary: PostgresAppender locks the
+// session row, validates mode/provider/lifecycle, classifies durable receipts, allocates
+// consecutive input sequences, appends immutable input_events and fingerprint-bound
+// receipts, and acknowledges only after commit. Batcher provides the bounded 256/50 ms
+// FIFO queue (20,000 default) with explicit queue-full backpressure and graceful flush.
+// It never mutates reducer state, marks applied_at_tick, or claims exactly-once gameplay;
+// M04 owns reducer application, fencing and recovery.
+//
 // The package is deterministic under an injected clock, race-free, bounded and
 // privacy-conscious: no raw comments, aliases or provider viewer ids are retained, and
 // diagnostics expose counts only.

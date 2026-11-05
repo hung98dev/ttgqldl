@@ -86,8 +86,13 @@ func TestRateIsolationAndClockRollback(t *testing.T) {
 	if decision.Class != ClassRateLimited {
 		t.Fatalf("clock rollback minted tokens: %+v", decision)
 	}
-	clock.Advance(2 * time.Second)
-	decision, reservation, err = admit(t, deduper, rateEvent(13), first, action)
+	clock.Advance(2 * time.Second) // still before the already-credited instant
+	decision, _, _ = admit(t, deduper, rateEvent(13), first, action)
+	if decision.Class != ClassRateLimited {
+		t.Fatalf("refill before high-water = %+v", decision)
+	}
+	clock.Advance(100 * time.Second) // t0+2s: one token beyond the high-water mark
+	decision, reservation, err = admit(t, deduper, rateEvent(14), first, action)
 	if err != nil || decision.Class != ClassAccepted || reservation == nil {
 		t.Fatalf("post-rollback refill = %+v/%v", decision, err)
 	}

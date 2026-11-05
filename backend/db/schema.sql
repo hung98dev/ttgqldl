@@ -141,7 +141,11 @@ CREATE TABLE ttg.input_receipts (
     session_id uuid NOT NULL,
     provider_source text NOT NULL,
     provider_event_id text NOT NULL,
-    inserted_at timestamp with time zone DEFAULT now() NOT NULL
+    inserted_at timestamp with time zone DEFAULT now() NOT NULL,
+    payload_fingerprint character(64),
+    input_seq bigint,
+    CONSTRAINT input_receipts_fingerprint_shape CHECK (((payload_fingerprint IS NULL) OR (payload_fingerprint ~ '^[0-9a-f]{64}$'::text))),
+    CONSTRAINT input_receipts_input_seq_positive CHECK (((input_seq IS NULL) OR (input_seq > 0)))
 );
 
 
@@ -642,6 +646,13 @@ CREATE INDEX input_receipts_inserted_at ON ttg.input_receipts USING btree (inser
 
 
 --
+-- Name: input_receipts_unassociated; Type: INDEX; Schema: ttg; Owner: -
+--
+
+CREATE INDEX input_receipts_unassociated ON ttg.input_receipts USING btree (session_id) WHERE (input_seq IS NULL);
+
+
+--
 -- Name: operator_accounts_username_lower; Type: INDEX; Schema: ttg; Owner: -
 --
 
@@ -751,6 +762,14 @@ ALTER TABLE ONLY ttg.domain_events
 
 ALTER TABLE ONLY ttg.input_events
     ADD CONSTRAINT input_events_session_id_fkey FOREIGN KEY (session_id) REFERENCES ttg.sessions(id) ON DELETE RESTRICT;
+
+
+--
+-- Name: input_receipts input_receipts_input_event_fk; Type: FK CONSTRAINT; Schema: ttg; Owner: -
+--
+
+ALTER TABLE ONLY ttg.input_receipts
+    ADD CONSTRAINT input_receipts_input_event_fk FOREIGN KEY (session_id, input_seq) REFERENCES ttg.input_events(session_id, input_seq) ON DELETE RESTRICT;
 
 
 --

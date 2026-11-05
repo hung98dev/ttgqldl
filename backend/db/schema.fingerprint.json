@@ -497,6 +497,25 @@
           "udt_name": "timestamptz",
           "nullable": false,
           "default": "now()"
+        },
+        {
+          "name": "payload_fingerprint",
+          "ordinal": 5,
+          "data_type": "character",
+          "udt_name": "bpchar",
+          "nullable": true,
+          "default": null,
+          "max_length": 64
+        },
+        {
+          "name": "input_seq",
+          "ordinal": 6,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": true,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
         }
       ]
     },
@@ -1891,6 +1910,24 @@
     },
     {
       "table": "input_receipts",
+      "name": "input_receipts_fingerprint_shape",
+      "type": "c",
+      "definition": "CHECK (((payload_fingerprint IS NULL) OR (payload_fingerprint ~ '^[0-9a-f]{64}$'::text)))"
+    },
+    {
+      "table": "input_receipts",
+      "name": "input_receipts_input_event_fk",
+      "type": "f",
+      "definition": "FOREIGN KEY (session_id, input_seq) REFERENCES input_events(session_id, input_seq) ON DELETE RESTRICT"
+    },
+    {
+      "table": "input_receipts",
+      "name": "input_receipts_input_seq_positive",
+      "type": "c",
+      "definition": "CHECK (((input_seq IS NULL) OR (input_seq \u003e 0)))"
+    },
+    {
+      "table": "input_receipts",
       "name": "input_receipts_inserted_at_not_null",
       "type": "n",
       "definition": "NOT NULL inserted_at"
@@ -2809,6 +2846,11 @@
       "table": "input_receipts",
       "name": "input_receipts_inserted_at",
       "definition": "CREATE INDEX input_receipts_inserted_at ON ttg.input_receipts USING btree (inserted_at)"
+    },
+    {
+      "table": "input_receipts",
+      "name": "input_receipts_unassociated",
+      "definition": "CREATE INDEX input_receipts_unassociated ON ttg.input_receipts USING btree (session_id) WHERE (input_seq IS NULL)"
     },
     {
       "table": "input_receipts",

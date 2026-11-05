@@ -46,13 +46,18 @@ func (d *Deduper) takeTokenLocked(actor domain.ActorKey, now time.Time) (bool, b
 			generation: b.generation,
 		})
 	} else {
-		elapsed := now.Sub(b.last)
-		if elapsed < 0 {
-			elapsed = 0
+		// Monotonic effective time: a clock rollback never rewinds the refill baseline,
+		// so returning to an already-credited instant cannot grant a second refill.
+		effective := now
+		if effective.Before(b.last) {
+			effective = b.last
 		}
+		elapsed := effective.Sub(b.last)
 		b.tokens = math.Min(d.cfg.RateCapacity, b.tokens+elapsed.Seconds()*d.cfg.RateRefillPerSecond)
-		b.last = now
-		b.lastSeen = now
+		b.last = effective
+		if now.After(b.lastSeen) {
+			b.lastSeen = now
+		}
 		b.generation++
 	}
 	if b.tokens+1e-9 < 1 {
@@ -87,8 +92,14 @@ func (d *Deduper) refundLocked(actor domain.ActorKey, now time.Time) {
 		})
 		return
 	}
+	effective := now
+	if effective.Before(b.last) {
+		effective = b.last
+	}
 	b.tokens = math.Min(d.cfg.RateCapacity, b.tokens+1)
-	b.last = now
-	b.lastSeen = now
+	b.last = effective
+	if now.After(b.lastSeen) {
+		b.lastSeen = now
+	}
 	b.generation++
 }
