@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/hung98dev/ttgqldl/backend/internal/domain"
+	"github.com/hung98dev/ttgqldl/backend/internal/identity"
 	"github.com/hung98dev/ttgqldl/backend/internal/reducer"
 	"github.com/hung98dev/ttgqldl/backend/internal/storage"
 	"github.com/hung98dev/ttgqldl/backend/internal/writer"
@@ -215,4 +216,111 @@ func boolValue(t *testing.T, pool *storage.Pool, query string, args ...any) bool
 		t.Fatal(err)
 	}
 	return value
+}
+
+func TestAliasRotationResolvesSamePlayerAndErasureRemovesAllVersions(t *testing.T) {
+	pool := testPool(t)
+	villageID, sessionID, _, manager, red := setupPrivacySession(t, pool)
+	ctx := context.Background()
+	v1, err := identity.NewKey("v1", []byte("0123456789abcdef0123456789abcdef"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	v2, err := identity.NewKey("v2", []byte("fedcba9876543210fedcba9876543210"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	keys, err := identity.NewKeySet(v2, []identity.Key{v1})
+	if err != nil {
+		t.Fatal(err)
+	}
+	input := identity.Input{Provider: "tiktok", ProviderVersion: "v1", BroadcasterKey: "synthetic-broadcaster", ViewerID: "viewer-rotation-1"}
+	candidates, err := keys.Candidates(input)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(candidates) != 2 {
+		t.Fatalf("candidates=%d", len(candidates))
+	}
+	oldKey := string(candidates[1].ActorKey)
+	newKey := string(candidates[0].ActorKey)
+	var playerID string
+	tx, err := pool.Begin(ctx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := tx.QueryRow(ctx, `INSERT INTO ttg.players (id, village_id, actor_key, ephemeral, alias) VALUES (gen_random_uuid(), $1, $2, false, 'RotationSubject') RETURNING id::text`, villageID, oldKey).Scan(&playerID); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := tx.Exec(ctx, `INSERT INTO ttg.actor_identity_aliases (village_id, actor_key, key_version, player_id) VALUES ($1, $2, 'v1', $3), ($1, $4, 'v2', $3)`, villageID, oldKey, playerID, newKey); err != nil {
+		t.Fatal(err)
+	}
+	if err := tx.Commit(ctx); err != nil {
+		t.Fatal(err)
+	}
+	var resolved string
+	if err := func() error {
+		tx, err := pool.Begin(ctx)
+		if err != nil {
+			return err
+		}
+		defer tx.Rollback(ctx)
+		return tx.QueryRow(ctx, `SELECT player_id::text FROM ttg.actor_identity_aliases WHERE village_id = $1 AND actor_key = $2`, villageID, oldKey).Scan(&resolved)
+	}(); err != nil {
+		t.Fatal(err)
+	}
+	if resolved != playerID {
+		t.Fatalf("rotation resolved %s want %s", resolved, playerID)
+	}
+	enc := make([]byte, 32)
+	chain := make([]byte, 32)
+	_, _ = rand.Read(enc)
+	_, _ = rand.Read(chain)
+	ledger, err := OpenLedger(t.TempDir(), "rotation-ledger", enc, chain)
+	if err != nil {
+		t.Fatal(err)
+	}
+	service := &Service{Pool: pool, Ledger: ledger, Reducer: red}
+	request, err := service.Request(ctx, sessionID, oldKey, "rotation erasure", "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := service.Export(ctx, 10); err != nil {
+		t.Fatal(err)
+	}
+	lease, err := manager.Acquire(ctx, villageID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := service.Apply(ctx, lease, request.ID); err != nil {
+		t.Fatal(err)
+	}
+	var remaining int
+	if err := func() error {
+		tx, err := pool.Begin(ctx)
+		if err != nil {
+			return err
+		}
+		defer tx.Rollback(ctx)
+		return tx.QueryRow(ctx, `SELECT count(*) FROM ttg.actor_identity_aliases WHERE village_id = $1`, villageID).Scan(&remaining)
+	}(); err != nil {
+		t.Fatal(err)
+	}
+	if remaining != 0 {
+		t.Fatalf("aliases survived erasure: %d", remaining)
+	}
+	var after int
+	if err := func() error {
+		tx, err := pool.Begin(ctx)
+		if err != nil {
+			return err
+		}
+		defer tx.Rollback(ctx)
+		return tx.QueryRow(ctx, `SELECT count(*) FROM ttg.actor_identity_aliases WHERE village_id = $1 AND actor_key = ANY($2)`, villageID, []string{oldKey, newKey}).Scan(&after)
+	}(); err != nil {
+		t.Fatal(err)
+	}
+	if after != 0 {
+		t.Fatalf("old/new aliases survived: %d", after)
+	}
 }

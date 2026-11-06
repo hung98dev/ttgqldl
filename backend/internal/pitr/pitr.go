@@ -16,6 +16,8 @@ import (
 	"os"
 	"sort"
 	"time"
+
+	"github.com/hung98dev/ttgqldl/backend/internal/privacy"
 )
 
 const (
@@ -229,6 +231,19 @@ type PrivacyGate struct {
 	LedgerVerified  bool
 	CoverageThrough time.Time
 	ErasureReplayed bool
+}
+
+// AllowClientServingWithLedgerProof accepts only a verifier-produced encrypted-ledger
+// coverage proof, not caller-supplied booleans. The proof is process-local and must be
+// regenerated after reconnecting to the ledger; it is not a signature.
+func (g PrivacyGate) AllowClientServingWithLedgerProof(proof privacy.CoverageProof, restoreTime time.Time, required []string) error {
+	if !g.LedgerAvailable || !g.LedgerVerified {
+		return ErrPrivacyGate
+	}
+	if err := privacy.AllowClientServing(proof, restoreTime, required); err != nil {
+		return ErrPrivacyGate
+	}
+	return nil
 }
 
 func (g PrivacyGate) AllowClientServing(restoreTime time.Time) error {
