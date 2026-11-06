@@ -201,7 +201,15 @@ jobs:
         run: |
           set -euo pipefail
           export TTG_PITR_TEST=1
-          go test -count=1 -v -timeout 10m ./test/pitr/...
+          set +e
+          go test -count=1 -v -timeout 10m ./test/pitr/... 2>&1 | tee /tmp/pitr-tests.log
+          status=${PIPESTATUS[0]}
+          if [ "${status}" -ne 0 ]; then
+            grep -E '^--- FAIL|^=== RUN|panic:|test timed out|FATAL|ERROR:' /tmp/pitr-tests.log | tail -n 12 | while IFS= read -r line; do
+              echo "::error::${line}"
+            done
+            exit "${status}"
+          fi
           go test -count=1 ./internal/pitr/...
 
       - name: fuzz smoke (ingress trust boundaries)
@@ -471,6 +479,7 @@ jobs:
 
       - name: Validate ART-009 remediation package, single-source metrics & status gates
         run: python3 -B art/production/ART-009/tools/validate_art009.py --ci-fast
+
 
 
 
