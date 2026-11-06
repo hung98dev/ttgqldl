@@ -65,6 +65,7 @@ from showcase_contracts import (  # noqa: E402
     build_eight_failure_sequences,
     build_hud_transition_mapping,
     build_wave10_full_300s_fixture,
+    format_prep_warning_banner,
     make_snapshot,
 )
 
@@ -123,12 +124,21 @@ class ShowcaseHudRenderer(CompositionalHudRenderer):
         tick = int(snap["wave_tick"])
         vote = snap["vote"]
         settle = snap["settlement"]
+        diag = snap["diagnostics"]
         en = locale != "vi-VN"
+
+        has_drops = bool(diag["metrics_available"]) and int(diag["confirmed_valid_drops"]) > 0
+        if not has_drops and snap["phase"] == "prep" and 1000 <= tick <= 1599:
+            warn_txt = format_prep_warning_banner(tick, locale=locale)
+            if tick >= 1450:
+                res["banner"] = ("err", "ui_icon_danger", warn_txt)
+            else:
+                res["banner"] = ("warn", "ui_icon_timer", warn_txt)
 
         if snap["phase"] == "results" and int(settle["pending_next_wave_count"]) > 0:
             return res
         if bool(vote["open"]) and (wave_no % 2 == 0) and (800 <= tick <= 1199):
-            v_rem = max(0, (1200 - tick) // 10)
+            v_rem = max(0, (1200 - tick + 9) // 10)
             vc = vote["counts"]
             txt = (
                 f"VOTE {v_rem}s · A:{vc['A']}(-50W,Def+15%) B:{vc['B']}(-50F,Atk+15%) C:{vc['C']}(0)"
@@ -827,6 +837,7 @@ def build_full_wave_and_failure_previews(
     wave10_doc: Dict[str, Any],
     failures: List[Dict[str, Any]],
     out_dir: Path,
+    skip_failure_renders: bool = False,
 ) -> Dict[str, Any]:
     out_dir.mkdir(parents=True, exist_ok=True)
     f_hdr = load_font(28, bold=True)
@@ -872,6 +883,9 @@ def build_full_wave_and_failure_previews(
         wd.rectangle((x0 - 1, y0 - 1, x0 + 270, y0 + 480), outline=(80, 128, 186), width=2)
         wd.text((x0, y0 + 486), tag[:36], font=f_lbl, fill=(225, 236, 250))
     w_board.save(out_dir / "wave10_300s_timeline_board.png")
+
+    if skip_failure_renders:
+        return {"wave10_mp4": w10_mp4_metrics}
 
     # 2. Render 8 Failure & Reconnect Sequences Video & Board
     fail_frames: List[Image.Image] = []
@@ -1172,8 +1186,51 @@ def build_all_art008(run_unity: bool = False) -> Dict[str, Any]:
     return comp_metrics
 
 
+def build_prep_affected_art008() -> Dict[str, Any]:
+    """
+    Minimal surgical rebuild of ONLY the ART-008 preview artifacts affected by dynamic PREP
+    warning countdown text (retaining unchanged fixtures, choreography, 7-class, failure,
+    mobile assault, grayscale, and compression boards untouched).
+    """
+    previews_dir = ART008_DIR / "previews"
+    wave10_path = ART008_DIR / "showcase" / "fixtures" / "full_wave_300s_wave10_showcase.json"
+    wave10_doc = json.loads(wave10_path.read_text(encoding="utf-8"))
+    failures = build_eight_failure_sequences()
+
+    composer = ModularBattlefieldComposer()
+    hud = ShowcaseHudRenderer(composer)
+    mixer = AudioTimelineMixer()
+
+    print("[ART-008 HOTFIX] Regenerating affected HUD priority transitions (standard vs reduced motion)...")
+    build_hud_transition_previews(composer, hud, mixer, previews_dir / "hud_transitions")
+
+    print("[ART-008 HOTFIX] Regenerating affected Wave 10 300s full-wave showcase MP4 & timeline board...")
+    extra_mp4 = build_full_wave_and_failure_previews(
+        composer, hud, mixer, wave10_doc, failures, previews_dir / "full_wave", skip_failure_renders=True
+    )
+
+    comp_json_path = previews_dir / "compression" / "stream_compression_and_sync_metrics.json"
+    comp_metrics = json.loads(comp_json_path.read_text(encoding="utf-8"))
+    w10_rel = "art/production/ART-008/previews/full_wave/wave10_full_300s_vertical_slice_1080p.mp4"
+    comp_metrics["encoded_clips"] = [
+        extra_mp4["wave10_mp4"] if c.get("file") == w10_rel else c
+        for c in comp_metrics.get("encoded_clips", [])
+    ]
+    write_json_lf(comp_json_path, comp_metrics)
+    print("[ART-008 HOTFIX COMPLETE] Affected HUD transition & Wave 10 timeline artifacts regenerated.")
+    return comp_metrics
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Build ART-008 audiovisual showcase & handoff outputs.")
     parser.add_argument("--run-unity", action="store_true", help="Also run isolated Unity 6000.6.7f1 showcase verifier.")
+    parser.add_argument(
+        "--only-prep-affected",
+        action="store_true",
+        help="Regenerate only HUD transition & Wave 10 timeline outputs affected by PREP warning text.",
+    )
     args = parser.parse_args()
-    build_all_art008(run_unity=args.run_unity)
+    if args.only_prep_affected:
+        build_prep_affected_art008()
+    else:
+        build_all_art008(run_unity=args.run_unity)

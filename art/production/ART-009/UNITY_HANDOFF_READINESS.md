@@ -12,7 +12,7 @@ All `244` canonical production assets (`ART-003`..`ART-007`), `6` RGBA32 atlases
 3. **16-State + 8-Overlay Localized HUD (`ART-006` + `HudInPlacePresenter.cs`):**
    - `20` text-free icons + `15` nine-slice skins (`PPU = 100`), `59` `vi-VN`/`en-US` strings, `82% x 88%` TikTok safe-rail compliance (`x <= 885.6`, `y <= 1689.6` at `1080x1920`), single primary CTA (`Bình luận XÂY / THỦ / ĐÁNH`), `0` scene reloads across transitions, and `SyntheticCommittedView` binding (`0` hardcoded gameplay counters).
 4. **Original 48 kHz / 24-bit Audio & Pooled Dispatcher (`ART-007` + `BroadcastAudioDispatcher.cs`):**
-   - `12` original SFX + `1` seamless `20.0s` ambient loop + `2` seamless music loops (`12` preallocated `AudioSource`s, `PREP` join `2000 ms`, `ASSAULT` join `3500 ms` at `-5.5 dB` cue + `-1.5 dB` `SFX` bus = `-7.0 dB` / `0.4467` linear, `ttg-audio-dedupe-v2` Two-Tier dedupe, `Music` **muted by default** at `-80.0 dB` / `mute = true`).
+   - `12` original SFX + `1 original seamless 36.00s ambient loop` (`amb_village_dawn_loop.wav`) + `2` seamless music loops (`38.40s` prep, `37.50s` assault; `12` preallocated `AudioSource`s, `PREP` join `2000 ms`, `ASSAULT` join `3500 ms` at `-5.5 dB` cue + `-1.5 dB` `SFX` bus = `-7.0 dB` / `0.4467` linear, `ttg-audio-dedupe-v2` Two-Tier dedupe, `Music` **muted by default** at `-80.0 dB` / `mute = true`, `rights_status = PENDING_REVIEW`).
 
 ---
 

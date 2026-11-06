@@ -63,6 +63,7 @@ namespace TTGQLDL.Showcase.UI
         public string outputPng1080p;
         public string outputPng720p;
         public string outputPng360p;
+        public bool skipGpuRender;
     }
 
     /// <summary>
@@ -165,6 +166,28 @@ namespace TTGQLDL.Showcase.UI
             if (ratio < 0.25f && skinHpCrit != null) return skinHpCrit;
             if (ratio < 0.60f && skinHpWarn != null) return skinHpWarn;
             return skinHpHealthy != null ? skinHpHealthy : (wallHpFill != null ? wallHpFill.sprite : null);
+        }
+
+        public static int ComputePrepSecondsUntilAssault(int waveTick)
+        {
+            if (waveTick < 0) return 160;
+            if (waveTick >= 1600) return 0;
+            // Exact integer ceiling of (1600 - waveTick) / 10f, clamped to valid PREP range [1..160]
+            return Mathf.Clamp((1600 - waveTick + 9) / 10, 1, 160);
+        }
+
+        public static string FormatPrepWarningBanner(int waveTick, bool en)
+        {
+            int secondsUntilAssault = Mathf.Clamp(ComputePrepSecondsUntilAssault(waveTick), 1, 60);
+            if (waveTick >= 1450)
+            {
+                return en
+                    ? $"URGENT: ENEMIES IN {secondsUntilAssault} {(secondsUntilAssault == 1 ? "SECOND" : "SECONDS")}!"
+                    : $"KHẨN CẤP: QUÁI TỚI TRONG {secondsUntilAssault} GIÂY!";
+            }
+            return en
+                ? $"WARNING: {secondsUntilAssault}s UNTIL ENEMY ASSAULT!"
+                : $"CẢNH BÁO: CÒN {secondsUntilAssault} GIÂY QUÁI TỚI!";
         }
 
         public void ApplyCommittedViewInPlace(SyntheticCommittedView v, string locale = "vi-VN")
@@ -307,17 +330,17 @@ namespace TTGQLDL.Showcase.UI
                 bannerSkin = skinNavy;
                 bannerTxt = en ? "WAITING (P=0) · CLOCK FROZEN 05:00" : "CHỜ NGƯỜI CHƠI (P=0) · DỪNG 05:00";
             }
-            else if (v.phase == "prep")
+            else if (v.phase == "prep" && v.waveTick >= 0 && v.waveTick < 1600)
             {
                 if (v.waveTick >= 1450)
                 {
                     bannerSkin = skinErr;
-                    bannerTxt = en ? "URGENT: ENEMIES IN 15 SECONDS!" : "KHẨN CẤP: QUÁI TỚI TRONG 15 GIÂY!";
+                    bannerTxt = FormatPrepWarningBanner(v.waveTick, en);
                 }
                 else if (v.waveTick >= 1000)
                 {
                     bannerSkin = skinWarn;
-                    bannerTxt = en ? "WARNING: 60s UNTIL ENEMY ASSAULT!" : "CẢNH BÁO: CÒN 60 GIÂY QUÁI TỚI!";
+                    bannerTxt = FormatPrepWarningBanner(v.waveTick, en);
                 }
                 else if (v.voteOpen && (v.waveNo % 2 == 0) && v.waveTick >= 800 && v.waveTick <= 1199)
                 {
@@ -418,7 +441,7 @@ namespace TTGQLDL.Showcase.UI
             }
             else if (v.voteOpen && (v.waveNo % 2 == 0) && v.waveTick >= 800 && v.waveTick <= 1199)
             {
-                int vRem = Mathf.Max(0, (1200 - v.waveTick) / 10);
+                int vRem = Mathf.Max(0, (1200 - v.waveTick + 9) / 10);
                 subTxt = en
                     ? $"VOTE {vRem}s · A:{v.voteA}(-50W,Def+15%) B:{v.voteB}(-50F,Atk+15%) C:{v.voteC}(0)"
                     : $"VOTE {vRem}s · A:{v.voteA}(-50G,Thủ+15%) B:{v.voteB}(-50L,Đánh+15%) C:{v.voteC}(0)";

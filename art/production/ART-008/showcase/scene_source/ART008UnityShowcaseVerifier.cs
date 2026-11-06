@@ -36,12 +36,49 @@ namespace TTGQLDL.Showcase.EditorTools
             public List<SpriteImportRule> spriteRules = new List<SpriteImportRule>();
             public List<SyntheticCommittedView> verificationStates = new List<SyntheticCommittedView>();
             public SyntheticCommittedView englishVoteProofState;
+            public List<SyntheticCommittedView> extraPrepWarningRenderStates = new List<SyntheticCommittedView>();
+            public List<SyntheticCommittedView> prepCountdownBoundaryStates = new List<SyntheticCommittedView>();
+            public bool skipPerformanceBenchmark;
+            public bool skipUnchangedIsolatedRenders;
             public string outputVerificationJson;
             public string outputPerformanceJson;
             public string outputSceneSummaryJson;
             public string outputRenderAssaultPng;
             public string outputRenderBossPng;
             public string outputRenderReconnectPng;
+        }
+
+        [Serializable]
+        public sealed class PrepCountdownReadbackEntry
+        {
+            public int wave_tick;
+            public string phase;
+            public int seconds_until_assault;
+            public string vi_banner_text;
+            public string en_banner_text;
+            public string vi_vote_strip_text;
+            public string en_vote_strip_text;
+            public string vi_timer_text;
+            public string en_timer_text;
+            public float vi_preferred_width_px;
+            public float en_preferred_width_px;
+            public float banner_inner_width_px;
+            public bool text_fits_without_overflow;
+        }
+
+        [Serializable]
+        public sealed class PausedWallClockFreezeProof
+        {
+            public int wave_tick;
+            public float simulated_wallclock_elapsed_ms;
+            public string paused_vi_banner_before;
+            public string paused_vi_banner_after;
+            public string paused_vi_timer_before;
+            public string paused_vi_timer_after;
+            public string running_no_snapshot_vi_banner_before;
+            public string running_no_snapshot_vi_banner_after;
+            public bool priority_storage_gt_source_gt_pause_verified;
+            public bool advanced_from_wallclock;
         }
 
         [Serializable]
@@ -202,7 +239,11 @@ namespace TTGQLDL.Showcase.EditorTools
             public List<ClassDisplayMeasurement> classMeasurements = new List<ClassDisplayMeasurement>();
             public List<HudVerificationStateEntry> hud_verification_states = new List<HudVerificationStateEntry>();
             public HudVerificationStateEntry english_vote_b_proof;
+            public List<HudVerificationStateEntry> prep_warning_gpu_renders = new List<HudVerificationStateEntry>();
+            public List<PrepCountdownReadbackEntry> prep_countdown_readbacks = new List<PrepCountdownReadbackEntry>();
+            public PausedWallClockFreezeProof paused_wallclock_freeze_proof;
             public List<string> renderedGpuFrames = new List<string>();
+            public List<string> regeneratedInHotfixGpuFrames = new List<string>();
             public string honestyNote;
         }
 
@@ -388,6 +429,7 @@ namespace TTGQLDL.Showcase.EditorTools
             // 6. Verify & GPU-Render all 12 canonical states at 1080p, 720p, and 360p (Standard Motion, ZERO scene reloads!)
             var hudStatesOut = new List<HudVerificationStateEntry>();
             var renderedFiles = new List<string>();
+            var regeneratedFiles = new List<string>();
             hudPresenter.ReducedMotion = false;
 
             SyntheticCommittedView stateAssault = null;
@@ -403,17 +445,29 @@ namespace TTGQLDL.Showcase.EditorTools
 
                 if (!string.IsNullOrEmpty(st.outputPng1080p))
                 {
-                    RenderCameraToPng(cam, 1080, 1920, st.outputPng1080p);
+                    if (!st.skipGpuRender || !File.Exists(st.outputPng1080p))
+                    {
+                        RenderCameraToPng(cam, 1080, 1920, st.outputPng1080p);
+                        regeneratedFiles.Add(st.outputPng1080p);
+                    }
                     renderedFiles.Add(st.outputPng1080p);
                 }
                 if (!string.IsNullOrEmpty(st.outputPng720p))
                 {
-                    RenderCameraToPng(cam, 720, 1280, st.outputPng720p);
+                    if (!st.skipGpuRender || !File.Exists(st.outputPng720p))
+                    {
+                        RenderCameraToPng(cam, 720, 1280, st.outputPng720p);
+                        regeneratedFiles.Add(st.outputPng720p);
+                    }
                     renderedFiles.Add(st.outputPng720p);
                 }
                 if (!string.IsNullOrEmpty(st.outputPng360p))
                 {
-                    RenderCameraToPng(cam, 360, 640, st.outputPng360p);
+                    if (!st.skipGpuRender || !File.Exists(st.outputPng360p))
+                    {
+                        RenderCameraToPng(cam, 360, 640, st.outputPng360p);
+                        regeneratedFiles.Add(st.outputPng360p);
+                    }
                     renderedFiles.Add(st.outputPng360p);
                 }
 
@@ -435,11 +489,174 @@ namespace TTGQLDL.Showcase.EditorTools
                 hudPresenter.StepMotionMs(16.67f);
                 if (!string.IsNullOrEmpty(cfg.englishVoteProofState.outputPng1080p))
                 {
-                    RenderCameraToPng(cam, 1080, 1920, cfg.englishVoteProofState.outputPng1080p);
+                    if (!cfg.englishVoteProofState.skipGpuRender || !File.Exists(cfg.englishVoteProofState.outputPng1080p))
+                    {
+                        RenderCameraToPng(cam, 1080, 1920, cfg.englishVoteProofState.outputPng1080p);
+                        regeneratedFiles.Add(cfg.englishVoteProofState.outputPng1080p);
+                    }
                     renderedFiles.Add(cfg.englishVoteProofState.outputPng1080p);
                 }
                 enVoteProof = ReadBackHudVerificationEntry(cfg.englishVoteProofState, hudPresenter, "en-US");
             }
+
+            // Extra PREP warning GPU renders (e.g. tick 1000 60s & tick 1450 15s across 1080p/720p/360p)
+            var extraPrepRendersOut = new List<HudVerificationStateEntry>();
+            if (cfg.extraPrepWarningRenderStates != null)
+            {
+                hudPresenter.ReducedMotion = false;
+                foreach (var pst in cfg.extraPrepWarningRenderStates)
+                {
+                    ApplyWorldForCommittedView(pst, worldRefs, pooledControllers, vfxPool, spritesByStem);
+                    hudPresenter.ApplyCommittedViewInPlace(pst, "vi-VN");
+                    hudPresenter.StepMotionMs(120f);
+                    hudPresenter.StepMotionMs(140f);
+                    if (!string.IsNullOrEmpty(pst.outputPng1080p))
+                    {
+                        RenderCameraToPng(cam, 1080, 1920, pst.outputPng1080p);
+                        renderedFiles.Add(pst.outputPng1080p);
+                        regeneratedFiles.Add(pst.outputPng1080p);
+                    }
+                    if (!string.IsNullOrEmpty(pst.outputPng720p))
+                    {
+                        RenderCameraToPng(cam, 720, 1280, pst.outputPng720p);
+                        renderedFiles.Add(pst.outputPng720p);
+                        regeneratedFiles.Add(pst.outputPng720p);
+                    }
+                    if (!string.IsNullOrEmpty(pst.outputPng360p))
+                    {
+                        RenderCameraToPng(cam, 360, 640, pst.outputPng360p);
+                        renderedFiles.Add(pst.outputPng360p);
+                        regeneratedFiles.Add(pst.outputPng360p);
+                    }
+                    extraPrepRendersOut.Add(ReadBackHudVerificationEntry(pst, hudPresenter, "vi-VN"));
+                }
+                hudPresenter.ReducedMotion = true;
+            }
+
+            // Read back all PREP countdown boundary ticks (999, 1000, 1199, 1200, 1449, 1450, 1500, 1599, 1600) in BOTH vi-VN and en-US
+            var prepReadbacksOut = new List<PrepCountdownReadbackEntry>();
+            const float bannerInnerWidthPx = 816f;
+            if (cfg.prepCountdownBoundaryStates != null)
+            {
+                foreach (var bs in cfg.prepCountdownBoundaryStates)
+                {
+                    hudPresenter.ApplyCommittedViewInPlace(bs, "vi-VN");
+                    hudPresenter.StepMotionMs(250f);
+                    Canvas.ForceUpdateCanvases();
+                    string viBan = hudPresenter.threatBannerLabel != null ? hudPresenter.threatBannerLabel.text : "";
+                    string viVote = hudPresenter.voteStripLabel != null ? hudPresenter.voteStripLabel.text : "";
+                    string viTim = hudPresenter.timerLabel != null ? hudPresenter.timerLabel.text : "";
+                    float viW = hudPresenter.threatBannerLabel != null ? hudPresenter.threatBannerLabel.preferredWidth : 0f;
+
+                    hudPresenter.ApplyCommittedViewInPlace(bs, "en-US");
+                    hudPresenter.StepMotionMs(250f);
+                    Canvas.ForceUpdateCanvases();
+                    string enBan = hudPresenter.threatBannerLabel != null ? hudPresenter.threatBannerLabel.text : "";
+                    string enVote = hudPresenter.voteStripLabel != null ? hudPresenter.voteStripLabel.text : "";
+                    string enTim = hudPresenter.timerLabel != null ? hudPresenter.timerLabel.text : "";
+                    float enW = hudPresenter.threatBannerLabel != null ? hudPresenter.threatBannerLabel.preferredWidth : 0f;
+
+                    prepReadbacksOut.Add(new PrepCountdownReadbackEntry
+                    {
+                        wave_tick = bs.waveTick,
+                        phase = bs.phase,
+                        seconds_until_assault = HudInPlacePresenter.ComputePrepSecondsUntilAssault(bs.waveTick),
+                        vi_banner_text = viBan,
+                        en_banner_text = enBan,
+                        vi_vote_strip_text = viVote,
+                        en_vote_strip_text = enVote,
+                        vi_timer_text = viTim,
+                        en_timer_text = enTim,
+                        vi_preferred_width_px = Mathf.Round(viW * 100f) / 100f,
+                        en_preferred_width_px = Mathf.Round(enW * 100f) / 100f,
+                        banner_inner_width_px = bannerInnerWidthPx,
+                        text_fits_without_overflow = (viW <= bannerInnerWidthPx) && (enW <= bannerInnerWidthPx),
+                    });
+                }
+            }
+
+            // Prove zero wall-clock catch-up while paused OR while awaiting next authoritative snapshot, plus blocker priority
+            var freezeView = new SyntheticCommittedView
+            {
+                stateId = "proof_pause_tick_1200",
+                fixtureId = "synth-proof-pause-1200",
+                visualStateId = "PAUSED",
+                lifecycle = "paused",
+                sourceStatus = "mock",
+                pauseReasons = new[] { "operator_paused" },
+                waveNo = 10,
+                waveTick = 1200,
+                remainingSeconds = 180,
+                phase = "prep",
+                villageLevel = 14,
+                wallTier = 6,
+                wallHp = 1944,
+                wallMax = 2000,
+                townhallHp = 500,
+                townhallMax = 500,
+                wood = 550,
+                stone = 820,
+                food = 490,
+                builderCount = 121,
+                guardCount = 31,
+                fighterCount = 52,
+                uniqueJoined = 204,
+                voteSelected = "B",
+                voteA = 34,
+                voteB = 68,
+                voteC = 25,
+                metricsAvailable = true,
+            };
+            hudPresenter.ApplyCommittedViewInPlace(freezeView, "vi-VN");
+            hudPresenter.StepMotionMs(16.67f);
+            string pausedBanBefore = hudPresenter.threatBannerLabel.text;
+            string pausedTimBefore = hudPresenter.timerLabel.text;
+            hudPresenter.StepMotionMs(25000f);
+            string pausedBanAfter = hudPresenter.threatBannerLabel.text;
+            string pausedTimAfter = hudPresenter.timerLabel.text;
+
+            freezeView.stateId = "proof_prio_storage_1200";
+            freezeView.lifecycle = "storage_unavailable";
+            freezeView.pauseReasons = new[] { "storage_unavailable", "source_disconnected", "operator_paused" };
+            hudPresenter.ApplyCommittedViewInPlace(freezeView, "vi-VN");
+            string prioStorage = hudPresenter.threatBannerLabel.text;
+
+            freezeView.stateId = "proof_prio_source_1200";
+            freezeView.lifecycle = "source_disconnected";
+            freezeView.sourceStatus = "disconnected";
+            freezeView.pauseReasons = new[] { "source_disconnected", "operator_paused" };
+            hudPresenter.ApplyCommittedViewInPlace(freezeView, "vi-VN");
+            string prioSource = hudPresenter.threatBannerLabel.text;
+
+            freezeView.stateId = "proof_running_no_snap_1200";
+            freezeView.lifecycle = "running";
+            freezeView.sourceStatus = "mock";
+            freezeView.pauseReasons = Array.Empty<string>();
+            hudPresenter.ApplyCommittedViewInPlace(freezeView, "vi-VN");
+            hudPresenter.StepMotionMs(16.67f);
+            string runBanBefore = hudPresenter.threatBannerLabel.text;
+            hudPresenter.StepMotionMs(25000f);
+            string runBanAfter = hudPresenter.threatBannerLabel.text;
+
+            bool prioOk = prioStorage == "LỖI LƯU TRỮ DB · TẠM DỪNG AN TOÀN" &&
+                          prioSource == "MẤT KẾT NỐI NGUỒN · ĐỒNG HỒ DỪNG" &&
+                          pausedBanBefore == "TẠM DỪNG ĐIỀU HÀNH · ĐỒNG HỒ DỪNG";
+            var pausedFreezeProof = new PausedWallClockFreezeProof
+            {
+                wave_tick = 1200,
+                simulated_wallclock_elapsed_ms = 25000f,
+                paused_vi_banner_before = pausedBanBefore,
+                paused_vi_banner_after = pausedBanAfter,
+                paused_vi_timer_before = pausedTimBefore,
+                paused_vi_timer_after = pausedTimAfter,
+                running_no_snapshot_vi_banner_before = runBanBefore,
+                running_no_snapshot_vi_banner_after = runBanAfter,
+                priority_storage_gt_source_gt_pause_verified = prioOk,
+                advanced_from_wallclock = (pausedBanBefore != pausedBanAfter) ||
+                                          (pausedTimBefore != pausedTimAfter) ||
+                                          (runBanBefore != runBanAfter),
+            };
+
             // Additional ReducedMotion transitions (storage_unavailable -> waiting -> assault)
             foreach (var rIdx in new[] { 10, 0, 4 })
             {
@@ -454,26 +671,38 @@ namespace TTGQLDL.Showcase.EditorTools
             // Export the 3 ART-008 isolated_unity GPU renders (strictly named with actual Direct3D12 API)
             if (stateAssault != null && !string.IsNullOrEmpty(cfg.outputRenderAssaultPng))
             {
-                ApplyWorldForCommittedView(stateAssault, worldRefs, pooledControllers, vfxPool, spritesByStem);
-                hudPresenter.ApplyCommittedViewInPlace(stateAssault, "vi-VN");
-                hudPresenter.StepMotionMs(250f);
-                RenderCameraToPng(cam, 1080, 1920, cfg.outputRenderAssaultPng);
+                if (!cfg.skipUnchangedIsolatedRenders || !File.Exists(cfg.outputRenderAssaultPng))
+                {
+                    ApplyWorldForCommittedView(stateAssault, worldRefs, pooledControllers, vfxPool, spritesByStem);
+                    hudPresenter.ApplyCommittedViewInPlace(stateAssault, "vi-VN");
+                    hudPresenter.StepMotionMs(250f);
+                    RenderCameraToPng(cam, 1080, 1920, cfg.outputRenderAssaultPng);
+                    regeneratedFiles.Add(cfg.outputRenderAssaultPng);
+                }
                 renderedFiles.Add(cfg.outputRenderAssaultPng);
             }
             if (stateBossActive != null && !string.IsNullOrEmpty(cfg.outputRenderBossPng))
             {
-                ApplyWorldForCommittedView(stateBossActive, worldRefs, pooledControllers, vfxPool, spritesByStem);
-                hudPresenter.ApplyCommittedViewInPlace(stateBossActive, "vi-VN");
-                hudPresenter.StepMotionMs(250f);
-                RenderCameraToPng(cam, 1080, 1920, cfg.outputRenderBossPng);
+                if (!cfg.skipUnchangedIsolatedRenders || !File.Exists(cfg.outputRenderBossPng))
+                {
+                    ApplyWorldForCommittedView(stateBossActive, worldRefs, pooledControllers, vfxPool, spritesByStem);
+                    hudPresenter.ApplyCommittedViewInPlace(stateBossActive, "vi-VN");
+                    hudPresenter.StepMotionMs(250f);
+                    RenderCameraToPng(cam, 1080, 1920, cfg.outputRenderBossPng);
+                    regeneratedFiles.Add(cfg.outputRenderBossPng);
+                }
                 renderedFiles.Add(cfg.outputRenderBossPng);
             }
             if (stateReconnect != null && !string.IsNullOrEmpty(cfg.outputRenderReconnectPng))
             {
-                ApplyWorldForCommittedView(stateReconnect, worldRefs, pooledControllers, vfxPool, spritesByStem);
-                hudPresenter.ApplyCommittedViewInPlace(stateReconnect, "vi-VN");
-                hudPresenter.StepMotionMs(250f);
-                RenderCameraToPng(cam, 1080, 1920, cfg.outputRenderReconnectPng);
+                if (!cfg.skipUnchangedIsolatedRenders || !File.Exists(cfg.outputRenderReconnectPng))
+                {
+                    ApplyWorldForCommittedView(stateReconnect, worldRefs, pooledControllers, vfxPool, spritesByStem);
+                    hudPresenter.ApplyCommittedViewInPlace(stateReconnect, "vi-VN");
+                    hudPresenter.StepMotionMs(250f);
+                    RenderCameraToPng(cam, 1080, 1920, cfg.outputRenderReconnectPng);
+                    regeneratedFiles.Add(cfg.outputRenderReconnectPng);
+                }
                 renderedFiles.Add(cfg.outputRenderReconnectPng);
             }
 
@@ -493,20 +722,32 @@ namespace TTGQLDL.Showcase.EditorTools
                 out int joinDuringAlert, out int dupSeqPlays, out int dupVicPlays, out int wallDmg3,
                 out int fighter2, out int builder2, out int bossSlam2, out int burst32Voices, out bool busesOk);
 
-            // 8. Run Real 180-Frame GPU+CPU Load Benchmarks at 10, 50, 100, and 150 Pooled Entities
-            worldRefs.bossTelegraphSr.gameObject.SetActive(false);
-            worldRefs.wallBackSr.sprite = spritesByStem["env_wall_state2_damaged_back"];
-            worldRefs.wallFrontSr.sprite = spritesByStem["env_wall_state2_damaged_front"];
-            hudPresenter.ReducedMotion = false;
-            if (stateAssault != null)
-            {
-                hudPresenter.ApplyCommittedViewInPlace(stateAssault, "vi-VN");
-            }
-
+            // 8. Run Real 180-Frame GPU+CPU Load Benchmarks at 10, 50, 100, and 150 Pooled Entities (or preserve existing report when skipPerformanceBenchmark is enabled)
             var loadTiers = new List<LoadTierResult>();
-            foreach (int count in new[] { 10, 50, 100, 150 })
+            PerformanceReport existingPerf = null;
+            if (cfg.skipPerformanceBenchmark && !string.IsNullOrEmpty(cfg.outputPerformanceJson) && File.Exists(cfg.outputPerformanceJson))
             {
-                loadTiers.Add(MeasureEntityLoadTier(cam, pooledControllers, vfxPool, dispatcher, hudPresenter, count, 180, totalSpriteBytes, totalAudioBytes));
+                existingPerf = JsonUtility.FromJson<PerformanceReport>(File.ReadAllText(cfg.outputPerformanceJson));
+                if (existingPerf != null && existingPerf.loadTiers != null)
+                {
+                    loadTiers = existingPerf.loadTiers;
+                }
+            }
+            else
+            {
+                worldRefs.bossTelegraphSr.gameObject.SetActive(false);
+                worldRefs.wallBackSr.sprite = spritesByStem["env_wall_state2_damaged_back"];
+                worldRefs.wallFrontSr.sprite = spritesByStem["env_wall_state2_damaged_front"];
+                hudPresenter.ReducedMotion = false;
+                if (stateAssault != null)
+                {
+                    hudPresenter.ApplyCommittedViewInPlace(stateAssault, "vi-VN");
+                }
+
+                foreach (int count in new[] { 10, 50, 100, 150 })
+                {
+                    loadTiers.Add(MeasureEntityLoadTier(cam, pooledControllers, vfxPool, dispatcher, hudPresenter, count, 180, totalSpriteBytes, totalAudioBytes));
+                }
             }
 
             // Ensure VFX bursts drain cleanly after stepping 12 frames with no new spawns
@@ -575,8 +816,12 @@ namespace TTGQLDL.Showcase.EditorTools
                 classMeasurements = classMeasurements,
                 hud_verification_states = hudStatesOut,
                 english_vote_b_proof = enVoteProof,
+                prep_warning_gpu_renders = extraPrepRendersOut,
+                prep_countdown_readbacks = prepReadbacksOut,
+                paused_wallclock_freeze_proof = pausedFreezeProof,
                 renderedGpuFrames = renderedFiles,
-                honestyNote = $"Executed in an isolated Unity {Application.unityVersion} project outside production unity/. Proves asset compatibility, sorting, scaling, canonical SyntheticCommittedView HUD truthfulness across 12 states, audio gain/dedupe logic, and bounded 150-entity {gfxApi} CPU render-submission budgets; does NOT claim M05 live WebSocket wiring, 15-minute M06/M08 standalone soak, or hardware OBS capture."
+                regeneratedInHotfixGpuFrames = regeneratedFiles,
+                honestyNote = $"Executed in an isolated Unity {Application.unityVersion} project outside production unity/. Proves asset compatibility, sorting, scaling, canonical SyntheticCommittedView HUD truthfulness across 12 states + dynamic PREP countdown boundaries, audio gain/dedupe logic, and bounded 150-entity {gfxApi} CPU render-submission budgets; does NOT claim M05 live WebSocket wiring, 15-minute M06/M08 standalone soak, or hardware OBS capture."
             };
             foreach (var sl in SortingLayer.layers)
             {
@@ -589,26 +834,32 @@ namespace TTGQLDL.Showcase.EditorTools
                               fighter2 == 2 && builder2 == 2 && bossSlam2 == 2 && burst32Voices <= 10 &&
                               busesOk && leakedSources == 0;
             bool hud12Ok = hudStatesOut.Count >= 12 && hudStatesOut.TrueForAll(h => h.castle_hp_text.EndsWith("/500"));
+            bool prepOk = prepReadbacksOut.TrueForAll(p => p.text_fits_without_overflow) &&
+                          pausedFreezeProof.priority_storage_gt_source_gt_pause_verified &&
+                          !pausedFreezeProof.advanced_from_wallclock;
 
-            rep.status = (allClassesOk && audioAllOk && hud12Ok && parapetDepthOk && hudSafeZoneOk && hudPresenter.SceneReloadCount == 0 && lingeringVfx == 0) ? "PASS" : "FAIL";
+            rep.status = (allClassesOk && audioAllOk && hud12Ok && prepOk && parapetDepthOk && hudSafeZoneOk && hudPresenter.SceneReloadCount == 0 && lingeringVfx == 0) ? "PASS" : "FAIL";
             File.WriteAllText(cfg.outputVerificationJson, JsonUtility.ToJson(rep, true));
 
-            var perf = new PerformanceReport
+            if (existingPerf == null)
             {
-                status = rep.status,
-                unityVersion = Application.unityVersion,
-                executionContext = $"Isolated Unity {Application.unityVersion} {gfxApi} 1080x1920 RenderTexture Camera.Render() CPU Submission Loop (180 frames/tier after 24-frame warmup)",
-                cpuModel = SystemInfo.processorType,
-                gpuModel = SystemInfo.graphicsDeviceName,
-                graphicsApi = gfxApi,
-                systemMemoryMB = SystemInfo.systemMemorySize,
-                graphicsMemoryMB = SystemInfo.graphicsMemorySize,
-                importedSpriteTextureRuntimeBytes = totalSpriteBytes,
-                importedAudioRuntimeBytes = totalAudioBytes,
-                loadTiers = loadTiers,
-                scopeAndLimitationsNote = $"Bounded 10/50/100/150 pooled entity benchmark measured on {SystemInfo.processorType} + {SystemInfo.graphicsDeviceName} ({gfxApi}) in isolated Unity {Application.unityVersion} Editor batchmode. Frame times reflect CPU-side Camera.Render() submission into an offscreen 1080x1920 RenderTexture (not swapchain VSync or full async GPU completion). 10,000 simulated participants are represented via HUD counters + <=150 pooled decorative world units per 07_UNITY_ART_UX.md. Standalone 15-minute soak and OBS NVENC capture remain NOT_EXECUTED until M06/M08."
-            };
-            File.WriteAllText(cfg.outputPerformanceJson, JsonUtility.ToJson(perf, true));
+                var perf = new PerformanceReport
+                {
+                    status = rep.status,
+                    unityVersion = Application.unityVersion,
+                    executionContext = $"Isolated Unity {Application.unityVersion} {gfxApi} 1080x1920 RenderTexture Camera.Render() CPU Submission Loop (180 frames/tier after 24-frame warmup)",
+                    cpuModel = SystemInfo.processorType,
+                    gpuModel = SystemInfo.graphicsDeviceName,
+                    graphicsApi = gfxApi,
+                    systemMemoryMB = SystemInfo.systemMemorySize,
+                    graphicsMemoryMB = SystemInfo.graphicsMemorySize,
+                    importedSpriteTextureRuntimeBytes = totalSpriteBytes,
+                    importedAudioRuntimeBytes = totalAudioBytes,
+                    loadTiers = loadTiers,
+                    scopeAndLimitationsNote = $"Bounded 10/50/100/150 pooled entity benchmark measured on {SystemInfo.processorType} + {SystemInfo.graphicsDeviceName} ({gfxApi}) in isolated Unity {Application.unityVersion} Editor batchmode. Frame times reflect CPU-side Camera.Render() submission into an offscreen 1080x1920 RenderTexture (not swapchain VSync or full async GPU completion). 10,000 simulated participants are represented via HUD counters + <=150 pooled decorative world units per 07_UNITY_ART_UX.md. Standalone 15-minute soak and OBS NVENC capture remain NOT_EXECUTED until M06/M08."
+                };
+                File.WriteAllText(cfg.outputPerformanceJson, JsonUtility.ToJson(perf, true));
+            }
 
             if (rep.status != "PASS")
             {
@@ -1025,6 +1276,11 @@ namespace TTGQLDL.Showcase.EditorTools
             presenter.threatBannerRect = bannerImg.rectTransform;
             presenter.threatBannerGroup = bannerImg.gameObject.AddComponent<CanvasGroup>();
             presenter.threatBannerLabel = AddUiLabel(bannerImg.transform, "ThreatBannerText", uiFont, 28, Color.white);
+            presenter.threatBannerLabel.horizontalOverflow = HorizontalWrapMode.Wrap;
+            presenter.threatBannerLabel.verticalOverflow = VerticalWrapMode.Truncate;
+            presenter.threatBannerLabel.resizeTextForBestFit = true;
+            presenter.threatBannerLabel.resizeTextMinSize = 21;
+            presenter.threatBannerLabel.resizeTextMaxSize = 28;
 
             // Embedded Boss HP bar strip inside bottom of ThreatBanner (visible only when boss_exists && wave_tick >= 2600)
             var bossTrackGo = new GameObject("BossHpBarTrack", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));

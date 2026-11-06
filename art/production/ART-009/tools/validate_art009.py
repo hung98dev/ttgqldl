@@ -29,7 +29,9 @@ if str(TOOLS_DIR) not in sys.path:
 
 from validate_canonical_fixtures import (  # noqa: E402
     evaluate_bundle,
+    evaluate_hotfix_regressions,
     load_bundle_from_repo,
+    run_hotfix_negative_mutations,
     run_negative_mutation_suite,
     write_json_lf,
 )
@@ -44,14 +46,22 @@ def read_png_dims(path: Path) -> Tuple[int, int]:
     return int(w), int(h)
 
 
-def run_art009_checks(ci_fast: bool = False, write_rep: bool = False) -> Tuple[bool, List[Dict[str, Any]], Dict[str, Any], Dict[str, Any]]:
+def run_art009_checks(
+    ci_fast: bool = False, write_rep: bool = False
+) -> Tuple[bool, List[Dict[str, Any]], Dict[str, Any], Dict[str, Any], Dict[str, Any], Dict[str, Any]]:
     bundle = load_bundle_from_repo()
     pos_canon = evaluate_bundle(bundle)
     neg_canon = run_negative_mutation_suite(bundle)
+    hotfix_pos = evaluate_hotfix_regressions(bundle)
+    hotfix_neg = run_hotfix_negative_mutations(bundle)
     if write_rep:
         qa_dir = ART009_DIR / "qa"
         write_json_lf(qa_dir / "canonical_rules_regression.json", pos_canon)
         write_json_lf(qa_dir / "negative_test_results.json", neg_canon)
+        write_json_lf(
+            qa_dir / "hotfix_countdown_and_audio_regression.json",
+            {"positive_checks": hotfix_pos, "negative_mutations": hotfix_neg},
+        )
 
     checks: List[Dict[str, Any]] = []
 
@@ -80,7 +90,14 @@ def run_art009_checks(ci_fast: bool = False, write_rep: bool = False) -> Tuple[b
         "previews/before_after/before_after_hud_defects_board.png",
         "previews/before_after/before_after_wave10_math_board.png",
         "previews/corrected_hud/unity_12_states_contact_sheet.png",
+        "previews/corrected_hud/prep_dynamic_countdown_board.png",
         "previews/corrected_hud/04b_vote_b_locked_en_1080p.png",
+        "previews/corrected_hud/03b_prep_60_warn_1080p.png",
+        "previews/corrected_hud/04c_prep_15_warn_1080p.png",
+        "previews/mobile/03b_prep_60_warn_720p.png",
+        "previews/mobile/03b_prep_60_warn_360p.png",
+        "previews/mobile/04c_prep_15_warn_720p.png",
+        "previews/mobile/04c_prep_15_warn_360p.png",
         "previews/mobile/mobile_1080p_720p_360p_truthfulness_board.png",
         "previews/gameplay/wave10_canonical_lanes_and_boss_board.png",
         "previews/compressed_video/wave10_canonical_360p_h264_aac.mp4",
@@ -188,7 +205,7 @@ def run_art009_checks(ci_fast: bool = False, write_rep: bool = False) -> Tuple[b
         mp4_ok = vst["codec_name"] == "h264" and int(vst["width"]) == 360 and int(vst["height"]) == 640 and ast["codec_name"] == "aac" and int(ast["sample_rate"]) == 48000
     rec("C07_compressed_360p_h264_aac_stream_verified", mp4_ok, f"360x640 H.264 + 48 kHz AAC stream verified (size={mp4_p.stat().st_size if mp4_p.exists() else 0} bytes)")
 
-    all_ok = all(c["status"] == "PASS" for c in checks)
+    all_ok = all(c["status"] == "PASS" for c in checks) and hotfix_pos["overall_passed"] and hotfix_neg["all_rejected"]
 
     if write_rep:
         lines = [
@@ -198,6 +215,8 @@ def run_art009_checks(ci_fast: bool = False, write_rep: bool = False) -> Tuple[b
             f"- **Package Acceptance Checks (`C01..C07`):** `{sum(1 for c in checks if c['status']=='PASS')}/{len(checks)} PASS`",
             f"- **Canonical `ttg-rules-v1` Validator (`R01..R25`):** `{pos_canon['passed_rules']}/{pos_canon['total_rules']} PASS` (cross-checked against `{pos_canon['golden_vectors_cross_checked']}` M02 golden vectors)",
             f"- **Adversarial Negative Mutation Tests (`N01..N15`):** `{neg_canon['rejected_count']}/{neg_canon['total_negative_tests']} REJECTED`",
+            f"- **Hotfix Countdown & Audio-Handoff Regressions (`H01..H03`, Reported Separately):** `{hotfix_pos['passed_checks']}/{hotfix_pos['total_checks']} PASS`",
+            f"- **Hotfix Negative Mutations (`HN01..HN06`, Reported Separately):** `{hotfix_neg['rejected_count']}/{hotfix_neg['total_hotfix_negative_tests']} REJECTED`",
             "- **Open External Gates:** `M04 = IN_PROGRESS`, `M05 = NOT_STARTED`, `M06 = NOT_STARTED`, `GATE-LEGAL = PENDING_REVIEW` (`Music` muted `-80 dB`), `GATE-OBS = NOT EXECUTED`, Human UX/Listening = `NOT EXECUTED`",
             "",
             "## 1. ART-009 Package Checks (`C01..C07`)",
@@ -228,9 +247,29 @@ def run_art009_checks(ci_fast: bool = False, write_rep: bool = False) -> Tuple[b
         for m in neg_canon["results"]:
             lines.append(f"| `{m['test_id']}` | `{'PASS' if m['rejected_as_expected'] else 'FAIL'}` | `{m['expected_catching_rule']}` — {m['description']} |")
 
+        lines.extend([
+            "",
+            "## 4. ART-009 Hotfix Regression Suite (`H01..H03`, Reported Separately)",
+            "",
+            "| Check ID | Status | Title |",
+            "|---|---|---|",
+        ])
+        for hc in hotfix_pos["checks"]:
+            lines.append(f"| `{hc['check_id']}` | `{'PASS' if hc['passed'] else 'FAIL'}` | {hc['title']} |")
+
+        lines.extend([
+            "",
+            "## 5. ART-009 Hotfix Negative Mutations (`HN01..HN06`, Reported Separately)",
+            "",
+            "| Mutation ID | Status | Triggered Check & Rejection Reason |",
+            "|---|---|---|",
+        ])
+        for hm in hotfix_neg["results"]:
+            lines.append(f"| `{hm['test_id']}` | `{'PASS' if hm['rejected_as_expected'] else 'FAIL'}` | `{hm['expected_catching_check']}` — {hm['sample_failure_reason']} |")
+
         (ART009_DIR / "qa/qa_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
 
-    return all_ok, checks, pos_canon, neg_canon
+    return all_ok, checks, pos_canon, neg_canon, hotfix_pos, hotfix_neg
 
 
 def main() -> int:
@@ -239,18 +278,28 @@ def main() -> int:
     parser.add_argument("--write-reports", action="store_true", help="Write QA JSONs and qa_report.md.")
     args = parser.parse_args()
 
-    ok, checks, pos_canon, neg_canon = run_art009_checks(ci_fast=args.ci_fast, write_rep=args.write_reports)
+    ok, checks, pos_canon, neg_canon, hotfix_pos, hotfix_neg = run_art009_checks(
+        ci_fast=args.ci_fast, write_rep=args.write_reports
+    )
     mode = "CI-FAST" if args.ci_fast else "FULL"
     print(
         f"[ART-009 QA ({mode}) {'PASS' if ok else 'FAIL'}] "
         f"Package={sum(1 for c in checks if c['status']=='PASS')}/{len(checks)} | "
         f"Rules={pos_canon['passed_rules']}/{pos_canon['total_rules']} | "
-        f"Negative={neg_canon['rejected_count']}/{neg_canon['total_negative_tests']}"
+        f"Negative={neg_canon['rejected_count']}/{neg_canon['total_negative_tests']} | "
+        f"HotfixChecks={hotfix_pos['passed_checks']}/{hotfix_pos['total_checks']} | "
+        f"HotfixNeg={hotfix_neg['rejected_count']}/{hotfix_neg['total_hotfix_negative_tests']}"
     )
     if not ok:
         for c in checks:
             if c["status"] != "PASS":
                 print(f"  [FAIL] {c['check_id']}: {c['detail']}")
+        for hc in hotfix_pos["checks"]:
+            if not hc["passed"]:
+                print(f"  [HOTFIX FAIL] {hc['check_id']}: {hc['failures']}")
+        for hm in hotfix_neg["results"]:
+            if not hm["rejected_as_expected"]:
+                print(f"  [HOTFIX NEG FAIL] {hm['test_id']} was NOT rejected")
         return 1
     return 0
 

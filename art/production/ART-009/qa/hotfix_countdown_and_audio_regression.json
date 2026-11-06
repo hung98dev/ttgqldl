@@ -1,0 +1,230 @@
+{
+  "positive_checks": {
+    "suite_id": "art009-hotfix-countdown-and-audio-regression-v1",
+    "total_checks": 3,
+    "passed_checks": 3,
+    "failed_checks": 0,
+    "overall_passed": true,
+    "boundary_readbacks": [
+      {
+        "wave_tick": 999,
+        "phase": "prep",
+        "seconds_until_assault": 61,
+        "vi_banner_text": "ĐỢT CHẴN BẦU CHỌN · GÕ A / B / C",
+        "en_banner_text": "EVEN WAVE VOTE · TYPE A / B / C",
+        "vi_vote_strip_text": "VOTE 21s · A:28(-50G,Thủ+15%) B:53(-50L,Đánh+15%) C:21(0)",
+        "en_vote_strip_text": "VOTE 21s · A:28(-50W,Def+15%) B:53(-50F,Atk+15%) C:21(0)",
+        "vi_timer_text": "GIỜ 03:20",
+        "en_timer_text": "TIME 03:20",
+        "vi_preferred_width_px": 454.6600036621094,
+        "en_preferred_width_px": 415.69000244140625,
+        "banner_inner_width_px": 816.0,
+        "text_fits_without_overflow": true
+      },
+      {
+        "wave_tick": 1000,
+        "phase": "prep",
+        "seconds_until_assault": 60,
+        "vi_banner_text": "CẢNH BÁO: CÒN 60 GIÂY QUÁI TỚI!",
+        "en_banner_text": "WARNING: 60s UNTIL ENEMY ASSAULT!",
+        "vi_vote_strip_text": "VOTE 20s · A:29(-50G,Thủ+15%) B:54(-50L,Đánh+15%) C:22(0)",
+        "en_vote_strip_text": "VOTE 20s · A:29(-50W,Def+15%) B:54(-50F,Atk+15%) C:22(0)",
+        "vi_timer_text": "GIỜ 03:20",
+        "en_timer_text": "TIME 03:20",
+        "vi_preferred_width_px": 449.4700012207031,
+        "en_preferred_width_px": 496.2300109863281,
+        "banner_inner_width_px": 816.0,
+        "text_fits_without_overflow": true
+      },
+      {
+        "wave_tick": 1199,
+        "phase": "prep",
+        "seconds_until_assault": 41,
+        "vi_banner_text": "CẢNH BÁO: CÒN 41 GIÂY QUÁI TỚI!",
+        "en_banner_text": "WARNING: 41s UNTIL ENEMY ASSAULT!",
+        "vi_vote_strip_text": "VOTE 1s · A:34(-50G,Thủ+15%) B:68(-50L,Đánh+15%) C:25(0)",
+        "en_vote_strip_text": "VOTE 1s · A:34(-50W,Def+15%) B:68(-50F,Atk+15%) C:25(0)",
+        "vi_timer_text": "GIỜ 03:00",
+        "en_timer_text": "TIME 03:00",
+        "vi_preferred_width_px": 449.4700012207031,
+        "en_preferred_width_px": 496.2300109863281,
+        "banner_inner_width_px": 816.0,
+        "text_fits_without_overflow": true
+      },
+      {
+        "wave_tick": 1200,
+        "phase": "prep",
+        "seconds_until_assault": 40,
+        "vi_banner_text": "CẢNH BÁO: CÒN 40 GIÂY QUÁI TỚI!",
+        "en_banner_text": "WARNING: 40s UNTIL ENEMY ASSAULT!",
+        "vi_vote_strip_text": "CHỐT [B: -50 Lương, Đánh+15%] · A:34 B:68 C:25",
+        "en_vote_strip_text": "LOCKED [B: -50 Food, Atk+15%] · A:34 B:68 C:25",
+        "vi_timer_text": "GIỜ 03:00",
+        "en_timer_text": "TIME 03:00",
+        "vi_preferred_width_px": 449.4700012207031,
+        "en_preferred_width_px": 496.2300109863281,
+        "banner_inner_width_px": 816.0,
+        "text_fits_without_overflow": true
+      },
+      {
+        "wave_tick": 1449,
+        "phase": "prep",
+        "seconds_until_assault": 16,
+        "vi_banner_text": "CẢNH BÁO: CÒN 16 GIÂY QUÁI TỚI!",
+        "en_banner_text": "WARNING: 16s UNTIL ENEMY ASSAULT!",
+        "vi_vote_strip_text": "CHỐT [B: -50 Lương, Đánh+15%] · A:34 B:68 C:25",
+        "en_vote_strip_text": "LOCKED [B: -50 Food, Atk+15%] · A:34 B:68 C:25",
+        "vi_timer_text": "GIỜ 02:35",
+        "en_timer_text": "TIME 02:35",
+        "vi_preferred_width_px": 449.4700012207031,
+        "en_preferred_width_px": 496.2300109863281,
+        "banner_inner_width_px": 816.0,
+        "text_fits_without_overflow": true
+      },
+      {
+        "wave_tick": 1450,
+        "phase": "prep",
+        "seconds_until_assault": 15,
+        "vi_banner_text": "KHẨN CẤP: QUÁI TỚI TRONG 15 GIÂY!",
+        "en_banner_text": "URGENT: ENEMIES IN 15 SECONDS!",
+        "vi_vote_strip_text": "CHỐT [B: -50 Lương, Đánh+15%] · A:34 B:68 C:25",
+        "en_vote_strip_text": "LOCKED [B: -50 Food, Atk+15%] · A:34 B:68 C:25",
+        "vi_timer_text": "GIỜ 02:35",
+        "en_timer_text": "TIME 02:35",
+        "vi_preferred_width_px": 480.6400146484375,
+        "en_preferred_width_px": 439.07000732421875,
+        "banner_inner_width_px": 816.0,
+        "text_fits_without_overflow": true
+      },
+      {
+        "wave_tick": 1500,
+        "phase": "prep",
+        "seconds_until_assault": 10,
+        "vi_banner_text": "KHẨN CẤP: QUÁI TỚI TRONG 10 GIÂY!",
+        "en_banner_text": "URGENT: ENEMIES IN 10 SECONDS!",
+        "vi_vote_strip_text": "CHỐT [B: -50 Lương, Đánh+15%] · A:34 B:68 C:25",
+        "en_vote_strip_text": "LOCKED [B: -50 Food, Atk+15%] · A:34 B:68 C:25",
+        "vi_timer_text": "GIỜ 02:30",
+        "en_timer_text": "TIME 02:30",
+        "vi_preferred_width_px": 480.6400146484375,
+        "en_preferred_width_px": 439.07000732421875,
+        "banner_inner_width_px": 816.0,
+        "text_fits_without_overflow": true
+      },
+      {
+        "wave_tick": 1599,
+        "phase": "prep",
+        "seconds_until_assault": 1,
+        "vi_banner_text": "KHẨN CẤP: QUÁI TỚI TRONG 1 GIÂY!",
+        "en_banner_text": "URGENT: ENEMIES IN 1 SECOND!",
+        "vi_vote_strip_text": "CHỐT [B: -50 Lương, Đánh+15%] · A:34 B:68 C:25",
+        "en_vote_strip_text": "LOCKED [B: -50 Food, Atk+15%] · A:34 B:68 C:25",
+        "vi_timer_text": "GIỜ 02:20",
+        "en_timer_text": "TIME 02:20",
+        "vi_preferred_width_px": 465.05999755859375,
+        "en_preferred_width_px": 407.8999938964844,
+        "banner_inner_width_px": 816.0,
+        "text_fits_without_overflow": true
+      },
+      {
+        "wave_tick": 1600,
+        "phase": "assault",
+        "seconds_until_assault": 0,
+        "vi_banner_text": "GIAO TRANH · T:210 · G:198 · Đ:212",
+        "en_banner_text": "ASSAULT · W:210 · C:198 · E:212",
+        "vi_vote_strip_text": "CHỐT [B: -50 Lương, Đánh+15%] · A:34 B:68 C:25",
+        "en_vote_strip_text": "LOCKED [B: -50 Food, Atk+15%] · A:34 B:68 C:25",
+        "vi_timer_text": "GIỜ 02:20",
+        "en_timer_text": "TIME 02:20",
+        "vi_preferred_width_px": 452.07000732421875,
+        "en_preferred_width_px": 402.70001220703125,
+        "banner_inner_width_px": 816.0,
+        "text_fits_without_overflow": true
+      }
+    ],
+    "paused_wallclock_freeze_proof": {
+      "wave_tick": 1200,
+      "simulated_wallclock_elapsed_ms": 25000.0,
+      "paused_vi_banner_before": "TẠM DỪNG ĐIỀU HÀNH · ĐỒNG HỒ DỪNG",
+      "paused_vi_banner_after": "TẠM DỪNG ĐIỀU HÀNH · ĐỒNG HỒ DỪNG",
+      "paused_vi_timer_before": "GIỜ 03:00",
+      "paused_vi_timer_after": "GIỜ 03:00",
+      "running_no_snapshot_vi_banner_before": "CẢNH BÁO: CÒN 40 GIÂY QUÁI TỚI!",
+      "running_no_snapshot_vi_banner_after": "CẢNH BÁO: CÒN 40 GIÂY QUÁI TỚI!",
+      "priority_storage_gt_source_gt_pause_verified": true,
+      "advanced_from_wallclock": false
+    },
+    "checks": [
+      {
+        "check_id": "H01_DYNAMIC_PREP_COUNTDOWN_BOUNDARIES_VI_EN",
+        "title": "Dynamic PREP warning countdown verified across ticks 999..1600 in VI & EN (shared formatter + Unity GPU read-backs + 360p fit)",
+        "passed": true,
+        "failure_count": 0,
+        "failures": []
+      },
+      {
+        "check_id": "H02_PAUSED_NO_WALLCLOCK_CATCHUP_AND_PRIORITY",
+        "title": "Zero wall-clock countdown catch-up while paused/awaiting snapshot & STORAGE_UNAVAILABLE > SOURCE_RECONNECTING > PAUSED priority",
+        "passed": true,
+        "failure_count": 0,
+        "failures": []
+      },
+      {
+        "check_id": "H03_AMBIENT_LOOP_36S_HANDOFF_PARITY",
+        "title": "ART-009 & ART-008 handoff docs state exact 36.00s ambient loop matching ART-007 manifest (12 SFX, 1 ambient, 2 music muted, PENDING_REVIEW)",
+        "passed": true,
+        "failure_count": 0,
+        "failures": []
+      }
+    ]
+  },
+  "negative_mutations": {
+    "total_hotfix_negative_tests": 6,
+    "rejected_count": 6,
+    "all_rejected": true,
+    "results": [
+      {
+        "test_id": "HN01_HARDCODED_60S_AT_TICK_1200",
+        "description": "Inject hardcoded 60s PREP warning at tick 1200",
+        "expected_catching_check": "H01_DYNAMIC_PREP_COUNTDOWN_BOUNDARIES_VI_EN",
+        "rejected_as_expected": true,
+        "sample_failure_reason": "unity_readback tick=1200 vi-VN: 'CẢNH BÁO: CÒN 60 GIÂY QUÁI TỚI!' != 'CẢNH BÁO: CÒN 40 GIÂY QUÁI TỚI!'"
+      },
+      {
+        "test_id": "HN02_HARDCODED_15S_AT_TICK_1500",
+        "description": "Inject hardcoded 15s urgent warning at tick 1500",
+        "expected_catching_check": "H01_DYNAMIC_PREP_COUNTDOWN_BOUNDARIES_VI_EN",
+        "rejected_as_expected": true,
+        "sample_failure_reason": "unity_readback tick=1500 vi-VN: 'KHẨN CẤP: QUÁI TỚI TRONG 15 GIÂY!' != 'KHẨN CẤP: QUÁI TỚI TRONG 10 GIÂY!'"
+      },
+      {
+        "test_id": "HN03_PREP_WARNING_VISIBLE_DURING_ASSAULT",
+        "description": "Inject PREP warning banner visible during ASSAULT at tick 1600",
+        "expected_catching_check": "H01_DYNAMIC_PREP_COUNTDOWN_BOUNDARIES_VI_EN",
+        "rejected_as_expected": true,
+        "sample_failure_reason": "unity_readback tick=1600 vi-VN: 'KHẨN CẤP: QUÁI TỚI TRONG 0 GIÂY!' != 'GIAO TRANH · T:210 · G:198 · Đ:212'"
+      },
+      {
+        "test_id": "HN04_INCORRECT_ROUNDING_AT_TICK_1599",
+        "description": "Inject floor-division 0s countdown rounding at tick 1599",
+        "expected_catching_check": "H01_DYNAMIC_PREP_COUNTDOWN_BOUNDARIES_VI_EN",
+        "rejected_as_expected": true,
+        "sample_failure_reason": "unity_readback tick=1599: seconds_until_assault=0 != 1"
+      },
+      {
+        "test_id": "HN05_PAUSED_WALLCLOCK_CATCHUP",
+        "description": "Inject paused-state presentation advancing via 25s wall-clock catch-up",
+        "expected_catching_check": "H02_PAUSED_NO_WALLCLOCK_CATCHUP_AND_PRIORITY",
+        "rejected_as_expected": true,
+        "sample_failure_reason": "paused_wallclock_freeze_proof reports advanced_from_wallclock == True"
+      },
+      {
+        "test_id": "HN06_WRONG_20S_AMBIENT_DURATION_IN_HANDOFF",
+        "description": "Inject wrong 20.0s ambient loop duration into ART-009 handoff doc",
+        "expected_catching_check": "H03_AMBIENT_LOOP_36S_HANDOFF_PARITY",
+        "rejected_as_expected": true,
+        "sample_failure_reason": "ART-009 UNITY_HANDOFF_READINESS.md missing exact '1 original seamless 36.00s ambient loop'"
+      }
+    ]
+  }
+}

@@ -88,7 +88,7 @@ def build_before_after_hud_board(out_path: Path, before_backup_dir: Optional[Pat
         ("BEFORE (ART-008 Hardcoded Unity HUD)", before_img, (224, 88, 88), "THÀNH 1850/2000 | TƯỜNG 680/1000 | B: SỬA TƯỜNG +25%"),
         ("AFTER 1: Wave 10 ASSAULT (Tick 1600)", after_assault, (92, 208, 132), "CHÍNH 500/500 | TƯỜNG 2200/2200 (Tier 7) | 210/198/212"),
         ("AFTER 2: Boss Finale (Tick 2600)", after_boss, (92, 208, 132), "BOSS 62/124 (ceil(620/5)=124) | B: -50 Lương, Đánh+15%"),
-        ("AFTER 3: Vote B Locked (en-US Proof)", after_en, (112, 184, 246), "KEEP 500/500 | WALL 2000/2000 | B: -50 Food, Atk+15%"),
+        ("AFTER 3: Vote B @ Tick 1200 (en-US)", after_en, (112, 184, 246), "WARNING: 40s | KEEP 500/500 | B: -50 Food, Atk+15%"),
     ]
 
     for idx, (hdr, img, col, cap) in enumerate(panels):
@@ -254,6 +254,80 @@ def build_12_states_contact_sheet(out_path: Path, unity_ver: Dict[str, Any]) -> 
         sd.text((x0, y0 + 594), f"{st['wall_hp_text']} · {st['castle_hp_text']} · {st['timer_text']}", font=f_sub, fill=(168, 238, 188))
 
     sheet.save(out_path)
+
+
+def build_prep_dynamic_countdown_board(out_path: Path, unity_ver: Dict[str, Any]) -> None:
+    """
+    Dedicated GPU proof board for ART-009 Hotfix Fix 1 & Fix 4:
+    Verifies dynamic PREP warning countdowns at tick 1000 (60s), tick 1200 (40s VI + EN),
+    and tick 1450 (15s) across 1080x1920, 720x1280, and 1:1 360x640 with 2x nearest crops.
+    """
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    board = Image.new("RGB", (2320, 1460), (14, 19, 28))
+    bd = ImageDraw.Draw(board)
+
+    f_title = load_font(28, bold=True)
+    f_hdr = load_font(20, bold=True)
+    f_lbl = load_font(16, bold=True)
+    f_mono = load_font(15, bold=True)
+
+    bd.text(
+        (36, 20),
+        "ART-009 HOTFIX — DYNAMIC PREP WARNING COUNTDOWN PROOF (UNITY 6000.6.7f1 DIRECT3D12 @ 1080p, 720p & 360x640)",
+        font=f_title,
+        fill=(246, 235, 205),
+    )
+
+    p60_1080 = Image.open(ART009_DIR / "previews/corrected_hud/03b_prep_60_warn_1080p.png").convert("RGB")
+    p40_1080 = Image.open(ART009_DIR / "previews/corrected_hud/04_vote_b_locked_1080p.png").convert("RGB")
+    p40_en_1080 = Image.open(ART009_DIR / "previews/corrected_hud/04b_vote_b_locked_en_1080p.png").convert("RGB")
+    p15_1080 = Image.open(ART009_DIR / "previews/corrected_hud/04c_prep_15_warn_1080p.png").convert("RGB")
+
+    p60_360 = Image.open(ART009_DIR / "previews/mobile/03b_prep_60_warn_360p.png").convert("RGB")
+    p40_360 = Image.open(ART009_DIR / "previews/mobile/04_vote_b_locked_360p.png").convert("RGB")
+    p15_360 = Image.open(ART009_DIR / "previews/mobile/04c_prep_15_warn_360p.png").convert("RGB")
+
+    cards = [
+        ("Tick 1000 (60s Left · vi-VN)", p60_1080, (245, 186, 76), "CẢNH BÁO: CÒN 60 GIÂY QUÁI TỚI! + Vote Open (20s)"),
+        ("Tick 1200 (40s Left · Vote B Locked vi-VN)", p40_1080, (92, 208, 132), "CẢNH BÁO: CÒN 40 GIÂY QUÁI TỚI! + CHỐT [B]"),
+        ("Tick 1200 (40s Left · Vote B Locked en-US)", p40_en_1080, (112, 184, 246), "WARNING: 40s UNTIL ENEMY ASSAULT! + LOCKED [B]"),
+        ("Tick 1450 (15s Left · Urgent vi-VN)", p15_1080, (238, 96, 96), "KHẨN CẤP: QUÁI TỚI TRONG 15 GIÂY! (Tier 7 2200/2200)"),
+    ]
+    for idx, (hdr, im, col, cap) in enumerate(cards):
+        x0 = 36 + idx * 566
+        y0 = 96
+        rs = im.resize((528, 938), Image.Resampling.LANCZOS)
+        bd.text((x0, y0 - 28), hdr, font=f_hdr, fill=col)
+        board.paste(rs, (x0, y0))
+        bd.rectangle((x0 - 2, y0 - 2, x0 + 529, y0 + 939), outline=col, width=3)
+        bd.text((x0, y0 + 948), cap, font=f_lbl, fill=(224, 236, 250))
+
+    # Bottom: 2x Nearest-Neighbor 360x640 Mobile Threat-Banner Crops + Unity Read-Back Table
+    zy = 1090
+    bd.rounded_rectangle((36, zy, 2284, 1428), radius=12, fill=(20, 28, 40), outline=(76, 114, 162), width=2)
+    bd.text((56, zy + 14), "ACTUAL 360x640 UNITY GPU THREAT-BANNER CROPS (2x NEAREST) & AUTHORITATIVE BOUNDARY READ-BACKS", font=f_hdr, fill=(255, 222, 138))
+
+    for ci, (lbl, im360, col) in enumerate([
+        ("360p @ Tick 1000 (60s, Zero Overflow)", p60_360, (245, 186, 76)),
+        ("360p @ Tick 1200 (40s, Vote B Locked)", p40_360, (92, 208, 132)),
+        ("360p @ Tick 1450 (15s Urgent)", p15_360, (238, 96, 96)),
+    ]):
+        crop = im360.crop((10, 80, 294, 110)).resize((568, 60), Image.Resampling.NEAREST)
+        cy = zy + 54 + ci * 88
+        board.paste(crop, (56, cy))
+        bd.rectangle((55, cy - 1, 624, cy + 60), outline=col, width=2)
+        bd.text((642, cy + 18), lbl, font=f_lbl, fill=col)
+
+    readbacks = {int(r["wave_tick"]): r for r in unity_ver.get("prep_countdown_readbacks", [])}
+    rx = 1040
+    bd.text((rx, zy + 52), "Unity C# Read-Back (`HudInPlacePresenter` VI / EN, Width <= 816px):", font=f_lbl, fill=(172, 236, 255))
+    for ri, tk in enumerate([999, 1000, 1199, 1200, 1449, 1450, 1500, 1599, 1600]):
+        rb = readbacks.get(tk)
+        if rb:
+            line = f"t={tk:4d} ({rb['seconds_until_assault']:2d}s): {rb['vi_banner_text']}  |  {rb['en_banner_text']}"
+            bd.text((rx, zy + 84 + ri * 26), line[:116], font=f_mono, fill=(224, 236, 250))
+
+    board.save(out_path)
 
 
 def build_mobile_truthfulness_board(out_path: Path) -> None:
@@ -569,6 +643,7 @@ def build_performance_metrics_audit() -> Dict[str, Any]:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build ART-009 visual comparisons, 360p MP4 proof, and performance audit.")
     parser.add_argument("--before-backup-dir", type=str, default="", help="Optional path to pre-fix ART-008 backup screenshots.")
+    parser.add_argument("--skip-unchanged-math-board", action="store_true", help="Retain unchanged before_after_wave10_math_board.png.")
     args = parser.parse_args()
 
     before_dir = Path(args.before_backup_dir) if args.before_backup_dir else None
@@ -580,8 +655,11 @@ def main() -> int:
 
     perf_audit = build_performance_metrics_audit()
     build_before_after_hud_board(ART009_DIR / "previews/before_after/before_after_hud_defects_board.png", before_dir)
-    build_before_after_math_board(ART009_DIR / "previews/before_after/before_after_wave10_math_board.png", perf_audit)
+    math_board_path = ART009_DIR / "previews/before_after/before_after_wave10_math_board.png"
+    if not args.skip_unchanged_math_board or not math_board_path.exists():
+        build_before_after_math_board(math_board_path, perf_audit)
     build_12_states_contact_sheet(ART009_DIR / "previews/corrected_hud/unity_12_states_contact_sheet.png", unity_ver)
+    build_prep_dynamic_countdown_board(ART009_DIR / "previews/corrected_hud/prep_dynamic_countdown_board.png", unity_ver)
     build_mobile_truthfulness_board(ART009_DIR / "previews/mobile/mobile_1080p_720p_360p_truthfulness_board.png")
     build_gameplay_lanes_and_boss_board(ART009_DIR / "previews/gameplay/wave10_canonical_lanes_and_boss_board.png", wave10)
     comp_res = build_compressed_video_proof(ART009_DIR / "previews/compressed_video", unity_ver)
@@ -589,7 +667,7 @@ def main() -> int:
     write_json_lf(ART009_DIR / "qa" / "performance_metrics_audit.json", perf_audit)
 
     print(
-        f"[ART-009 PACKAGE BUILD PASS] 5 boards + 360p MP4 (VoteB PSNR={comp_res['vote_b_360p_psnr_db']} dB, "
+        f"[ART-009 PACKAGE BUILD PASS] Boards + 360p MP4 (VoteB PSNR={comp_res['vote_b_360p_psnr_db']} dB, "
         f"Boss PSNR={comp_res['boss_active_360p_psnr_db']} dB) + performance_metrics_audit.json generated."
     )
     return 0

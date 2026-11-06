@@ -4,6 +4,8 @@
 - **Package Acceptance Checks (`C01..C07`):** `7/7 PASS`
 - **Canonical `ttg-rules-v1` Validator (`R01..R25`):** `25/25 PASS` (cross-checked against `25` M02 golden vectors)
 - **Adversarial Negative Mutation Tests (`N01..N15`):** `15/15 REJECTED`
+- **Hotfix Countdown & Audio-Handoff Regressions (`H01..H03`, Reported Separately):** `3/3 PASS`
+- **Hotfix Negative Mutations (`HN01..HN06`, Reported Separately):** `6/6 REJECTED`
 - **Open External Gates:** `M04 = IN_PROGRESS`, `M05 = NOT_STARTED`, `M06 = NOT_STARTED`, `GATE-LEGAL = PENDING_REVIEW` (`Music` muted `-80 dB`), `GATE-OBS = NOT EXECUTED`, Human UX/Listening = `NOT EXECUTED`
 
 ## 1. ART-009 Package Checks (`C01..C07`)
@@ -11,12 +13,12 @@
 | Check ID | Status | Evidence |
 |---|---|---|
 | `C01_canonical_25_rules_and_15_negatives` | `PASS` | Canonical rules=25/25 PASS; Negative=15/15 rejected |
-| `C02_required_art009_deliverables_present` | `PASS` | Verified 18 required docs/boards/QA files; missing=[] |
+| `C02_required_art009_deliverables_present` | `PASS` | Verified 25 required docs/boards/QA files; missing=[] |
 | `C03_unity_12_states_1080p_720p_360p_verified` | `PASS` | Verified 37 GPU state PNGs across 1080p/720p/360p + en-US Vote B; errs=[] |
 | `C04_single_source_performance_and_d3d12_consistency` | `PASS` | 150-entity FPS=1222.02 matched across performance_report.json, ART-008 README & ART-009 policy; stale d3d11 files=0 |
 | `C05_audio_gain_and_dedupe_preserved` | `PASS` | PREP=2000ms(5), ASSAULT=3500ms(3) @ -5.5dB cue + -1.5dB bus = -7.0dB (0.4467 lin), 12 voices, Music -80dB, Two-Tier dedupe verified |
-| `C06_status_truthfulness_privacy_and_no_asset_duplication` | `PASS` | Gates truthful; leaks=[]; ART-009 PNG count=43 (no 244-asset duplication) |
-| `C07_compressed_360p_h264_aac_stream_verified` | `PASS` | 360x640 H.264 + 48 kHz AAC stream verified (size=272981 bytes) |
+| `C06_status_truthfulness_privacy_and_no_asset_duplication` | `PASS` | Gates truthful; leaks=[]; ART-009 PNG count=50 (no 244-asset duplication) |
+| `C07_compressed_360p_h264_aac_stream_verified` | `PASS` | 360x640 H.264 + 48 kHz AAC stream verified (size=273213 bytes) |
 
 ## 2. Canonical `ttg-rules-v1` Regression Checks (`R01..R25`)
 
@@ -67,3 +69,22 @@
 | `N13_MISSING_SYNTHETIC_WATERMARK` | `PASS` | `R22_TRUTHFUL_STATUS_AND_WATERMARK_TEXT` — Inject mock source_status with watermark_visible = False |
 | `N14_WRONG_MUSIC_RIGHTS_DEFAULT` | `PASS` | `R22_TRUTHFUL_STATUS_AND_WATERMARK_TEXT` — Inject gate_legal_status=APPROVED and unmuted music |
 | `N15_FALSE_PERFORMANCE_METRIC_STATUS` | `PASS` | `R24_REBUILD_HASHES_AND_PREVIEW_PROVENANCE` — Inject 1000/p99 1%-low definition & draw_calls=0 MEASURED |
+
+## 4. ART-009 Hotfix Regression Suite (`H01..H03`, Reported Separately)
+
+| Check ID | Status | Title |
+|---|---|---|
+| `H01_DYNAMIC_PREP_COUNTDOWN_BOUNDARIES_VI_EN` | `PASS` | Dynamic PREP warning countdown verified across ticks 999..1600 in VI & EN (shared formatter + Unity GPU read-backs + 360p fit) |
+| `H02_PAUSED_NO_WALLCLOCK_CATCHUP_AND_PRIORITY` | `PASS` | Zero wall-clock countdown catch-up while paused/awaiting snapshot & STORAGE_UNAVAILABLE > SOURCE_RECONNECTING > PAUSED priority |
+| `H03_AMBIENT_LOOP_36S_HANDOFF_PARITY` | `PASS` | ART-009 & ART-008 handoff docs state exact 36.00s ambient loop matching ART-007 manifest (12 SFX, 1 ambient, 2 music muted, PENDING_REVIEW) |
+
+## 5. ART-009 Hotfix Negative Mutations (`HN01..HN06`, Reported Separately)
+
+| Mutation ID | Status | Triggered Check & Rejection Reason |
+|---|---|---|
+| `HN01_HARDCODED_60S_AT_TICK_1200` | `PASS` | `H01_DYNAMIC_PREP_COUNTDOWN_BOUNDARIES_VI_EN` — unity_readback tick=1200 vi-VN: 'CẢNH BÁO: CÒN 60 GIÂY QUÁI TỚI!' != 'CẢNH BÁO: CÒN 40 GIÂY QUÁI TỚI!' |
+| `HN02_HARDCODED_15S_AT_TICK_1500` | `PASS` | `H01_DYNAMIC_PREP_COUNTDOWN_BOUNDARIES_VI_EN` — unity_readback tick=1500 vi-VN: 'KHẨN CẤP: QUÁI TỚI TRONG 15 GIÂY!' != 'KHẨN CẤP: QUÁI TỚI TRONG 10 GIÂY!' |
+| `HN03_PREP_WARNING_VISIBLE_DURING_ASSAULT` | `PASS` | `H01_DYNAMIC_PREP_COUNTDOWN_BOUNDARIES_VI_EN` — unity_readback tick=1600 vi-VN: 'KHẨN CẤP: QUÁI TỚI TRONG 0 GIÂY!' != 'GIAO TRANH · T:210 · G:198 · Đ:212' |
+| `HN04_INCORRECT_ROUNDING_AT_TICK_1599` | `PASS` | `H01_DYNAMIC_PREP_COUNTDOWN_BOUNDARIES_VI_EN` — unity_readback tick=1599: seconds_until_assault=0 != 1 |
+| `HN05_PAUSED_WALLCLOCK_CATCHUP` | `PASS` | `H02_PAUSED_NO_WALLCLOCK_CATCHUP_AND_PRIORITY` — paused_wallclock_freeze_proof reports advanced_from_wallclock == True |
+| `HN06_WRONG_20S_AMBIENT_DURATION_IN_HANDOFF` | `PASS` | `H03_AMBIENT_LOOP_36S_HANDOFF_PARITY` — ART-009 UNITY_HANDOFF_READINESS.md missing exact '1 original seamless 36.00s ambient loop' |

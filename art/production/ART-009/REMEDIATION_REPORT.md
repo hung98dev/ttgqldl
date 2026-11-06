@@ -39,5 +39,5 @@ Before modifying any `ART-008` generator or C# source file, `art/production/ART-
   - `art/production/ART-008/showcase/scene_source/ART008UnityShowcaseVerifier.cs`
   - Regenerated `ART-008` fixtures, `presentation_timeline.json`, `audio_dispatch_policy.json`, `qa/performance_report.json`, `qa/unity_isolated_verification.json`, `Direct3D12` GPU renders (`unity_d3d12_*.png`, replacing deleted `unity_d3d11_*.png`), proof boards, and H.264/AAC `.mp4` videos.
 - **Added in `art/production/ART-009/`:**
-  - Independent `ttg-rules-v1` validator (`tools/validate_canonical_fixtures.py`) + package validator (`tools/validate_art009.py`) + CI gate in `.github/workflows/ci.yml`.
-  - `12` GPU-rendered `Unity 6000.6.7f1` states at `1080x1920`, `720x1280`, and `360x640` + English Vote B `1080p` proof, before/after boards, compressed `360p` H.264/AAC stream proof, and formal handoff audit records.
+  - Independent `ttg-rules-v1` validator (`tools/validate_canonical_fixtures.py`) + package validator (`tools/validate_art009.py`) + separately reported hotfix countdown/audio regression suite (`3/3` positive + `6/6` negative mutations) + CI gate in `.github/workflows/ci.yml`.
+  - `12` GPU-rendered `Unity 6000.6.7f1` states at `1080x1920`, `720x1280`, and `360x640` + English Vote B `40s` `1080p` proof + PREP `60s`/`15s` GPU renders (`46` GPU PNGs), dynamic countdown & before/after boards, compressed `360p` H.264/AAC stream proof, `36.00s` ambient loop handoff parity, and formal handoff audit records.

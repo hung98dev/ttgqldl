@@ -103,8 +103,8 @@
       "video_codec": "h264",
       "audio_codec": "aac",
       "actual_fps": 12.0,
-      "bitrate_kbps": 181.99,
-      "file_size_bytes": 272981,
+      "bitrate_kbps": 182.14,
+      "file_size_bytes": 273213,
       "duration_s": 12.0,
       "audio_sample_rate_hz": 48000,
       "audio_channels": 2,
@@ -113,7 +113,7 @@
       "true_peak_dbtp": -1.19,
       "clipped_samples": 0
     },
-    "vote_b_360p_psnr_db": 30.73,
+    "vote_b_360p_psnr_db": 30.72,
     "boss_active_360p_psnr_db": 30.63
   }
 }

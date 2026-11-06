@@ -46,5 +46,5 @@ Reconnect resyncs and outbox redeliveries can replay already-delivered events, w
 | `SFX10` | Even-Wave Vote Closed (`tick 1200`) | `1+2. Committed Event / Vote Lock` | Trigger once per even wave when `vote.open` transitions `true -> false` with `vote.selected in {A,B,C}` at `tick 1200`. |
 | `SFX11` | Wave Victory (`RESULTS_WIN`) | `2+4. Committed Settlement Projection` | Trigger once per wave at `tick >= 2800` when `settlement.wave_result == "win"` (`QA-SIM-12` public projection required in `M05`). |
 | `SFX12` | Wave Defeat (`RESULTS_LOSS`) | `2+4. Committed Settlement Projection` | Trigger once per wave when `settlement.wave_result == "loss"` (`tick >= 2800` or authoritative `townhall_hp == 0`). |
-| `AMB01` | Village Dawn Ambient Loop (`20.0s`) | `3. Scene Lifecycle` | Start seamlessly on showcase/session load (`-3.0 dB` Ambient bus); respect global mute. |
+| `AMB01` | Village Dawn Ambient Loop (`36.00s`) | `3. Scene Lifecycle` | Start seamlessly on showcase/session load (`-3.0 dB` Ambient bus); respect global mute. |
 | `MUS01` / `MUS02` | Prep / Assault Music Loops | `Gated by GATE-LEGAL` | **Keep muted (`-80.0 dB`, `mute = true`) by default in all builds until `GATE-LEGAL` written clearance.** |

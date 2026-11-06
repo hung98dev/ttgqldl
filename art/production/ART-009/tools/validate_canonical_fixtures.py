@@ -26,8 +26,19 @@ TOOLS_DIR = Path(__file__).resolve().parent
 ART009_DIR = TOOLS_DIR.parent
 REPO_ROOT = ART009_DIR.parents[2]
 ART008_DIR = REPO_ROOT / "art" / "production" / "ART-008"
+ART007_DIR = REPO_ROOT / "art" / "production" / "ART-007"
 ART006_DIR = REPO_ROOT / "art" / "production" / "ART-006"
 GOLDEN_VECTORS_PATH = REPO_ROOT / "tooling" / "refeval" / "testdata" / "golden_vectors.json"
+
+if str(ART008_DIR / "tools") not in sys.path:
+    sys.path.insert(0, str(ART008_DIR / "tools"))
+
+from showcase_contracts import (  # noqa: E402
+    compute_prep_seconds_until_assault,
+    format_prep_warning_banner,
+    make_snapshot,
+    resolve_authoritative_hud_banner,
+)
 
 
 # ============================================================================
@@ -142,6 +153,10 @@ def load_bundle_from_repo() -> Dict[str, Any]:
 
     vi_strings = json.loads((ART006_DIR / "localization_vi.json").read_text(encoding="utf-8"))["strings"]
     en_strings = json.loads((ART006_DIR / "localization_en.json").read_text(encoding="utf-8"))["strings"]
+    art007_manifest = json.loads((ART007_DIR / "asset_manifest.json").read_text(encoding="utf-8"))
+    art009_handoff_doc = (ART009_DIR / "UNITY_HANDOFF_READINESS.md").read_text(encoding="utf-8")
+    art008_event_contract_doc = (ART008_DIR / "PRESENTATION_EVENT_CONTRACT.md").read_text(encoding="utf-8")
+    art008_direction_doc = (ART008_DIR / "AUDIOVISUAL_DIRECTION.md").read_text(encoding="utf-8")
 
     golden_cases: List[Dict[str, Any]] = []
     if GOLDEN_VECTORS_PATH.exists():
@@ -162,6 +177,10 @@ def load_bundle_from_repo() -> Dict[str, Any]:
         "cs_hud_text": cs_hud_text,
         "vi_strings": vi_strings,
         "en_strings": en_strings,
+        "art007_manifest": art007_manifest,
+        "art009_handoff_doc": art009_handoff_doc,
+        "art008_event_contract_doc": art008_event_contract_doc,
+        "art008_direction_doc": art008_direction_doc,
         "golden_cases": golden_cases,
     }
 
@@ -974,6 +993,270 @@ def run_negative_mutation_suite(base_bundle: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
+# ============================================================================
+# ART-009 Hotfix Separately Reported Countdown & Audio-Handoff Regression Suite
+# ============================================================================
+
+EXPECTED_HOTFIX_BOUNDARIES: List[Tuple[int, str, int, str, str]] = [
+    (999, "prep", 61, "ĐỢT CHẴN BẦU CHỌN · GÕ A / B / C", "EVEN WAVE VOTE · TYPE A / B / C"),
+    (1000, "prep", 60, "CẢNH BÁO: CÒN 60 GIÂY QUÁI TỚI!", "WARNING: 60s UNTIL ENEMY ASSAULT!"),
+    (1199, "prep", 41, "CẢNH BÁO: CÒN 41 GIÂY QUÁI TỚI!", "WARNING: 41s UNTIL ENEMY ASSAULT!"),
+    (1200, "prep", 40, "CẢNH BÁO: CÒN 40 GIÂY QUÁI TỚI!", "WARNING: 40s UNTIL ENEMY ASSAULT!"),
+    (1449, "prep", 16, "CẢNH BÁO: CÒN 16 GIÂY QUÁI TỚI!", "WARNING: 16s UNTIL ENEMY ASSAULT!"),
+    (1450, "prep", 15, "KHẨN CẤP: QUÁI TỚI TRONG 15 GIÂY!", "URGENT: ENEMIES IN 15 SECONDS!"),
+    (1500, "prep", 10, "KHẨN CẤP: QUÁI TỚI TRONG 10 GIÂY!", "URGENT: ENEMIES IN 10 SECONDS!"),
+    (1599, "prep", 1, "KHẨN CẤP: QUÁI TỚI TRONG 1 GIÂY!", "URGENT: ENEMIES IN 1 SECOND!"),
+    (1600, "assault", 0, "GIAO TRANH · T:210 · G:198 · Đ:212", "ASSAULT · W:210 · C:198 · E:212"),
+]
+
+
+def _make_boundary_test_fixture(tick: int, phase: str) -> Dict[str, Any]:
+    if phase == "assault":
+        return make_snapshot(
+            stream_seq=5000 + tick, wave_no=10, wave_tick=tick, phase="assault",
+            total_wins=39, consecutive_wins_before_wave=5, wall_tier=7, wall_hp=2200, townhall_hp=500,
+            wood=592, stone=256, food=490, builder=48, guard=92, fighter=64,
+            population_anchor=204, west_hp=210, center_hp=198, east_hp=212, boss_max_hp=124,
+            vote_selected="B", vote_a=34, vote_b=68, vote_c=25,
+        )
+    vote_open = 800 <= tick <= 1199
+    return make_snapshot(
+        stream_seq=5000 + tick, wave_no=10, wave_tick=tick, phase="prep",
+        total_wins=39, consecutive_wins_before_wave=5, wall_tier=6 if tick < 1400 else 7,
+        wall_hp=1944 if tick < 1400 else 2200, townhall_hp=500,
+        wood=560, stone=820 if tick < 1400 else 250, food=540 if vote_open else 490,
+        builder=121 if tick < 1450 else 64, guard=31 if tick < 1450 else 80, fighter=52 if tick < 1450 else 60,
+        vote_open=vote_open, vote_selected=None if vote_open else "B", vote_a=34, vote_b=68, vote_c=25,
+    )
+
+
+def evaluate_hotfix_regressions(bundle: Dict[str, Any]) -> Dict[str, Any]:
+    checks: List[Dict[str, Any]] = []
+
+    def rec(cid: str, title: str, failures: List[str]) -> None:
+        checks.append({
+            "check_id": cid,
+            "title": title,
+            "passed": len(failures) == 0,
+            "failure_count": len(failures),
+            "failures": failures[:12],
+        })
+
+    uver = bundle["unity_verification"]
+    rb_by_tick = {int(r["wave_tick"]): r for r in uver.get("prep_countdown_readbacks", [])}
+    hud_by_id = {s["state_id"]: s for s in uver.get("hud_verification_states", [])}
+    extra_by_id = {s["state_id"]: s for s in uver.get("prep_warning_gpu_renders", [])}
+
+    # H01: Dynamic PREP warning countdown across ticks 999..1600 in BOTH Vietnamese & English
+    f_h01: List[str] = []
+    for tick, exp_phase, exp_sec, exp_vi, exp_en in EXPECTED_HOTFIX_BOUNDARIES:
+        fx = _make_boundary_test_fixture(tick, exp_phase)
+        py_vi = resolve_authoritative_hud_banner(fx, locale="vi-VN")
+        py_en = resolve_authoritative_hud_banner(fx, locale="en-US")
+        if py_vi["seconds_until_assault"] != exp_sec:
+            f_h01.append(f"shared_formatter tick={tick}: seconds_until_assault={py_vi['seconds_until_assault']} != {exp_sec}")
+        if py_vi["banner_text"] != exp_vi:
+            f_h01.append(f"shared_formatter tick={tick} vi-VN: '{py_vi['banner_text']}' != '{exp_vi}'")
+        if py_en["banner_text"] != exp_en:
+            f_h01.append(f"shared_formatter tick={tick} en-US: '{py_en['banner_text']}' != '{exp_en}'")
+        if tick in (999, 1000, 1199):
+            exp_v_rem = (1200 - tick + 9) // 10
+            if f"VOTE {exp_v_rem}s" not in py_vi["vote_strip_text"] or f"VOTE {exp_v_rem}s" not in py_en["vote_strip_text"]:
+                f_h01.append(f"shared_formatter tick={tick}: subordinate even-wave vote strip missing VOTE {exp_v_rem}s")
+
+        rb = rb_by_tick.get(tick)
+        if rb is None:
+            f_h01.append(f"unity_readback missing boundary tick={tick}")
+            continue
+        if rb.get("phase") != exp_phase:
+            f_h01.append(f"unity_readback tick={tick}: phase={rb.get('phase')} != {exp_phase}")
+        if int(rb.get("seconds_until_assault", -999)) != exp_sec:
+            f_h01.append(f"unity_readback tick={tick}: seconds_until_assault={rb.get('seconds_until_assault')} != {exp_sec}")
+        if rb.get("vi_banner_text") != exp_vi:
+            f_h01.append(f"unity_readback tick={tick} vi-VN: '{rb.get('vi_banner_text')}' != '{exp_vi}'")
+        if rb.get("en_banner_text") != exp_en:
+            f_h01.append(f"unity_readback tick={tick} en-US: '{rb.get('en_banner_text')}' != '{exp_en}'")
+        if not bool(rb.get("text_fits_without_overflow")) or float(rb.get("vi_preferred_width_px", 9999.0)) > 816.0 or float(rb.get("en_preferred_width_px", 9999.0)) > 816.0:
+            f_h01.append(f"unity_readback tick={tick}: banner text overflows 816px inner box (vi={rb.get('vi_preferred_width_px')}, en={rb.get('en_preferred_width_px')})")
+        if tick in (999, 1000, 1199):
+            exp_v_rem = (1200 - tick + 9) // 10
+            if f"VOTE {exp_v_rem}s" not in str(rb.get("vi_vote_strip_text", "")) or f"VOTE {exp_v_rem}s" not in str(rb.get("en_vote_strip_text", "")):
+                f_h01.append(f"unity_readback tick={tick}: even-wave vote strip not preserved ({rb.get('vi_vote_strip_text')})")
+
+    st04 = hud_by_id.get("04_vote_b_locked")
+    if not st04 or st04.get("threat_banner_text") != "CẢNH BÁO: CÒN 40 GIÂY QUÁI TỚI!":
+        f_h01.append(f"04_vote_b_locked threat_banner_text='{st04.get('threat_banner_text') if st04 else None}' != 'CẢNH BÁO: CÒN 40 GIÂY QUÁI TỚI!'")
+    en04 = uver.get("english_vote_b_proof", {})
+    if en04.get("threat_banner_text") != "WARNING: 40s UNTIL ENEMY ASSAULT!":
+        f_h01.append(f"04b_vote_b_locked_en threat_banner_text='{en04.get('threat_banner_text')}' != 'WARNING: 40s UNTIL ENEMY ASSAULT!'")
+    st05 = hud_by_id.get("05_assault")
+    if st05 and any(tok in str(st05.get("threat_banner_text", "")) for tok in ("CẢNH BÁO: CÒN", "KHẨN CẤP: QUÁI TỚI", "UNTIL ENEMY ASSAULT", "URGENT: ENEMIES IN")):
+        f_h01.append(f"05_assault displays PREP warning during ASSAULT: '{st05.get('threat_banner_text')}'")
+    if extra_by_id.get("03b_prep_60_warn", {}).get("threat_banner_text") != "CẢNH BÁO: CÒN 60 GIÂY QUÁI TỚI!":
+        f_h01.append("03b_prep_60_warn GPU render state missing or not displaying 60s warning")
+    if extra_by_id.get("04c_prep_15_warn", {}).get("threat_banner_text") != "KHẨN CẤP: QUÁI TỚI TRONG 15 GIÂY!":
+        f_h01.append("04c_prep_15_warn GPU render state missing or not displaying 15s urgent warning")
+    rec(
+        "H01_DYNAMIC_PREP_COUNTDOWN_BOUNDARIES_VI_EN",
+        "Dynamic PREP warning countdown verified across ticks 999..1600 in VI & EN (shared formatter + Unity GPU read-backs + 360p fit)",
+        f_h01,
+    )
+
+    # H02: Paused state never advances via wall-clock catch-up + blocker priority preserved
+    f_h02: List[str] = []
+    pf = uver.get("paused_wallclock_freeze_proof")
+    if not isinstance(pf, dict):
+        f_h02.append("Missing paused_wallclock_freeze_proof in unity_isolated_verification.json")
+    else:
+        if bool(pf.get("advanced_from_wallclock")):
+            f_h02.append("paused_wallclock_freeze_proof reports advanced_from_wallclock == True")
+        if not bool(pf.get("priority_storage_gt_source_gt_pause_verified")):
+            f_h02.append("Blocker priority storage_unavailable > source_disconnected > operator_paused failed")
+        if pf.get("paused_vi_banner_before") != "TẠM DỪNG ĐIỀU HÀNH · ĐỒNG HỒ DỪNG" or pf.get("paused_vi_banner_after") != pf.get("paused_vi_banner_before"):
+            f_h02.append(f"Paused banner drifted across 25s wall-clock step: '{pf.get('paused_vi_banner_before')}' -> '{pf.get('paused_vi_banner_after')}'")
+        if pf.get("paused_vi_timer_before") != pf.get("paused_vi_timer_after"):
+            f_h02.append(f"Paused timer drifted across 25s wall-clock step: '{pf.get('paused_vi_timer_before')}' -> '{pf.get('paused_vi_timer_after')}'")
+        if pf.get("running_no_snapshot_vi_banner_before") != "CẢNH BÁO: CÒN 40 GIÂY QUÁI TỚI!" or pf.get("running_no_snapshot_vi_banner_after") != "CẢNH BÁO: CÒN 40 GIÂY QUÁI TỚI!":
+            f_h02.append(f"Un-stepped snapshot drifted from wall-clock: '{pf.get('running_no_snapshot_vi_banner_before')}' -> '{pf.get('running_no_snapshot_vi_banner_after')}'")
+
+    paused_fx = make_snapshot(
+        stream_seq=5200, wave_no=10, wave_tick=1200, phase="prep", lifecycle="paused",
+        pause_reasons=["operator_paused"], total_wins=39, wall_tier=6, wall_hp=1944, townhall_hp=500,
+    )
+    if resolve_authoritative_hud_banner(paused_fx, "vi-VN", simulated_wallclock_elapsed_ms=0) != resolve_authoritative_hud_banner(paused_fx, "vi-VN", simulated_wallclock_elapsed_ms=25000):
+        f_h02.append("Shared formatter changed output when simulated_wallclock_elapsed_ms=25000")
+    rec(
+        "H02_PAUSED_NO_WALLCLOCK_CATCHUP_AND_PRIORITY",
+        "Zero wall-clock countdown catch-up while paused/awaiting snapshot & STORAGE_UNAVAILABLE > SOURCE_RECONNECTING > PAUSED priority",
+        f_h02,
+    )
+
+    # H03: Canonical 36.00s ambient loop duration matches ART-007 manifest across ART-008 & ART-009 handoff docs
+    f_h03: List[str] = []
+    m7 = bundle["art007_manifest"]
+    amb_assets = [a for a in m7.get("assets", []) if a.get("cue_id") == "AMB01"]
+    if (
+        m7.get("sfx_count") != 12
+        or m7.get("ambient_count") != 1
+        or m7.get("music_count") != 2
+        or m7.get("music_muted_by_default") is not True
+        or m7.get("rights_status") != "PENDING_REVIEW"
+        or len(amb_assets) != 1
+    ):
+        f_h03.append("ART-007 canonical manifest counts/mute/rights invariants unexpected")
+    else:
+        amb_dur = float(amb_assets[0].get("duration_s", 0.0))
+        if abs(amb_dur - 36.0) > 0.01:
+            f_h03.append(f"ART-007 AMB01 duration_s={amb_dur} != 36.0")
+        handoff_txt = bundle["art009_handoff_doc"]
+        ev_contract_txt = bundle["art008_event_contract_doc"]
+        dir_doc_txt = bundle.get("art008_direction_doc", "")
+        if "1 original seamless 36.00s ambient loop" not in handoff_txt:
+            f_h03.append("ART-009 UNITY_HANDOFF_READINESS.md missing exact '1 original seamless 36.00s ambient loop'")
+        if "36.00s" not in ev_contract_txt:
+            f_h03.append("ART-008 PRESENTATION_EVENT_CONTRACT.md missing '36.00s' ambient loop duration")
+        if dir_doc_txt and "36.00 s" not in dir_doc_txt and "36.00s" not in dir_doc_txt:
+            f_h03.append("ART-008 AUDIOVISUAL_DIRECTION.md missing '36.00s' AMB01 loop duration")
+        wrong_20s_pat = re.compile(r"(?:20(?:\.0+)?\s*s[^\n]{0,40}(?:ambient|amb01)|(?:ambient|amb01)[^\n]{0,40}20(?:\.0+)?\s*s)", re.IGNORECASE)
+        if wrong_20s_pat.search(handoff_txt):
+            f_h03.append("ART-009 UNITY_HANDOFF_READINESS.md contains stale 20s ambient loop claim")
+        if wrong_20s_pat.search(ev_contract_txt):
+            f_h03.append("ART-008 PRESENTATION_EVENT_CONTRACT.md contains stale 20s ambient loop claim")
+        if dir_doc_txt and wrong_20s_pat.search(dir_doc_txt):
+            f_h03.append("ART-008 AUDIOVISUAL_DIRECTION.md contains stale 20s AMB01 loop claim")
+    rec(
+        "H03_AMBIENT_LOOP_36S_HANDOFF_PARITY",
+        "ART-009 & ART-008 handoff docs state exact 36.00s ambient loop matching ART-007 manifest (12 SFX, 1 ambient, 2 music muted, PENDING_REVIEW)",
+        f_h03,
+    )
+
+    passed_checks = sum(1 for c in checks if c["passed"])
+    return {
+        "suite_id": "art009-hotfix-countdown-and-audio-regression-v1",
+        "total_checks": len(checks),
+        "passed_checks": passed_checks,
+        "failed_checks": len(checks) - passed_checks,
+        "overall_passed": passed_checks == len(checks),
+        "boundary_readbacks": uver.get("prep_countdown_readbacks", []),
+        "paused_wallclock_freeze_proof": uver.get("paused_wallclock_freeze_proof", {}),
+        "checks": checks,
+    }
+
+
+def run_hotfix_negative_mutations(base_bundle: Dict[str, Any]) -> Dict[str, Any]:
+    def hn01(b: Dict[str, Any]) -> None:
+        for r in b["unity_verification"].get("prep_countdown_readbacks", []):
+            if int(r.get("wave_tick", -1)) == 1200:
+                r["vi_banner_text"] = "CẢNH BÁO: CÒN 60 GIÂY QUÁI TỚI!"
+                r["en_banner_text"] = "WARNING: 60s UNTIL ENEMY ASSAULT!"
+
+    def hn02(b: Dict[str, Any]) -> None:
+        for r in b["unity_verification"].get("prep_countdown_readbacks", []):
+            if int(r.get("wave_tick", -1)) == 1500:
+                r["vi_banner_text"] = "KHẨN CẤP: QUÁI TỚI TRONG 15 GIÂY!"
+                r["en_banner_text"] = "URGENT: ENEMIES IN 15 SECONDS!"
+
+    def hn03(b: Dict[str, Any]) -> None:
+        for r in b["unity_verification"].get("prep_countdown_readbacks", []):
+            if int(r.get("wave_tick", -1)) == 1600:
+                r["vi_banner_text"] = "KHẨN CẤP: QUÁI TỚI TRONG 0 GIÂY!"
+                r["en_banner_text"] = "URGENT: ENEMIES IN 0 SECONDS!"
+        for s in b["unity_verification"].get("hud_verification_states", []):
+            if s.get("state_id") == "05_assault":
+                s["threat_banner_text"] = "KHẨN CẤP: QUÁI TỚI TRONG 1 GIÂY!"
+
+    def hn04(b: Dict[str, Any]) -> None:
+        for r in b["unity_verification"].get("prep_countdown_readbacks", []):
+            if int(r.get("wave_tick", -1)) == 1599:
+                r["seconds_until_assault"] = 0
+                r["vi_banner_text"] = "KHẨN CẤP: QUÁI TỚI TRONG 0 GIÂY!"
+                r["en_banner_text"] = "URGENT: ENEMIES IN 0 SECONDS!"
+
+    def hn05(b: Dict[str, Any]) -> None:
+        pf = b["unity_verification"].setdefault("paused_wallclock_freeze_proof", {})
+        pf["paused_vi_banner_after"] = "KHẨN CẤP: QUÁI TỚI TRONG 15 GIÂY!"
+        pf["paused_vi_timer_after"] = "GIỜ 02:35"
+        pf["advanced_from_wallclock"] = True
+
+    def hn06(b: Dict[str, Any]) -> None:
+        b["art009_handoff_doc"] = b["art009_handoff_doc"].replace(
+            "1 original seamless 36.00s ambient loop",
+            "1 seamless 20.0s ambient loop",
+        )
+
+    cases: List[Tuple[str, str, str, Callable[[Dict[str, Any]], None]]] = [
+        ("HN01_HARDCODED_60S_AT_TICK_1200", "Inject hardcoded 60s PREP warning at tick 1200", "H01_DYNAMIC_PREP_COUNTDOWN_BOUNDARIES_VI_EN", hn01),
+        ("HN02_HARDCODED_15S_AT_TICK_1500", "Inject hardcoded 15s urgent warning at tick 1500", "H01_DYNAMIC_PREP_COUNTDOWN_BOUNDARIES_VI_EN", hn02),
+        ("HN03_PREP_WARNING_VISIBLE_DURING_ASSAULT", "Inject PREP warning banner visible during ASSAULT at tick 1600", "H01_DYNAMIC_PREP_COUNTDOWN_BOUNDARIES_VI_EN", hn03),
+        ("HN04_INCORRECT_ROUNDING_AT_TICK_1599", "Inject floor-division 0s countdown rounding at tick 1599", "H01_DYNAMIC_PREP_COUNTDOWN_BOUNDARIES_VI_EN", hn04),
+        ("HN05_PAUSED_WALLCLOCK_CATCHUP", "Inject paused-state presentation advancing via 25s wall-clock catch-up", "H02_PAUSED_NO_WALLCLOCK_CATCHUP_AND_PRIORITY", hn05),
+        ("HN06_WRONG_20S_AMBIENT_DURATION_IN_HANDOFF", "Inject wrong 20.0s ambient loop duration into ART-009 handoff doc", "H03_AMBIENT_LOOP_36S_HANDOFF_PARITY", hn06),
+    ]
+
+    results: List[Dict[str, Any]] = []
+    for hnid, desc, exp_check, mut_fn in cases:
+        mutated = copy.deepcopy(base_bundle)
+        mut_fn(mutated)
+        ev = evaluate_hotfix_regressions(mutated)
+        failed_map = {c["check_id"]: c for c in ev["checks"] if not c["passed"]}
+        caught = exp_check in failed_map
+        results.append({
+            "test_id": hnid,
+            "description": desc,
+            "expected_catching_check": exp_check,
+            "rejected_as_expected": caught,
+            "sample_failure_reason": failed_map[exp_check]["failures"][0] if caught else "NOT_REJECTED",
+        })
+
+    rej_cnt = sum(1 for r in results if r["rejected_as_expected"])
+    return {
+        "total_hotfix_negative_tests": len(results),
+        "rejected_count": rej_cnt,
+        "all_rejected": rej_cnt == len(results),
+        "results": results,
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate ART-008/009 canonical gameplay fixtures against ttg-rules-v1.")
     parser.add_argument("--ci-fast", action="store_true", help="Fast deterministic CI mode (pure Python stdlib).")
@@ -984,6 +1267,8 @@ def main() -> int:
     bundle = load_bundle_from_repo()
     pos = evaluate_bundle(bundle)
     neg = run_negative_mutation_suite(bundle)
+    hotfix_pos = evaluate_hotfix_regressions(bundle)
+    hotfix_neg = run_hotfix_negative_mutations(bundle)
 
     if args.save_baseline:
         write_json_lf(Path(args.save_baseline), {"positive_audit": pos, "negative_suite": neg})
@@ -992,10 +1277,16 @@ def main() -> int:
         qa_dir = ART009_DIR / "qa"
         write_json_lf(qa_dir / "canonical_rules_regression.json", pos)
         write_json_lf(qa_dir / "negative_test_results.json", neg)
+        write_json_lf(
+            qa_dir / "hotfix_countdown_and_audio_regression.json",
+            {"positive_checks": hotfix_pos, "negative_mutations": hotfix_neg},
+        )
 
     print(
         f"[ART-009 Canonical Validator] Rules: {pos['passed_rules']}/{pos['total_rules']} PASS | "
         f"Negative Mutations Rejected: {neg['rejected_count']}/{neg['total_negative_tests']} | "
+        f"Hotfix Regressions: {hotfix_pos['passed_checks']}/{hotfix_pos['total_checks']} PASS | "
+        f"Hotfix Negatives Rejected: {hotfix_neg['rejected_count']}/{hotfix_neg['total_hotfix_negative_tests']} | "
         f"Snapshots Inspected: {pos['snapshots_inspected']} | Golden Cases Cross-Checked: {pos['golden_vectors_cross_checked']}"
     )
     for r in pos["rules"]:
@@ -1003,12 +1294,21 @@ def main() -> int:
         detail = f" -> {r['failures'][0]}" if r["failures"] else ""
         print(f"  [{status}] {r['rule_id']}: {r['title']}{detail}")
 
+    print("[ART-009 Hotfix Regression Suite — Reported Separately]")
+    for hc in hotfix_pos["checks"]:
+        status = "PASS" if hc["passed"] else "FAIL"
+        detail = f" -> {hc['failures'][0]}" if hc["failures"] else ""
+        print(f"  [{status}] {hc['check_id']}: {hc['title']}{detail}")
+    for hnr in hotfix_neg["results"]:
+        status = "PASS" if hnr["rejected_as_expected"] else "FAIL"
+        print(f"  [HOTFIX NEG {status}] {hnr['test_id']} -> {hnr['sample_failure_reason']}")
+
     if not neg["all_rejected"]:
         for nr in neg["results"]:
             if not nr["rejected_as_expected"]:
                 print(f"  [NEG FAIL] {nr['test_id']} was NOT rejected by {nr['expected_catching_rule']}")
 
-    if not pos["overall_passed"] or not neg["all_rejected"]:
+    if not pos["overall_passed"] or not neg["all_rejected"] or not hotfix_pos["overall_passed"] or not hotfix_neg["all_rejected"]:
         return 1
     return 0
 

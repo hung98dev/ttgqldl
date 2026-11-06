@@ -7,7 +7,7 @@
 | **Engine Verified** | `Unity 6000.6.7f1` (`Direct3D12`, `1080x1920`, `720x1280`, `360x640` hardware GPU renders) |
 | **`ART-003..ART-007` Status** | **`PASS`** (Maintained; zero upstream master asset regressions) |
 | **`ART-008` Status** | **`COMPLETED`** (Audiovisual asset integration complete; canonical fixture/HUD/metric defects remediated in `ART-009`) |
-| **`ART-009` Status** | **`PASS`** (`25/25` `ttg-rules-v1` canonical checks `PASS`, `15/15` negative mutations rejected, `40` Unity GPU frames verified) |
+| **`ART-009` Status** | **`PASS`** (`25/25` `ttg-rules-v1` checks `PASS`, `15/15` canonical negatives rejected, `3/3` hotfix checks + `6/6` hotfix negatives `PASS`, `46` Unity GPU frames verified) |
 | **`M04` Milestone Status** | **`IN_PROGRESS`** (`W0401–W0405 PASS`, `W0406 IN_PROGRESS`, `W0407 NOT_STARTED` per `10_IMPLEMENTATION_MATRIX.md`) |
 | **`M05` Milestone Status** | **`NOT_STARTED`** (Public `/ws/v1/public` WebSocket API pending backend implementation) |
 | **`M06` Milestone Status** | **`NOT_STARTED`** (Awaiting `M04` + `M05` completion before wiring production `unity/` scenes) |

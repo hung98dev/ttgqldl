@@ -13,6 +13,7 @@ Vote B proof), and benchmark 10 / 50 / 100 / 150 pooled entities with truthful
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import re
@@ -39,7 +40,11 @@ UNITY_EXE = Path(r"C:\Program Files\Unity\Hub\Editor\6000.6.7f1\Editor\Unity.exe
 if str(TOOLS_DIR) not in sys.path:
     sys.path.insert(0, str(TOOLS_DIR))
 
-from showcase_contracts import build_eight_failure_sequences, build_wave10_full_300s_fixture  # noqa: E402
+from showcase_contracts import (  # noqa: E402
+    build_eight_failure_sequences,
+    build_wave10_full_300s_fixture,
+    make_snapshot,
+)
 
 
 def verify_csharp_sprite_stems(valid_stems: set[str]) -> None:
@@ -57,9 +62,10 @@ def fixture_to_committed_view(
     visual_state_id: str,
     fixture_doc: Dict[str, Any],
     *,
-    out_1080p: Path,
+    out_1080p: Path | None = None,
     out_720p: Path | None = None,
     out_360p: Path | None = None,
+    skip_gpu_render: bool = False,
 ) -> Dict[str, Any]:
     s = fixture_doc["public_snapshot"]
     cnts = s["counts"]
@@ -121,23 +127,98 @@ def fixture_to_committed_view(
         "showJoinToast": toast is not None,
         "joinToastAlias": str(toast.get("display_alias", "")) if toast else "",
         "joinToastRole": str(toast.get("role", "")) if toast else "",
-        "outputPng1080p": str(out_1080p),
+        "outputPng1080p": str(out_1080p) if out_1080p else "",
         "outputPng720p": str(out_720p) if out_720p else "",
         "outputPng360p": str(out_360p) if out_360p else "",
+        "skipGpuRender": bool(skip_gpu_render),
     }
 
 
-def build_12_canonical_unity_states() -> tuple[List[Dict[str, Any]], Dict[str, Any]]:
+def build_prep_boundary_views(beats: Dict[str, Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Canonical Wave 10 snapshots across all 9 required PREP/ASSAULT boundary ticks:
+    999, 1000, 1199, 1200, 1449, 1450, 1500, 1599, 1600.
+    """
+    specs = [
+        (
+            "prep_tick_0999",
+            "VOTE_OPEN",
+            make_snapshot(
+                stream_seq=3099, wave_no=10, wave_tick=999, phase="prep",
+                total_wins=39, consecutive_wins_before_wave=5, wall_tier=6, wall_hp=1856, townhall_hp=500,
+                wood=550, stone=810, food=540, builder=121, guard=24, fighter=35,
+                vote_open=True, vote_a=28, vote_b=53, vote_c=21,
+            ),
+        ),
+        ("prep_tick_1000", "PREP_60_WARN", beats["B06_PREP_60_WARN"]["fixture"]),
+        (
+            "prep_tick_1199",
+            "PREP_60_WARN",
+            make_snapshot(
+                stream_seq=3199, wave_no=10, wave_tick=1199, phase="prep",
+                total_wins=39, consecutive_wins_before_wave=5, wall_tier=6, wall_hp=1944, townhall_hp=500,
+                wood=560, stone=825, food=540, builder=121, guard=28, fighter=45,
+                vote_open=True, vote_a=34, vote_b=68, vote_c=25,
+            ),
+        ),
+        ("prep_tick_1200", "PREP_60_WARN", beats["B07_VOTE_CLOSED"]["fixture"]),
+        (
+            "prep_tick_1449",
+            "PREP_60_WARN",
+            make_snapshot(
+                stream_seq=3449, wave_no=10, wave_tick=1449, phase="prep",
+                total_wins=39, consecutive_wins_before_wave=5, wall_tier=7, wall_hp=2200, townhall_hp=500,
+                wood=574, stone=248, food=490, builder=121, guard=31, fighter=52,
+                vote_open=False, vote_selected="B", vote_a=34, vote_b=68, vote_c=25,
+            ),
+        ),
+        ("prep_tick_1450", "PREP_15_WARN", beats["B09_PREP_15_WARN"]["fixture"]),
+        (
+            "prep_tick_1500",
+            "PREP_15_WARN",
+            make_snapshot(
+                stream_seq=3500, wave_no=10, wave_tick=1500, phase="prep",
+                total_wins=39, consecutive_wins_before_wave=5, wall_tier=7, wall_hp=2200, townhall_hp=500,
+                wood=580, stone=250, food=490, builder=64, guard=80, fighter=60,
+                vote_open=False, vote_selected="B", vote_a=34, vote_b=68, vote_c=25,
+            ),
+        ),
+        (
+            "prep_tick_1599",
+            "PREP_15_WARN",
+            make_snapshot(
+                stream_seq=3599, wave_no=10, wave_tick=1599, phase="prep",
+                total_wins=39, consecutive_wins_before_wave=5, wall_tier=7, wall_hp=2200, townhall_hp=500,
+                wood=590, stone=255, food=490, builder=48, guard=92, fighter=64,
+                vote_open=False, vote_selected="B", vote_a=34, vote_b=68, vote_c=25,
+            ),
+        ),
+        ("prep_tick_1600", "ASSAULT", beats["B10_ASSAULT_START"]["fixture"]),
+    ]
+    return [fixture_to_committed_view(sid, vis, fx) for sid, vis, fx in specs]
+
+
+def build_12_canonical_unity_states(
+    only_prep_affected: bool = False,
+) -> tuple[List[Dict[str, Any]], Dict[str, Any], List[Dict[str, Any]], List[Dict[str, Any]]]:
     FIXTURES_DIR.mkdir(parents=True, exist_ok=True)
-    wave10_doc = build_wave10_full_300s_fixture()
-    (FIXTURES_DIR / "full_wave_300s_wave10_showcase.json").write_text(
-        json.dumps(wave10_doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n"
-    )
-    failures = build_eight_failure_sequences()
-    for seq in failures:
-        (FIXTURES_DIR / seq["filename"]).write_text(
-            json.dumps(seq, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n"
+    w10_file = FIXTURES_DIR / "full_wave_300s_wave10_showcase.json"
+    if only_prep_affected and w10_file.exists():
+        wave10_doc = json.loads(w10_file.read_text(encoding="utf-8"))
+        failures = [
+            json.loads((FIXTURES_DIR / seq["filename"]).read_text(encoding="utf-8"))
+            for seq in build_eight_failure_sequences()
+        ]
+    else:
+        wave10_doc = build_wave10_full_300s_fixture()
+        w10_file.write_text(
+            json.dumps(wave10_doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n"
         )
+        failures = build_eight_failure_sequences()
+        for seq in failures:
+            (FIXTURES_DIR / seq["filename"]).write_text(
+                json.dumps(seq, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n"
+            )
 
     beats = {b["beat_id"]: b for b in wave10_doc["beats"]}
     fails = {f["sequence_id"]: f for f in failures}
@@ -165,6 +246,7 @@ def build_12_canonical_unity_states() -> tuple[List[Dict[str, Any]], Dict[str, A
 
     states_out: List[Dict[str, Any]] = []
     for sid, vis_id, fix in state_specs:
+        skip_render = bool(only_prep_affected and sid != "04_vote_b_locked")
         states_out.append(
             fixture_to_committed_view(
                 sid,
@@ -173,6 +255,7 @@ def build_12_canonical_unity_states() -> tuple[List[Dict[str, Any]], Dict[str, A
                 out_1080p=hud_dir / f"{sid}_1080p.png",
                 out_720p=mob_dir / f"{sid}_720p.png",
                 out_360p=mob_dir / f"{sid}_360p.png",
+                skip_gpu_render=skip_render,
             )
         )
 
@@ -181,8 +264,29 @@ def build_12_canonical_unity_states() -> tuple[List[Dict[str, Any]], Dict[str, A
         "PREP_60_WARN_EN",
         beats["B07_VOTE_CLOSED"]["fixture"],
         out_1080p=hud_dir / "04b_vote_b_locked_en_1080p.png",
+        skip_gpu_render=False,
     )
-    return states_out, en_vote_state
+
+    extra_prep_renders = [
+        fixture_to_committed_view(
+            "03b_prep_60_warn",
+            "PREP_60_WARN",
+            beats["B06_PREP_60_WARN"]["fixture"],
+            out_1080p=hud_dir / "03b_prep_60_warn_1080p.png",
+            out_720p=mob_dir / "03b_prep_60_warn_720p.png",
+            out_360p=mob_dir / "03b_prep_60_warn_360p.png",
+        ),
+        fixture_to_committed_view(
+            "04c_prep_15_warn",
+            "PREP_15_WARN",
+            beats["B09_PREP_15_WARN"]["fixture"],
+            out_1080p=hud_dir / "04c_prep_15_warn_1080p.png",
+            out_720p=mob_dir / "04c_prep_15_warn_720p.png",
+            out_360p=mob_dir / "04c_prep_15_warn_360p.png",
+        ),
+    ]
+    boundary_views = build_prep_boundary_views(beats)
+    return states_out, en_vote_state, extra_prep_renders, boundary_views
 
 
 def to_repo_posix(path_str: str) -> str:
@@ -191,7 +295,7 @@ def to_repo_posix(path_str: str) -> str:
     return Path(path_str).resolve().relative_to(REPO_ROOT).as_posix()
 
 
-def run_isolated_unity_showcase() -> Dict[str, Any]:
+def run_isolated_unity_showcase(only_prep_affected: bool = False) -> Dict[str, Any]:
     if not UNITY_EXE.exists():
         raise FileNotFoundError(f"Unity 6000.6.7f1 executable not found at {UNITY_EXE}")
 
@@ -216,7 +320,9 @@ def run_isolated_unity_showcase() -> Dict[str, Any]:
     }
     verify_csharp_sprite_stems(valid_stems)
 
-    states_12, en_vote_state = build_12_canonical_unity_states()
+    states_12, en_vote_state, extra_prep_renders, boundary_views = build_12_canonical_unity_states(
+        only_prep_affected=only_prep_affected
+    )
 
     out_verif = QA_OUT_DIR / "unity_isolated_verification.json"
     out_perf = QA_OUT_DIR / "performance_report.json"
@@ -287,6 +393,10 @@ def run_isolated_unity_showcase() -> Dict[str, Any]:
             "spriteRules": sprite_rules,
             "verificationStates": states_12,
             "englishVoteProofState": en_vote_state,
+            "extraPrepWarningRenderStates": extra_prep_renders,
+            "prepCountdownBoundaryStates": boundary_views,
+            "skipPerformanceBenchmark": bool(only_prep_affected),
+            "skipUnchangedIsolatedRenders": bool(only_prep_affected),
             "outputVerificationJson": str(out_verif),
             "outputPerformanceJson": str(out_perf),
             "outputSceneSummaryJson": str(out_scene_sum),
@@ -340,10 +450,15 @@ def run_isolated_unity_showcase() -> Dict[str, Any]:
     # Normalize all output paths to repo-relative POSIX strings (zero host-user path leaks)
     verif_doc = json.loads(out_verif.read_text(encoding="utf-8"))
     verif_doc["renderedGpuFrames"] = [to_repo_posix(p) for p in verif_doc.get("renderedGpuFrames", [])]
+    verif_doc["regeneratedInHotfixGpuFrames"] = [to_repo_posix(p) for p in verif_doc.get("regeneratedInHotfixGpuFrames", [])]
     for st in verif_doc.get("hud_verification_states", []):
         st["render_1080p"] = to_repo_posix(st.get("render_1080p", ""))
         st["render_720p"] = to_repo_posix(st.get("render_720p", ""))
         st["render_360p"] = to_repo_posix(st.get("render_360p", ""))
+    for pst in verif_doc.get("prep_warning_gpu_renders", []):
+        pst["render_1080p"] = to_repo_posix(pst.get("render_1080p", ""))
+        pst["render_720p"] = to_repo_posix(pst.get("render_720p", ""))
+        pst["render_360p"] = to_repo_posix(pst.get("render_360p", ""))
     if isinstance(verif_doc.get("english_vote_b_proof"), dict) and verif_doc["english_vote_b_proof"].get("state_id"):
         ep = verif_doc["english_vote_b_proof"]
         ep["render_1080p"] = to_repo_posix(ep.get("render_1080p", ""))
@@ -356,16 +471,26 @@ def run_isolated_unity_showcase() -> Dict[str, Any]:
     )
 
     perf_doc = json.loads(out_perf.read_text(encoding="utf-8"))
-    out_perf.write_text(json.dumps(perf_doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+    if not only_prep_affected:
+        out_perf.write_text(json.dumps(perf_doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
 
     print(
         f"[UNITY SHOWCASE {verif_doc['status']}] "
         f"GPU={verif_doc['graphicsDeviceName']} ({verif_doc['graphicsDeviceType']}) | "
         f"Sprites={verif_doc['importedSpriteCount']} | Clips={verif_doc['importedAudioClipCount']} | "
-        f"HUD12={len(verif_doc['hud_verification_states'])} | Renders={len(verif_doc['renderedGpuFrames'])}"
+        f"HUD12={len(verif_doc['hud_verification_states'])} | "
+        f"PrepTicks={len(verif_doc.get('prep_countdown_readbacks', []))} | "
+        f"Regenerated={len(verif_doc.get('regeneratedInHotfixGpuFrames', []))}"
     )
     return {"verification": verif_doc, "performance": perf_doc}
 
 
 if __name__ == "__main__":
-    run_isolated_unity_showcase()
+    parser = argparse.ArgumentParser(description="Run isolated Unity 6000.6.7f1 showcase & HUD verifier.")
+    parser.add_argument(
+        "--only-prep-affected",
+        action="store_true",
+        help="Re-render only PREP-warning affected GPU frames and preserve existing performance_report.json.",
+    )
+    args = parser.parse_args()
+    run_isolated_unity_showcase(only_prep_affected=args.only_prep_affected)

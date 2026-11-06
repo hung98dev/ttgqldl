@@ -91,6 +91,167 @@ def canonical_militia_bonus(p_ref: int) -> int:
     return 0
 
 
+def compute_prep_seconds_until_assault(wave_tick: int) -> int:
+    """
+    Authoritative integer ceiling of (1600 - wave_tick) / 10, clamped to PREP [1..160].
+    Matches C# `HudInPlacePresenter.ComputePrepSecondsUntilAssault` 1-for-1.
+    """
+    wt = int(wave_tick)
+    if wt < 0:
+        return 160
+    if wt >= 1600:
+        return 0
+    return min(160, max(1, (1600 - wt + 9) // 10))
+
+
+def format_prep_warning_banner(wave_tick: int, locale: str = "vi-VN") -> str:
+    """
+    Authoritative PREP warning banner formatter derived strictly from `wave_tick`.
+    Matches C# `HudInPlacePresenter.FormatPrepWarningBanner` character-for-character.
+    """
+    wt = int(wave_tick)
+    en = str(locale).lower().startswith("en")
+    seconds_until_assault = min(60, max(1, compute_prep_seconds_until_assault(wt)))
+    if wt >= 1450:
+        if en:
+            unit = "SECOND" if seconds_until_assault == 1 else "SECONDS"
+            return f"URGENT: ENEMIES IN {seconds_until_assault} {unit}!"
+        return f"KHẨN CẤP: QUÁI TỚI TRONG {seconds_until_assault} GIÂY!"
+    if en:
+        return f"WARNING: {seconds_until_assault}s UNTIL ENEMY ASSAULT!"
+    return f"CẢNH BÁO: CÒN {seconds_until_assault} GIÂY QUÁI TỚI!"
+
+
+def resolve_authoritative_hud_banner(
+    fixture: Dict[str, Any],
+    locale: str = "vi-VN",
+    simulated_wallclock_elapsed_ms: int = 0,
+) -> Dict[str, Any]:
+    """
+    Shared pure-stdlib deterministic banner & vote-strip resolver matching C# `HudInPlacePresenter`.
+    Explicitly ignores `simulated_wallclock_elapsed_ms` (never advances from wall-clock time).
+    """
+    _ = simulated_wallclock_elapsed_ms  # Invariant: wall-clock elapsed time NEVER alters authoritative HUD text
+    snap = fixture["public_snapshot"]
+    en = str(locale).lower().startswith("en")
+    lifecycle = str(snap["lifecycle"])
+    pause_set = list(snap.get("pause_reasons", []))
+    phase = str(snap["phase"])
+    tick = int(snap["wave_tick"])
+    wave_no = int(snap["wave_no"])
+    rem_s = int(snap["remaining_seconds"])
+    diag = snap["diagnostics"]
+    boss = snap["boss"]
+    vote = snap["vote"]
+    settle = snap["settlement"]
+    lanes = {ln["id"]: int(ln["ordinary_hp"]) for ln in snap["lanes"]}
+    w_hp, c_hp, e_hp = lanes["west"], lanes["center"], lanes["east"]
+
+    db_err = ("storage_unavailable" in pause_set) or (lifecycle == "storage_unavailable")
+    src_disc = ("source_disconnected" in pause_set) or (snap.get("source_status") == "disconnected") or (lifecycle == "source_disconnected")
+    op_pause = ("operator_paused" in pause_set) or (lifecycle == "paused")
+    is_frozen = (lifecycle in ("waiting", "paused", "source_disconnected", "storage_unavailable", "stopped")) or len(pause_set) > 0
+
+    mm, ss = max(0, rem_s) // 60, max(0, rem_s) % 60
+    mm_ss = f"{mm:02d}:{ss:02d}"
+    if lifecycle == "stopped":
+        timer_txt = "TIME --:--" if en else "GIỜ --:--"
+    else:
+        timer_txt = f"TIME {mm_ss}" if en else f"GIỜ {mm_ss}"
+
+    if lifecycle == "stopped":
+        banner_skin, banner_txt = "err", ("MAINTENANCE · SESSION STOPPED" if en else "PHIÊN DỪNG / BẢO TRÌ · HẸN GẶP LẠI")
+    elif db_err:
+        banner_skin, banner_txt = "err", ("STORAGE ERROR · SAFE HALT ACTIVE" if en else "LỖI LƯU TRỮ DB · TẠM DỪNG AN TOÀN")
+    elif src_disc:
+        banner_skin, banner_txt = "warn", ("SOURCE LOST · CLOCK SAFELY FROZEN" if en else "MẤT KẾT NỐI NGUỒN · ĐỒNG HỒ DỪNG")
+    elif op_pause:
+        banner_skin, banner_txt = "warn", ("OPERATOR PAUSED · CLOCK FROZEN" if en else "TẠM DỪNG ĐIỀU HÀNH · ĐỒNG HỒ DỪNG")
+    elif bool(diag["metrics_available"]) and int(diag["confirmed_valid_drops"]) > 0:
+        drops = int(diag["confirmed_valid_drops"])
+        banner_skin, banner_txt = "err", (f"OVERLOAD · VALID DROPS ({drops})" if en else f"QUÁ TẢI · LỆNH HỢP LỆ RƠI ({drops})")
+    elif phase == "waiting" or tick < 0:
+        banner_skin, banner_txt = "navy", ("WAITING (P=0) · CLOCK FROZEN 05:00" if en else "CHỜ NGƯỜI CHƠI (P=0) · DỪNG 05:00")
+    elif phase == "prep" and 0 <= tick < 1600:
+        if tick >= 1450:
+            banner_skin, banner_txt = "err", format_prep_warning_banner(tick, locale)
+        elif tick >= 1000:
+            banner_skin, banner_txt = "warn", format_prep_warning_banner(tick, locale)
+        elif bool(vote["open"]) and (wave_no % 2 == 0) and (800 <= tick <= 1199):
+            banner_skin, banner_txt = "navy", ("EVEN WAVE VOTE · TYPE A / B / C" if en else "ĐỢT CHẴN BẦU CHỌN · GÕ A / B / C")
+        else:
+            banner_skin, banner_txt = "navy", ("PREP 0..160s · REPAIR & RALLY" if en else "CHUẨN BỊ 0..160s · GIA CỐ & TẬP HỢP")
+    elif phase == "assault":
+        if bool(boss["boss_incoming"]) and tick < 2600:
+            banner_skin, banner_txt = "err", ("LANES CLEAR · BOSS AT 260s!" if en else "QUÁI HẠ · CẢNH BÁO BOSS GIÂY 260!")
+        elif (w_hp + c_hp + e_hp) == 0 and not bool(boss["boss_incoming"]):
+            banner_skin, banner_txt = "ok", ("LANES CLEAR · AWAITING SETTLEMENT" if en else "SẠCH QUÁI THƯỜNG · CHỜ CHỐT ĐỢT")
+        else:
+            banner_skin, banner_txt = "warn", (f"ASSAULT · W:{w_hp} · C:{c_hp} · E:{e_hp}" if en else f"GIAO TRANH · T:{w_hp} · G:{c_hp} · Đ:{e_hp}")
+    elif phase == "finale":
+        if bool(boss["boss_exists"]) and tick >= 2600:
+            banner_skin, banner_txt = "err", (
+                f"BOSS {boss['boss_hp']}/{boss['boss_max_hp']} · W:{w_hp} · E:{e_hp}"
+                if en else
+                f"BOSS {boss['boss_hp']}/{boss['boss_max_hp']} · TÂY {w_hp} · ĐÔNG {e_hp}"
+            )
+        else:
+            banner_skin, banner_txt = "warn", (f"FINALE · W:{w_hp} · C:{c_hp} · E:{e_hp}" if en else f"CUỐI ĐỢT · T:{w_hp} · G:{c_hp} · Đ:{e_hp}")
+    elif phase == "results":
+        if settle["wave_result"] == "win":
+            banner_skin, banner_txt = "ok", (f"WAVE {wave_no} WON · TOWNHALL SAFE!" if en else f"THẮNG ĐỢT {wave_no} · ĐẠI BẢN DOANH AN TOÀN!")
+        else:
+            banner_skin, banner_txt = "err", (
+                ("DEFEAT · ENTERING RECOVERY" if int(snap["townhall_hp"]) <= 250 else "TIME UP · WAVE LOST · RECOVERING")
+                if en else
+                ("THẤT THỦ · CHUYỂN HỒI PHỤC" if int(snap["townhall_hp"]) <= 250 else "HẾT GIỜ · THUA ĐỢT · HỒI PHỤC")
+            )
+    else:
+        banner_skin, banner_txt = "navy", ("PREP 0..160s · REPAIR & RALLY" if en else "CHUẨN BỊ 0..160s · GIA CỐ & TẬP HỢP")
+
+    if lifecycle == "stopped":
+        sub_txt = "Clock held · Resumes when blockers clear" if en else "Giữ đội hình · Chạy lại khi hết cờ dừng"
+    elif phase == "waiting" or tick < 0:
+        sub_txt = "P=0 active · No bots or unattended loss" if en else "P=0 người chơi · Không tự chạy hay tự thua"
+    elif is_frozen:
+        sub_txt = "Clock held · Resumes when blockers clear" if en else "Giữ đội hình · Chạy lại khi hết cờ dừng"
+    elif bool(vote["open"]) and (wave_no % 2 == 0) and (800 <= tick <= 1199):
+        v_rem = max(0, (1200 - tick + 9) // 10)
+        vc = vote["counts"]
+        sub_txt = (
+            f"VOTE {v_rem}s · A:{vc['A']}(-50W,Def+15%) B:{vc['B']}(-50F,Atk+15%) C:{vc['C']}(0)"
+            if en else
+            f"VOTE {v_rem}s · A:{vc['A']}(-50G,Thủ+15%) B:{vc['B']}(-50L,Đánh+15%) C:{vc['C']}(0)"
+        )
+    elif phase == "results" and int(settle["pending_next_wave_count"]) > 0:
+        p_next = int(settle["pending_next_wave_count"])
+        sub_txt = f"NEXT WAVE {wave_no + 1}: Queued for start ({p_next})" if en else f"ĐỢT SAU ({wave_no + 1}): Vào thẳng đầu đợt ({p_next} chờ)"
+    elif vote.get("selected") and (wave_no % 2 == 0):
+        vc = vote["counts"]
+        sel = vote["selected"]
+        eff = (
+            ("A: -50 Wood, Guard+15%" if en else "A: -50 Gỗ, Thủ+15%") if sel == "A"
+            else (("B: -50 Food, Atk+15%" if en else "B: -50 Lương, Đánh+15%") if sel == "B" else ("C: Free, -10%Def, -50%Loss" if en else "C: 0 phí, Thủ-10%, -50%phạt"))
+        )
+        prefix = "LOCKED" if en else "CHỐT"
+        sub_txt = f"{prefix} [{eff}] · A:{vc['A']} B:{vc['B']} C:{vc['C']}"
+    elif wave_no % 2 == 0:
+        nt = min(20, int(snap["wall_tier"]) + 1)
+        sub_txt = f"EVEN WAVE {wave_no}: Vote A/B/C at 03:40 · Wall Tier {nt}" if en else f"ĐỢT CHẴN {wave_no}: Bầu A/B/C lúc 03:40 · Tường Cấp {nt}"
+    else:
+        nt = min(20, int(snap["wall_tier"]) + 1)
+        sub_txt = f"ODD WAVE {wave_no}: Wall Tier {nt} & balance roles" if en else f"ĐỢT LẺ {wave_no}: Nâng Tường Cấp {nt} & đủ 3 vai"
+
+    return {
+        "banner_skin": banner_skin,
+        "banner_text": banner_txt,
+        "vote_strip_text": sub_txt,
+        "timer_text": timer_txt,
+        "seconds_until_assault": compute_prep_seconds_until_assault(tick),
+        "is_prep_warning": (not is_frozen) and (not (bool(diag["metrics_available"]) and int(diag["confirmed_valid_drops"]) > 0)) and phase == "prep" and (1000 <= tick <= 1599),
+    }
+
+
 def step_canonical_wave(
     *,
     wave_no: int,
