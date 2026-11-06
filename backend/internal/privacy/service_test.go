@@ -386,3 +386,90 @@ func mustVillage(t *testing.T, pool *storage.Pool, sessionID string) string {
 	t.Helper()
 	return sessionValue(t, pool, `SELECT village_id::text FROM ttg.sessions WHERE id = $1`, sessionID)
 }
+
+func TestVillageScopeParentIdempotentAndResumable(t *testing.T) {
+	pool := testPool(t)
+	villageID, sessionID, actor, manager, red := setupPrivacySession(t, pool)
+	ctx := context.Background()
+	tx, err := pool.Begin(ctx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var playerID string
+	if err := tx.QueryRow(ctx, `INSERT INTO ttg.players (id, village_id, actor_key, ephemeral, alias) VALUES (gen_random_uuid(), $1, $2, false, 'VillageParent') RETURNING id::text`, villageID, actor).Scan(&playerID); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := tx.Exec(ctx, `INSERT INTO ttg.actor_identity_aliases (village_id, actor_key, key_version, player_id) VALUES ($1, $2, 'v1', $3)`, villageID, actor, playerID); err != nil {
+		t.Fatal(err)
+	}
+	if err := tx.Commit(ctx); err != nil {
+		t.Fatal(err)
+	}
+	enc := make([]byte, 32)
+	chain := make([]byte, 32)
+	_, _ = rand.Read(enc)
+	_, _ = rand.Read(chain)
+	ledger, err := OpenLedger(t.TempDir(), "scope-ledger", enc, chain)
+	if err != nil {
+		t.Fatal(err)
+	}
+	service := &Service{Pool: pool, Ledger: ledger, Reducer: red}
+	parent, err := service.CreateVillageRequest(ctx, sessionID, actor, "village scope", "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() {
+		cleanup, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		tx, err := pool.Begin(cleanup)
+		if err != nil {
+			return
+		}
+		_, _ = tx.Exec(cleanup, `DELETE FROM ttg.privacy_ledger_outbox WHERE tombstone_id IN (SELECT tombstone_id FROM ttg.privacy_erase_requests WHERE parent_id = $1)`, parent.ID)
+		_, _ = tx.Exec(cleanup, `DELETE FROM ttg.privacy_erase_requests WHERE parent_id = $1`, parent.ID)
+		_, _ = tx.Exec(cleanup, `DELETE FROM ttg.privacy_tombstones t WHERE t.actor_ref_protected = $1 AND NOT EXISTS (SELECT 1 FROM ttg.privacy_ledger_outbox o WHERE o.tombstone_id = t.id) AND NOT EXISTS (SELECT 1 FROM ttg.privacy_erase_requests r WHERE r.tombstone_id = t.id)`, actor)
+		_, _ = tx.Exec(cleanup, `DELETE FROM ttg.privacy_scope_requests WHERE id = $1`, parent.ID)
+		_ = tx.Commit(cleanup)
+	})
+	if parent.Status != "queued" || len(parent.Children) != 1 || parent.Children[0].ParentID != parent.ID {
+		t.Fatalf("parent %+v", parent)
+	}
+	again, err := service.CreateVillageRequest(ctx, sessionID, actor, "village scope", "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if again.ID != parent.ID || len(again.Children) != 1 {
+		t.Fatalf("idempotent parent %+v", again)
+	}
+	lease, err := manager.Acquire(ctx, villageID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := service.ApplyScope(ctx, lease, parent.ID); !errors.Is(err, ErrNotAcknowledged) {
+		t.Fatalf("unexported parent apply = %v", err)
+	}
+	if _, err := service.Export(ctx, 10); err != nil {
+		t.Fatal(err)
+	}
+	resumed, err := service.ApplyScope(ctx, lease, parent.ID)
+	if err != nil {
+		t.Fatalf("resume parent: %v", err)
+	}
+	if resumed.Status != "applied" {
+		t.Fatalf("parent status=%s", resumed.Status)
+	}
+	var aliases int
+	if err := func() error {
+		tx, err := pool.Begin(ctx)
+		if err != nil {
+			return err
+		}
+		defer tx.Rollback(ctx)
+		return tx.QueryRow(ctx, `SELECT count(*) FROM ttg.actor_identity_aliases WHERE village_id = $1`, villageID).Scan(&aliases)
+	}(); err != nil {
+		t.Fatal(err)
+	}
+	if aliases != 0 {
+		t.Fatalf("aliases=%d", aliases)
+	}
+}

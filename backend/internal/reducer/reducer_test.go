@@ -1475,7 +1475,7 @@ func TestPrivacyCompletionFailureRollsBackAnonymization(t *testing.T) {
 	}
 	revisionBefore := sessionValue[int64](t, pool, `SELECT reducer_revision FROM ttg.sessions WHERE id = $1`, session.SessionID)
 	epochBefore := sessionValue[int64](t, pool, `SELECT privacy_epoch FROM ttg.sessions WHERE id = $1`, session.SessionID)
-	_, err = reducer.AnonymizeWithCompletion(context.Background(), session.Lease, session.SessionID, []string{actor}, func(context.Context, writer.FencedTx) error {
+	_, err = reducer.AnonymizeWithCompletion(context.Background(), session.Lease, session.SessionID, []string{actor}, func(context.Context, writer.FencedTx, int64) error {
 		return errors.New("completion fault")
 	})
 	if err == nil {

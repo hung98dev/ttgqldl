@@ -17,6 +17,7 @@ ALTER TABLE ttg.reducer_transitions
     CHECK (operation IN ('start', 'advance', 'rollover', 'privacy'));
 
 -- +goose Down
+UPDATE ttg.reducer_transitions SET operation = 'advance' WHERE operation = 'privacy';
 ALTER TABLE ttg.reducer_transitions
     DROP CONSTRAINT reducer_transitions_operation_check;
 ALTER TABLE ttg.reducer_transitions
@@ -25,3 +26,4 @@ ALTER TABLE ttg.reducer_transitions
 ALTER TABLE ttg.checkpoints DROP COLUMN privacy_epoch;
 DROP INDEX IF EXISTS ttg.privacy_erase_requests_idempotency;
 ALTER TABLE ttg.privacy_erase_requests DROP COLUMN scope;
+

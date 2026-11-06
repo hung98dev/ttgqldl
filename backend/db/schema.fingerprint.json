@@ -881,6 +881,14 @@
           "udt_name": "uuid",
           "nullable": true,
           "default": null
+        },
+        {
+          "name": "parent_id",
+          "ordinal": 12,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": true,
+          "default": null
         }
       ]
     },
@@ -1082,6 +1090,67 @@
           "nullable": false,
           "default": null,
           "max_length": 64
+        }
+      ]
+    },
+    {
+      "name": "privacy_scope_requests",
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "village_id",
+          "ordinal": 2,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "actor_ref_protected",
+          "ordinal": 3,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "scope",
+          "ordinal": 4,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "status",
+          "ordinal": 5,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "ordinal": 6,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        },
+        {
+          "name": "completed_at",
+          "ordinal": 7,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": true,
+          "default": null
         }
       ]
     },
@@ -2412,6 +2481,12 @@
     },
     {
       "table": "privacy_erase_requests",
+      "name": "privacy_erase_requests_parent_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (parent_id) REFERENCES privacy_scope_requests(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "privacy_erase_requests",
       "name": "privacy_erase_requests_pkey",
       "type": "p",
       "definition": "PRIMARY KEY (id)"
@@ -2655,6 +2730,72 @@
       "name": "privacy_restore_runs_target_identity_not_null",
       "type": "n",
       "definition": "NOT NULL target_identity"
+    },
+    {
+      "table": "privacy_scope_requests",
+      "name": "privacy_scope_requests_actor_ref_protected_not_null",
+      "type": "n",
+      "definition": "NOT NULL actor_ref_protected"
+    },
+    {
+      "table": "privacy_scope_requests",
+      "name": "privacy_scope_requests_created_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "table": "privacy_scope_requests",
+      "name": "privacy_scope_requests_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table": "privacy_scope_requests",
+      "name": "privacy_scope_requests_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "privacy_scope_requests",
+      "name": "privacy_scope_requests_scope_check",
+      "type": "c",
+      "definition": "CHECK ((scope = 'village'::text))"
+    },
+    {
+      "table": "privacy_scope_requests",
+      "name": "privacy_scope_requests_scope_not_null",
+      "type": "n",
+      "definition": "NOT NULL scope"
+    },
+    {
+      "table": "privacy_scope_requests",
+      "name": "privacy_scope_requests_status_check",
+      "type": "c",
+      "definition": "CHECK ((status = ANY (ARRAY['queued'::text, 'applied'::text, 'blocked'::text, 'failed'::text])))"
+    },
+    {
+      "table": "privacy_scope_requests",
+      "name": "privacy_scope_requests_status_not_null",
+      "type": "n",
+      "definition": "NOT NULL status"
+    },
+    {
+      "table": "privacy_scope_requests",
+      "name": "privacy_scope_requests_village_id_actor_ref_protected_scope_key",
+      "type": "u",
+      "definition": "UNIQUE (village_id, actor_ref_protected, scope)"
+    },
+    {
+      "table": "privacy_scope_requests",
+      "name": "privacy_scope_requests_village_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (village_id) REFERENCES villages(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "privacy_scope_requests",
+      "name": "privacy_scope_requests_village_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL village_id"
     },
     {
       "table": "privacy_tombstones",
@@ -3368,6 +3509,11 @@
     },
     {
       "table": "privacy_erase_requests",
+      "name": "privacy_erase_requests_parent",
+      "definition": "CREATE INDEX privacy_erase_requests_parent ON ttg.privacy_erase_requests USING btree (parent_id)"
+    },
+    {
+      "table": "privacy_erase_requests",
       "name": "privacy_erase_requests_pkey",
       "definition": "CREATE UNIQUE INDEX privacy_erase_requests_pkey ON ttg.privacy_erase_requests USING btree (id)"
     },
@@ -3415,6 +3561,16 @@
       "table": "privacy_restore_runs",
       "name": "privacy_restore_runs_pkey",
       "definition": "CREATE UNIQUE INDEX privacy_restore_runs_pkey ON ttg.privacy_restore_runs USING btree (id)"
+    },
+    {
+      "table": "privacy_scope_requests",
+      "name": "privacy_scope_requests_pkey",
+      "definition": "CREATE UNIQUE INDEX privacy_scope_requests_pkey ON ttg.privacy_scope_requests USING btree (id)"
+    },
+    {
+      "table": "privacy_scope_requests",
+      "name": "privacy_scope_requests_village_id_actor_ref_protected_scope_key",
+      "definition": "CREATE UNIQUE INDEX privacy_scope_requests_village_id_actor_ref_protected_scope_key ON ttg.privacy_scope_requests USING btree (village_id, actor_ref_protected, scope)"
     },
     {
       "table": "privacy_tombstones",

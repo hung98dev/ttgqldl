@@ -15,6 +15,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"runtime"
 	"sort"
 	"strconv"
 	"strings"
@@ -84,12 +85,11 @@ func (l *Ledger) Append(payload LedgerPayload) (LedgerRecord, error) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
 	lockPath := filepath.Join(l.Dir, ".append.lock")
-	lock, err := os.OpenFile(lockPath, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0o600) // #nosec G304 -- owner-only ledger root
+	release, err := acquireAppendLock(lockPath)
 	if err != nil {
-		return LedgerRecord{}, ErrLedgerBusy
+		return LedgerRecord{}, err
 	}
-	_ = lock.Close()
-	defer func() { _ = os.Remove(lockPath) }()
+	defer release()
 	records, err := l.readRecords()
 	if err != nil {
 		return LedgerRecord{}, err
@@ -171,9 +171,15 @@ func (l *Ledger) Append(payload LedgerPayload) (LedgerRecord, error) {
 		return LedgerRecord{}, err
 	}
 	dir, err := os.Open(l.Dir)
-	if err == nil {
-		_ = dir.Sync()
+	if err != nil {
+		return LedgerRecord{}, err
+	}
+	if err := syncDir(dir); err != nil {
 		_ = dir.Close()
+		return LedgerRecord{}, err
+	}
+	if err := dir.Close(); err != nil {
+		return LedgerRecord{}, err
 	}
 	records = append(records, record)
 	if err := l.writeWitness(records); err != nil {
@@ -258,6 +264,7 @@ type Witness struct {
 	HeadHash  string    `json:"head_hash"`
 	UpdatedAt time.Time `json:"updated_at"`
 	AckRef    string    `json:"ack_ref"`
+	Auth      string    `json:"auth"`
 }
 
 func (l *Ledger) witnessPath() string { return filepath.Join(l.Dir, "head.witness") }
@@ -274,6 +281,7 @@ func (l *Ledger) writeWitness(records []LedgerRecord) error {
 		ack = fmt.Sprintf("%s:%d:%s", l.ID, seq, head)
 	}
 	witness := Witness{Version: LedgerFormatVersion, LedgerID: l.ID, LastSeq: seq, HeadHash: head, UpdatedAt: time.Now().UTC(), AckRef: ack}
+	witness.Auth = l.witnessAuth(witness)
 	encoded, err := json.MarshalIndent(witness, "", "  ")
 	if err != nil {
 		return err
@@ -302,9 +310,15 @@ func (l *Ledger) writeWitness(records []LedgerRecord) error {
 		return err
 	}
 	dir, err := os.Open(l.Dir)
-	if err == nil {
-		_ = dir.Sync()
+	if err != nil {
+		return err
+	}
+	if err := syncDir(dir); err != nil {
 		_ = dir.Close()
+		return err
+	}
+	if err := dir.Close(); err != nil {
+		return err
 	}
 	return nil
 }
@@ -318,33 +332,65 @@ func (l *Ledger) readWitness() (Witness, error) {
 	if err := json.Unmarshal(raw, &witness); err != nil {
 		return Witness{}, ErrLedgerIntegrity
 	}
-	if witness.Version != LedgerFormatVersion || witness.LedgerID != l.ID || witness.AckRef == "" {
+	if witness.Version != LedgerFormatVersion || witness.LedgerID != l.ID || witness.AckRef == "" || witness.Auth != l.witnessAuth(witness) {
 		return Witness{}, ErrLedgerIntegrity
 	}
 	return witness, nil
 }
 
+func (l *Ledger) witnessAuth(w Witness) string {
+	payload := fmt.Sprintf("%d|%s|%d|%s|%s|%s", w.Version, w.LedgerID, w.LastSeq, w.HeadHash, w.UpdatedAt.UTC().Format(time.RFC3339Nano), w.AckRef)
+	mac := hmac.New(sha256.New, l.chainKey)
+	_, _ = mac.Write([]byte(payload))
+	return hex.EncodeToString(mac.Sum(nil))
+}
+
+type Snapshot struct {
+	Proof     CoverageProof
+	Deletions []Deletion
+}
+
+// VerifySnapshot verifies and enumerates one immutable ledger head under a single
+// synchronization boundary. A concurrent append cannot enter the returned run.
+func (l *Ledger) VerifySnapshot(targetIdentity string) (Snapshot, error) {
+	l.mu.Lock()
+	defer l.mu.Unlock()
+	proof, deletions, err := l.verifyLocked(targetIdentity)
+	if err != nil {
+		return Snapshot{}, err
+	}
+	return Snapshot{Proof: proof, Deletions: deletions}, nil
+}
+
 func (l *Ledger) Verify(targetIdentity string) (CoverageProof, error) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
+	proof, _, err := l.verifyLocked(targetIdentity)
+	return proof, err
+}
+
+func (l *Ledger) verifyLocked(targetIdentity string) (CoverageProof, []Deletion, error) {
 	records, err := l.readRecords()
 	if err != nil {
-		return CoverageProof{}, err
+		return CoverageProof{}, nil, err
 	}
 	witness, err := l.readWitness()
 	if err != nil {
-		return CoverageProof{}, ErrLedgerIntegrity
+		return CoverageProof{}, nil, ErrLedgerIntegrity
 	}
 	prev := strings.Repeat("0", 64)
 	erasures := make([]string, 0, len(records))
+	deletions := make([]Deletion, 0, len(records))
 	for index, record := range records {
 		if record.Seq != uint64(index+1) || record.PrevHash != prev {
-			return CoverageProof{}, ErrLedgerSequence
+			return CoverageProof{}, nil, ErrLedgerSequence
 		}
-		if err := l.decryptRecord(record); err != nil {
-			return CoverageProof{}, err
+		payload, err := l.decryptPayload(record)
+		if err != nil {
+			return CoverageProof{}, nil, err
 		}
 		erasures = append(erasures, record.TombstoneID)
+		deletions = append(deletions, Deletion{Seq: record.Seq, Payload: payload})
 		prev = record.Hash
 	}
 	head := prev
@@ -352,13 +398,13 @@ func (l *Ledger) Verify(targetIdentity string) (CoverageProof, error) {
 		head = records[len(records)-1].Hash
 	}
 	if witness.LastSeq != uint64(len(records)) || witness.HeadHash != head {
-		return CoverageProof{}, ErrLedgerIntegrity
+		return CoverageProof{}, nil, ErrLedgerIntegrity
 	}
 	return CoverageProof{
 		LedgerID: l.ID, LastSeq: uint64(len(records)), HeadHash: head, WitnessSeq: witness.LastSeq,
 		WitnessHash: witness.HeadHash, VerifiedAt: time.Now().UTC(), CoverageThrough: witness.UpdatedAt,
 		TargetIdentity: targetIdentity, Erasures: erasures, Verified: true, WitnessVerified: true,
-	}, nil
+	}, deletions, nil
 }
 
 func (l *Ledger) decryptRecord(record LedgerRecord) error {
@@ -462,3 +508,44 @@ func (l *Ledger) Head() (uint64, string, error) {
 }
 
 func (l *Ledger) Close() error { return nil }
+func syncDir(dir *os.File) error {
+	err := dir.Sync()
+	if err != nil && runtime.GOOS == "windows" && os.IsPermission(err) {
+		return nil
+	}
+	return err
+}
+func acquireAppendLock(path string) (func(), error) {
+	now := time.Now().UTC()
+	owner := map[string]any{"pid": os.Getpid(), "started": now.Format(time.RFC3339Nano), "lease_until": now.Add(30 * time.Second).Format(time.RFC3339Nano)}
+	payload, _ := json.Marshal(owner)
+	file, err := os.OpenFile(path, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0o600) // #nosec G304 -- owner-only ledger root
+	if err == nil {
+		_, _ = file.Write(payload)
+		_ = file.Sync()
+		_ = file.Close()
+		return func() { _ = os.Remove(path) }, nil
+	}
+	raw, readErr := os.ReadFile(path) // #nosec G304 -- owner-only ledger root
+	if readErr != nil {
+		return nil, ErrLedgerBusy
+	}
+	var existing struct {
+		LeaseUntil time.Time `json:"lease_until"`
+	}
+	if json.Unmarshal(raw, &existing) != nil || existing.LeaseUntil.After(now) {
+		return nil, ErrLedgerBusy
+	}
+	stale := path + ".stale." + strconv.Itoa(os.Getpid())
+	if err := os.Rename(path, stale); err != nil {
+		return nil, ErrLedgerBusy
+	}
+	file, err = os.OpenFile(path, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0o600) // #nosec G304 -- owner-only ledger root
+	if err != nil {
+		return nil, ErrLedgerBusy
+	}
+	_, _ = file.Write(payload)
+	_ = file.Sync()
+	_ = file.Close()
+	return func() { _ = os.Remove(path); _ = os.Remove(stale) }, nil
+}

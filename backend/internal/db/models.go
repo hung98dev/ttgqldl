@@ -141,6 +141,7 @@ type TtgPrivacyEraseRequest struct {
 	RequestedBy       pgtype.UUID
 	Scope             string
 	TombstoneID       pgtype.UUID
+	ParentID          pgtype.UUID
 }
 
 type TtgPrivacyLedgerOutbox struct {
@@ -172,6 +173,16 @@ type TtgPrivacyRestoreRun struct {
 	TargetIdentity string
 	AppliedAt      pgtype.Timestamptz
 	ResultHash     string
+}
+
+type TtgPrivacyScopeRequest struct {
+	ID                pgtype.UUID
+	VillageID         pgtype.UUID
+	ActorRefProtected string
+	Scope             string
+	Status            string
+	CreatedAt         pgtype.Timestamptz
+	CompletedAt       pgtype.Timestamptz
 }
 
 type TtgPrivacyTombstone struct {

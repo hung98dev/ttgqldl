@@ -134,3 +134,60 @@ func TestLedgerSingleWriterLockAndDuplicateTombstone(t *testing.T) {
 		t.Fatalf("duplicate append %+v %+v", first, second)
 	}
 }
+
+func copyLedgerDir(t *testing.T, src, dst string) {
+	t.Helper()
+	if err := os.MkdirAll(dst, 0o700); err != nil {
+		t.Fatal(err)
+	}
+	entries, err := os.ReadDir(src)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, entry := range entries {
+		if entry.IsDir() {
+			continue
+		}
+		raw, err := os.ReadFile(filepath.Join(src, entry.Name()))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(filepath.Join(dst, entry.Name()), raw, 0o600); err != nil {
+			t.Fatal(err)
+		}
+	}
+}
+
+func TestLedgerBackupRestoreAndStaleLockRecovery(t *testing.T) {
+	enc, chain := ledgerKeys(t)
+	dir := t.TempDir()
+	ledger, err := OpenLedger(dir, "backup-ledger", enc, chain)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := ledger.Append(LedgerPayload{TombstoneID: "11111111-1111-4111-8111-111111111111", SessionID: "s", Scope: "session", ActorRefProtected: "a", PrivacyEpoch: 1}); err != nil {
+		t.Fatal(err)
+	}
+	backup := t.TempDir()
+	copyLedgerDir(t, dir, backup)
+	if err := os.RemoveAll(dir); err != nil {
+		t.Fatal(err)
+	}
+	restored := t.TempDir()
+	copyLedgerDir(t, backup, restored)
+	restoredLedger, err := OpenLedger(restored, "backup-ledger", enc, chain)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := restoredLedger.Verify("target"); err != nil {
+		t.Fatalf("restored ledger verify: %v", err)
+	}
+	lockPath := filepath.Join(restored, ".append.lock")
+	stale := `{"pid":1,"started":"2000-01-01T00:00:00Z","lease_until":"2000-01-01T00:01:00Z"}`
+	if err := os.WriteFile(lockPath, []byte(stale), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := restoredLedger.Append(LedgerPayload{TombstoneID: "22222222-2222-4222-8222-222222222222", SessionID: "s", Scope: "session", ActorRefProtected: "b", PrivacyEpoch: 1}); err != nil {
+		t.Fatalf("stale lock recovery: %v", err)
+	}
+}

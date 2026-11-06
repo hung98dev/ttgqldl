@@ -247,7 +247,8 @@ exec postgres -D /var/lib/postgresql/18/docker`
 			return reducer.New(manager, restoredPool)
 		},
 	}
-	restoreResult, err := coordinator.Reapply(ctx, restoredDSN)
+	restoreTarget := randomRestoreUUID(t)
+	restoreResult, err := coordinator.Reapply(ctx, restoreTarget)
 	if err != nil {
 		t.Fatalf("automatic ledger replay: %v", err)
 	}
@@ -284,12 +285,36 @@ exec postgres -D /var/lib/postgresql/18/docker`
 		},
 		NewReducer: func(manager *writer.Manager) (*reducer.Reducer, error) { return reducer.New(manager, restoredPool) },
 	}
-	second, err := secondCoordinator.Reapply(ctx, restoredDSN)
+	second, err := secondCoordinator.Reapply(ctx, restoreTarget)
 	if err != nil {
 		t.Fatalf("idempotent ledger replay: %v", err)
 	}
 	if second.Applied != 0 {
 		t.Fatalf("second replay applied %d erasures", second.Applied)
 	}
+	if !restoreResult.Ready || !second.Ready {
+		t.Fatal("restore did not produce readiness proof")
+	}
+	gate := pitr.PrivacyGate{LedgerAvailable: true, LedgerVerified: true}
+	if err := gate.AllowClientServingWithLedgerProof(restoreResult.Proof, markerTime, restoreResult.AppliedErasures); err != nil {
+		t.Fatalf("readiness gate: %v", err)
+	}
+	var storedTarget string
+	if err := restoredDB.QueryRowContext(ctx, `SELECT target_identity FROM ttg.privacy_restore_runs LIMIT 1`).Scan(&storedTarget); err != nil {
+		t.Fatal(err)
+	}
+	if strings.Contains(storedTarget, "postgres://") || strings.Contains(storedTarget, "pitr_synthetic_password") {
+		t.Fatal("DSN persisted as target identity")
+	}
 	_ = manifest
+}
+func randomRestoreUUID(t *testing.T) string {
+	t.Helper()
+	raw := make([]byte, 16)
+	if _, err := rand.Read(raw); err != nil {
+		t.Fatal(err)
+	}
+	raw[6] = (raw[6] & 0x0f) | 0x40
+	raw[8] = (raw[8] & 0x3f) | 0x80
+	return fmt.Sprintf("%x-%x-%x-%x-%x", raw[0:4], raw[4:6], raw[6:8], raw[8:10], raw[10:16])
 }

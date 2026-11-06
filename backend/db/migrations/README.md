@@ -14,6 +14,8 @@ Canonical, forward-only schema migrations, executed by `cmd/migrate` via goose.
 | `00008_replay_wave_boundary.sql` | `input_events.accepted_wave` and journal `input_seq_high` for multi-wave/historical replay visibility |
 | `00009_privacy_erasure.sql` | idempotent erasure scope, checkpoint privacy epoch and `privacy` transition journal operation |
 | `00010_privacy_request_binding.sql` | explicit request→tombstone binding and durable privacy restore run/erasure audit |
+| `00011_privacy_scope_parent.sql` | durable village-scope parent and child erasure inventory |
+
 
 The migrations implement the contract in `docs/plan/04_DATABASE.md`: every CHECK,
 unique constraint, partial index and FK cascade policy is written there, and
@@ -49,6 +51,9 @@ changing a migration:
 
 `sqlc generate` must never be pointed at the goose files directly: they contain
 down migrations and goose markers.
+
+
+
 
 
 

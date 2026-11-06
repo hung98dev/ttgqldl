@@ -29,11 +29,11 @@ func (r *Reducer) Anonymize(ctx context.Context, lease writer.Lease, sessionID s
 // AnonymizeWithCompletion runs the same privacy boundary and calls completion inside the
 // fenced transaction after the checkpoint/journal/SQL erasure writes. If completion fails
 // the whole anonymization rolls back, so request status and erasure cannot diverge.
-func (r *Reducer) AnonymizeWithCompletion(ctx context.Context, lease writer.Lease, sessionID string, actorKeys []string, completion func(context.Context, writer.FencedTx) error) (Result, error) {
+func (r *Reducer) AnonymizeWithCompletion(ctx context.Context, lease writer.Lease, sessionID string, actorKeys []string, completion func(context.Context, writer.FencedTx, int64) error) (Result, error) {
 	return r.anonymize(ctx, lease, sessionID, actorKeys, completion)
 }
 
-func (r *Reducer) anonymize(ctx context.Context, lease writer.Lease, sessionID string, actorKeys []string, completion func(context.Context, writer.FencedTx) error) (Result, error) {
+func (r *Reducer) anonymize(ctx context.Context, lease writer.Lease, sessionID string, actorKeys []string, completion func(context.Context, writer.FencedTx, int64) error) (Result, error) {
 	if len(actorKeys) == 0 {
 		return Result{}, ErrPrivacyActor
 	}
@@ -150,7 +150,7 @@ func (r *Reducer) anonymize(ctx context.Context, lease writer.Lease, sessionID s
 			}
 		}
 		if completion != nil {
-			if err := completion(ctx, tx); err != nil {
+			if err := completion(ctx, tx, revision); err != nil {
 				return err
 			}
 		}
