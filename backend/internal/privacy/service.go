@@ -85,6 +85,52 @@ func (s *Service) Request(ctx context.Context, sessionID, actorRef, reason, requ
 	return existing, nil
 }
 
+// RequestScope accepts a session-scoped or village-scoped erasure. A village scope
+// creates one durable request per session in the village so every authoritative
+// session can apply its own fenced anonymization boundary.
+func (s *Service) RequestScope(ctx context.Context, sessionID, actorRef, reason, scope string) ([]ErasureRequest, error) {
+	if scope == "" || scope == "session" {
+		request, err := s.Request(ctx, sessionID, actorRef, reason, "")
+		return []ErasureRequest{request}, err
+	}
+	if scope != "village" {
+		return nil, ErrErasureState
+	}
+	tx, err := s.Pool.Begin(ctx)
+	if err != nil {
+		return nil, err
+	}
+	defer func() { _ = tx.Rollback(ctx) }()
+	var villageID string
+	if err := tx.QueryRow(ctx, `SELECT village_id::text FROM ttg.sessions WHERE id = $1`, sessionID).Scan(&villageID); err != nil {
+		return nil, err
+	}
+	rows, err := tx.Query(ctx, `SELECT id::text FROM ttg.sessions WHERE village_id = $1 ORDER BY id`, villageID)
+	if err != nil {
+		return nil, err
+	}
+	sessionIDs := make([]string, 0)
+	for rows.Next() {
+		var id string
+		if err := rows.Scan(&id); err != nil {
+			rows.Close()
+			return nil, err
+		}
+		sessionIDs = append(sessionIDs, id)
+	}
+	rows.Close()
+	_ = tx.Rollback(ctx)
+	out := make([]ErasureRequest, 0, len(sessionIDs))
+	for _, id := range sessionIDs {
+		request, err := s.Request(ctx, id, actorRef, reason, "")
+		if err != nil {
+			return out, err
+		}
+		out = append(out, request)
+	}
+	return out, nil
+}
+
 func (s *Service) Export(ctx context.Context, limit int) (int, error) {
 	if s == nil || s.Ledger == nil {
 		return 0, ErrLedgerKey
