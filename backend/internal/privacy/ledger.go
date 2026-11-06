@@ -29,6 +29,7 @@ var (
 	ErrLedgerSequence  = errors.New("privacy: deletion ledger sequence gap")
 	ErrLedgerKey       = errors.New("privacy: deletion ledger key is invalid")
 	ErrLedgerCoverage  = errors.New("privacy: deletion ledger coverage is insufficient")
+	ErrLedgerBusy      = errors.New("privacy: deletion ledger is already owned by another writer")
 )
 
 type LedgerRecord struct {
@@ -82,6 +83,13 @@ func (l *Ledger) recordPath(seq uint64) string {
 func (l *Ledger) Append(payload LedgerPayload) (LedgerRecord, error) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
+	lockPath := filepath.Join(l.Dir, ".append.lock")
+	lock, err := os.OpenFile(lockPath, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0o600) // #nosec G304 -- owner-only ledger root
+	if err != nil {
+		return LedgerRecord{}, ErrLedgerBusy
+	}
+	_ = lock.Close()
+	defer func() { _ = os.Remove(lockPath) }()
 	records, err := l.readRecords()
 	if err != nil {
 		return LedgerRecord{}, err
@@ -92,6 +100,9 @@ func (l *Ledger) Append(payload LedgerPayload) (LedgerRecord, error) {
 		if existing.TombstoneID == payload.TombstoneID {
 			if existing.Scope != payload.Scope || existing.ActorRefProtected != payload.ActorRefProtected {
 				return LedgerRecord{}, ErrLedgerIntegrity
+			}
+			if err := l.writeWitness(records); err != nil {
+				return LedgerRecord{}, err
 			}
 			return existing, nil
 		}
@@ -164,6 +175,10 @@ func (l *Ledger) Append(payload LedgerPayload) (LedgerRecord, error) {
 		_ = dir.Sync()
 		_ = dir.Close()
 	}
+	records = append(records, record)
+	if err := l.writeWitness(records); err != nil {
+		return LedgerRecord{}, err
+	}
 	return record, nil
 }
 
@@ -222,19 +237,103 @@ type CoverageProof struct {
 	LedgerID        string    `json:"ledger_id"`
 	LastSeq         uint64    `json:"last_seq"`
 	HeadHash        string    `json:"head_hash"`
+	WitnessSeq      uint64    `json:"witness_seq"`
+	WitnessHash     string    `json:"witness_hash"`
 	VerifiedAt      time.Time `json:"verified_at"`
 	CoverageThrough time.Time `json:"coverage_through"`
 	TargetIdentity  string    `json:"target_identity"`
 	Erasures        []string  `json:"erasures"`
 	Verified        bool      `json:"verified"`
+	WitnessVerified bool      `json:"witness_verified"`
 }
 
-func (l *Ledger) Verify(targetIdentity string, coverageThrough time.Time) (CoverageProof, error) {
+// Witness is the independently durable local high-watermark. It proves what the
+// ledger process durably published; it cannot prove that a destroyed primary had no
+// later unexported deletion, so callers must treat absent/reconciled witness evidence
+// as a blocker.
+type Witness struct {
+	Version   int       `json:"version"`
+	LedgerID  string    `json:"ledger_id"`
+	LastSeq   uint64    `json:"last_seq"`
+	HeadHash  string    `json:"head_hash"`
+	UpdatedAt time.Time `json:"updated_at"`
+	AckRef    string    `json:"ack_ref"`
+}
+
+func (l *Ledger) witnessPath() string { return filepath.Join(l.Dir, "head.witness") }
+
+func (l *Ledger) writeWitness(records []LedgerRecord) error {
+	head := strings.Repeat("0", 64)
+	seq := uint64(0)
+	if len(records) > 0 {
+		seq = records[len(records)-1].Seq
+		head = records[len(records)-1].Hash
+	}
+	ack := head
+	if seq > 0 {
+		ack = fmt.Sprintf("%s:%d:%s", l.ID, seq, head)
+	}
+	witness := Witness{Version: LedgerFormatVersion, LedgerID: l.ID, LastSeq: seq, HeadHash: head, UpdatedAt: time.Now().UTC(), AckRef: ack}
+	encoded, err := json.MarshalIndent(witness, "", "  ")
+	if err != nil {
+		return err
+	}
+	tmp := l.witnessPath() + ".tmp"
+	file, err := os.OpenFile(tmp, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0o600) // #nosec G304 -- owner-only ledger root
+	if err != nil {
+		return err
+	}
+	if _, err := file.Write(append(encoded, '\n')); err != nil {
+		_ = file.Close()
+		_ = os.Remove(tmp)
+		return err
+	}
+	if err := file.Sync(); err != nil {
+		_ = file.Close()
+		_ = os.Remove(tmp)
+		return err
+	}
+	if err := file.Close(); err != nil {
+		_ = os.Remove(tmp)
+		return err
+	}
+	if err := os.Rename(tmp, l.witnessPath()); err != nil {
+		_ = os.Remove(tmp)
+		return err
+	}
+	dir, err := os.Open(l.Dir)
+	if err == nil {
+		_ = dir.Sync()
+		_ = dir.Close()
+	}
+	return nil
+}
+
+func (l *Ledger) readWitness() (Witness, error) {
+	raw, err := os.ReadFile(l.witnessPath()) // #nosec G304 -- owner-only ledger root
+	if err != nil {
+		return Witness{}, err
+	}
+	var witness Witness
+	if err := json.Unmarshal(raw, &witness); err != nil {
+		return Witness{}, ErrLedgerIntegrity
+	}
+	if witness.Version != LedgerFormatVersion || witness.LedgerID != l.ID || witness.AckRef == "" {
+		return Witness{}, ErrLedgerIntegrity
+	}
+	return witness, nil
+}
+
+func (l *Ledger) Verify(targetIdentity string) (CoverageProof, error) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
 	records, err := l.readRecords()
 	if err != nil {
 		return CoverageProof{}, err
+	}
+	witness, err := l.readWitness()
+	if err != nil {
+		return CoverageProof{}, ErrLedgerIntegrity
 	}
 	prev := strings.Repeat("0", 64)
 	erasures := make([]string, 0, len(records))
@@ -252,44 +351,25 @@ func (l *Ledger) Verify(targetIdentity string, coverageThrough time.Time) (Cover
 	if len(records) > 0 {
 		head = records[len(records)-1].Hash
 	}
+	if witness.LastSeq != uint64(len(records)) || witness.HeadHash != head {
+		return CoverageProof{}, ErrLedgerIntegrity
+	}
 	return CoverageProof{
-		LedgerID: l.ID, LastSeq: uint64(len(records)), HeadHash: head, VerifiedAt: time.Now().UTC(),
-		CoverageThrough: coverageThrough, TargetIdentity: targetIdentity, Erasures: erasures, Verified: true,
+		LedgerID: l.ID, LastSeq: uint64(len(records)), HeadHash: head, WitnessSeq: witness.LastSeq,
+		WitnessHash: witness.HeadHash, VerifiedAt: time.Now().UTC(), CoverageThrough: witness.UpdatedAt,
+		TargetIdentity: targetIdentity, Erasures: erasures, Verified: true, WitnessVerified: true,
 	}, nil
 }
 
 func (l *Ledger) decryptRecord(record LedgerRecord) error {
-	block, err := aes.NewCipher(l.encKey)
-	if err != nil {
-		return ErrLedgerKey
-	}
-	gcm, err := cipher.NewGCM(block)
-	if err != nil {
-		return ErrLedgerKey
-	}
-	nonce, err := hex.DecodeString(record.Nonce)
-	if err != nil {
-		return ErrLedgerIntegrity
-	}
-	ciphertext, err := hex.DecodeString(record.Ciphertext)
-	if err != nil {
-		return ErrLedgerIntegrity
-	}
-	ad := []byte(l.ID + "|" + strconv.FormatUint(record.Seq, 10) + "|" + record.PrevHash)
-	plaintext, err := gcm.Open(nil, nonce, ciphertext, ad)
-	if err != nil {
-		return ErrLedgerIntegrity
-	}
-	var payload LedgerPayload
-	if err := json.Unmarshal(plaintext, &payload); err != nil || payload.TombstoneID != record.TombstoneID {
-		return ErrLedgerIntegrity
-	}
-	return nil
+	_, err := l.decryptPayload(record)
+	return err
 }
 
 // AllowClientServing requires a verifier-produced proof, not caller booleans.
 func AllowClientServing(proof CoverageProof, requiredHorizon time.Time, requiredErasures []string) error {
-	if !proof.Verified || proof.LedgerID == "" || proof.LastSeq == 0 || proof.CoverageThrough.Before(requiredHorizon) {
+	if !proof.Verified || !proof.WitnessVerified || proof.LedgerID == "" || proof.LastSeq == 0 ||
+		proof.WitnessSeq != proof.LastSeq || proof.WitnessHash != proof.HeadHash || proof.CoverageThrough.Before(requiredHorizon) {
 		return ErrLedgerCoverage
 	}
 	seen := make(map[string]struct{}, len(proof.Erasures))
@@ -307,11 +387,65 @@ func AllowClientServing(proof CoverageProof, requiredHorizon time.Time, required
 // ReplayTombstones returns the verified tombstone IDs for a restore. The caller must
 // apply each local deletion transactionally before granting readiness.
 func (l *Ledger) ReplayTombstones() ([]string, error) {
-	proof, err := l.Verify("", time.Time{})
+	proof, err := l.Verify("")
 	if err != nil {
 		return nil, err
 	}
 	return append([]string(nil), proof.Erasures...), nil
+}
+
+type Deletion struct {
+	Seq     uint64
+	Payload LedgerPayload
+}
+
+// Deletions returns authenticated, decrypted deletion payloads in sequence order.
+// Plaintext stays in memory only; callers must not log it.
+func (l *Ledger) Deletions() ([]Deletion, error) {
+	l.mu.Lock()
+	defer l.mu.Unlock()
+	records, err := l.readRecords()
+	if err != nil {
+		return nil, err
+	}
+	out := make([]Deletion, 0, len(records))
+	for _, record := range records {
+		payload, err := l.decryptPayload(record)
+		if err != nil {
+			return nil, err
+		}
+		out = append(out, Deletion{Seq: record.Seq, Payload: payload})
+	}
+	return out, nil
+}
+
+func (l *Ledger) decryptPayload(record LedgerRecord) (LedgerPayload, error) {
+	block, err := aes.NewCipher(l.encKey)
+	if err != nil {
+		return LedgerPayload{}, ErrLedgerKey
+	}
+	gcm, err := cipher.NewGCM(block)
+	if err != nil {
+		return LedgerPayload{}, ErrLedgerKey
+	}
+	nonce, err := hex.DecodeString(record.Nonce)
+	if err != nil {
+		return LedgerPayload{}, ErrLedgerIntegrity
+	}
+	ciphertext, err := hex.DecodeString(record.Ciphertext)
+	if err != nil {
+		return LedgerPayload{}, ErrLedgerIntegrity
+	}
+	ad := []byte(l.ID + "|" + strconv.FormatUint(record.Seq, 10) + "|" + record.PrevHash)
+	plaintext, err := gcm.Open(nil, nonce, ciphertext, ad)
+	if err != nil {
+		return LedgerPayload{}, ErrLedgerIntegrity
+	}
+	var payload LedgerPayload
+	if err := json.Unmarshal(plaintext, &payload); err != nil || payload.TombstoneID != record.TombstoneID {
+		return LedgerPayload{}, ErrLedgerIntegrity
+	}
+	return payload, nil
 }
 
 func (l *Ledger) Head() (uint64, string, error) {

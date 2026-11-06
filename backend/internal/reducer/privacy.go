@@ -12,7 +12,10 @@ import (
 	"github.com/hung98dev/ttgqldl/backend/internal/writer"
 )
 
-var ErrPrivacyActor = errors.New("reducer: invalid privacy actor")
+var (
+	ErrPrivacyActor    = errors.New("reducer: invalid privacy actor")
+	ErrPrivacyBoundary = errors.New("reducer: privacy erasure requires a safe wave boundary")
+)
 
 // Anonymize commits a privacy boundary without advancing the wave tick. The erased
 // actor(s) are removed from the complete private continuation state, all older
@@ -20,6 +23,17 @@ var ErrPrivacyActor = errors.New("reducer: invalid privacy actor")
 // trusted replay boundary. Inputs for the erased actors are removed only in the same
 // fenced transaction after the new checkpoint has been written.
 func (r *Reducer) Anonymize(ctx context.Context, lease writer.Lease, sessionID string, actorKeys []string) (Result, error) {
+	return r.anonymize(ctx, lease, sessionID, actorKeys, nil)
+}
+
+// AnonymizeWithCompletion runs the same privacy boundary and calls completion inside the
+// fenced transaction after the checkpoint/journal/SQL erasure writes. If completion fails
+// the whole anonymization rolls back, so request status and erasure cannot diverge.
+func (r *Reducer) AnonymizeWithCompletion(ctx context.Context, lease writer.Lease, sessionID string, actorKeys []string, completion func(context.Context, writer.FencedTx) error) (Result, error) {
+	return r.anonymize(ctx, lease, sessionID, actorKeys, completion)
+}
+
+func (r *Reducer) anonymize(ctx context.Context, lease writer.Lease, sessionID string, actorKeys []string, completion func(context.Context, writer.FencedTx) error) (Result, error) {
 	if len(actorKeys) == 0 {
 		return Result{}, ErrPrivacyActor
 	}
@@ -54,6 +68,9 @@ func (r *Reducer) Anonymize(ctx context.Context, lease writer.Lease, sessionID s
 		}
 		if err := verifySessionState(session, state); err != nil {
 			return err
+		}
+		if state.Tick() != 0 && state.Tick() != domain.FinalCombatTick && state.Tick() != domain.RolloverTick {
+			return ErrPrivacyBoundary
 		}
 		oldState := state.Clone()
 		state = filterActorState(state, actors)
@@ -130,6 +147,11 @@ func (r *Reducer) Anonymize(ctx context.Context, lease writer.Lease, sessionID s
 				if _, err := tx.Exec(ctx, statement, session.VillageID, actor); err != nil {
 					return err
 				}
+			}
+		}
+		if completion != nil {
+			if err := completion(ctx, tx); err != nil {
+				return err
 			}
 		}
 		expectedRevision = revision

@@ -8,7 +8,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict ZpJzigPPUzJAdjf4om5YgUNpvydW53haJnkJSA5ZmeFaF02zHk1csL9sKFKpqEm
+\restrict z06hLb1ZQ0qnxm1AktG85CauGpzCZhalUUtthZhvFnYK477EKjAggsjv45iynNi
 
 -- Dumped from database version 18.6 (Debian 18.6-1.pgdg13+2)
 -- Dumped by pg_dump version 18.6 (Debian 18.6-1.pgdg13+2)
@@ -244,6 +244,7 @@ CREATE TABLE ttg.privacy_erase_requests (
     privacy_epoch bigint NOT NULL,
     requested_by uuid,
     scope text DEFAULT 'session'::text NOT NULL,
+    tombstone_id uuid,
     CONSTRAINT privacy_erase_requests_status_check CHECK ((status = ANY (ARRAY['queued'::text, 'applied'::text, 'blocked'::text, 'failed'::text])))
 );
 
@@ -280,6 +281,35 @@ ALTER TABLE ttg.privacy_ledger_outbox ALTER COLUMN seq ADD GENERATED ALWAYS AS I
     NO MINVALUE
     NO MAXVALUE
     CACHE 1
+);
+
+
+--
+-- Name: privacy_restore_erasures; Type: TABLE; Schema: ttg; Owner: -
+--
+
+CREATE TABLE ttg.privacy_restore_erasures (
+    run_id uuid NOT NULL,
+    tombstone_id uuid NOT NULL,
+    session_id uuid NOT NULL,
+    actor_ref_protected text NOT NULL,
+    applied_revision bigint NOT NULL,
+    applied_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+--
+-- Name: privacy_restore_runs; Type: TABLE; Schema: ttg; Owner: -
+--
+
+CREATE TABLE ttg.privacy_restore_runs (
+    id uuid NOT NULL,
+    ledger_id text NOT NULL,
+    ledger_last_seq bigint NOT NULL,
+    ledger_head_hash character(64) NOT NULL,
+    target_identity text NOT NULL,
+    applied_at timestamp with time zone DEFAULT now() NOT NULL,
+    result_hash character(64) NOT NULL
 );
 
 
@@ -578,6 +608,30 @@ ALTER TABLE ONLY ttg.privacy_ledger_outbox
 
 
 --
+-- Name: privacy_restore_erasures privacy_restore_erasures_pkey; Type: CONSTRAINT; Schema: ttg; Owner: -
+--
+
+ALTER TABLE ONLY ttg.privacy_restore_erasures
+    ADD CONSTRAINT privacy_restore_erasures_pkey PRIMARY KEY (run_id, tombstone_id, session_id);
+
+
+--
+-- Name: privacy_restore_runs privacy_restore_runs_ledger_id_ledger_last_seq_target_ident_key; Type: CONSTRAINT; Schema: ttg; Owner: -
+--
+
+ALTER TABLE ONLY ttg.privacy_restore_runs
+    ADD CONSTRAINT privacy_restore_runs_ledger_id_ledger_last_seq_target_ident_key UNIQUE (ledger_id, ledger_last_seq, target_identity);
+
+
+--
+-- Name: privacy_restore_runs privacy_restore_runs_pkey; Type: CONSTRAINT; Schema: ttg; Owner: -
+--
+
+ALTER TABLE ONLY ttg.privacy_restore_runs
+    ADD CONSTRAINT privacy_restore_runs_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: privacy_tombstones privacy_tombstones_pkey; Type: CONSTRAINT; Schema: ttg; Owner: -
 --
 
@@ -727,6 +781,13 @@ CREATE INDEX privacy_erase_requests_session ON ttg.privacy_erase_requests USING 
 
 
 --
+-- Name: privacy_erase_requests_tombstone_unique; Type: INDEX; Schema: ttg; Owner: -
+--
+
+CREATE UNIQUE INDEX privacy_erase_requests_tombstone_unique ON ttg.privacy_erase_requests USING btree (tombstone_id) WHERE (tombstone_id IS NOT NULL);
+
+
+--
 -- Name: privacy_ledger_outbox_pending; Type: INDEX; Schema: ttg; Owner: -
 --
 
@@ -851,11 +912,35 @@ ALTER TABLE ONLY ttg.privacy_erase_requests
 
 
 --
+-- Name: privacy_erase_requests privacy_erase_requests_tombstone_id_fkey; Type: FK CONSTRAINT; Schema: ttg; Owner: -
+--
+
+ALTER TABLE ONLY ttg.privacy_erase_requests
+    ADD CONSTRAINT privacy_erase_requests_tombstone_id_fkey FOREIGN KEY (tombstone_id) REFERENCES ttg.privacy_tombstones(id) ON DELETE RESTRICT;
+
+
+--
 -- Name: privacy_ledger_outbox privacy_ledger_outbox_tombstone_fk; Type: FK CONSTRAINT; Schema: ttg; Owner: -
 --
 
 ALTER TABLE ONLY ttg.privacy_ledger_outbox
     ADD CONSTRAINT privacy_ledger_outbox_tombstone_fk FOREIGN KEY (tombstone_id) REFERENCES ttg.privacy_tombstones(id) ON DELETE RESTRICT;
+
+
+--
+-- Name: privacy_restore_erasures privacy_restore_erasures_run_id_fkey; Type: FK CONSTRAINT; Schema: ttg; Owner: -
+--
+
+ALTER TABLE ONLY ttg.privacy_restore_erasures
+    ADD CONSTRAINT privacy_restore_erasures_run_id_fkey FOREIGN KEY (run_id) REFERENCES ttg.privacy_restore_runs(id) ON DELETE RESTRICT;
+
+
+--
+-- Name: privacy_restore_erasures privacy_restore_erasures_tombstone_id_fkey; Type: FK CONSTRAINT; Schema: ttg; Owner: -
+--
+
+ALTER TABLE ONLY ttg.privacy_restore_erasures
+    ADD CONSTRAINT privacy_restore_erasures_tombstone_id_fkey FOREIGN KEY (tombstone_id) REFERENCES ttg.privacy_tombstones(id) ON DELETE RESTRICT;
 
 
 --
@@ -910,5 +995,5 @@ ALTER TABLE ONLY ttg.writer_leases
 -- PostgreSQL database dump complete
 --
 
-\unrestrict ZpJzigPPUzJAdjf4om5YgUNpvydW53haJnkJSA5ZmeFaF02zHk1csL9sKFKpqEm
+\unrestrict z06hLb1ZQ0qnxm1AktG85CauGpzCZhalUUtthZhvFnYK477EKjAggsjv45iynNi
 

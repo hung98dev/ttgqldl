@@ -140,6 +140,7 @@ type TtgPrivacyEraseRequest struct {
 	PrivacyEpoch      int64
 	RequestedBy       pgtype.UUID
 	Scope             string
+	TombstoneID       pgtype.UUID
 }
 
 type TtgPrivacyLedgerOutbox struct {
@@ -152,6 +153,25 @@ type TtgPrivacyLedgerOutbox struct {
 	LedgerAckRef pgtype.Text
 	Attempts     int32
 	LastError    pgtype.Text
+}
+
+type TtgPrivacyRestoreErasure struct {
+	RunID             pgtype.UUID
+	TombstoneID       pgtype.UUID
+	SessionID         pgtype.UUID
+	ActorRefProtected string
+	AppliedRevision   int64
+	AppliedAt         pgtype.Timestamptz
+}
+
+type TtgPrivacyRestoreRun struct {
+	ID             pgtype.UUID
+	LedgerID       string
+	LedgerLastSeq  int64
+	LedgerHeadHash string
+	TargetIdentity string
+	AppliedAt      pgtype.Timestamptz
+	ResultHash     string
 }
 
 type TtgPrivacyTombstone struct {

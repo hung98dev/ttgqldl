@@ -112,14 +112,3 @@ func TestRetentionProtectsWALAndRequiresSeven(t *testing.T) {
 		t.Fatalf("six points = %v", err)
 	}
 }
-
-func TestPrivacyGateFailsClosedWithoutExternalLedger(t *testing.T) {
-	gate := PrivacyGate{}
-	if err := gate.AllowClientServing(time.Now().UTC()); !errors.Is(err, ErrPrivacyGate) {
-		t.Fatalf("gate = %v", err)
-	}
-	gate = PrivacyGate{LedgerAvailable: true, LedgerVerified: true, CoverageThrough: time.Now().UTC().Add(time.Hour), ErasureReplayed: true}
-	if err := gate.AllowClientServing(time.Now().UTC()); err != nil {
-		t.Fatalf("verified gate = %v", err)
-	}
-}

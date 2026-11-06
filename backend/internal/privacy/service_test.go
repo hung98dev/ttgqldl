@@ -3,6 +3,7 @@ package privacy
 import (
 	"context"
 	"crypto/rand"
+	"errors"
 	"os"
 	"strings"
 	"testing"
@@ -176,7 +177,7 @@ func TestErasureRequiresLedgerThenAnonymizes(t *testing.T) {
 	if got := sessionValue(t, pool, `SELECT privacy_epoch::text FROM ttg.sessions WHERE id = $1`, sessionID); got != "1" {
 		t.Fatalf("epoch=%s", got)
 	}
-	proof, err := ledger.Verify("db-test", time.Now().UTC())
+	proof, err := ledger.Verify("db-test")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -230,7 +231,11 @@ func TestAliasRotationResolvesSamePlayerAndErasureRemovesAllVersions(t *testing.
 	if err != nil {
 		t.Fatal(err)
 	}
-	keys, err := identity.NewKeySet(v2, []identity.Key{v1})
+	v3, err := identity.NewKey("v3", []byte("00112233445566778899aabbccddeeff"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	keys, err := identity.NewKeySet(v3, []identity.Key{v2, v1})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -239,11 +244,12 @@ func TestAliasRotationResolvesSamePlayerAndErasureRemovesAllVersions(t *testing.
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(candidates) != 2 {
+	if len(candidates) != 3 {
 		t.Fatalf("candidates=%d", len(candidates))
 	}
-	oldKey := string(candidates[1].ActorKey)
-	newKey := string(candidates[0].ActorKey)
+	oldKey := string(candidates[2].ActorKey)
+	newKey := string(candidates[1].ActorKey)
+	activeKey := string(candidates[0].ActorKey)
 	var playerID string
 	tx, err := pool.Begin(ctx)
 	if err != nil {
@@ -252,7 +258,7 @@ func TestAliasRotationResolvesSamePlayerAndErasureRemovesAllVersions(t *testing.
 	if err := tx.QueryRow(ctx, `INSERT INTO ttg.players (id, village_id, actor_key, ephemeral, alias) VALUES (gen_random_uuid(), $1, $2, false, 'RotationSubject') RETURNING id::text`, villageID, oldKey).Scan(&playerID); err != nil {
 		t.Fatal(err)
 	}
-	if _, err := tx.Exec(ctx, `INSERT INTO ttg.actor_identity_aliases (village_id, actor_key, key_version, player_id) VALUES ($1, $2, 'v1', $3), ($1, $4, 'v2', $3)`, villageID, oldKey, playerID, newKey); err != nil {
+	if _, err := tx.Exec(ctx, `INSERT INTO ttg.actor_identity_aliases (village_id, actor_key, key_version, player_id) VALUES ($1, $2, 'v1', $3), ($1, $4, 'v2', $3), ($1, $5, 'v3', $3)`, villageID, oldKey, playerID, newKey, activeKey); err != nil {
 		t.Fatal(err)
 	}
 	if err := tx.Commit(ctx); err != nil {
@@ -316,11 +322,53 @@ func TestAliasRotationResolvesSamePlayerAndErasureRemovesAllVersions(t *testing.
 			return err
 		}
 		defer tx.Rollback(ctx)
-		return tx.QueryRow(ctx, `SELECT count(*) FROM ttg.actor_identity_aliases WHERE village_id = $1 AND actor_key = ANY($2)`, villageID, []string{oldKey, newKey}).Scan(&after)
+		return tx.QueryRow(ctx, `SELECT count(*) FROM ttg.actor_identity_aliases WHERE village_id = $1 AND actor_key = ANY($2)`, villageID, []string{oldKey, newKey, activeKey}).Scan(&after)
 	}(); err != nil {
 		t.Fatal(err)
 	}
 	if after != 0 {
 		t.Fatalf("old/new aliases survived: %d", after)
 	}
+}
+
+func TestErasureCannotBorrowAnotherRequestsAck(t *testing.T) {
+	pool := testPool(t)
+	_, sessionOne, actor, _, redOne := setupPrivacySession(t, pool)
+	_, sessionTwo, _, managerTwo, redTwo := setupPrivacySession(t, pool)
+	enc := make([]byte, 32)
+	chain := make([]byte, 32)
+	_, _ = rand.Read(enc)
+	_, _ = rand.Read(chain)
+	ledger, err := OpenLedger(t.TempDir(), "binding-ledger", enc, chain)
+	if err != nil {
+		t.Fatal(err)
+	}
+	serviceOne := &Service{Pool: pool, Ledger: ledger, Reducer: redOne}
+	requestOne, err := serviceOne.Request(context.Background(), sessionOne, actor, "request one", "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := serviceOne.Export(context.Background(), 10); err != nil {
+		t.Fatal(err)
+	}
+	serviceTwo := &Service{Pool: pool, Ledger: ledger, Reducer: redTwo}
+	requestTwo, err := serviceTwo.Request(context.Background(), sessionTwo, actor, "request two", "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if requestOne.TombstoneID == "" || requestTwo.TombstoneID == "" || requestOne.TombstoneID == requestTwo.TombstoneID {
+		t.Fatalf("tombstone binding missing: %+v %+v", requestOne, requestTwo)
+	}
+	leaseTwo, err := managerTwo.Acquire(context.Background(), mustVillage(t, pool, sessionTwo))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := serviceTwo.Apply(context.Background(), leaseTwo, requestTwo.ID); !errors.Is(err, ErrNotAcknowledged) {
+		t.Fatalf("borrowed ack result = %v", err)
+	}
+}
+
+func mustVillage(t *testing.T, pool *storage.Pool, sessionID string) string {
+	t.Helper()
+	return sessionValue(t, pool, `SELECT village_id::text FROM ttg.sessions WHERE id = $1`, sessionID)
 }

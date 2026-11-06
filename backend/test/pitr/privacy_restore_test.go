@@ -235,26 +235,26 @@ exec postgres -D /var/lib/postgresql/18/docker`
 	if err != nil {
 		t.Fatal(err)
 	}
-	// The restored backup's lease may still be unexpired; in this disposable test
-	// simulate the elapsed disaster window, then let PostgreSQL authorize takeover.
 	if _, err := restoredDB.ExecContext(ctx, `UPDATE ttg.writer_leases SET leased_until = clock_timestamp() - interval '1 second' WHERE village_id = $1`, villageID); err != nil {
 		t.Fatal(err)
 	}
-	deadline := time.Now().Add(10 * time.Second)
-	var restoredLease writer.Lease
-	for time.Now().Before(deadline) {
-		restoredLease, err = restoredManager.Acquire(ctx, villageID)
-		if err == nil {
-			break
-		}
-		time.Sleep(200 * time.Millisecond)
+	coordinator := &privacy.RestoreCoordinator{
+		Ledger: ledger, Pool: restoredPool,
+		NewManager: func(village string) (*writer.Manager, error) {
+			return writer.New(restoredPool, "privacy-restore-coordinator", writer.Config{LeaseDuration: 5 * time.Second})
+		},
+		NewReducer: func(manager *writer.Manager) (*reducer.Reducer, error) {
+			return reducer.New(manager, restoredPool)
+		},
 	}
+	restoreResult, err := coordinator.Reapply(ctx, restoredDSN)
 	if err != nil {
-		t.Fatalf("restored lease: %v", err)
+		t.Fatalf("automatic ledger replay: %v", err)
 	}
-	if _, err := restoredRed.Anonymize(ctx, restoredLease, sessionID, []string{actor}); err != nil {
-		t.Fatalf("reapply anonymization: %v", err)
+	if restoreResult.Applied == 0 || restoreResult.LastSeq == 0 {
+		t.Fatalf("restore result %+v", restoreResult)
 	}
+
 	if err := restoredDB.QueryRowContext(ctx, `SELECT count(*) FROM ttg.players WHERE village_id = $1`, villageID).Scan(&playerCount); err != nil {
 		t.Fatal(err)
 	}
@@ -264,7 +264,7 @@ exec postgres -D /var/lib/postgresql/18/docker`
 	if playerCount != 0 || aliasCount != 0 {
 		t.Fatalf("resurrection after ledger reapply: players=%d aliases=%d", playerCount, aliasCount)
 	}
-	proof, err := ledger.Verify(restoredDSN, markerTime)
+	proof, err := ledger.Verify(restoredDSN)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -273,6 +273,23 @@ exec postgres -D /var/lib/postgresql/18/docker`
 	}
 	if _, err := restoredRed.VerifyReplay(ctx, sessionID, 0); err != nil {
 		t.Fatalf("replay after reapply: %v", err)
+	}
+	if _, err := restoredDB.ExecContext(ctx, `UPDATE ttg.writer_leases SET leased_until = clock_timestamp() - interval '1 second' WHERE village_id = $1`, villageID); err != nil {
+		t.Fatal(err)
+	}
+	secondCoordinator := &privacy.RestoreCoordinator{
+		Ledger: ledger, Pool: restoredPool,
+		NewManager: func(village string) (*writer.Manager, error) {
+			return writer.New(restoredPool, "privacy-restore-idempotent", writer.Config{LeaseDuration: 5 * time.Second})
+		},
+		NewReducer: func(manager *writer.Manager) (*reducer.Reducer, error) { return reducer.New(manager, restoredPool) },
+	}
+	second, err := secondCoordinator.Reapply(ctx, restoredDSN)
+	if err != nil {
+		t.Fatalf("idempotent ledger replay: %v", err)
+	}
+	if second.Applied != 0 {
+		t.Fatalf("second replay applied %d erasures", second.Applied)
 	}
 	_ = manifest
 }

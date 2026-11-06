@@ -246,9 +246,5 @@ func (g PrivacyGate) AllowClientServingWithLedgerProof(proof privacy.CoveragePro
 	return nil
 }
 
-func (g PrivacyGate) AllowClientServing(restoreTime time.Time) error {
-	if !g.LedgerAvailable || !g.LedgerVerified || !g.ErasureReplayed || g.CoverageThrough.Before(restoreTime) {
-		return ErrPrivacyGate
-	}
-	return nil
-}
+// AllowClientServing is intentionally removed: boolean-only readiness is not
+// trustworthy. Use AllowClientServingWithLedgerProof with a verifier-produced proof.

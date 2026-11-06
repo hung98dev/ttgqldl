@@ -873,6 +873,14 @@
           "udt_name": "text",
           "nullable": false,
           "default": "'session'::text"
+        },
+        {
+          "name": "tombstone_id",
+          "ordinal": 11,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": true,
+          "default": null
         }
       ]
     },
@@ -954,6 +962,126 @@
           "udt_name": "text",
           "nullable": true,
           "default": null
+        }
+      ]
+    },
+    {
+      "name": "privacy_restore_erasures",
+      "columns": [
+        {
+          "name": "run_id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "tombstone_id",
+          "ordinal": 2,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "session_id",
+          "ordinal": 3,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "actor_ref_protected",
+          "ordinal": 4,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "applied_revision",
+          "ordinal": 5,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "applied_at",
+          "ordinal": 6,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        }
+      ]
+    },
+    {
+      "name": "privacy_restore_runs",
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "data_type": "uuid",
+          "udt_name": "uuid",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "ledger_id",
+          "ordinal": 2,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "ledger_last_seq",
+          "ordinal": 3,
+          "data_type": "bigint",
+          "udt_name": "int8",
+          "nullable": false,
+          "default": null,
+          "numeric_precision": 64,
+          "numeric_scale": 0
+        },
+        {
+          "name": "ledger_head_hash",
+          "ordinal": 4,
+          "data_type": "character",
+          "udt_name": "bpchar",
+          "nullable": false,
+          "default": null,
+          "max_length": 64
+        },
+        {
+          "name": "target_identity",
+          "ordinal": 5,
+          "data_type": "text",
+          "udt_name": "text",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "applied_at",
+          "ordinal": 6,
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz",
+          "nullable": false,
+          "default": "now()"
+        },
+        {
+          "name": "result_hash",
+          "ordinal": 7,
+          "data_type": "character",
+          "udt_name": "bpchar",
+          "nullable": false,
+          "default": null,
+          "max_length": 64
         }
       ]
     },
@@ -2337,6 +2465,12 @@
       "definition": "NOT NULL status"
     },
     {
+      "table": "privacy_erase_requests",
+      "name": "privacy_erase_requests_tombstone_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (tombstone_id) REFERENCES privacy_tombstones(id) ON DELETE RESTRICT"
+    },
+    {
       "table": "privacy_ledger_outbox",
       "name": "privacy_ledger_outbox_ack_consistency",
       "type": "c",
@@ -2413,6 +2547,114 @@
       "name": "privacy_ledger_outbox_tombstone_id_not_null",
       "type": "n",
       "definition": "NOT NULL tombstone_id"
+    },
+    {
+      "table": "privacy_restore_erasures",
+      "name": "privacy_restore_erasures_actor_ref_protected_not_null",
+      "type": "n",
+      "definition": "NOT NULL actor_ref_protected"
+    },
+    {
+      "table": "privacy_restore_erasures",
+      "name": "privacy_restore_erasures_applied_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL applied_at"
+    },
+    {
+      "table": "privacy_restore_erasures",
+      "name": "privacy_restore_erasures_applied_revision_not_null",
+      "type": "n",
+      "definition": "NOT NULL applied_revision"
+    },
+    {
+      "table": "privacy_restore_erasures",
+      "name": "privacy_restore_erasures_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (run_id, tombstone_id, session_id)"
+    },
+    {
+      "table": "privacy_restore_erasures",
+      "name": "privacy_restore_erasures_run_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (run_id) REFERENCES privacy_restore_runs(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "privacy_restore_erasures",
+      "name": "privacy_restore_erasures_run_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL run_id"
+    },
+    {
+      "table": "privacy_restore_erasures",
+      "name": "privacy_restore_erasures_session_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL session_id"
+    },
+    {
+      "table": "privacy_restore_erasures",
+      "name": "privacy_restore_erasures_tombstone_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (tombstone_id) REFERENCES privacy_tombstones(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "privacy_restore_erasures",
+      "name": "privacy_restore_erasures_tombstone_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL tombstone_id"
+    },
+    {
+      "table": "privacy_restore_runs",
+      "name": "privacy_restore_runs_applied_at_not_null",
+      "type": "n",
+      "definition": "NOT NULL applied_at"
+    },
+    {
+      "table": "privacy_restore_runs",
+      "name": "privacy_restore_runs_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL id"
+    },
+    {
+      "table": "privacy_restore_runs",
+      "name": "privacy_restore_runs_ledger_head_hash_not_null",
+      "type": "n",
+      "definition": "NOT NULL ledger_head_hash"
+    },
+    {
+      "table": "privacy_restore_runs",
+      "name": "privacy_restore_runs_ledger_id_ledger_last_seq_target_ident_key",
+      "type": "u",
+      "definition": "UNIQUE (ledger_id, ledger_last_seq, target_identity)"
+    },
+    {
+      "table": "privacy_restore_runs",
+      "name": "privacy_restore_runs_ledger_id_not_null",
+      "type": "n",
+      "definition": "NOT NULL ledger_id"
+    },
+    {
+      "table": "privacy_restore_runs",
+      "name": "privacy_restore_runs_ledger_last_seq_not_null",
+      "type": "n",
+      "definition": "NOT NULL ledger_last_seq"
+    },
+    {
+      "table": "privacy_restore_runs",
+      "name": "privacy_restore_runs_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "privacy_restore_runs",
+      "name": "privacy_restore_runs_result_hash_not_null",
+      "type": "n",
+      "definition": "NOT NULL result_hash"
+    },
+    {
+      "table": "privacy_restore_runs",
+      "name": "privacy_restore_runs_target_identity_not_null",
+      "type": "n",
+      "definition": "NOT NULL target_identity"
     },
     {
       "table": "privacy_tombstones",
@@ -3135,6 +3377,11 @@
       "definition": "CREATE INDEX privacy_erase_requests_session ON ttg.privacy_erase_requests USING btree (session_id)"
     },
     {
+      "table": "privacy_erase_requests",
+      "name": "privacy_erase_requests_tombstone_unique",
+      "definition": "CREATE UNIQUE INDEX privacy_erase_requests_tombstone_unique ON ttg.privacy_erase_requests USING btree (tombstone_id) WHERE (tombstone_id IS NOT NULL)"
+    },
+    {
       "table": "privacy_ledger_outbox",
       "name": "privacy_ledger_outbox_pending",
       "definition": "CREATE INDEX privacy_ledger_outbox_pending ON ttg.privacy_ledger_outbox USING btree (seq) WHERE (exported_at IS NULL)"
@@ -3153,6 +3400,21 @@
       "table": "privacy_ledger_outbox",
       "name": "privacy_ledger_outbox_tombstone",
       "definition": "CREATE INDEX privacy_ledger_outbox_tombstone ON ttg.privacy_ledger_outbox USING btree (tombstone_id)"
+    },
+    {
+      "table": "privacy_restore_erasures",
+      "name": "privacy_restore_erasures_pkey",
+      "definition": "CREATE UNIQUE INDEX privacy_restore_erasures_pkey ON ttg.privacy_restore_erasures USING btree (run_id, tombstone_id, session_id)"
+    },
+    {
+      "table": "privacy_restore_runs",
+      "name": "privacy_restore_runs_ledger_id_ledger_last_seq_target_ident_key",
+      "definition": "CREATE UNIQUE INDEX privacy_restore_runs_ledger_id_ledger_last_seq_target_ident_key ON ttg.privacy_restore_runs USING btree (ledger_id, ledger_last_seq, target_identity)"
+    },
+    {
+      "table": "privacy_restore_runs",
+      "name": "privacy_restore_runs_pkey",
+      "definition": "CREATE UNIQUE INDEX privacy_restore_runs_pkey ON ttg.privacy_restore_runs USING btree (id)"
     },
     {
       "table": "privacy_tombstones",

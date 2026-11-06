@@ -1392,9 +1392,6 @@ func TestPrivacyAnonymizeRemovesActorAndRetiresOldCheckpoints(t *testing.T) {
 	if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
 		t.Fatal(err)
 	}
-	if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
-		t.Fatal(err)
-	}
 	var playerID string
 	if err := func() error {
 		ctx := context.Background()
@@ -1420,7 +1417,7 @@ func TestPrivacyAnonymizeRemovesActorAndRetiresOldCheckpoints(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if result.Revision != 3 || result.StateHash == "" {
+	if result.Revision != 2 || result.StateHash == "" {
 		t.Fatalf("result %+v", result)
 	}
 	if got := countRows(t, pool, `SELECT count(*) FROM ttg.actor_identity_aliases WHERE village_id = $1`, session.VillageID); got != 0 {
@@ -1453,7 +1450,7 @@ func TestPrivacyAnonymizeRemovesActorAndRetiresOldCheckpoints(t *testing.T) {
 	if got := countRows(t, pool, `SELECT count(*) FROM ttg.checkpoints WHERE session_id = $1 AND revision = 1`, session.SessionID); got != 0 {
 		t.Fatalf("old checkpoint=%d", got)
 	}
-	if got := countRows(t, pool, `SELECT count(*) FROM ttg.checkpoints WHERE session_id = $1 AND revision = 3`, session.SessionID); got != 1 {
+	if got := countRows(t, pool, `SELECT count(*) FROM ttg.checkpoints WHERE session_id = $1 AND revision = 2`, session.SessionID); got != 1 {
 		t.Fatalf("privacy checkpoint=%d", got)
 	}
 	if got := sessionValue[int64](t, pool, `SELECT privacy_epoch FROM ttg.sessions WHERE id = $1`, session.SessionID); got != 1 {
@@ -1461,5 +1458,60 @@ func TestPrivacyAnonymizeRemovesActorAndRetiresOldCheckpoints(t *testing.T) {
 	}
 	if _, err := reducer.VerifyReplay(context.Background(), session.SessionID, 0); err != nil {
 		t.Fatalf("replay after anonymization: %v", err)
+	}
+}
+
+func TestPrivacyCompletionFailureRollsBackAnonymization(t *testing.T) {
+	pool := testPool(t)
+	session := newTestSession(t, pool, "waiting", 5*time.Second)
+	actor := actorKey("a")
+	insertRoleInput(t, pool, session.SessionID, 1, -1, 0, 1, actor, domain.RoleBuilder)
+	reducer, err := New(session.Manager, pool)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+		t.Fatal(err)
+	}
+	revisionBefore := sessionValue[int64](t, pool, `SELECT reducer_revision FROM ttg.sessions WHERE id = $1`, session.SessionID)
+	epochBefore := sessionValue[int64](t, pool, `SELECT privacy_epoch FROM ttg.sessions WHERE id = $1`, session.SessionID)
+	_, err = reducer.AnonymizeWithCompletion(context.Background(), session.Lease, session.SessionID, []string{actor}, func(context.Context, writer.FencedTx) error {
+		return errors.New("completion fault")
+	})
+	if err == nil {
+		t.Fatal("completion fault was accepted")
+	}
+	if got := sessionValue[int64](t, pool, `SELECT reducer_revision FROM ttg.sessions WHERE id = $1`, session.SessionID); got != revisionBefore {
+		t.Fatalf("revision advanced to %d", got)
+	}
+	if got := sessionValue[int64](t, pool, `SELECT privacy_epoch FROM ttg.sessions WHERE id = $1`, session.SessionID); got != epochBefore {
+		t.Fatalf("epoch advanced to %d", got)
+	}
+	if got := countRows(t, pool, `SELECT count(*) FROM ttg.checkpoints WHERE session_id = $1 AND revision > $2`, session.SessionID, revisionBefore); got != 0 {
+		t.Fatalf("privacy checkpoint survived rollback: %d", got)
+	}
+}
+
+func TestPrivacyErasureRejectsMidWaveBoundary(t *testing.T) {
+	pool := testPool(t)
+	session := newTestSession(t, pool, "waiting", 5*time.Second)
+	actor := actorKey("a")
+	insertRoleInput(t, pool, session.SessionID, 1, -1, 0, 1, actor, domain.RoleBuilder)
+	reducer, err := New(session.Manager, pool)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := reducer.Step(context.Background(), session.Lease, session.SessionID); err != nil {
+		t.Fatal(err)
+	}
+	revisionBefore := sessionValue[int64](t, pool, `SELECT reducer_revision FROM ttg.sessions WHERE id = $1`, session.SessionID)
+	if _, err := reducer.Anonymize(context.Background(), session.Lease, session.SessionID, []string{actor}); !errors.Is(err, ErrPrivacyBoundary) {
+		t.Fatalf("mid-wave erasure = %v", err)
+	}
+	if got := sessionValue[int64](t, pool, `SELECT reducer_revision FROM ttg.sessions WHERE id = $1`, session.SessionID); got != revisionBefore {
+		t.Fatalf("revision advanced to %d", got)
 	}
 }

@@ -39,7 +39,7 @@ func TestLedgerAppendVerifyAndCoverage(t *testing.T) {
 	if _, err := ledger.Append(LedgerPayload{TombstoneID: "t2", SessionID: "s1", Scope: "session", ActorRefProtected: "a2", PrivacyEpoch: 1}); err != nil {
 		t.Fatal(err)
 	}
-	proof, err := ledger.Verify("db-a", time.Now().UTC())
+	proof, err := ledger.Verify("db-a")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -75,13 +75,13 @@ func TestLedgerTamperGapAndWrongKey(t *testing.T) {
 	if err := os.WriteFile(path, raw, 0o600); err != nil {
 		t.Fatal(err)
 	}
-	if _, err := ledger.Verify("", time.Time{}); !errors.Is(err, ErrLedgerIntegrity) {
+	if _, err := ledger.Verify(""); !errors.Is(err, ErrLedgerIntegrity) {
 		t.Fatalf("tamper = %v", err)
 	}
 	if err := os.Remove(path); err != nil {
 		t.Fatal(err)
 	}
-	if _, err := ledger.Verify("", time.Time{}); !errors.Is(err, ErrLedgerSequence) {
+	if _, err := ledger.Verify(""); !errors.Is(err, ErrLedgerSequence) {
 		t.Fatalf("gap = %v", err)
 	}
 	enc2, chain2 := keys(t)
@@ -89,7 +89,7 @@ func TestLedgerTamperGapAndWrongKey(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if _, err := other.Verify("", time.Time{}); !errors.Is(err, ErrLedgerIntegrity) {
+	if _, err := other.Verify(""); !errors.Is(err, ErrLedgerIntegrity) {
 		t.Fatalf("wrong key = %v", err)
 	}
 }
@@ -102,5 +102,35 @@ func TestLedgerAppendRejectsMissingFields(t *testing.T) {
 	}
 	if _, err := ledger.Append(LedgerPayload{}); !errors.Is(err, ErrLedgerIntegrity) {
 		t.Fatalf("empty = %v", err)
+	}
+}
+
+func TestLedgerSingleWriterLockAndDuplicateTombstone(t *testing.T) {
+	enc, chain := keys(t)
+	dir := t.TempDir()
+	ledger, err := OpenLedger(dir, "lock-ledger", enc, chain)
+	if err != nil {
+		t.Fatal(err)
+	}
+	lock := filepath.Join(dir, ".append.lock")
+	if err := os.WriteFile(lock, []byte("other"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := ledger.Append(LedgerPayload{TombstoneID: "t", SessionID: "s", Scope: "session", ActorRefProtected: "a", PrivacyEpoch: 1}); !errors.Is(err, ErrLedgerBusy) {
+		t.Fatalf("lock = %v", err)
+	}
+	if err := os.Remove(lock); err != nil {
+		t.Fatal(err)
+	}
+	first, err := ledger.Append(LedgerPayload{TombstoneID: "t", SessionID: "s", Scope: "session", ActorRefProtected: "a", PrivacyEpoch: 1})
+	if err != nil {
+		t.Fatal(err)
+	}
+	second, err := ledger.Append(LedgerPayload{TombstoneID: "t", SessionID: "s", Scope: "session", ActorRefProtected: "a", PrivacyEpoch: 1})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if first.Seq != second.Seq || first.Hash != second.Hash {
+		t.Fatalf("duplicate append %+v %+v", first, second)
 	}
 }

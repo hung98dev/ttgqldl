@@ -32,6 +32,7 @@ type ErasureRequest struct {
 	PrivacyEpoch int64
 	OutboxSeq    int64
 	LedgerAckRef string
+	TombstoneID  string
 }
 
 func (s *Service) Request(ctx context.Context, sessionID, actorRef, reason, requestedBy string) (ErasureRequest, error) {
@@ -49,10 +50,14 @@ func (s *Service) Request(ctx context.Context, sessionID, actorRef, reason, requ
 		return ErasureRequest{}, err
 	}
 	var existing ErasureRequest
-	err = tx.QueryRow(ctx, `SELECT id::text, session_id::text, actor_ref_protected, scope, status, privacy_epoch
+	var existingTombstone *string
+	err = tx.QueryRow(ctx, `SELECT id::text, session_id::text, actor_ref_protected, scope, status, privacy_epoch, tombstone_id::text
 		FROM ttg.privacy_erase_requests WHERE session_id = $1 AND actor_ref_protected = $2 AND scope = 'session'`, sessionID, actorRef).Scan(
-		&existing.ID, &existing.SessionID, &existing.ActorRef, &existing.Scope, &existing.Status, &existing.PrivacyEpoch,
+		&existing.ID, &existing.SessionID, &existing.ActorRef, &existing.Scope, &existing.Status, &existing.PrivacyEpoch, &existingTombstone,
 	)
+	if existingTombstone != nil {
+		existing.TombstoneID = *existingTombstone
+	}
 	if err == nil {
 		return existing, tx.Commit(ctx)
 	}
@@ -67,8 +72,8 @@ func (s *Service) Request(ctx context.Context, sessionID, actorRef, reason, requ
 	if err := tx.QueryRow(ctx, `INSERT INTO ttg.privacy_ledger_outbox (id, tombstone_id, payload) VALUES (gen_random_uuid(), $1, $2::jsonb) RETURNING id::text, seq`, tombstoneID, payload).Scan(&outboxID, &existing.OutboxSeq); err != nil {
 		return ErasureRequest{}, err
 	}
-	if err := tx.QueryRow(ctx, `INSERT INTO ttg.privacy_erase_requests (id, session_id, actor_ref_protected, reason, status, privacy_epoch, requested_by, scope)
-		VALUES (gen_random_uuid(), $1, $2, $3, 'queued', $4, NULLIF($5, '')::uuid, 'session') RETURNING id::text`, sessionID, actorRef, reason, epoch, requestedBy).Scan(&existing.ID); err != nil {
+	if err := tx.QueryRow(ctx, `INSERT INTO ttg.privacy_erase_requests (id, session_id, actor_ref_protected, reason, status, privacy_epoch, requested_by, scope, tombstone_id)
+		VALUES (gen_random_uuid(), $1, $2, $3, 'queued', $4, NULLIF($5, '')::uuid, 'session', $6) RETURNING id::text`, sessionID, actorRef, reason, epoch, requestedBy, tombstoneID).Scan(&existing.ID); err != nil {
 		return ErasureRequest{}, err
 	}
 	if _, err := tx.Exec(ctx, `UPDATE ttg.players SET hide_alias = true, alias = NULL WHERE village_id = $1 AND actor_key = $2`, villageID, actorRef); err != nil {
@@ -79,6 +84,7 @@ func (s *Service) Request(ctx context.Context, sessionID, actorRef, reason, requ
 	existing.Scope = "session"
 	existing.Status = "queued"
 	existing.PrivacyEpoch = epoch
+	existing.TombstoneID = tombstoneID
 	if err := tx.Commit(ctx); err != nil {
 		return ErasureRequest{}, err
 	}
@@ -198,7 +204,7 @@ func (s *Service) Export(ctx context.Context, limit int) (int, error) {
 // external ledger has acknowledged the tombstone, then commits the anonymized
 // checkpoint and SQL erasure through the fenced reducer.
 func (s *Service) Apply(ctx context.Context, lease writer.Lease, requestID string) (reducer.Result, error) {
-	var sessionID, actorRef, status string
+	var sessionID, actorRef, status, tombstoneID string
 	var ack *string
 	if err := func() error {
 		tx, err := s.Pool.Begin(ctx)
@@ -206,11 +212,10 @@ func (s *Service) Apply(ctx context.Context, lease writer.Lease, requestID strin
 			return err
 		}
 		defer tx.Rollback(ctx)
-		return tx.QueryRow(ctx, `SELECT r.session_id::text, r.actor_ref_protected, r.status, o.ledger_ack_ref
+		return tx.QueryRow(ctx, `SELECT r.session_id::text, r.actor_ref_protected, r.status, r.tombstone_id::text, o.ledger_ack_ref
 			FROM ttg.privacy_erase_requests r
-			JOIN ttg.privacy_tombstones t ON t.actor_ref_protected = r.actor_ref_protected AND t.scope = r.scope
-			JOIN ttg.privacy_ledger_outbox o ON o.tombstone_id = t.id
-			WHERE r.id = $1 ORDER BY o.seq DESC LIMIT 1`, requestID).Scan(&sessionID, &actorRef, &status, &ack)
+			JOIN ttg.privacy_ledger_outbox o ON o.tombstone_id = r.tombstone_id
+			WHERE r.id = $1 AND r.tombstone_id IS NOT NULL ORDER BY o.seq DESC LIMIT 1`, requestID).Scan(&sessionID, &actorRef, &status, &tombstoneID, &ack)
 	}(); err != nil {
 		return reducer.Result{}, err
 	}
@@ -227,22 +232,18 @@ func (s *Service) Apply(ctx context.Context, lease writer.Lease, requestID strin
 	if err != nil {
 		return reducer.Result{}, err
 	}
-	result, err := s.Reducer.Anonymize(ctx, lease, sessionID, actors)
+	result, err := s.Reducer.AnonymizeWithCompletion(ctx, lease, sessionID, actors, func(ctx context.Context, tx writer.FencedTx) error {
+		tag, err := tx.Exec(ctx, `UPDATE ttg.privacy_erase_requests SET status = 'applied', applied_at = now() WHERE id = $1 AND status = 'queued' AND tombstone_id = $2`, requestID, tombstoneID)
+		if err != nil {
+			return err
+		}
+		if tag.RowsAffected() != 1 {
+			return ErrErasureState
+		}
+		_, err = tx.Exec(ctx, `UPDATE ttg.privacy_tombstones SET restore_applied_at = now() WHERE id = $1`, tombstoneID)
+		return err
+	})
 	if err != nil {
-		return reducer.Result{}, err
-	}
-	tx, err := s.Pool.Begin(ctx)
-	if err != nil {
-		return reducer.Result{}, err
-	}
-	defer tx.Rollback(ctx)
-	if _, err := tx.Exec(ctx, `UPDATE ttg.privacy_erase_requests SET status = 'applied', applied_at = now() WHERE id = $1 AND status = 'queued'`, requestID); err != nil {
-		return reducer.Result{}, err
-	}
-	if _, err := tx.Exec(ctx, `UPDATE ttg.privacy_tombstones SET restore_applied_at = now() WHERE actor_ref_protected = $1 AND scope = 'session'`, actorRef); err != nil {
-		return reducer.Result{}, err
-	}
-	if err := tx.Commit(ctx); err != nil {
 		return reducer.Result{}, err
 	}
 	return result, nil
@@ -297,12 +298,11 @@ func (s *Service) Status(ctx context.Context, requestID string) (ErasureRequest,
 	}
 	defer tx.Rollback(ctx)
 	err = tx.QueryRow(ctx, `SELECT r.id::text, r.session_id::text, r.actor_ref_protected, r.scope, r.status, r.privacy_epoch,
-		COALESCE(o.seq, 0), COALESCE(o.ledger_ack_ref, '')
+		COALESCE(o.seq, 0), COALESCE(o.ledger_ack_ref, ''), COALESCE(r.tombstone_id::text, '')
 		FROM ttg.privacy_erase_requests r
-		LEFT JOIN ttg.privacy_tombstones t ON t.actor_ref_protected = r.actor_ref_protected AND t.scope = r.scope
-		LEFT JOIN ttg.privacy_ledger_outbox o ON o.tombstone_id = t.id
+		LEFT JOIN ttg.privacy_ledger_outbox o ON o.tombstone_id = r.tombstone_id
 		WHERE r.id = $1 ORDER BY o.seq DESC LIMIT 1`, requestID).Scan(
-		&request.ID, &request.SessionID, &request.ActorRef, &request.Scope, &request.Status, &request.PrivacyEpoch, &request.OutboxSeq, &request.LedgerAckRef)
+		&request.ID, &request.SessionID, &request.ActorRef, &request.Scope, &request.Status, &request.PrivacyEpoch, &request.OutboxSeq, &request.LedgerAckRef, &request.TombstoneID)
 	if err != nil {
 		return ErasureRequest{}, err
 	}
@@ -313,7 +313,7 @@ func (s *Service) Coverage(ctx context.Context, target string, horizon time.Time
 	if s == nil || s.Ledger == nil {
 		return ErrLedgerCoverage
 	}
-	proof, err := s.Ledger.Verify(target, horizon)
+	proof, err := s.Ledger.Verify(target)
 	if err != nil {
 		return err
 	}

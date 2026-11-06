@@ -58,7 +58,7 @@ func dbVersion(t *testing.T, db *sql.DB) int64 {
 // TestMigrationLifecycleDestructive proves the upgrade path and the rollback
 // guard on a database that is explicitly marked disposable:
 //
-//	version 3 data survives the upgrade to version 9, re-applying is idempotent,
+//	version 3 data survives the upgrade to version 10, re-applying is idempotent,
 //	and a rollback that would destroy identity mappings or unexported deletion
 //	events fails closed.
 func TestMigrationLifecycleDestructive(t *testing.T) {
@@ -91,8 +91,8 @@ func TestMigrationLifecycleDestructive(t *testing.T) {
 	if err := goose.UpContext(ctx, db, "."); err != nil {
 		t.Fatalf("up to latest: %v", err)
 	}
-	if got := dbVersion(t, db); got != 9 {
-		t.Fatalf("expected version 9 after upgrade, got %d", got)
+	if got := dbVersion(t, db); got != 10 {
+		t.Fatalf("expected version 10 after upgrade, got %d", got)
 	}
 	var surviving int
 	if err := db.QueryRowContext(ctx,
@@ -100,21 +100,21 @@ func TestMigrationLifecycleDestructive(t *testing.T) {
 		t.Fatalf("count village: %v", err)
 	}
 	if surviving != 1 {
-		t.Fatal("data created at version 3 did not survive the upgrade to version 9")
+		t.Fatal("data created at version 3 did not survive the upgrade to version 10")
 	}
 	if err := db.QueryRowContext(ctx,
 		`SELECT count(*) FROM ttg.players WHERE id = $1`, playerID).Scan(&surviving); err != nil {
 		t.Fatalf("count player: %v", err)
 	}
 	if surviving != 1 {
-		t.Fatal("player created at version 3 did not survive the upgrade to version 9")
+		t.Fatal("player created at version 3 did not survive the upgrade to version 10")
 	}
 
 	// Re-applying at the latest version is idempotent.
 	if err := goose.UpContext(ctx, db, "."); err != nil {
 		t.Fatalf("re-applying migrations must be a no-op: %v", err)
 	}
-	if got := dbVersion(t, db); got != 9 {
+	if got := dbVersion(t, db); got != 10 {
 		t.Fatalf("version changed on a repeat run: %d", got)
 	}
 
@@ -181,7 +181,7 @@ func TestMigrationLifecycleDestructive(t *testing.T) {
 	if err := goose.UpContext(ctx, db, "."); err != nil {
 		t.Fatalf("rebuild after full rollback: %v", err)
 	}
-	if got := dbVersion(t, db); got != 9 {
-		t.Fatalf("expected version 9 after rebuilding, got %d", got)
+	if got := dbVersion(t, db); got != 10 {
+		t.Fatalf("expected version 10 after rebuilding, got %d", got)
 	}
 }
