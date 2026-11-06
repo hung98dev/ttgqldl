@@ -1,0 +1,271 @@
+{
+  "schema_version": "art010.asset_provenance.v1",
+  "package": "ART-010",
+  "phase": "Phase A — Visual Exploration & Art Direction Approval",
+  "gate_legal": "PENDING_REVIEW",
+  "owner_direction_approval": "PENDING_OWNER_CHOICE (HARD STOP BEFORE ART-010B)",
+  "rights_summary": "All 18 concept images and 4 comparison boards in ART-010 are original internal Phase A design exploration mockups created specifically for TTGQLDL art-direction selection. Zero third-party proprietary game screenshots, ripped sprites, or unlicensed stock icons were used. Commercial release rights sign-off remains gated under GATE-LEGAL (PENDING_REVIEW) and production asset replacement is gated on owner direction approval prior to ART-010B.",
+  "claims_disclaimers": {
+    "unity_runtime_scene_built_in_art010_phase_a": false,
+    "human_viewer_usability_study_conducted": false,
+    "replaces_art003_to_art009_production_masters": false,
+    "m06_marked_pass": false
+  },
+  "deliverables_count": 22,
+  "deliverables": [
+    {
+      "deliverable_path": "art/production/ART-010/concepts/A_fantasy_diorama/environment_clean.png",
+      "concept": "A_fantasy_diorama",
+      "role": "Clean 1080x1920 world art plate without HUD",
+      "sha256": "56eec7c5689e4484139dfeb48029570fb94d8965ae9716b713821923aaefc57c",
+      "source_world_plate_sha256": "57666a9251a41eca9d48fd9c9d2ebdf83cb37930a52619156ab60d746f5577ee",
+      "source_icon_sheet_sha256": "9e15e737e9a9e89028cbb7eabe251d1595d12b2553f906b7ec08429bb6dd71e4",
+      "generation_method": "Original AI-assisted painted 2D concept world plate + deterministic Python/Pillow studio HUD & safe-area compositor (compose_art010.py)",
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/concepts/A_fantasy_diorama/gameplay_1080p.png",
+      "concept": "A_fantasy_diorama",
+      "role": "Active ASSAULT 1080x1920 beauty mockup with integrated diegetic HUD",
+      "sha256": "90f380911b656d3aa8194de8605c9c8432f90ec78f58f4f74d877264ed4ed7b1",
+      "source_world_plate_sha256": "91cd9804186641b9f99e3e7f081f172bd3fc3bd2b72009dd42cf58d672cd1a83",
+      "source_icon_sheet_sha256": "9e15e737e9a9e89028cbb7eabe251d1595d12b2553f906b7ec08429bb6dd71e4",
+      "generation_method": "Original AI-assisted painted 2D concept world plate + deterministic Python/Pillow studio HUD & safe-area compositor (compose_art010.py)",
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/concepts/A_fantasy_diorama/boss_1080p.png",
+      "concept": "A_fantasy_diorama",
+      "role": "Boss FINALE 1080x1920 beauty mockup (Wave 10 tick >= 2600) with integrated diegetic HUD",
+      "sha256": "96aa232e2a62b97210c81a1b57ad62dd246b2db7779fd81ee455b5b93bb3459b",
+      "source_world_plate_sha256": "85465bdad2ab92858bbdfa66c859aa4f7c393d805fa784c89cf30a241560f876",
+      "source_icon_sheet_sha256": "9e15e737e9a9e89028cbb7eabe251d1595d12b2553f906b7ec08429bb6dd71e4",
+      "generation_method": "Original AI-assisted painted 2D concept world plate + deterministic Python/Pillow studio HUD & safe-area compositor (compose_art010.py)",
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/concepts/A_fantasy_diorama/gameplay_360p.png",
+      "concept": "A_fantasy_diorama",
+      "role": "True 1:1 360x640 direct LANCZOS downscale of gameplay_1080p.png",
+      "sha256": "b3940abd32fd6b67e16316f099133c93af5aff6e7dbaa2d92dc5d18814ff5aba",
+      "source_world_plate_sha256": "91cd9804186641b9f99e3e7f081f172bd3fc3bd2b72009dd42cf58d672cd1a83",
+      "source_icon_sheet_sha256": "9e15e737e9a9e89028cbb7eabe251d1595d12b2553f906b7ec08429bb6dd71e4",
+      "generation_method": "Original AI-assisted painted 2D concept world plate + deterministic Python/Pillow studio HUD & safe-area compositor (compose_art010.py)",
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/concepts/A_fantasy_diorama/boss_360p.png",
+      "concept": "A_fantasy_diorama",
+      "role": "True 1:1 360x640 direct LANCZOS downscale of boss_1080p.png",
+      "sha256": "e95d2450517df912bd2151772449055e91e52ccc6b7f4629532dd32c11cc07a7",
+      "source_world_plate_sha256": "85465bdad2ab92858bbdfa66c859aa4f7c393d805fa784c89cf30a241560f876",
+      "source_icon_sheet_sha256": "9e15e737e9a9e89028cbb7eabe251d1595d12b2553f906b7ec08429bb6dd71e4",
+      "generation_method": "Original AI-assisted painted 2D concept world plate + deterministic Python/Pillow studio HUD & safe-area compositor (compose_art010.py)",
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/concepts/A_fantasy_diorama/safe_area.png",
+      "concept": "A_fantasy_diorama",
+      "role": "TikTok 82%x88% safe-area & focal zone review diagram",
+      "sha256": "f2a528bfba2118e397e271090cbedeacc32520d1222a7a17e94a4a8f321f1396",
+      "source_world_plate_sha256": "91cd9804186641b9f99e3e7f081f172bd3fc3bd2b72009dd42cf58d672cd1a83",
+      "source_icon_sheet_sha256": "9e15e737e9a9e89028cbb7eabe251d1595d12b2553f906b7ec08429bb6dd71e4",
+      "generation_method": "Original AI-assisted painted 2D concept world plate + deterministic Python/Pillow studio HUD & safe-area compositor (compose_art010.py)",
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/concepts/B_action_defense/environment_clean.png",
+      "concept": "B_action_defense",
+      "role": "Clean 1080x1920 world art plate without HUD",
+      "sha256": "f1a195ff93ebd7ee1cda0810930f4248ad36f7bd82d3911fa881997e5ee9a61c",
+      "source_world_plate_sha256": "93b6942a1a6830f3d98c95edff326e4de48fe12d77d62da400dc2c6e4ae003be",
+      "source_icon_sheet_sha256": "9e15e737e9a9e89028cbb7eabe251d1595d12b2553f906b7ec08429bb6dd71e4",
+      "generation_method": "Original AI-assisted painted 2D concept world plate + deterministic Python/Pillow studio HUD & safe-area compositor (compose_art010.py)",
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/concepts/B_action_defense/gameplay_1080p.png",
+      "concept": "B_action_defense",
+      "role": "Active ASSAULT 1080x1920 beauty mockup with integrated diegetic HUD",
+      "sha256": "c76c6d87d6fab6d6ca6f6051caaf6096f98525b7b8f1a7cab345b7bfcb441997",
+      "source_world_plate_sha256": "8345877f3c77e13c2d416739c166b06abcb0f15dbdeaa40882ab33543890c3a8",
+      "source_icon_sheet_sha256": "9e15e737e9a9e89028cbb7eabe251d1595d12b2553f906b7ec08429bb6dd71e4",
+      "generation_method": "Original AI-assisted painted 2D concept world plate + deterministic Python/Pillow studio HUD & safe-area compositor (compose_art010.py)",
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/concepts/B_action_defense/boss_1080p.png",
+      "concept": "B_action_defense",
+      "role": "Boss FINALE 1080x1920 beauty mockup (Wave 10 tick >= 2600) with integrated diegetic HUD",
+      "sha256": "8fc60584dec7e38838150f0d235c7a1a62224d31283099d7c3905a8a608b6ec8",
+      "source_world_plate_sha256": "0dd94bd83e98d010323e2b58d63e9850e706e3a8e236c18b574dc8d700a7b487",
+      "source_icon_sheet_sha256": "9e15e737e9a9e89028cbb7eabe251d1595d12b2553f906b7ec08429bb6dd71e4",
+      "generation_method": "Original AI-assisted painted 2D concept world plate + deterministic Python/Pillow studio HUD & safe-area compositor (compose_art010.py)",
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/concepts/B_action_defense/gameplay_360p.png",
+      "concept": "B_action_defense",
+      "role": "True 1:1 360x640 direct LANCZOS downscale of gameplay_1080p.png",
+      "sha256": "95a2f71facfd7847bde36449ca716b1391b7c0d1499e128db5334815f157cd18",
+      "source_world_plate_sha256": "8345877f3c77e13c2d416739c166b06abcb0f15dbdeaa40882ab33543890c3a8",
+      "source_icon_sheet_sha256": "9e15e737e9a9e89028cbb7eabe251d1595d12b2553f906b7ec08429bb6dd71e4",
+      "generation_method": "Original AI-assisted painted 2D concept world plate + deterministic Python/Pillow studio HUD & safe-area compositor (compose_art010.py)",
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/concepts/B_action_defense/boss_360p.png",
+      "concept": "B_action_defense",
+      "role": "True 1:1 360x640 direct LANCZOS downscale of boss_1080p.png",
+      "sha256": "ef98051db83e970efcba913f5d1c61f22038646aea9dad6a5ba6d44c92d33639",
+      "source_world_plate_sha256": "0dd94bd83e98d010323e2b58d63e9850e706e3a8e236c18b574dc8d700a7b487",
+      "source_icon_sheet_sha256": "9e15e737e9a9e89028cbb7eabe251d1595d12b2553f906b7ec08429bb6dd71e4",
+      "generation_method": "Original AI-assisted painted 2D concept world plate + deterministic Python/Pillow studio HUD & safe-area compositor (compose_art010.py)",
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/concepts/B_action_defense/safe_area.png",
+      "concept": "B_action_defense",
+      "role": "TikTok 82%x88% safe-area & focal zone review diagram",
+      "sha256": "85d0cf768be340f016b94c948324e15423f9e33256a43ef69cad7cf1652071dd",
+      "source_world_plate_sha256": "8345877f3c77e13c2d416739c166b06abcb0f15dbdeaa40882ab33543890c3a8",
+      "source_icon_sheet_sha256": "9e15e737e9a9e89028cbb7eabe251d1595d12b2553f906b7ec08429bb6dd71e4",
+      "generation_method": "Original AI-assisted painted 2D concept world plate + deterministic Python/Pillow studio HUD & safe-area compositor (compose_art010.py)",
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/concepts/C_vertical_siege/environment_clean.png",
+      "concept": "C_vertical_siege",
+      "role": "Clean 1080x1920 world art plate without HUD",
+      "sha256": "bfbf82ed130e51edc54555944bd85ff5b920c29cb66bb1085869df7df579bea7",
+      "source_world_plate_sha256": "d7705d83581524ccc159f0c80552030eb63af52482c3fb988a451bb79bbb322f",
+      "source_icon_sheet_sha256": "9e15e737e9a9e89028cbb7eabe251d1595d12b2553f906b7ec08429bb6dd71e4",
+      "generation_method": "Original AI-assisted painted 2D concept world plate + deterministic Python/Pillow studio HUD & safe-area compositor (compose_art010.py)",
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/concepts/C_vertical_siege/gameplay_1080p.png",
+      "concept": "C_vertical_siege",
+      "role": "Active ASSAULT 1080x1920 beauty mockup with integrated diegetic HUD",
+      "sha256": "5c66c8f5ab9cf70e2645c5db35276aac17ad5c4a14fb643899ebfd052aa81432",
+      "source_world_plate_sha256": "62bbfece69346c0f2f3444b45c686d2cc12648ab4bd00a9829eb54815e7e3ffc",
+      "source_icon_sheet_sha256": "9e15e737e9a9e89028cbb7eabe251d1595d12b2553f906b7ec08429bb6dd71e4",
+      "generation_method": "Original AI-assisted painted 2D concept world plate + deterministic Python/Pillow studio HUD & safe-area compositor (compose_art010.py)",
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/concepts/C_vertical_siege/boss_1080p.png",
+      "concept": "C_vertical_siege",
+      "role": "Boss FINALE 1080x1920 beauty mockup (Wave 10 tick >= 2600) with integrated diegetic HUD",
+      "sha256": "8728e5a75f112776969c31417651cd047f46a6e71539d6e523b106e40cfa2c56",
+      "source_world_plate_sha256": "a7087265b9279bc8228d13c7c75f1a4b9d6dfa9913ecf2e9be4b7a55ae575ea6",
+      "source_icon_sheet_sha256": "9e15e737e9a9e89028cbb7eabe251d1595d12b2553f906b7ec08429bb6dd71e4",
+      "generation_method": "Original AI-assisted painted 2D concept world plate + deterministic Python/Pillow studio HUD & safe-area compositor (compose_art010.py)",
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/concepts/C_vertical_siege/gameplay_360p.png",
+      "concept": "C_vertical_siege",
+      "role": "True 1:1 360x640 direct LANCZOS downscale of gameplay_1080p.png",
+      "sha256": "ad50bf2fab8ea89cae3fd5e99ed05c2eeae79dd701b68442d5fc143047c8257e",
+      "source_world_plate_sha256": "62bbfece69346c0f2f3444b45c686d2cc12648ab4bd00a9829eb54815e7e3ffc",
+      "source_icon_sheet_sha256": "9e15e737e9a9e89028cbb7eabe251d1595d12b2553f906b7ec08429bb6dd71e4",
+      "generation_method": "Original AI-assisted painted 2D concept world plate + deterministic Python/Pillow studio HUD & safe-area compositor (compose_art010.py)",
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/concepts/C_vertical_siege/boss_360p.png",
+      "concept": "C_vertical_siege",
+      "role": "True 1:1 360x640 direct LANCZOS downscale of boss_1080p.png",
+      "sha256": "7c3b779f117f46e0c32c9e43d481f7b03dea30d120ee0e26cc08908659eee94c",
+      "source_world_plate_sha256": "a7087265b9279bc8228d13c7c75f1a4b9d6dfa9913ecf2e9be4b7a55ae575ea6",
+      "source_icon_sheet_sha256": "9e15e737e9a9e89028cbb7eabe251d1595d12b2553f906b7ec08429bb6dd71e4",
+      "generation_method": "Original AI-assisted painted 2D concept world plate + deterministic Python/Pillow studio HUD & safe-area compositor (compose_art010.py)",
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/concepts/C_vertical_siege/safe_area.png",
+      "concept": "C_vertical_siege",
+      "role": "TikTok 82%x88% safe-area & focal zone review diagram",
+      "sha256": "438c4e759a38668361961733709663ad365a3116772209c5836e19c7a9fdb07b",
+      "source_world_plate_sha256": "62bbfece69346c0f2f3444b45c686d2cc12648ab4bd00a9829eb54815e7e3ffc",
+      "source_icon_sheet_sha256": "9e15e737e9a9e89028cbb7eabe251d1595d12b2553f906b7ec08429bb6dd71e4",
+      "generation_method": "Original AI-assisted painted 2D concept world plate + deterministic Python/Pillow studio HUD & safe-area compositor (compose_art010.py)",
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/comparisons/current_vs_A.png",
+      "concept": "comparison",
+      "role": "Before/After comparison board (current_vs_A.png) against repository ART-009 baseline",
+      "sha256": "7781c7671e65f5c339092b0ed6e38c996690f75bab58c7827d5cd0e2fd335350",
+      "baseline_inputs": [
+        "art/production/ART-009/previews/corrected_hud/05_assault_1080p.png",
+        "art/production/ART-009/previews/corrected_hud/07_boss_active_1080p.png",
+        "art/production/ART-009/previews/mobile/05_assault_360p.png",
+        "art/production/ART-009/previews/mobile/07_boss_active_360p.png"
+      ],
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/comparisons/current_vs_B.png",
+      "concept": "comparison",
+      "role": "Before/After comparison board (current_vs_B.png) against repository ART-009 baseline",
+      "sha256": "a2ceb01ad23977c708f80590795a88ef861701daac238a82cc0987249f080260",
+      "baseline_inputs": [
+        "art/production/ART-009/previews/corrected_hud/05_assault_1080p.png",
+        "art/production/ART-009/previews/corrected_hud/07_boss_active_1080p.png",
+        "art/production/ART-009/previews/mobile/05_assault_360p.png",
+        "art/production/ART-009/previews/mobile/07_boss_active_360p.png"
+      ],
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/comparisons/current_vs_C.png",
+      "concept": "comparison",
+      "role": "Before/After comparison board (current_vs_C.png) against repository ART-009 baseline",
+      "sha256": "ddd9da430b23cc54729f392f67a1d221f19708c2b6fb116d17632c1dd68a145b",
+      "baseline_inputs": [
+        "art/production/ART-009/previews/corrected_hud/05_assault_1080p.png",
+        "art/production/ART-009/previews/corrected_hud/07_boss_active_1080p.png",
+        "art/production/ART-009/previews/mobile/05_assault_360p.png",
+        "art/production/ART-009/previews/mobile/07_boss_active_360p.png"
+      ],
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    },
+    {
+      "deliverable_path": "art/production/ART-010/comparisons/all_three_360p.png",
+      "concept": "comparison",
+      "role": "Before/After comparison board (all_three_360p.png) against repository ART-009 baseline",
+      "sha256": "aa3003ea1c440f38c5d004536c9fc44d22369aa3713f9ed4492874d600aa4d5f",
+      "baseline_inputs": [
+        "art/production/ART-009/previews/corrected_hud/05_assault_1080p.png",
+        "art/production/ART-009/previews/corrected_hud/07_boss_active_1080p.png",
+        "art/production/ART-009/previews/mobile/05_assault_360p.png",
+        "art/production/ART-009/previews/mobile/07_boss_active_360p.png"
+      ],
+      "third_party_game_assets_used": false,
+      "rights_status": "DESIGN_EXPLORATION_MOCKUP_ONLY — PENDING_OWNER_DIRECTION_APPROVAL"
+    }
+  ]
+}

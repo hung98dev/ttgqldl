@@ -1,0 +1,433 @@
+{
+  "schema_version": "art010.composition_metrics.v1",
+  "package": "ART-010",
+  "phase": "Phase A — Three Premium Gameplay Art Directions for Approval",
+  "nature_of_deliverables": "STATIC_DESIGN_MOCKUPS_ONLY (not Unity runtime captures; not human viewer study results)",
+  "baseline_art009": {
+    "05_assault_1080p.png": {
+      "width": 1080,
+      "height": 1920,
+      "sha256": "0c16c0a1ee11e49e27ea0525f2236ed36ebd1db576691f851af21207d21584cf",
+      "file_bytes": 472491,
+      "luma_mean": 128.09,
+      "luma_std_contrast": 51.26,
+      "edge_energy_mean": 8.22,
+      "luma_entropy_bits": 5.338,
+      "flat_empty_block_ratio": 0.5929
+    },
+    "07_boss_active_1080p.png": {
+      "width": 1080,
+      "height": 1920,
+      "sha256": "c7ce8333bad719c97011964543d7a57f26722ee933687d609d784de1d67efead",
+      "file_bytes": 447150,
+      "luma_mean": 128.5,
+      "luma_std_contrast": 51.19,
+      "edge_energy_mean": 7.73,
+      "luma_entropy_bits": 5.307,
+      "flat_empty_block_ratio": 0.6061
+    },
+    "05_assault_360p.png": {
+      "width": 360,
+      "height": 640,
+      "sha256": "982388a2c733be446264ceb8a4a358ec2a582b22ef10852421d9d4b9942e1b12",
+      "file_bytes": 116805,
+      "luma_mean": 128.29,
+      "luma_std_contrast": 49.56,
+      "edge_energy_mean": 15.6,
+      "luma_entropy_bits": 5.472,
+      "flat_empty_block_ratio": 0.4
+    },
+    "07_boss_active_360p.png": {
+      "width": 360,
+      "height": 640,
+      "sha256": "c266f9e4df11aa9dc4ee7d66dabb644fdce5306588786f90e63857a20f5ab904",
+      "file_bytes": 112779,
+      "luma_mean": 128.69,
+      "luma_std_contrast": 49.61,
+      "edge_energy_mean": 15.09,
+      "luma_entropy_bits": 5.45,
+      "flat_empty_block_ratio": 0.4091
+    }
+  },
+  "concepts": {
+    "A_fantasy_diorama": {
+      "theme": "Storybook Royal Oak & Burnished Gold",
+      "files": {
+        "gameplay_1080p.png": {
+          "width": 1080,
+          "height": 1920,
+          "sha256": "90f380911b656d3aa8194de8605c9c8432f90ec78f58f4f74d877264ed4ed7b1",
+          "file_bytes": 3608726,
+          "luma_mean": 104.2,
+          "luma_std_contrast": 58.21,
+          "edge_energy_mean": 18.69,
+          "luma_entropy_bits": 7.748,
+          "flat_empty_block_ratio": 0.0051
+        },
+        "boss_1080p.png": {
+          "width": 1080,
+          "height": 1920,
+          "sha256": "96aa232e2a62b97210c81a1b57ad62dd246b2db7779fd81ee455b5b93bb3459b",
+          "file_bytes": 3472716,
+          "luma_mean": 77.82,
+          "luma_std_contrast": 47.0,
+          "edge_energy_mean": 16.52,
+          "luma_entropy_bits": 7.396,
+          "flat_empty_block_ratio": 0.0066
+        },
+        "gameplay_360p.png": {
+          "width": 360,
+          "height": 640,
+          "sha256": "b3940abd32fd6b67e16316f099133c93af5aff6e7dbaa2d92dc5d18814ff5aba",
+          "file_bytes": 520759,
+          "luma_mean": 104.19,
+          "luma_std_contrast": 54.34,
+          "edge_energy_mean": 32.68,
+          "luma_entropy_bits": 7.706,
+          "flat_empty_block_ratio": 0.0
+        },
+        "boss_360p.png": {
+          "width": 360,
+          "height": 640,
+          "sha256": "e95d2450517df912bd2151772449055e91e52ccc6b7f4629532dd32c11cc07a7",
+          "file_bytes": 501375,
+          "luma_mean": 77.82,
+          "luma_std_contrast": 42.91,
+          "edge_energy_mean": 28.25,
+          "luma_entropy_bits": 7.328,
+          "flat_empty_block_ratio": 0.0
+        },
+        "safe_area.png": {
+          "width": 1080,
+          "height": 1920,
+          "sha256": "f2a528bfba2118e397e271090cbedeacc32520d1222a7a17e94a4a8f321f1396",
+          "file_bytes": 3301262,
+          "luma_mean": 98.42,
+          "luma_std_contrast": 59.23,
+          "edge_energy_mean": 19.31,
+          "luma_entropy_bits": 7.667,
+          "flat_empty_block_ratio": 0.0056
+        },
+        "environment_clean.png": {
+          "width": 1080,
+          "height": 1920,
+          "sha256": "56eec7c5689e4484139dfeb48029570fb94d8965ae9716b713821923aaefc57c",
+          "file_bytes": 3816980,
+          "luma_mean": 125.52,
+          "luma_std_contrast": 57.85,
+          "edge_energy_mean": 15.33,
+          "luma_entropy_bits": 7.793,
+          "flat_empty_block_ratio": 0.0293
+        }
+      },
+      "true_downscale_verification": {
+        "gameplay_360p_psnr_db": 99.0,
+        "boss_360p_psnr_db": 99.0,
+        "method": "Direct PIL.Image.Resampling.LANCZOS 1080x1920 -> 360x640 (never redrawn)"
+      },
+      "safe_area_compliance": {
+        "canvas_px": [
+          1080,
+          1920
+        ],
+        "safe_x_max_px": 885,
+        "safe_y_max_px": 1689,
+        "top_hud_box_px": [
+          30,
+          20,
+          872,
+          202
+        ],
+        "bottom_hud_box_px": [
+          30,
+          1458,
+          872,
+          1679
+        ],
+        "castle_focal_box_px": [
+          95,
+          760,
+          862,
+          1395
+        ],
+        "combat_zone_box_px": [
+          60,
+          260,
+          862,
+          740
+        ],
+        "right_18pct_hud_overlap_px": 0,
+        "bottom_12pct_hud_overlap_px": 0,
+        "status": "PASS"
+      }
+    },
+    "B_action_defense": {
+      "theme": "Forged Obsidian Iron & Ember Bronze",
+      "files": {
+        "gameplay_1080p.png": {
+          "width": 1080,
+          "height": 1920,
+          "sha256": "c76c6d87d6fab6d6ca6f6051caaf6096f98525b7b8f1a7cab345b7bfcb441997",
+          "file_bytes": 3097730,
+          "luma_mean": 59.46,
+          "luma_std_contrast": 45.92,
+          "edge_energy_mean": 14.71,
+          "luma_entropy_bits": 7.182,
+          "flat_empty_block_ratio": 0.0379
+        },
+        "boss_1080p.png": {
+          "width": 1080,
+          "height": 1920,
+          "sha256": "8fc60584dec7e38838150f0d235c7a1a62224d31283099d7c3905a8a608b6ec8",
+          "file_bytes": 3082116,
+          "luma_mean": 58.7,
+          "luma_std_contrast": 46.14,
+          "edge_energy_mean": 14.34,
+          "luma_entropy_bits": 7.167,
+          "flat_empty_block_ratio": 0.0404
+        },
+        "gameplay_360p.png": {
+          "width": 360,
+          "height": 640,
+          "sha256": "95a2f71facfd7847bde36449ca716b1391b7c0d1499e128db5334815f157cd18",
+          "file_bytes": 456960,
+          "luma_mean": 59.48,
+          "luma_std_contrast": 41.94,
+          "edge_energy_mean": 24.73,
+          "luma_entropy_bits": 7.152,
+          "flat_empty_block_ratio": 0.0045
+        },
+        "boss_360p.png": {
+          "width": 360,
+          "height": 640,
+          "sha256": "ef98051db83e970efcba913f5d1c61f22038646aea9dad6a5ba6d44c92d33639",
+          "file_bytes": 456787,
+          "luma_mean": 58.71,
+          "luma_std_contrast": 42.3,
+          "edge_energy_mean": 24.52,
+          "luma_entropy_bits": 7.14,
+          "flat_empty_block_ratio": 0.0045
+        },
+        "safe_area.png": {
+          "width": 1080,
+          "height": 1920,
+          "sha256": "85d0cf768be340f016b94c948324e15423f9e33256a43ef69cad7cf1652071dd",
+          "file_bytes": 2886676,
+          "luma_mean": 65.66,
+          "luma_std_contrast": 49.94,
+          "edge_energy_mean": 17.53,
+          "luma_entropy_bits": 7.15,
+          "flat_empty_block_ratio": 0.052
+        },
+        "environment_clean.png": {
+          "width": 1080,
+          "height": 1920,
+          "sha256": "f1a195ff93ebd7ee1cda0810930f4248ad36f7bd82d3911fa881997e5ee9a61c",
+          "file_bytes": 3166524,
+          "luma_mean": 65.9,
+          "luma_std_contrast": 42.13,
+          "edge_energy_mean": 10.95,
+          "luma_entropy_bits": 7.265,
+          "flat_empty_block_ratio": 0.0404
+        }
+      },
+      "true_downscale_verification": {
+        "gameplay_360p_psnr_db": 99.0,
+        "boss_360p_psnr_db": 99.0,
+        "method": "Direct PIL.Image.Resampling.LANCZOS 1080x1920 -> 360x640 (never redrawn)"
+      },
+      "safe_area_compliance": {
+        "canvas_px": [
+          1080,
+          1920
+        ],
+        "safe_x_max_px": 885,
+        "safe_y_max_px": 1689,
+        "top_hud_box_px": [
+          30,
+          20,
+          872,
+          202
+        ],
+        "bottom_hud_box_px": [
+          30,
+          1458,
+          872,
+          1679
+        ],
+        "castle_focal_box_px": [
+          55,
+          905,
+          862,
+          1395
+        ],
+        "combat_zone_box_px": [
+          55,
+          260,
+          862,
+          885
+        ],
+        "right_18pct_hud_overlap_px": 0,
+        "bottom_12pct_hud_overlap_px": 0,
+        "status": "PASS"
+      }
+    },
+    "C_vertical_siege": {
+      "theme": "Citadel Chiseled Slate & Antique Gold",
+      "files": {
+        "gameplay_1080p.png": {
+          "width": 1080,
+          "height": 1920,
+          "sha256": "5c66c8f5ab9cf70e2645c5db35276aac17ad5c4a14fb643899ebfd052aa81432",
+          "file_bytes": 3264478,
+          "luma_mean": 66.34,
+          "luma_std_contrast": 44.8,
+          "edge_energy_mean": 15.82,
+          "luma_entropy_bits": 7.216,
+          "flat_empty_block_ratio": 0.0742
+        },
+        "boss_1080p.png": {
+          "width": 1080,
+          "height": 1920,
+          "sha256": "8728e5a75f112776969c31417651cd047f46a6e71539d6e523b106e40cfa2c56",
+          "file_bytes": 3259053,
+          "luma_mean": 62.67,
+          "luma_std_contrast": 43.76,
+          "edge_energy_mean": 15.69,
+          "luma_entropy_bits": 7.162,
+          "flat_empty_block_ratio": 0.0687
+        },
+        "gameplay_360p.png": {
+          "width": 360,
+          "height": 640,
+          "sha256": "ad50bf2fab8ea89cae3fd5e99ed05c2eeae79dd701b68442d5fc143047c8257e",
+          "file_bytes": 458193,
+          "luma_mean": 66.35,
+          "luma_std_contrast": 40.51,
+          "edge_energy_mean": 24.37,
+          "luma_entropy_bits": 7.138,
+          "flat_empty_block_ratio": 0.0
+        },
+        "boss_360p.png": {
+          "width": 360,
+          "height": 640,
+          "sha256": "7c3b779f117f46e0c32c9e43d481f7b03dea30d120ee0e26cc08908659eee94c",
+          "file_bytes": 457340,
+          "luma_mean": 62.68,
+          "luma_std_contrast": 39.4,
+          "edge_energy_mean": 23.86,
+          "luma_entropy_bits": 7.073,
+          "flat_empty_block_ratio": 0.0
+        },
+        "safe_area.png": {
+          "width": 1080,
+          "height": 1920,
+          "sha256": "438c4e759a38668361961733709663ad365a3116772209c5836e19c7a9fdb07b",
+          "file_bytes": 3013209,
+          "luma_mean": 70.22,
+          "luma_std_contrast": 49.21,
+          "edge_energy_mean": 17.97,
+          "luma_entropy_bits": 7.23,
+          "flat_empty_block_ratio": 0.0768
+        },
+        "environment_clean.png": {
+          "width": 1080,
+          "height": 1920,
+          "sha256": "bfbf82ed130e51edc54555944bd85ff5b920c29cb66bb1085869df7df579bea7",
+          "file_bytes": 3465668,
+          "luma_mean": 71.5,
+          "luma_std_contrast": 39.53,
+          "edge_energy_mean": 13.22,
+          "luma_entropy_bits": 7.221,
+          "flat_empty_block_ratio": 0.1141
+        }
+      },
+      "true_downscale_verification": {
+        "gameplay_360p_psnr_db": 99.0,
+        "boss_360p_psnr_db": 99.0,
+        "method": "Direct PIL.Image.Resampling.LANCZOS 1080x1920 -> 360x640 (never redrawn)"
+      },
+      "safe_area_compliance": {
+        "canvas_px": [
+          1080,
+          1920
+        ],
+        "safe_x_max_px": 885,
+        "safe_y_max_px": 1689,
+        "top_hud_box_px": [
+          30,
+          20,
+          872,
+          202
+        ],
+        "bottom_hud_box_px": [
+          30,
+          1458,
+          872,
+          1679
+        ],
+        "castle_focal_box_px": [
+          55,
+          885,
+          765,
+          1395
+        ],
+        "combat_zone_box_px": [
+          65,
+          255,
+          835,
+          865
+        ],
+        "right_18pct_hud_overlap_px": 0,
+        "bottom_12pct_hud_overlap_px": 0,
+        "status": "PASS"
+      }
+    }
+  },
+  "comparisons": {
+    "current_vs_A.png": {
+      "width": 2360,
+      "height": 1480,
+      "sha256": "7781c7671e65f5c339092b0ed6e38c996690f75bab58c7827d5cd0e2fd335350",
+      "file_bytes": 2748432,
+      "luma_mean": 82.26,
+      "luma_std_contrast": 62.99,
+      "edge_energy_mean": 17.99,
+      "luma_entropy_bits": 6.426,
+      "flat_empty_block_ratio": 0.2004
+    },
+    "current_vs_B.png": {
+      "width": 2360,
+      "height": 1480,
+      "sha256": "a2ceb01ad23977c708f80590795a88ef861701daac238a82cc0987249f080260",
+      "file_bytes": 2493139,
+      "luma_mean": 72.51,
+      "luma_std_contrast": 61.3,
+      "edge_energy_mean": 16.36,
+      "luma_entropy_bits": 6.303,
+      "flat_empty_block_ratio": 0.2028
+    },
+    "current_vs_C.png": {
+      "width": 2360,
+      "height": 1480,
+      "sha256": "ddd9da430b23cc54729f392f67a1d221f19708c2b6fb116d17632c1dd68a145b",
+      "file_bytes": 2548964,
+      "luma_mean": 74.15,
+      "luma_std_contrast": 60.53,
+      "edge_energy_mean": 16.56,
+      "luma_entropy_bits": 6.326,
+      "flat_empty_block_ratio": 0.2037
+    },
+    "all_three_360p.png": {
+      "width": 1920,
+      "height": 1560,
+      "sha256": "aa3003ea1c440f38c5d004536c9fc44d22369aa3713f9ed4492874d600aa4d5f",
+      "file_bytes": 3129052,
+      "luma_mean": 65.48,
+      "luma_std_contrast": 56.36,
+      "edge_energy_mean": 18.3,
+      "luma_entropy_bits": 6.125,
+      "flat_empty_block_ratio": 0.2069
+    }
+  }
+}
