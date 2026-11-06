@@ -79,9 +79,11 @@ func setupPrivacySession(t *testing.T, pool *storage.Pool) (villageID, sessionID
 		if err != nil {
 			return
 		}
-		_, _ = tx.Exec(cleanup, `DELETE FROM ttg.privacy_ledger_outbox WHERE tombstone_id IN (SELECT id FROM ttg.privacy_tombstones WHERE actor_ref_protected = $1)`, actor)
+		_, _ = tx.Exec(cleanup, `DELETE FROM ttg.privacy_ledger_outbox WHERE tombstone_id IN (SELECT tombstone_id FROM ttg.privacy_erase_requests WHERE session_id = $1)`, sessionID)
 		_, _ = tx.Exec(cleanup, `DELETE FROM ttg.privacy_erase_requests WHERE session_id = $1`, sessionID)
-		_, _ = tx.Exec(cleanup, `DELETE FROM ttg.privacy_tombstones WHERE actor_ref_protected = $1`, actor)
+		_, _ = tx.Exec(cleanup, `DELETE FROM ttg.privacy_tombstones t WHERE t.actor_ref_protected = $1
+			AND NOT EXISTS (SELECT 1 FROM ttg.privacy_ledger_outbox o WHERE o.tombstone_id = t.id)
+			AND NOT EXISTS (SELECT 1 FROM ttg.privacy_erase_requests r WHERE r.tombstone_id = t.id)`, actor)
 		for _, statement := range []string{
 			`DELETE FROM ttg.stream_outbox WHERE session_id = $1`,
 			`DELETE FROM ttg.domain_events WHERE session_id = $1`,
@@ -250,6 +252,18 @@ func TestAliasRotationResolvesSamePlayerAndErasureRemovesAllVersions(t *testing.
 	oldKey := string(candidates[2].ActorKey)
 	newKey := string(candidates[1].ActorKey)
 	activeKey := string(candidates[0].ActorKey)
+	t.Cleanup(func() {
+		cleanup, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		tx, err := pool.Begin(cleanup)
+		if err != nil {
+			return
+		}
+		_, _ = tx.Exec(cleanup, `DELETE FROM ttg.privacy_ledger_outbox WHERE tombstone_id IN (SELECT id FROM ttg.privacy_tombstones WHERE actor_ref_protected = $1)`, oldKey)
+		_, _ = tx.Exec(cleanup, `DELETE FROM ttg.privacy_erase_requests WHERE actor_ref_protected = $1`, oldKey)
+		_, _ = tx.Exec(cleanup, `DELETE FROM ttg.privacy_tombstones WHERE actor_ref_protected = $1`, oldKey)
+		_ = tx.Commit(cleanup)
+	})
 	var playerID string
 	tx, err := pool.Begin(ctx)
 	if err != nil {
